@@ -42,7 +42,7 @@
 - Auth production redirect는 GitHub Pages 사이트 경로, 로컬 개발/검증 포트만 허용. GitHub API에서 저장소 Public 및 Pages workflow 설정 확인, 가시성 변경은 수행하지 않음. main은 v0.2 유지, v0.3 개발 브랜치 수동 배포 예정.
 - 로그인 링크 복귀/토큰 제거와 만료 링크 실패 표시를 자동 회귀에 추가: 모의 Auth PC·모바일 8개 PASS. 첫 개발 브랜치 Pages 실행 40341275998은 보호 규칙으로 runner 시작 전 거절됨. 사용자에게 main 병합/배포 승인을 받았으며 보호 규칙 변경 없이 main에서 배포 진행.
 
-## 2026-10-27 KST · v0.3 main 배포 확인
+## 2026-10-26 KST · v0.3 main 배포 확인
 - 사용자 승인 후 v0.3을 main에 fast-forward 통합. 배포 앱 SHA 590f4c5912298cd1994e9c39f799c9c3ad4b70c2. GitHub Actions Deploy Pages run 40342093140 성공(기존 보호 규칙 유지).
 - 실제 URL https://pchjesus.github.io/us-stock-lab/ 에서 PC 1440×1000·모바일 390×844 HTTP 200, HTML/JS/CSS/캔들 로드, 화면 이동/해시 새로고침, 검색/관심종목 저장, 로컬 가상 주문/보유 복원, 시장정보·학습·연결된 인증 UI 확인. JS 런타임 오류 0, 가로 넘침 없음. 두 레이아웃 스크린샷 시각 확인.
 - 실제 배포 사이트에서도 일회용 Auth 테스트 사용자로 Admin generate_link(메일 미발송) → 실제 Supabase 확인 링크 → 사이트 복귀 → URL 토큰 제거 → 로그아웃 PASS. 테스트 사용자/데이터 삭제 후 auth.users 0 확인. 일회용 4180 redirect 제거, production 및 표준 개발 URL 유지.

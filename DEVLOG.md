@@ -23,3 +23,13 @@
 - PASS: 빌드/타입, 금융/기존/신규 PC·모바일 총 32개; 별도 mock 인증 서버 기반 OTP/로그아웃·실패 4개; PostgreSQL SQL/RLS 검증. 시장 경계/빈 UI 8개 추가 재검증. 가상 데이터→공식 라벨 오표시 없음. 기존 학습 회귀 selector는 의도된 신규 제목에 맞춰 변경, 검증 내용 유지. 데스크톱 상세 좌우/모바일 단일 열, 가로 넘침/캘린더 스크린샷 확인.
 - 사용자 조직 링크 meyqlbmzdshtfbulnotu 확인, 프로젝트 생성 요청 승인됨. 실제 관리 API 자격증명이 없어 프로젝트 생성·실서버 Auth·원격 migration은 아직 실행 못 함. 환경 설정에 SUPABASE_ACCESS_TOKEN 비밀값 요구 및 api.supabase.com 목적지, 공개 빌드 변수 요구 저장. 토큰은 채팅/앱 번들 금지. 사용자 등록 후 프로젝트 생성부터 재개.
 - 대규모 리팩터링 없음. v0.3는 main 미병합, 실제 배포 미실행. 이후 서버 주문 RPC·로컬 계좌 이관은 별도 구현.
+
+
+## 2026-10-26 · Supabase 원격 연결
+- 기준 원격 브랜치 `codex/supabase-market-v0.3`가 요청 기준 SHA `07ce49087d092fac5321637d6ce866ba309aad38`에 있음을 확인했다. 현재 실행 컨테이너에는 `SUPABASE_ACCESS_TOKEN`과 다른 Supabase 환경 변수가 노출되지 않았지만, 연결된 Supabase 도구의 조직/프로젝트 조회 및 DB 작업은 성공했다.
+- 조직의 기존 `us-stock-lab` 프로젝트(ref `vveljtqmujdzkzmoncjx`)를 재사용했다. 상태 `ACTIVE_HEALTHY`, 리전 `ap-south-1`; 새 프로젝트 생성이나 유료 업그레이드는 하지 않았다.
+- 기존 public 스키마와 migration 이력이 비어 있음을 확인한 후 원격 migration `202610260001_foundation`을 적용했다. 9개 테이블, 모두 RLS 활성화, migration 이력 등록 확인. anon role로 published/unpublished 임시 market_events 2개를 조회해 공개 1개만 보이는 것 확인 후 임시 행 2개를 삭제하고 잔여 0개 확인.
+- Supabase security advisor 결과 lint 없음. Performance advisor 정보: `paper_cash_ledger` 복합 FK 인덱스 권고 1건과 사용되지 않은 인덱스 2건. 금융 테이블 쓰기 권한은 anon/authenticated 모두 없음.
+- 프로젝트 URL/publishable key는 공개 클라이언트 설정으로 `.env.example`과 Pages workflow에 연결했다. service_role, sb_secret, 관리 토큰은 추가하지 않았다. 공개 키가 실제 빌드에 포함되는 것은 의도된 동작.
+- 신규 가입 제한·초대 이메일 설정·OTP 메일 템플릿·실제 로그인 검증은 미완료. 현재 Supabase 연결 도구는 Auth 프로젝트 설정 편집/초대 발송 기능을 제공하지 않는다. 실제 메일 발송은 사용자가 테스트 수신 이메일을 정한 뒤 진행해야 한다.
+- 실제 앱 빌드/브라우저 테스트는 현재 실행 디렉터리에 저장소 checkout이 없어 재실행하지 않았다. 기존 32개+모의 인증 4개 결과는 이전 로컬 검증 기록이며 이번 원격 검증과 구분한다. Pages 배포도 실행하지 않았다. 개발 브랜치에만 반영한다.

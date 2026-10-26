@@ -6,7 +6,7 @@
 - 향후 경계는 data.ts의 VirtualAccount, OrderRequest, Position, FxRate, CorporateAction 타입. 주문 ID 중복 방지, 금액 최소단위 문자열/수량 decimal 문자열을 서버에서 검증하고 원자적 트랜잭션으로 처리할 예정. data.ts 타입은 미래 서버 계약 예시이며, 현재 실행 모델은 trading.ts의 Account/Trade.
 - 향후 Supabase Auth 사용자 ID로 계좌 소유권 검증 및 RLS, 서버 주문 검증 필요. v0.2는 평단/실현·평가손익을 로컬에서 구현. 환손익, 배당/분할, 기술지표는 미구현.
 - 학습 탭은 독립 UI. 향후 선택형 튜토리얼을 화면/단계 ID 기반으로 추가 가능. 현재 자동 튜토리얼 없음.
-- 데모 배포는 공개 접근 가능. 저장소 비공개와 서비스 인증은 다른 개념.
+- 저장소와 데모 배포는 공개 접근 가능하다. 저장소 공개 여부와 앱의 Supabase 인증·RLS는 별개다.
 
 ## v0.2 로컬 가상매매
 - `trading.ts`: 저장/React/시세 의존성 없는 순수 계산. `accountStore.ts`: 합성 가격 검증·주문 잠금·저장/복원. `TradingUI.tsx`: 주문 검토/확정·분석·포트폴리오. 기존 탐색/차트/관심종목 유지.

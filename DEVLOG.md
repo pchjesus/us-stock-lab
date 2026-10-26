@@ -67,3 +67,11 @@
 - 알림 archive를 사용자별로 보관하여 일정 창이 지난 뒤에도 조회 가능, 당일 발표 전/후/결과 확인 상태 구분. 관련 시장/UI 18개 및 알림 보관 2개 재검증 PASS. 분봉 생성에서 거래일별 NY 시간대 변환을 한 번만 계산하도록 변경해 OHLC 검증 비용을 줄임(값 불변). 1440/768/390 캘린더 시각 확인.
 - 최종 Pages run 40356138013 성공, 배포 앱 d0824375635bbb1f0bc46178a21013d6c99b8f78. 실제 https://pchjesus.github.io/us-stock-lab/ PC·모바일 HTTP 200, JS/CSS/차트·탐색·관심종목·로컬 거래 복원 PASS(런타임 오류 0). 실서버 UI-B smoke도 투어 원장/보유 불변, 계정·알림 분리, 네트워크 불확실 재확인/다른 기기 복원 PASS. 임시 Auth 사용자와 cascade 데이터 삭제.
 - 최종 신규 UI 10개/변경 시장 포함 18개 재검증, 알림 창 이후 보관 2개 검증 PASS. 서버 정규장 차단·실제 지수/뉴스 공급·기간 수익/배당·외부 Push·로그인 유도는 명시한 후속 범위. 2026~27 밖/임시 휴장 및 브라우저 시각은 표시 신뢰 한계로 유지.
+
+## 2026-10-27 · v0.4-C
+- 최신 main 1e8a2dc 기반 codex/ui-polish-v0.4-c. 금융 엔진/계좌 저장소/서버 RPC/인증/SQL 변경 없이 표시 context와 UI만 확장.
+- 헤더 중앙 KST/ET·장 상태, 동일 높이 버튼, sidebar rail 정렬. 단일 시장 hash 메뉴 4개로 중첩 제거. 스포트라이트의 native backdrop/전체 shield dim을 제거하고 target 외곽 cutout만 적용.
+- USD/KRW 표시 설정 및 계정별 기기 저장, 합성 환율/원장 USD 안내, 설정 메뉴와 주요 금액 표시 연결. 주문/체결·차트 USD 불변. 기존 profiles 스키마 변경 없이 사용자별 namespace 채택, 서버 preference 동기화는 보류.
+- PASS: 빌드/타입, UI·금융 48개, 인증 8개. USD/KRW 양/음수 반올림·범위, 1440/768/390 메뉴/헤더 동일 높이/통화 복원·USD 주문 확인. 실제 target 배경 screenshot 픽셀 비교와 transparent backdrop 검증 PASS. 모바일 설정 시각 확인.
+- 실제 Supabase 임시 A/B smoke PASS: 사용자별 KRW 복원/B USD 격리, 원래 USD-only RPC payload/체결 성공, 원장·계좌·로컬 보존 기존 회귀. 임시 사용자/cascade 데이터 정리. 유료 서비스/새 라이브러리 없음.
+- 추가: USD 최대 안전 센트 금액도 BigInt 분리 형식화로 1센트 표시 손실 방지, 평균단가는 문자열에서 센트로 표시 변환. 엔진 원본 계산은 변경하지 않음. 1440/768/390 스포트라이트 clip 픽셀 동일 및 transparent backdrop 확인.

@@ -43,3 +43,11 @@
 - 자산/현금·주식/ETF·섹터 구성, ETF 별도 범주, 비중 표시 largest remainder로 합계 100.00%, 실현/미실현 및 종목 손익. 현재 보유분 교육용 집중도/미보유 영역 안내만 제공.
 - 실제 UI 스포트라이트 7단계 투어: 화면 전환만 허용, shield/native modal로 쓰기 입력 차단, missing target fallback, 종료 시 hash/scroll/focus 복원. 사이드바 icon rail·저장/복원, 모바일 하단 탐색 유지.
 - 후속 계약 보존: 서버 기준 정규장 외 주문 차단(High), 실제 시세/지수/환율 공급자, 배당락/수령/달력/원장·분할, 오늘/기간별/종목별 수익과 스냅샷, 환율손익 분해, 실제 산업구성, 적립식/매수후보유/리밸런싱 백테스트, 가격 알림/외부 Push, 신규 계정 개설 안내. 비로그인 주문 로그인 유도는 최종 안정화까지 보류. 분봉 이외 장기 실제 과거 데이터·배당 기록을 만들어내지 않음.
+
+## v0.4-C 표시 설정·UI 정리
+- 단일 시장 상위 분류: #market 종목, #indices 지표, #calendar 경제 캘린더, #news 뉴스. 새로고침 시 hash 상태 복원, 기본 종목 진입. 기존 중첩 종목/지표 버튼 래퍼 제거.
+- 헤더 중앙 장 상태·현재 KST/ET 시각·운영/카운트다운, 동일 44px 우측 알림/계정/사용 방법. 좁은 폭에서는 2행 이상 압축 배치. 접힌 sidebar 80px rail의 햄버거/브랜드/48px nav 중심선 정렬, 모바일 기존 탐색 유지.
+- 스포트라이트는 transparent native dialog backdrop + transparent 입력 차단 shield + target 외곽 shadow cutout. 대상 배경은 원래 밝기 유지, 대상 부재 시 전체 dim fallback. 기존 포커스/ESC/scroll 복원·7단계·읽기 전용 유지.
+- CurrencyProvider는 표시 전용. 원본 거래/원장/수량/평단/손익 계산은 USD 센트 유지, KRW는 앱 합성 USD/KRW 1360 기준 원 단위 half-up BigInt 환산. 환율손익/실환율 기능이 아님. 홈/포트폴리오/시세/분석·원장 표시 전환, 주문 확인/입력과 차트 축은 USD 명시 유지. 지수 pt와 환율 비율은 통화 환산 대상이 아님.
+- 통화 설정은 us-stock.preferences.v1.{local|userId}로 이 기기에 저장. 사용자 전환 시 namespace 즉시 분리, 인증 확인 중 저장 차단. profiles에 preference 컬럼이 없어 서버 동기화는 이번 무-migration 범위에서 보류. localStorage 저장 실패 시 이전 표시 유지/오류 안내. 설정에서 통화/기존 sidebar 상태/튜토리얼 진입 제공.
+- High 후속: 서버 정규장 외 주문 차단은 여전히 미구현. 기존 합성/예외 휴장/브라우저 시계 한계·실제 데이터/Push·로그인 유도 보류 계약 유지.

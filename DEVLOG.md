@@ -54,3 +54,6 @@
 - 격리 PostgreSQL 17: $100×10+$80×5 평단 $93.33, 부분 원가/실현손익, 전량 원가 0, 거절 입력, 중복/충돌, 원장 불변식, A/B/익명/내부 함수 권한, trigger 강제 실패 전체 롤백 PASS. 별도 DB 세션 병렬 매수/매도 초과 방지와 동일 ID 1회 체결 PASS.
 - 기존 PC·모바일/금융 32개 및 인증 8개 PASS. 실제 Supabase 두 임시 계정: 중복 동시 RPC, 계좌 1회 생성, 잘못된 JWT/수량, 직접 잔고 변경 거절, 계정/관심목록 격리 PASS. 실제 Chromium: 네트워크 단절 후 동일 ID 복원·재시도, 체결 후 응답 유실 재조회, 다른 기기 복원/로그아웃 PASS. 테스트 사용자와 cascade 데이터 정리.
 - Security Advisor: 의도된 authenticated SECURITY DEFINER 경고 2건(주문/조회 RPC), 소유권/권한/search_path 검토 완료. 기타 중요 경고 없음. 모듈 번들 크기 경고는 UI Medium 단계 최적화 대상으로 남김. 실제 증권 API/유료 서비스 사용 없음.
+- main fast-forward 및 Pages run 40348963309 성공. 배포 앱 326d5b06bffd864b4b37dfc1ed6df1b944a79472, 실제 URL https://pchjesus.github.io/us-stock-lab/.
+- 배포된 앱에서도 PC 1440×1000·모바일 390×844로 실서버 주문/관심종목, 네트워크 불확실 주문 복원, 체결 후 응답 유실, 다른 기기 복원, 로그아웃 시 기존 로컬 MSFT 거래 복원 및 같은 브라우저 A→B 분리 PASS. 각 실행 후 임시 Auth 사용자/cascade 금융·관심종목 데이터 삭제.
+- Medium 인수인계: UI 고도화와 번들 분할, 로컬 이관은 원본 보존 상태에서 사용자 요청/무결성 검증 설계부터 진행. 실제 이메일 전달·친구 초대는 별도 수신자 지정 필요. 새로운 유료 설정/실거래 연결 없음.

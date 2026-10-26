@@ -41,3 +41,9 @@
 - PASS: 현재 공개 연결 설정 빌드/타입, 금융/PC·모바일 회귀 32개, 모의 인증 4개, 별도 무설정 dev 서버 fallback 확인. 시장 UI 회귀는 미연결/연결 두 상태를 허용하도록 보완. 실제 메일 배달·친구 초대는 수신자 미지정으로 미실행.
 - Auth production redirect는 GitHub Pages 사이트 경로, 로컬 개발/검증 포트만 허용. GitHub API에서 저장소 Public 및 Pages workflow 설정 확인, 가시성 변경은 수행하지 않음. main은 v0.2 유지, v0.3 개발 브랜치 수동 배포 예정.
 - 로그인 링크 복귀/토큰 제거와 만료 링크 실패 표시를 자동 회귀에 추가: 모의 Auth PC·모바일 8개 PASS. 첫 개발 브랜치 Pages 실행 40341275998은 보호 규칙으로 runner 시작 전 거절됨. 사용자에게 main 병합/배포 승인을 받았으며 보호 규칙 변경 없이 main에서 배포 진행.
+
+## 2026-10-27 KST · v0.3 main 배포 확인
+- 사용자 승인 후 v0.3을 main에 fast-forward 통합. 배포 앱 SHA 590f4c5912298cd1994e9c39f799c9c3ad4b70c2. GitHub Actions Deploy Pages run 40342093140 성공(기존 보호 규칙 유지).
+- 실제 URL https://pchjesus.github.io/us-stock-lab/ 에서 PC 1440×1000·모바일 390×844 HTTP 200, HTML/JS/CSS/캔들 로드, 화면 이동/해시 새로고침, 검색/관심종목 저장, 로컬 가상 주문/보유 복원, 시장정보·학습·연결된 인증 UI 확인. JS 런타임 오류 0, 가로 넘침 없음. 두 레이아웃 스크린샷 시각 확인.
+- 실제 배포 사이트에서도 일회용 Auth 테스트 사용자로 Admin generate_link(메일 미발송) → 실제 Supabase 확인 링크 → 사이트 복귀 → URL 토큰 제거 → 로그아웃 PASS. 테스트 사용자/데이터 삭제 후 auth.users 0 확인. 일회용 4180 redirect 제거, production 및 표준 개발 URL 유지.
+- 남은 범위: 실제 메일 발송/수신 및 친구 초대는 수신자 미지정으로 미검증. 기본 메일 제공자의 수신자/발송 제한은 custom SMTP 도입 시 별도 해결. 서버 계좌 주문/동기화·자동 RSS 수집·배당/환율손익은 기존 계획대로 후속 단계. 프로젝트/메일 서비스 유료 전환 없음.

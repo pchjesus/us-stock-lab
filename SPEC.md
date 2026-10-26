@@ -20,7 +20,7 @@
 - 후속 서버 이전 시 decimal/최소단위 정수 계약, Auth 사용자 소유권·RLS, 주문 멱등키·서버 가격 검증·원자적 주문/원장 갱신 필요. 실매매 API 영구 금지.
 
 ## v0.3 인증·정보 기반
-- v0.2 계산/저장 형식 그대로 보존. main 통합 SHA b5332a73cdfb45850d07e3167d5cfa52ecb0cb5a. v0.3는 별도 브랜치.
+- v0.2 계산/저장 형식 그대로 보존. main 통합 SHA b5332a73cdfb45850d07e3167d5cfa52ecb0cb5a. v0.3는 개발 브랜치 검증 후 사용자 승인으로 main에 통합·Pages 배포.
 - 인증: Supabase SDK, 초대 사용자 이메일 로그인 링크·선택적 OTP·로그아웃. URL/공개 키 없거나 잘못되면 미연결 표시. 서버 키 빌드 거절 및 브라우저 초기화 거절. 인증 상태·로딩·실패와 로컬 데모 계좌 상태 분리. 15초 요청 timeout. 세션은 SDK 저장소에 유지. 관리 토큰은 브라우저에 절대 사용하지 않음.
 - SQL: profiles, paper_accounts, paper_positions, paper_orders, paper_cash_ledger, watchlist_items, market_events, market_news, learning_articles. 사용자 정보/관심종목은 자기 행만, 계좌/보유/주문/원장은 자기 계좌만 읽기, 금융 테이블 client 쓰기 권한과 정책 없음. 공개 정보는 published 행만 읽기, client 게시 불가. 주문 멱등키, account/order 복합 FK와 단일 초기자금 원장 제약. Auth 신규 가입 차단 원격 설정 완료. 기본 메일 제공자 제약과 실제 수신 여부는 별도 확인 필요.
 - 서버 계좌 생성/원자 주문 RPC, 로컬→서버 계좌 이관·관심종목 동기화는 후속 단계. 현재 로그인은 로컬 데이터 소유권을 바꾸지 않음. 후속 이관은 사용자 확인·서버 재검증 후 별도 계좌로 가져오고 로컬 원본 보존 예정.

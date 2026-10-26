@@ -75,3 +75,4 @@
 - PASS: 빌드/타입, UI·금융 48개, 인증 8개. USD/KRW 양/음수 반올림·범위, 1440/768/390 메뉴/헤더 동일 높이/통화 복원·USD 주문 확인. 실제 target 배경 screenshot 픽셀 비교와 transparent backdrop 검증 PASS. 모바일 설정 시각 확인.
 - 실제 Supabase 임시 A/B smoke PASS: 사용자별 KRW 복원/B USD 격리, 원래 USD-only RPC payload/체결 성공, 원장·계좌·로컬 보존 기존 회귀. 임시 사용자/cascade 데이터 정리. 유료 서비스/새 라이브러리 없음.
 - 추가: USD 최대 안전 센트 금액도 BigInt 분리 형식화로 1센트 표시 손실 방지, 평균단가는 문자열에서 센트로 표시 변환. 엔진 원본 계산은 변경하지 않음. 1440/768/390 스포트라이트 clip 픽셀 동일 및 transparent backdrop 확인.
+- 배포 앱 ac508ebd547ded66b9eaa0970fc666edb1eb838f, Pages run 40361863834 성공. 실제 https://pchjesus.github.io/us-stock-lab/ PC·모바일 HTTP 200, JS/CSS/chart/탐색/로컬 거래 및 서버 UIC A/B preference·USD-only 체결 검증 PASS. 런타임 오류 0, 임시 Auth 사용자/cascade 정리. 스포트라이트 3개 화면 크기 픽셀 비교 PASS. 접힌 rail 중심선 브라우저 실측 검증.

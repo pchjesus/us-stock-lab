@@ -13,7 +13,7 @@ test('configured email OTP login/logout uses invited users and preserves local d
  });
  await page.goto('/#settings');await page.getByLabel('초대된 이메일').fill(user.email);await page.getByRole('button',{name:'로그인 링크 받기'}).click();await expect(page.getByRole('status')).toContainText('초대된 이메일이라면');
  await page.getByLabel('이메일 인증 코드 (메일에 코드가 있는 경우)').fill('123456');await page.getByRole('button',{name:'코드 확인',exact:true}).click();await expect(page.getByText(`로그인: ${user.email}`,{exact:true})).toBeVisible();
- await expect(page.getByText(/계좌 모드: 개인 로컬 데모/)).toBeVisible();await page.reload();await expect(page.getByText(`로그인: ${user.email}`,{exact:true})).toBeVisible();
+ await expect(page.getByText(/계좌 모드: 사용자별 서버 가상계좌/)).toBeVisible();await page.reload();await expect(page.getByText(`로그인: ${user.email}`,{exact:true})).toBeVisible();
  await page.getByRole('button',{name:'로그아웃',exact:true}).click();await expect(page.getByLabel('초대된 이메일')).toBeVisible();expect(requests).toBe(1);
  await page.goto('/#portfolio');await expect(page.getByTestId('cash')).toHaveText('$100,000.00');
 });

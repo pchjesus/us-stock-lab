@@ -1,0 +1,20 @@
+import {chromium,expect} from '@playwright/test';
+const sessions=JSON.parse(process.env.TEST_SESSIONS),base=process.env.TEST_BASE;
+const proxy=process.env.HTTPS_PROXY||process.env.https_proxy;
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox'],...(proxy?{proxy:{server:proxy,bypass:'localhost,127.0.0.1'}}:{})});
+let stage='start';
+try{
+ async function device(session){const c=await browser.newContext();await c.addInitScript(({session})=>{if(!localStorage.getItem('us-stock-lab.account.v1'))localStorage.setItem('us-stock-lab.account.v1',JSON.stringify({version:1,generation:'local-preserved',trades:[{id:'local-preserved',symbol:'MSFT',side:'buy',quantity:1,price:100,time:'2026-10-27T00:00:00Z'}]}));if(!localStorage.getItem('sb-vveljtqmujdzkzmoncjx-auth-token'))localStorage.setItem('sb-vveljtqmujdzkzmoncjx-auth-token',JSON.stringify(session));},{session});const p=await c.newPage();return {c,p};}
+ const A=await device(sessions[0]),B=await device(sessions[1]);
+ stage='server account load';await A.p.goto(base+'#portfolio');await expect(A.p.getByTestId('cash')).toHaveText('$100,000.00');await B.p.goto(base+'#portfolio');await expect(B.p.getByTestId('cash')).toHaveText('$100,000.00');
+ stage='watchlist separation';await A.p.goto(base+'#market');await A.p.getByRole('button',{name:'★ 관심종목만',exact:true}).click();await expect(A.p.locator('.stock')).toContainText('MSFT');await B.p.goto(base+'#market');await B.p.getByRole('button',{name:'★ 관심종목만',exact:true}).click();await expect(B.p.locator('.stock')).toContainText('QQQ');
+ stage='uncertain order';await A.p.goto(base+'#stock/AAPL');await expect(A.p.getByRole('button',{name:'주문 검토',exact:true})).toBeEnabled();await A.p.route('**/rest/v1/rpc/*',r=>r.abort());await A.p.getByRole('button',{name:'주문 검토',exact:true}).click();await A.p.getByRole('button',{name:'체결 확정',exact:true}).click();await expect(A.p.getByRole('alert').filter({hasText:'체결 여부 확인 중'})).toBeVisible();
+ stage='resume same id';const id=await A.p.evaluate(uid=>JSON.parse(localStorage.getItem('paper.pending.'+uid)).id,sessions[0].user.id);await A.p.unroute('**/rest/v1/rpc/*');await A.p.reload();await expect(A.p.getByRole('dialog',{name:'가상 주문 확인'})).toBeVisible();await A.p.getByRole('button',{name:'체결 확정',exact:true}).click();await expect(A.p.getByRole('status')).toContainText('체결되고 저장');
+ stage='lost response after commit';await A.p.route('**/rest/v1/rpc/paper_order',async r=>{await r.fetch();await r.abort();});await A.p.getByRole('button',{name:'주문 검토',exact:true}).click();await A.p.getByRole('button',{name:'체결 확정',exact:true}).click();await expect(A.p.getByRole('status')).toContainText('체결되고 저장');await A.p.unroute('**/rest/v1/rpc/paper_order');
+ stage='other device restoration';const C=await device(sessions[0]);await C.p.goto(base+'#portfolio');await expect(C.p.locator('.holding')).toContainText('2주');await expect(C.p.locator('.history-row')).toHaveCount(4);
+ stage='other user isolation';await B.p.goto(base+'#portfolio');await expect(B.p.locator('.holding')).toHaveCount(0);await expect(B.p.getByTestId('cash')).toHaveText('$100,000.00');
+ stage='logout local preservation';// Disable init script reseeding by staying within this document on logout.
+ await A.p.goto(base+'#settings');await A.p.getByRole('button',{name:'로그아웃',exact:true}).click();await A.p.getByRole('link',{name:'▤ 포트폴리오',exact:true}).click();await expect(A.p.getByTestId('cash')).toHaveText('$99,999.00');await expect(A.p.locator('.holding')).toContainText('MSFT');
+ stage='same-browser user switch';await A.p.evaluate(s=>localStorage.setItem('sb-vveljtqmujdzkzmoncjx-auth-token',JSON.stringify(s)),sessions[1]);await A.p.reload();await expect(A.p.getByTestId('cash')).toHaveText('$100,000.00');await expect(A.p.locator('.holding')).toHaveCount(0);
+ console.log('PASS live browser: A/B and local/server separation, server watchlists, uncertain order same-ID retry/reload, other-device restore, logout');
+} catch(e){console.log('Stage: '+stage);throw Error('Browser verification failed (session details suppressed)');}finally{await browser.close();}

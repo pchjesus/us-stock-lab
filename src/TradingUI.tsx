@@ -3,6 +3,7 @@ import {accountKey,executeOrder,loadAccount,marketPrices,resetAccount,type Loade
 import {amount,averageText,parseCents,parseQuantity,simulate,valuation,type Account} from './trading';
 import {getAuthClient} from './auth';
 import {serverSnapshot,serverOrder,pendingOrder} from './serverAccount';
+import {Allocation} from './UiPanels';
 import {type Instrument} from './data';
 export const usd=(cents:number)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(cents/100);
 const message=(e:unknown)=>e instanceof Error?e.message:'처리하지 못했습니다.';
@@ -21,7 +22,7 @@ export function AccountSummary({view}:{view:AccountView}){
  if(view.error)return <section className="panel" role="alert">{view.error}<p><button onClick={()=>void view.refresh()}>계좌 다시 조회</button> <a href="#settings">인증 설정 →</a></p></section>;
  if(!view.loaded)return <p role="status">계좌 불러오는 중…</p>;
  const a=view.loaded.account,v=valuation(a,view.prices);
- return <section className="balance account-summary"><div><span>나의 총자산 · {view.userId?'서버 가상계좌':'로컬 가상계좌'}</span><h2 data-testid="total-assets">{usd(v.total)}</h2><p>최초 가상자금 $100,000 · 합성 시세 평가</p></div><dl><dt>현금잔고</dt><dd data-testid="cash">{usd(a.cash)}</dd><dt>보유 평가액</dt><dd>{usd(v.value)}</dd><dt>총손익</dt><dd>{usd(v.profit)}</dd><dt>미실현 / 실현</dt><dd>{usd(v.unrealized)} / {usd(v.realized)}</dd><dt>보유 평가수익률</dt><dd>{v.returnPct.toFixed(2)}%</dd></dl></section>;
+ return <section className="balance account-summary"><div><span>나의 총자산 · {view.userId?'서버 가상계좌':'로컬 가상계좌'}</span><h2 data-testid="total-assets">{usd(v.total)}</h2><p>최초 가상자금 $100,000 · 합성 시세 평가</p><Allocation account={a} prices={view.prices}/></div><dl><dt>현금잔고</dt><dd data-testid="cash">{usd(a.cash)}</dd><dt>보유 평가액</dt><dd>{usd(v.value)}</dd><dt>총손익</dt><dd>{usd(v.profit)}</dd><dt>미실현 / 실현</dt><dd>{usd(v.unrealized)} / {usd(v.realized)}</dd><dt>보유 평가수익률</dt><dd>{v.returnPct.toFixed(2)}%</dd></dl></section>;
 }
 export function OrderPanel({stock,view}:{stock:Instrument;view:AccountView}){
  const [side,setSide]=useState<'buy'|'sell'>('buy');const [quantity,setQuantity]=useState('1');const [pending,setPending]=useState<{order:LocalOrder;token:string|null}|null>(()=>{const order=view.userId?pendingOrder(view.userId):null;return order?.symbol===stock.symbol?{order,token:null}:null;});

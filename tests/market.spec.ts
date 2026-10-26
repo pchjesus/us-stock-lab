@@ -30,7 +30,7 @@ test('market cards, calendar, empty news and beginner lessons render responsivel
  await page.goto('/#calendar');await expect(page.locator('.event-list article')).toHaveCount(8);await expect(page.getByText(/아래 일정·값은 모두 교육용 가상/)).toBeVisible();
  await page.screenshot({path:`test-results/${test.info().project.name}-calendar.png`,fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.goto('/#news');await expect(page.getByRole('heading',{name:'수신된 뉴스가 없습니다'})).toBeVisible();await expect(page.locator('.source-links a')).toHaveCount(5);
- await page.getByLabel('시장정보 모드').selectOption('official-pending');await page.goto('/#calendar');await expect(page.getByText(/공식 경제 일정 연동예정/)).toBeVisible();await page.goto('/#market');await expect(page.getByText(/현재 수신된 지표가 없습니다/)).toBeVisible();
+ await page.getByLabel('시장정보 모드').selectOption('official-pending');await page.goto('/#calendar');await expect(page.getByText(/공식 경제 일정 연동예정/)).toBeVisible();await page.goto('/#market');await page.getByRole('button',{name:'지표',exact:true}).click();await expect(page.getByText(/현재 수신된 지표가 없습니다/)).toBeVisible();
  await page.goto('/#learn');await expect(page.locator('.lesson')).toHaveCount(10);await page.getByRole('button',{name:'왕초보',exact:true}).click();await expect(page.locator('.lesson')).toHaveCount(2);await page.getByRole('button',{name:/ETF가 뭐야/}).click();await expect(page.getByText(/한 바구니/)).toBeVisible();
  await page.goto('/#settings');await expect(page.getByRole('heading',{name:'로그인 및 연결'})).toBeVisible();await expect(page.getByTestId('auth-unconfigured').or(page.getByLabel('초대된 이메일'))).toBeVisible();await expect(page.getByText(/계좌 모드:/)).toBeVisible();expect(errors).toEqual([]);
 });

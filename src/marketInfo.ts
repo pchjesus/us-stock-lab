@@ -43,7 +43,7 @@ export function importantEvent(events:EconomicEvent[],now=new Date()):{event:Eco
  const today=dayNumber(now.toISOString());
  const candidates=events.filter(e=>e.importance==='high'&&Math.abs(dayNumber(e.scheduledAt)-today)<=1).sort((a,b)=>Math.abs(dayNumber(a.scheduledAt)-today)-Math.abs(dayNumber(b.scheduledAt)-today)||Date.parse(a.scheduledAt)-Date.parse(b.scheduledAt));
  const event=candidates[0];if(!event)return null;
- const day=dayNumber(event.scheduledAt);return {event,label:day===today?'오늘 발표':day>today?'예정':event.actual!==undefined?'결과 요약':'발표 결과 확인 중'};
+ const day=dayNumber(event.scheduledAt);return {event,label:day===today?(now.getTime()<Date.parse(event.scheduledAt)?'오늘 발표':event.actual!==undefined?'발표 결과':'발표 결과 확인 중'):day>today?'예정':event.actual!==undefined?'결과 요약':'발표 결과 확인 중'};
 }
 // Future domains, intentionally separate from the v0.2 USD-only execution engine.
 export interface DividendEvent {symbol:string;exDate:string;payDate:string;amountCents:number;currency:'USD';source:DataStatus}

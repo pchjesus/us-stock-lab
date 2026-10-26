@@ -22,3 +22,14 @@ Pages를 사용할 수 없으면 Cloudflare Pages에서 이 비공개 저장소�
 현재 GitHub/Cloudflare API는 환경 프록시의 Forbidden 응답으로 접근 불가. 실제 배포 URL 없음. Git HTTPS 접근과 API 접근 권한은 별개입니다. 환경 설정의 API 도메인 허용을 저장·적용한 뒤 인증과 Pages 지원 요금제를 확인해야 합니다.
 
 롤백: Pages의 이전 성공 워크플로를 재실행하거나 Cloudflare에서 이전 배포로 되돌립니다. 테스트 스크린샷은 `test-results/`에 생성됩니다.
+
+## v0.3 연결 준비
+- v0.2 검증 후 main을 `b5332a7`로 fast-forward 통합. v0.3 개발은 `codex/supabase-market-v0.3`.
+- 홈/시장: 미국 3지수·환율·KOSPI·KOSDAQ 합성 카드. 시장 하위 화면에 가상 경제 캘린더와 뉴스(미수집 빈 상태+공식 출처 링크). 일정/수치는 공식 발표가 아닌 교육용 예시. 학습은 10개 개념·5단계 필터. 데스크톱 종목 상세는 차트/정보와 주문/분석을 좌우 배치.
+- `.env.example`을 참고해 로컬 `.env.local` 또는 배포 빌드 환경에 `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` 설정. legacy anon JWT는 `VITE_SUPABASE_ANON_KEY`로 대체 가능. VITE 값은 빌드에 공개되므로 service_role/sb_secret/관리 토큰 금지. 설정 후 재빌드/개발서버 재시작 필요. GitHub Pages Actions 사용 시 저장소 Settings → Variables의 두 공개 변수에 같은 값을 등록. workflow가 빌드 단계에 전달하며, 비어 있으면 미연결 로컬 데모로 빌드.
+- 프로젝트가 아직 없다면 Supabase 조직에서 무료 프로젝트를 생성해야 함. Codex가 대신 생성하려면 관리 API 접근이 필요: 개인 관리 토큰을 채팅/소스 대신 환경 설정 `SUPABASE_ACCESS_TOKEN` 비밀값으로 연결(목적지 api.supabase.com). 이 관리 토큰은 브라우저에 절대 전달하지 않음. 조직 URL만으로는 프로젝트 생성/접속 권한이 주어지지 않음.
+- Supabase 프로젝트 SQL Editor에서 `supabase/migrations/202610260001_foundation.sql`을 한 번 적용. 9개 테이블과 RLS 포함. 아직 서버 주문 RPC가 없으므로 브라우저의 금융 데이터 쓰기를 모두 차단. 로그인만으로 서버 계좌 생성·주문·동기화가 가능해지는 것은 아님.
+- Auth 설정에서 신규 가입을 비활성화하고 관리자 UI로 테스트 이메일 3~4명을 초대. Email OTP 메일 템플릿에 `{{ .Token }}`을 표시. 앱은 이메일+메일 코드로 로그인하며 `shouldCreateUser:false`, 자동 회원가입/URL 세션 수신 없음. 기본 초대 링크 대신 이 앱의 코드 로그인을 사용. SMTP/메일 제한·이메일 템플릿·초대 상태는 실프로젝트 검증 필요.
+- 로그인/로그아웃은 설정 탭. 로그인 여부와 별개로 로컬 계좌는 같은 브라우저에서 공유됨. 기존 로컬 계좌를 자동 업로드하거나 로그인 사용자의 소유로 표시하지 않음.
+- `npm test`: 무설정 fallback, KST 날짜/배너, 시장 빈 상태, 금융 및 PC/모바일 회귀. `npm run test:auth`: 가짜 인증 서버 응답을 사용한 설정 상태 로그인/로그아웃·실패 검증(실제 Supabase 검증과 다름).
+- SQL 로컬 재현: 격리된 `postgres:17` 임시 컨테이너에 `tests/sql/bootstrap.sql` → migration → `tests/sql/rls.sql` 순서로 `psql -v ON_ERROR_STOP=1` 실행. bootstrap은 테스트 전용이므로 실제 Supabase에 적용하지 말 것.

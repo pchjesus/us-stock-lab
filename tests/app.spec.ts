@@ -9,7 +9,7 @@ test('navigation, search, chart, persistence and lessons',async({page})=>{
  await page.screenshot({path:`test-results/${test.info().project.name}-chart.png`,fullPage:true});await page.reload();await expect(page.getByRole('heading',{name:'애플',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'★ 관심종목 해제'}).click();await page.reload();await expect(page.getByRole('button',{name:'☆ 관심종목 등록'})).toBeVisible();
  for(const [nav,title] of [['▤ 포트폴리오','포트폴리오'],['◷ 학습','한 걸음씩 배우는 투자'],['⚙ 설정','설정 및 서비스 안내']]){await page.getByRole('link',{name:nav,exact:true}).click();await expect(page.getByRole('heading',{name:title,exact:true})).toBeVisible();}
- await page.getByRole('link',{name:'◷ 학습',exact:true}).click();await page.getByRole('button',{name:/주식과 ETF/}).click();await expect(page.getByText(/개별 기업의 지분/)).toBeVisible();
+ await page.getByRole('link',{name:'◷ 학습',exact:true}).click();await page.getByRole('button',{name:/주식이 뭐야/}).click();await expect(page.getByText(/개별 기업의 지분/)).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors).toEqual([]);
 });
 test('invalid storage and failed writes are safe',async({page})=>{

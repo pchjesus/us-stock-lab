@@ -20,7 +20,7 @@ npm test
 롤백: Pages의 이전 성공 워크플로를 재실행합니다. 테스트 스크린샷은 `test-results/`에 생성됩니다.
 
 ## v0.3 연결 준비
-- v0.2 검증 후 main을 `b5332a7`로 fast-forward 통합. v0.3 개발은 `codex/supabase-market-v0.3`.
+- v0.2 검증 후 main을 `b5332a7`로 fast-forward 통합. v0.3 및 실제 인증 검증 후 사용자 승인으로 main에 반영. GitHub Pages 보호 규칙에 따라 main에서 배포한다.
 - 홈/시장: 미국 3지수·환율·KOSPI·KOSDAQ 합성 카드. 시장 하위 화면에 가상 경제 캘린더와 뉴스(미수집 빈 상태+공식 출처 링크). 일정/수치는 공식 발표가 아닌 교육용 예시. 학습은 10개 개념·5단계 필터. 데스크톱 종목 상세는 차트/정보와 주문/분석을 좌우 배치.
 - `.env.example`에는 현재 Supabase 프로젝트의 공개 URL과 publishable key가 들어 있다. 이 두 값은 브라우저 빌드에 포함되는 공개 설정이다. Pages workflow도 같은 공개 설정으로 빌드한다. `service_role`, `sb_secret`, 관리 토큰은 소스·프론트엔드·VITE 변수에 넣지 않는다. 다른 프로젝트를 쓸 때는 로컬 `.env.local`의 `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`를 바꾸고 재빌드한다.
 - 현재 연결 프로젝트: 조직 `meyqlbmzdshtfbulnotu`, ref `vveljtqmujdzkzmoncjx`, 리전 `ap-south-1`. 기존 프로젝트를 재사용하며 중복 프로젝트를 만들지 않는다.

@@ -21,3 +21,16 @@ test('failed authentication never claims login success',async({page})=>{
  await page.route('https://auth-test.invalid/**',route=>route.fulfill({status:400,json:{error_code:'otp_expired',msg:'Code expired'}}));
  await page.goto('/#settings');await page.getByLabel('초대된 이메일').fill('friend@example.test');await page.getByRole('button',{name:'로그인 링크 받기'}).click();await expect(page.getByRole('alert')).toContainText('인증 요청을 완료하지 못했습니다');await expect(page.getByRole('button',{name:'로그아웃',exact:true})).toHaveCount(0);
 });
+test('magic-link callback opens settings and removes tokens from URL',async({page})=>{
+ const user={id:'00000000-0000-0000-0000-000000000001',aud:'authenticated',role:'authenticated',email:'callback@example.test',app_metadata:{},user_metadata:{},created_at:'2026-10-26T00:00:00Z'};
+ const expires=Math.floor(Date.now()/1000)+3600;
+ const payload=Buffer.from(JSON.stringify({sub:user.id,aud:'authenticated',role:'authenticated',exp:expires})).toString('base64url');
+ await page.route('https://auth-test.invalid/**',route=>route.fulfill({json:user}));
+ await page.goto(`/#access_token=e30.${payload}.test-signature&refresh_token=fake-test-refresh&token_type=bearer&expires_in=3600&expires_at=${expires}&type=magiclink`);
+ await expect(page.getByText(`로그인: ${user.email}`,{exact:true})).toBeVisible();await expect(page).toHaveURL(/#settings$/);expect(page.url()).not.toContain('access_token');
+});
+test('expired magic link shows a clear failure without logging in',async({page})=>{
+ await page.goto('/#error=access_denied&error_code=otp_expired&error_description=expired');
+ await expect(page.getByRole('alert').filter({hasText:'로그인 링크를 확인하지 못했습니다'})).toBeVisible();
+ await expect(page.getByRole('button',{name:'로그아웃',exact:true})).toHaveCount(0);await expect(page.getByLabel('초대된 이메일')).toBeVisible();
+});

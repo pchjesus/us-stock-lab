@@ -107,3 +107,6 @@
 - `codex/licensed-market-widgets-v0.5-a`에서 TradingView 공식 ticker-tape/market-overview/advanced-chart 위젯을 사용자 작동 시 로드. 명시된 8종목·5지수 심볼 및 원문 링크/출처/지연 가능성 포함; 비공식 네이버 증권 API 미사용.
 - 기존 React 화면과 합성 차트·가격·주문·원장/시장시간 기능 보존. 첫 회귀에서 홈 계좌 요약 상단 위젯에 의한 스포트라이트 스크린샷 실패 2건을 확인, 계좌 요약 아래로 이동해 원래 정보 위계 복구.
 - GitHub Actions run 40430748282: npm build PASS / 브라우저·금융 70 PASS / 인증 12 PASS / deployed public `market-fx` 실제 HTTP PASS (Frankfurter UTC 기준일 2026-10-27). 후속 production FX opt-in 테스트 및 Pages 자동배포는 최종 검증/브랜치 통합 완료 전까지 미완료.
+
+- 추가 확장: TradingView 공식 경제 발표(events) 및 금융 뉴스(timeline) 위젯을 캘린더/뉴스 화면에 분리. FOMC/CPI/PCE 실제 일정의 존재는 외부 화면에서만 확인하며, 기존 합성 이벤트 8종은 원본 보존. 새 회귀 테스트 추가.
+- 운영 배포 게이트: `VITE_ENABLE_MARKET_FX=true` 전용 빌드 및 브라우저 mock 검증, live HTTP smoke, 기존 금융/인증 자동검증 완료 후 PR main 통합. Pages는 main push 자동 workflow가 실행되도록 변경(배포 결과 별도 확인).

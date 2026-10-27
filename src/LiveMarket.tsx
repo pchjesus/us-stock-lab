@@ -15,11 +15,13 @@ export const indexSymbols=[
  {name:'KOSPI',symbol:'KRX:KOSPI',url:'https://www.tradingview.com/symbols/KRX-KOSPI/'},
  {name:'KOSDAQ',symbol:'KRX:KOSDAQ',url:'https://www.tradingview.com/symbols/KRX-KOSDAQ/'}
 ] as const;
-type WidgetType='ticker-tape'|'market-overview'|'advanced-chart';
+type WidgetType='ticker-tape'|'market-overview'|'advanced-chart'|'events'|'timeline';
 const scriptURLs:Record<WidgetType,string>={
  'ticker-tape':'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js',
  'market-overview':'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js',
- 'advanced-chart':'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'
+ 'advanced-chart':'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js',
+ 'events':'https://s3.tradingview.com/external-embedding/embed-widget-events.js',
+ 'timeline':'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js'
 };
 export function HostedWidget({type,config,height}:{type:WidgetType;config:Record<string,unknown>;height:number}){
  const ref=useRef<HTMLDivElement>(null),[failed,setFailed]=useState(false);
@@ -83,5 +85,26 @@ export function LiveStockChart({symbol}:{symbol:string}){
      save_image:false,backgroundColor:'#ffffff',gridColor:'rgba(46, 46, 46, 0.06)'
    }}/>}
    <p><a href={'https://www.tradingview.com/symbols/'+tv.replace(':','-')+'/'} target="_blank" rel="noopener noreferrer">{symbol} TradingView 원본 시세 ↗</a> · 실제 차트와 합성 매매 차트는 별개입니다.</p>
+ </section>;
+}
+
+export function LiveEconomicCalendar(){
+ const [open,setOpen]=useState(false);
+ return <section className="panel live-market" data-testid="live-economic-calendar">
+ <div className="section-title"><h2>실제 경제 발표 일정</h2><span>TradingView · 일정 변경 가능</span></div>
+ <p>미국·한국 주요 발표를 외부 캘린더에서 확인합니다. 아래 US Stock Lab 기존 캘린더는 여전히 <strong>교육용 합성 일정</strong>입니다.</p>
+ <button aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open?'실제 발표 일정 접기':'실제 FOMC·CPI·PCE 등 경제 일정 보기'}</button>
+ {open&&<HostedWidget type="events" height={560} config={{colorTheme:'light',isTransparent:false,locale:'ko',countryFilter:'us,kr',importanceFilter:'0,1',width:'100%',height:'100%'}}/>}
+ <p><a href="https://www.tradingview.com/economic-calendar/" target="_blank" rel="noopener noreferrer">TradingView 경제 캘린더 원문 ↗</a></p>
+ </section>;
+}
+export function LiveNewsFeed(){
+ const [open,setOpen]=useState(false);
+ return <section className="panel live-market" data-testid="live-news-feed">
+ <div className="section-title"><h2>실제 금융 뉴스</h2><span>TradingView 외부 뉴스 · 원문 제공</span></div>
+ <p>가상의 기사 제목·발행시각을 생성하지 않습니다. 뉴스 출처·발행시각·내용은 외부 위젯을 통해 확인하세요.</p>
+ <button aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open?'외부 뉴스 접기':'실제 금융 뉴스 보기'}</button>
+ {open&&<HostedWidget type="timeline" height={550} config={{displayMode:'regular',feedMode:'all_symbols',colorTheme:'light',isTransparent:false,locale:'ko',width:'100%',height:550}}/>}
+ <p><a href="https://www.tradingview.com/news/" target="_blank" rel="noopener noreferrer">TradingView 최신 뉴스 원문 ↗</a></p>
  </section>;
 }

@@ -92,3 +92,8 @@
 - Twelve Data/Massive/Alpha Vantage/Finnhub/FRED/KRX/Frankfurter/ECB 공식 자료 및 접근권·가격·지연·갱신 주기를 조사. 특히 무료 API 호출과 제3자 시세 표시 권리를 분리: 미국주식·지수/한국지수 친구 대상 표시 미승인. USD/KRW 일별 Frankfurter 우선 후보.
 - 별도 개발 브랜치 `codex/market-data-v0.5-a-design`의 `docs/market-data/V0_5_A_PROVIDER_RESEARCH_AND_DESIGN_20261027.md`에 공급자 표·정규화 계약·보안 계층·영향 범위·단계별 테스트 게이트 문서화.
 - 설계/문서만 변경. 소스코드·실제 시세/환율·Supabase DB/Functions·키/과금·main·Pages 변경 없음. 빌드/자동테스트/실제 API 요청/실서버 주문 검증은 수행하지 않았으므로 PASS 아님.
+
+## 2026-10-27 · v0.5-A1/A2 개발 브랜치 1차 구현
+- `codex/market-data-v0.5-a-implementation`에서 시장정보 전용 타입/환율 파서·Fetch 어댑터, 서버 읽기전용 `market-fx` Edge Function, 실제 참고환율 별도 카드, opt-in `VITE_ENABLE_MARKET_FX=false` 기본, mock 기반 Playwright 테스트 추가.
+- 서버 원장/가격표/RPC/인증/RLS/시장시간 게이트와 금융 테스트는 변경하지 않음. 기존 UI 유지, 외부 시세를 주문 평가액에 혼합하지 않음. 주식·ETF 및 한국 지수의 권리 미승인 실데이터 호출·표시 없음.
+- 전용 GitHub Actions 브랜치 검증 워크플로 추가(빌드·기존/신규 UI 금융·인증 테스트). 기록 시점의 CI PASS 상태는 **미확인**; 로컬 전체 소스 checkout이 불가하여 수동 전체 빌드/Playwright 재실행도 **미실행**. 외부 실제 환율 요청·Supabase Edge Function 배포·Pages/main 반영은 테스트 통과 확인까지 보류.

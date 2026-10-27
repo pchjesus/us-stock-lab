@@ -51,3 +51,12 @@
 - CurrencyProvider는 표시 전용. 원본 거래/원장/수량/평단/손익 계산은 USD 센트 유지, KRW는 앱 합성 USD/KRW 1360 기준 원 단위 half-up BigInt 환산. 환율손익/실환율 기능이 아님. 홈/포트폴리오/시세/분석·원장 표시 전환, 주문 확인/입력과 차트 축은 USD 명시 유지. 지수 pt와 환율 비율은 통화 환산 대상이 아님.
 - 통화 설정은 us-stock.preferences.v1.{local|userId}로 이 기기에 저장. 사용자 전환 시 namespace 즉시 분리, 인증 확인 중 저장 차단. profiles에 preference 컬럼이 없어 서버 동기화는 이번 무-migration 범위에서 보류. localStorage 저장 실패 시 이전 표시 유지/오류 안내. 설정에서 통화/기존 sidebar 상태/튜토리얼 진입 제공.
 - High 후속: 서버 정규장 외 주문 차단은 여전히 미구현. 기존 합성/예외 휴장/브라우저 시계 한계·실제 데이터/Push·로그인 유도 보류 계약 유지.
+
+## v0.4-D 정규장 주문 게이트
+- 공통 계약 `market-calendar.json`: NYSE 공식 2026~27 표와 Nasdaq 현재 게시 2026 표 대조(2027은 NYSE 근거). America/New_York 09:30 이상~16:00 미만. 2026-11-27/12-24, 2027-11-26만 13:00 조기폐장. 휴일·주말·범위 밖·누락/미검증 일정은 신규 체결 차단. 프리/애프터·예약 주문 없음.
+- `202610270003_market_hours`: 기존 RPC·금융 데이터 보존. 비노출 `paper_private`에 730일 일정/운영 중단 singleton과 권한 상승 없는 내부 판정 함수. client schema usage/table/function 권한 없음, RLS no-policy는 의도된 owner-only 차단. 공개 API는 기존 paper_order/paper_snapshot만 사용.
+- paper_order는 기존 계좌 잠금·소유권·센트/numeric 계산 유지. 기존 ID의 재조회/내용 충돌은 장외에도 먼저 처리. 신규 주문은 잠금 후 서버 clock_timestamp 검사, 원장/응답 구성 후 최종 마감 검사로 지연 발생 시 전체 롤백. 클라이언트 시각/타임존/가격/소유자 입력 없음. snapshot은 장외 조회·계좌 초기화 허용, market 상태를 부가 반환.
+- 운영자가 신뢰된 SQL Editor에서만 `update paper_private.market_control set enabled=false,reason='임시 휴장 확인 중' where id=true;`로 신규 체결 중단. 공식 상태 확인 후 enabled=true로 복구. 진행 중 주문의 shared row lock 해제 뒤 중단 적용, 이후 신규 체결 차단. 예외 휴장 자동 수집은 없으므로 운영자 확인 필요. 누락 일자 복구/연장도 검토된 migration으로만 수행. 프론트 롤백 시에도 서버 게이트는 유지.
+- 로컬은 동일 계약으로 Web Lock 획득 후·저장 직전 검증. 기존 기록 복원/초기화는 시간 제한 없음. 브라우저 시각 조작 가능성을 명시하며 서버 보안과 동일시하지 않음. 테스트 시각 주입은 disposable DB 함수 교체/Playwright에서만 수행, 운영 코드에 우회 매개변수·버튼·GUC 없음.
+- UI: 중앙 KST/ET·헤더 유지. 로컬은 브라우저 기준, 로그인 계좌는 snapshot의 서버 상태+monotonic 경과로 조기 차단(30초 경과/조회 실패 제한, 기존 15초 poll/focus 갱신). 최종 체결은 항상 서버 재검증. 장외 신규 검토 제한·기존 불확실 ID 재확인 허용. 분석·조회·차트·관심종목 및 USD/KRW 표시 전용 계약 유지.
+- 검증: `python3 scripts/build-market-migration.py --check`, `python3 scripts/test-server.py`(Docker disposable PostgreSQL17), npm test/test:auth. 운영 DB 시각 변경 금지. 실제 smoke는 당시 장외 차단/격리만 검증하고 장중 체결·경계/장애/동시성은 격리 DB에서 결정론적으로 검증한다.

@@ -4,6 +4,7 @@ test('currency display rounding and isolated namespaces',()=>{
  expect(formatDisplay(Number.MAX_SAFE_INTEGER,'USD')).toBe('$90,071,992,547,409.91');expect(formatDisplay(-1,'USD')).toBe('-$0.01');expect(formatDisplay(10000000,'USD')).toBe('$100,000.00');expect(formatDisplay(10000000,'KRW')).toBe('₩136,000,000');expect(formatDisplay(149,'KRW')).toBe('₩2,026');expect(formatDisplay(-149,'KRW')).toBe('-₩2,026');expect(formatDisplay(Number.MAX_SAFE_INTEGER+1,'KRW')).toContain('표시 범위');expect(preferenceKey('a')).not.toBe(preferenceKey('b'));expect(preferenceKey(null)).not.toBe(preferenceKey('a'));
 });
 test('polished navigation, header, currency persistence and USD order boundary',async({page})=>{
+ await page.clock.setFixedTime(new Date('2026-10-27T14:00:00Z'));
  for(const width of [1440,768,390]){
  await page.setViewportSize({width,height:1000});await page.goto('/#settings');await page.getByLabel('기본 표시 통화').selectOption('KRW');await page.getByRole('link',{name:'◫ 홈',exact:true}).click();await expect(page.getByTestId('total-assets')).toHaveText('₩136,000,000');await page.reload();await expect(page.getByTestId('total-assets')).toHaveText('₩136,000,000');
  const heights=await page.locator('.header-actions > *').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().height));expect(new Set(heights).size).toBe(1);await expect(page.locator('.live-times')).toContainText('KST');await expect(page.locator('.live-times')).toContainText('ET');

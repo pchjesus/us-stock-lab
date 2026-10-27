@@ -8,7 +8,7 @@ export function decodeSnapshot(raw:any):ServerLoaded {
  if(account.cash!==Number(raw.cash)||account.realized!==Number(raw.realized))throw Error('서버 계좌 원장 불일치');
  const positions=Object.fromEntries(raw.positions.map((p:any)=>[p.symbol,{quantity:integer(Number(p.quantity)),cost:integer(Number(p.cost),'원가',true)}]));
  if(Object.keys(positions).length!==Object.keys(account.holdings).length||Object.entries(account.holdings).some(([s,h])=>positions[s]?.quantity!==h.quantity||positions[s]?.cost!==h.cost))throw Error('서버 보유원가 불일치');
- return {account,token:raw.id,prices:Object.fromEntries(Object.entries(raw.prices).map(([s,p])=>[s,integer(Number(p))]))};
+ return {account,token:raw.id,market:raw.market,receivedAt:performance.now(),prices:Object.fromEntries(Object.entries(raw.prices).map(([s,p])=>[s,integer(Number(p))]))};
 }
 export async function serverSnapshot(){const r=await getAuthClient()!.rpc('paper_snapshot');if(r.error)throw Error('서버 계좌를 불러오지 못했습니다. 연결·인증을 확인하고 다시 조회하세요.');return decodeSnapshot(r.data);}
 export function pendingOrder(uid:string):LocalOrder|null {try{return JSON.parse(localStorage.getItem('paper.pending.'+uid)??'null');}catch{return null;}}
@@ -20,7 +20,7 @@ export async function serverOrder(order:LocalOrder,uid:string){
  if(!r.error){const result=decodeSnapshot(r.data);localStorage.removeItem(key);return result;}
  // Transport failures can occur after commit. Read back the SAME id; never mint a replacement.
  try{const snapshot=await serverSnapshot();if(snapshot.account.trades.some(t=>t.id===order.id)){localStorage.removeItem(key);return snapshot;}}catch{/* uncertain outcome remains pending */}
- const known=['insufficient_cash','insufficient_shares','invalid_order','unsupported_symbol','idempotency_conflict','unsafe_amount'];
- if(known.some(k=>r.error!.message.includes(k))){localStorage.removeItem(key);throw Error('주문이 거절되었습니다: '+r.error.message);}
+ const known=['insufficient_cash','insufficient_shares','invalid_order','unsupported_symbol','idempotency_conflict','unsafe_amount','market_closed','market_unavailable','market_halted'];
+ if(known.some(k=>r.error!.message.includes(k))){localStorage.removeItem(key);throw Error(r.error.message.includes('market_')?'신규 주문 제한: 정규장 외·일정 미확인·운영 중단 상태입니다. 체결하지 않았습니다. 계좌를 다시 조회하세요.':'주문이 거절되었습니다: '+r.error.message);}
  throw Error('체결 여부 확인 중입니다. 같은 주문으로 다시 확인하세요. 새 주문을 만들지 마세요.');
 }

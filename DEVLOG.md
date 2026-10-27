@@ -76,3 +76,12 @@
 - 실제 Supabase 임시 A/B smoke PASS: 사용자별 KRW 복원/B USD 격리, 원래 USD-only RPC payload/체결 성공, 원장·계좌·로컬 보존 기존 회귀. 임시 사용자/cascade 데이터 정리. 유료 서비스/새 라이브러리 없음.
 - 추가: USD 최대 안전 센트 금액도 BigInt 분리 형식화로 1센트 표시 손실 방지, 평균단가는 문자열에서 센트로 표시 변환. 엔진 원본 계산은 변경하지 않음. 1440/768/390 스포트라이트 clip 픽셀 동일 및 transparent backdrop 확인.
 - 배포 앱 ac508ebd547ded66b9eaa0970fc666edb1eb838f, Pages run 40361863834 성공. 실제 https://pchjesus.github.io/us-stock-lab/ PC·모바일 HTTP 200, JS/CSS/chart/탐색/로컬 거래 및 서버 UIC A/B preference·USD-only 체결 검증 PASS. 런타임 오류 0, 임시 Auth 사용자/cascade 정리. 스포트라이트 3개 화면 크기 픽셀 비교 PASS. 접힌 rail 중심선 브라우저 실측 검증.
+
+## 2026-10-27 · v0.4-D
+- 원격 main 81c3e705 기준 codex/market-hours-v0.4-d. v0.4-C 구조·표시 통화·계좌/금융 계산 보존, 공통 2026~27 검증 일정과 서버/로컬/UI 게이트만 추가.
+- 공식 NYSE hours-calendars/trading-information 확인, Nasdaq 현재 2026 휴장/조기폐장 표 대조. Nasdaq 2027 표는 미게시로 NYSE 공통 시장 일정 근거. 조기폐장 3일과 휴장 20일 명시, 2027-12-31 정상장(2028 새해 토요일 대체휴장 없음).
+- PASS: TypeScript/Vite build, 금융·시간/기존 PC·모바일 58개, 인증/서버 오류·응답 유실 복구 12개. 가상시각으로 개장/마감 1초 경계·DST 2개년·KST 날짜·휴일/주말·범위 밖·누락·장외 로컬 저장 차단. 표시 통화와 USD 주문 계약·8주기 차트·캘린더/알림/튜토리얼 회귀, 모바일 시각 확인.
+- PASS disposable PostgreSQL17: 기존 평단/부분/전량매도·원장/총자산·중복/동시 과매수/과매도·A/B RLS·서버 오류 롤백. 730일 UTC DST 정합, 장외 기존 ID 재조회/충돌, 계좌 잠금 대기 및 원장 기록 중 마감 시 전체 롤백, 누락/미검증·운영 중단 fail-closed. 테스트 시각은 격리 DB에만 교체, 컨테이너 제거.
+- 실제 migration 이력/기존 함수 일치 확인 후 202610270003을 원자 적용·기록. 730일/조기폐장3일, 금융 데이터 건수 불변. 운영 clock_timestamp와 기존 SECURITY DEFINER/search_path/grants 유지, private schema/helper 접근 및 anon 주문 실행 불가 확인. 임시 Auth A/B로 실제 장외 동시/직접 RPC 거절·현금/원장 불변·JWT 거절·관심목록/표시통화·브라우저 시계 조작 무효·로그아웃 local 보존 PC/모바일 PASS, 테스트 사용자/cascade 정리.
+- Security Advisor: ERROR 0 / WARN 3 / INFO 2. 기존 authenticated SECURITY DEFINER 2개는 소유권·실행권한·빈 search_path·직접쓰기 차단으로 검토. private 운영 테이블 RLS no-policy INFO 2개는 의도된 client 접근 불가. Auth 비밀번호 유출검사 비활성 WARN 1개: 초대 이메일 링크/OTP만 제공, 가입·익명 인증 차단, 비밀번호 계정 0 확인. 유료 설정 변경 없이 잔여 권고로 기록하며 비밀번호 인증 도입 전 재검토 필요.
+- 대규모 리팩터링 불필요: 기존 금융 함수/저장 형식 유지, 시계·게이트 계약만 국소 분리. 실제 프로젝트는 검증 당시 장외이므로 장중 실제 서버 체결은 미검증(격리 DB 체결/경계/동시성은 PASS). 실제 증권/결제 API 호출 없음.

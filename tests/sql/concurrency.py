@@ -2,7 +2,7 @@
 import subprocess,concurrent.futures,uuid
 container='stock-v04-test'
 def sql(s,check=True):
- return subprocess.run(['docker','exec','-i',container,'psql','-U','postgres','-v','ON_ERROR_STOP=1','-At'],input=s,text=True,capture_output=True,check=check)
+ return subprocess.run(['docker','exec','-i',container,'psql','-U','postgres','-d','stock_test','-v','ON_ERROR_STOP=1','-At'],input=s,text=True,capture_output=True,check=check)
 def order(side,qty,key):
  return sql("set role authenticated;set request.jwt.claim.sub='00000000-0000-0000-0000-000000000002';select public.paper_order('"+key+"','AAPL','"+side+"',"+str(qty)+");",False)
 with concurrent.futures.ThreadPoolExecutor(2) as pool:r=list(pool.map(lambda _:order('buy',600,str(uuid.uuid4())),range(2)))

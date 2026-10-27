@@ -3,6 +3,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {test,expect,chromium,type Page} from '@playwright/test';
 import {marketPrices,accountKey} from '../src/accountStore';
+test.beforeEach(async({page})=>{await page.clock.setFixedTime(new Date('2026-10-27T14:00:00Z'));});
 const price=marketPrices().AAPL;
 async function order(page:Page,side:'buy'|'sell',qty:string){await page.getByLabel('주문 유형',{exact:true}).selectOption(side);await page.getByLabel('주문 수량',{exact:true}).fill(qty);await page.getByRole('button',{name:'주문 검토',exact:true}).click();await page.getByRole('button',{name:'체결 확정',exact:true}).click();}
 const cash=(n:number)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n/100);
@@ -35,7 +36,7 @@ test('corrupt data preserved, blocked orders and explicit recovery',async({page}
 });
 test('two tabs reject stale confirmed orders',async({page,context})=>{
  await page.goto('/#stock/AAPL');await page.getByRole('button',{name:'주문 검토',exact:true}).click();
- const other=await context.newPage();await other.goto('/#stock/AAPL');await order(other,'buy','1');await expect(other.getByRole('status')).toContainText('체결되고 저장');
+ const other=await context.newPage();await other.clock.setFixedTime(new Date('2026-10-27T14:00:00Z'));await other.goto('/#stock/AAPL');await order(other,'buy','1');await expect(other.getByRole('status')).toContainText('체결되고 저장');
  await page.getByRole('button',{name:'체결 확정',exact:true}).click();await expect(page.getByRole('alert')).toContainText('변경');expect(JSON.parse((await page.evaluate(k=>localStorage.getItem(k),accountKey))!).trades).toHaveLength(1);
 });
 
@@ -44,8 +45,8 @@ test('real Chromium profile restart preserves the account',async()=>{
  const options={executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox'],headless:true};
  let browser=await chromium.launchPersistentContext(profile,options);
  try{
- let tab=await browser.newPage();await tab.goto('http://127.0.0.1:4173/#stock/AAPL');await order(tab,'buy','3');await expect(tab.getByRole('status')).toContainText('체결되고 저장');
- await browser.close();browser=await chromium.launchPersistentContext(profile,options);tab=await browser.newPage();await tab.goto('http://127.0.0.1:4173/#portfolio');
+ let tab=await browser.newPage();await tab.clock.setFixedTime(new Date('2026-10-27T14:00:00Z'));await tab.goto('http://127.0.0.1:4173/#stock/AAPL');await order(tab,'buy','3');await expect(tab.getByRole('status')).toContainText('체결되고 저장');
+ await browser.close();browser=await chromium.launchPersistentContext(profile,options);tab=await browser.newPage();await tab.clock.setFixedTime(new Date('2026-10-27T14:00:00Z'));await tab.goto('http://127.0.0.1:4173/#portfolio');
  await expect(tab.getByTestId('cash')).toHaveText(cash(10000000-price*3));await expect(tab.locator('.holding')).toContainText('3주');await expect(tab.locator('.history-row')).toHaveCount(1);
  }finally{await browser.close();rmSync(profile,{recursive:true,force:true});}
 });

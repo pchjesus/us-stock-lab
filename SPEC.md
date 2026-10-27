@@ -79,3 +79,5 @@
 - 위젯은 직접 제공하는 실가격 '표시'로만 사용하며 스크래핑·브라우저 DOM/iframe 추출·서버 가격 변경·자동 거래·포트폴리오 평가에 이용할 수 없다. CFD/추정 지수를 실제 공식 지수와 혼동하지 않는다.
 - 기존 `market-fx` Frankfurter 혼합 USD/KRW 읽기 전용 실제 기준율을 Pages 활성화 예정(운영 API smoke/CI 성공 필요); 참조 카드 이외 기존 KRW 계산 1360원 합성·USD 센트 주문 그대로.
 - 네이버 비공식 시세 JSON은 무단 재게시 권한 미확인으로 사용하지 않음. KRX 국내 지수 위젯 데이터 표시가 불가하면 원문 링크로 fallback; 친구 서비스용 재배포 서버 구축하지 않는다.
+
+- 실제 캘린더/뉴스: `LiveEconomicCalendar` 및 `LiveNewsFeed`는 TradingView 공식 events/timeline hosted embed를 사용자가 열 때만 로드. 기존 `demoEvents`와 공식 뉴스 빈상태를 덮어쓰지 않음. 외부 위젯의 사용자별 뉴스 요약을 앱 DB로 수집/복사하지 않는다.

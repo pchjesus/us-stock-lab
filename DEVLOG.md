@@ -97,3 +97,8 @@
 - `codex/market-data-v0.5-a-implementation`에서 시장정보 전용 타입/환율 파서·Fetch 어댑터, 서버 읽기전용 `market-fx` Edge Function, 실제 참고환율 별도 카드, opt-in `VITE_ENABLE_MARKET_FX=false` 기본, mock 기반 Playwright 테스트 추가.
 - 서버 원장/가격표/RPC/인증/RLS/시장시간 게이트와 금융 테스트는 변경하지 않음. 기존 UI 유지, 외부 시세를 주문 평가액에 혼합하지 않음. 주식·ETF 및 한국 지수의 권리 미승인 실데이터 호출·표시 없음.
 - 전용 GitHub Actions 브랜치 검증 워크플로 추가(빌드·기존/신규 UI 금융·인증 테스트). 기록 시점의 CI PASS 상태는 **미확인**; 로컬 전체 소스 checkout이 불가하여 수동 전체 빌드/Playwright 재실행도 **미실행**. 외부 실제 환율 요청·Supabase Edge Function 배포·Pages/main 반영은 테스트 통과 확인까지 보류.
+
+## 2026-10-27 · v0.5-A1/A2 CI 및 Edge Function 배포
+- GitHub Actions run 40428677537 / head 814ba98: npm ci, npm run build PASS; npm test **66 PASS**, npm run test:auth **12 PASS**. 총 78개(PC·모바일 프로젝트 포함) 통과.
+- Supabase 프로젝트 vveljtqmujdzkzmoncjx에 공개 읽기 전용 `market-fx` Edge Function version 1 ACTIVE 배포. verify_jwt=false, DB/금융 테이블 접근 없음. 함수 HTTP 실호출은 환경 접근 제한으로 **미검증**이며 실제 Frankfurter 응답 성공을 주장하지 않음.
+- 앱 기능 플래그 VITE_ENABLE_MARKET_FX=false, GitHub Pages main 변경 없음. 따라서 실제 사이트에는 새 카드/실환율이 아직 배포되지 않음. 미검증 실데이터를 활성화하지 않음.

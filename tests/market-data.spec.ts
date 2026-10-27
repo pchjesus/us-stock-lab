@@ -24,9 +24,12 @@ test('FX request rejects upstream failure and never fabricates a rate',async()=>
  await expect(fetchFxReference('https://demo.supabase.co/functions/v1/market-fx',(async()=>new Response('{}',{status:200})) as typeof fetch,now)).rejects.toThrow();
 });
 
-test('FX reference unavailable by default does not relabel demo quotes',async({page})=>{
+test('FX live reference remains separate from six synthetic market indicators',async({page})=>{
  await page.goto('/#indices');
- await expect(page.getByTestId('fx-reference')).toContainText('연동 준비 중');
+ const live=page.getByTestId('fx-reference');
+ await expect(live).toContainText('일별 참고환율');
+ await expect(live).toContainText('Frankfurter 혼합 기준환율');
  await expect(page.locator('.market-indices section')).toHaveCount(6);
- await expect(page.getByTestId('fx-reference')).not.toContainText('1 USD =');
+ await expect(page.locator('.market-indices section')).toContainText(['S&P 500','Nasdaq','Dow','USD/KRW','KOSPI','KOSDAQ']);
+ await expect(page.locator('.market-indices section').first()).toContainText('합성 예시');
 });

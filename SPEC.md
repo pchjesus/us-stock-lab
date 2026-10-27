@@ -60,3 +60,9 @@
 - 로컬은 동일 계약으로 Web Lock 획득 후·저장 직전 검증. 기존 기록 복원/초기화는 시간 제한 없음. 브라우저 시각 조작 가능성을 명시하며 서버 보안과 동일시하지 않음. 테스트 시각 주입은 disposable DB 함수 교체/Playwright에서만 수행, 운영 코드에 우회 매개변수·버튼·GUC 없음.
 - UI: 중앙 KST/ET·헤더 유지. 로컬은 브라우저 기준, 로그인 계좌는 snapshot의 서버 상태+monotonic 경과로 조기 차단(30초 경과/조회 실패 제한, 기존 15초 poll/focus 갱신). 최종 체결은 항상 서버 재검증. 장외 신규 검토 제한·기존 불확실 ID 재확인 허용. 분석·조회·차트·관심종목 및 USD/KRW 표시 전용 계약 유지.
 - 검증: `python3 scripts/build-market-migration.py --check`, `python3 scripts/test-server.py`(Docker disposable PostgreSQL17), npm test/test:auth. 운영 DB 시각 변경 금지. 실제 smoke는 당시 장외 차단/격리만 검증하고 장중 체결·경계/장애/동시성은 격리 DB에서 결정론적으로 검증한다.
+
+## v0.5-A 공급자 설계 (미구현)
+- 승인된 설계: `docs/market-data/V0_5_A_PROVIDER_RESEARCH_AND_DESIGN_20261027.md`. 서비스 내 주식·ETF·지수의 외부 표시 권한 확인 전 실제 데이터 활성화 금지.
+- 실제 시장정보·환율은 서버 관리형 별도 데이터 계층으로 구현하고 출처/관측/수집 시각/실시간성/권리/지연·오류를 표시. 합성값을 실제로 오표시하지 않으며 라이선스 미검증 시 fail-closed.
+- v0.5-A에서는 기존 paper_prices, paper_order, paper_snapshot, USD 센트 금융 원장, 계좌 소유권/RLS/멱등성/시장시간 게이트 및 합성 계좌 손익을 변경하지 않음. USD/KRW 일별 기준율은 표시용이며 실시간 환전율/환차익이 아님.
+- 본 항목은 설계만 반영. 운영 DB migration·공급자 인증키·Edge Function·실제 시세/환율 연동 및 코드 테스트는 미실행.

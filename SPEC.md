@@ -126,3 +126,7 @@
 - 게이트: disposable PostgreSQL17의 기존 금융/RLS/중복·동시 주문/배당·세금 검사, v2 2사용자·2독립 연결 CAS, 실제 SQL snapshot→클라이언트 replay, populated004→007 금융 해시 보존/실패 rollback, clean install, 실제 격리 pg_cron 자동/반복/중단/재시작/재개 검증. 독립 연결 검사는 실제 두 물리 기기/운영 Auth 검증을 대신하지 않는다.
 - 운영 DB migration·실운영 Cron·main·Pages는 이번 실행에서 금지. 실제 Advisor/운영 이력·백업/두 초대 계정 기기 smoke와 별도 사용자 승인 전 운영 전환 NO-GO. 공개 프론트의 새 비밀키 불필요, DB/관리 키는 trusted operator 환경에만 보관. 단계별 전환/중단·복구는 감사 문서 참조.
 - 재검증: `VITE_ENABLE_MARKET_FX=true VITE_ENABLE_TREASURY_STATS=true npm run build`, `npm test`, `npm run test:auth`, `python3 scripts/test-server.py`, `python3 scripts/test-dividend-cron.py`. `supabase/operations/finance-audit-check.sql`은 별도 승인된 설치 뒤 읽기 전용 운영 검사 준비물이며 Advisor 대체가 아니다.
+
+## v0.7-A1 차트 실습실 UI 체크포인트
+- 학습 상단에서 자체 합성 일봉 차트, 초급·중급·고급 설명, 선/캔들, 5·20·60봉 SMA와 별도 RSI(14) 표시를 제공한다. RSI 30·70은 참고선이며 매매 신호가 아니다. 차트는 생성 후 해제하며 실제 시세나 수기 주문에 전달하지 않는다.
+- 기존 종목 상세 합성 차트와 금융 데이터 계약은 유지한다. 거래량, 지지·저항 실습과 종목별 차트 이전은 후속 단계다.

@@ -60,3 +60,24 @@
 - 로컬은 동일 계약으로 Web Lock 획득 후·저장 직전 검증. 기존 기록 복원/초기화는 시간 제한 없음. 브라우저 시각 조작 가능성을 명시하며 서버 보안과 동일시하지 않음. 테스트 시각 주입은 disposable DB 함수 교체/Playwright에서만 수행, 운영 코드에 우회 매개변수·버튼·GUC 없음.
 - UI: 중앙 KST/ET·헤더 유지. 로컬은 브라우저 기준, 로그인 계좌는 snapshot의 서버 상태+monotonic 경과로 조기 차단(30초 경과/조회 실패 제한, 기존 15초 poll/focus 갱신). 최종 체결은 항상 서버 재검증. 장외 신규 검토 제한·기존 불확실 ID 재확인 허용. 분석·조회·차트·관심종목 및 USD/KRW 표시 전용 계약 유지.
 - 검증: `python3 scripts/build-market-migration.py --check`, `python3 scripts/test-server.py`(Docker disposable PostgreSQL17), npm test/test:auth. 운영 DB 시각 변경 금지. 실제 smoke는 당시 장외 차단/격리만 검증하고 장중 체결·경계/장애/동시성은 격리 DB에서 결정론적으로 검증한다.
+
+## v0.5-A 공급자 설계 (미구현)
+- 승인된 설계: `docs/market-data/V0_5_A_PROVIDER_RESEARCH_AND_DESIGN_20261027.md`. 서비스 내 주식·ETF·지수의 외부 표시 권한 확인 전 실제 데이터 활성화 금지.
+- 실제 시장정보·환율은 서버 관리형 별도 데이터 계층으로 구현하고 출처/관측/수집 시각/실시간성/권리/지연·오류를 표시. 합성값을 실제로 오표시하지 않으며 라이선스 미검증 시 fail-closed.
+- v0.5-A에서는 기존 paper_prices, paper_order, paper_snapshot, USD 센트 금융 원장, 계좌 소유권/RLS/멱등성/시장시간 게이트 및 합성 계좌 손익을 변경하지 않음. USD/KRW 일별 기준율은 표시용이며 실시간 환전율/환차익이 아님.
+- 본 항목은 설계만 반영. 운영 DB migration·공급자 인증키·Edge Function·실제 시세/환율 연동 및 코드 테스트는 미실행.
+
+## v0.5-A 구현 브랜치 (운영 미반영)
+- `src/marketData.ts`: 데이터 provenance/freshness 타입, Frankfurter 일별 USD/KRW 기준환율 유효성 검사와 서버 읽기 전용 클라이언트. 실제 주문가격 전달 불가.
+- `supabase/functions/market-fx/index.ts`: 외부 Frankfurter v2 blended USD/KRW를 서버에서 조회, 10일 이상 오래된/잘못된 응답 거부, 인스턴스 내 6시간 성공 캐시, 타임아웃·503 오류. DB/계좌/민감키 호출 없음. 실제 배포는 별도 검증 필요.
+- `MarketPanels.tsx`: 기존 합성 지표·가상 주문·USD 센트 원장 보존하면서 실제 참고환율을 별도 카드로 표시. `VITE_ENABLE_MARKET_FX=true`이고 서버 함수가 배포된 경우에만 읽기 수행. 미설정·오류·오래된 환율은 실값 표시하지 않음.
+- FX 카드의 실제 값은 **읽기 전용**이다. KRW 표시 환율 1360원은 v0.4-C 합성 그대로 유지. '실제 원화 평가' 및 체결가 전환은 v0.5-B 이후 별도 금융 High 검증 필요.
+- 공급자의 무료 실험 가능성과 제3자 가격/차트 재표시 권리는 별개이며, 권리 미승인 미국주식·한국지수 가격을 실제 시세로 공개하지 않는다.
+
+## v0.5-A 공개 시장참고자료 위젯 (실주문 가격 아님)
+- `LiveMarket.tsx` TradingView 공식 hosted embed만 사용: 8개 미국 종목·ETF ticker, S&P500/Nasdaq Composite/Dow 및 KOSPI/KOSDAQ 탭, 종목별 차트. 사용자 클릭으로만 외부 자바스크립트 로드. 거래소 지연/표시 제한·출처표시·원본 링크 항상 안내.
+- 위젯은 직접 제공하는 실가격 '표시'로만 사용하며 스크래핑·브라우저 DOM/iframe 추출·서버 가격 변경·자동 거래·포트폴리오 평가에 이용할 수 없다. CFD/추정 지수를 실제 공식 지수와 혼동하지 않는다.
+- 기존 `market-fx` Frankfurter 혼합 USD/KRW 읽기 전용 실제 기준율을 Pages 활성화 예정(운영 API smoke/CI 성공 필요); 참조 카드 이외 기존 KRW 계산 1360원 합성·USD 센트 주문 그대로.
+- 네이버 비공식 시세 JSON은 무단 재게시 권한 미확인으로 사용하지 않음. KRX 국내 지수 위젯 데이터 표시가 불가하면 원문 링크로 fallback; 친구 서비스용 재배포 서버 구축하지 않는다.
+
+- 실제 캘린더/뉴스: `LiveEconomicCalendar` 및 `LiveNewsFeed`는 TradingView 공식 events/timeline hosted embed를 사용자가 열 때만 로드. 기존 `demoEvents`와 공식 뉴스 빈상태를 덮어쓰지 않음. 외부 위젯의 사용자별 뉴스 요약을 앱 DB로 수집/복사하지 않는다.

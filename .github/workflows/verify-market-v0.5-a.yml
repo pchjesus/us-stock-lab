@@ -1,0 +1,35 @@
+name: Verify Market v0.5-A
+on:
+  push:
+    branches: [codex/market-data-v0.5-a-implementation, codex/licensed-market-widgets-v0.5-a]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Configure bundled Chromium for existing test config
+        run: |
+          CHROME=$(find "$HOME/.cache/ms-playwright" -path '*/chrome-linux64/chrome' -type f | head -n 1)
+          test -n "$CHROME"
+          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+      - run: npm test
+      - run: npm run test:auth
+      - name: Verify deployed public read-only FX reference
+        run: node scripts/check-market-fx.mjs
+      - name: Verify opt-in FX browser build
+        run: |
+          npm run build
+          npx playwright test --config=playwright.fx.config.ts
+        env:
+          VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
+          VITE_ENABLE_MARKET_FX: 'true'

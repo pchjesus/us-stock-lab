@@ -86,3 +86,27 @@
 - Security Advisor: ERROR 0 / WARN 3 / INFO 2. 기존 authenticated SECURITY DEFINER 2개는 소유권·실행권한·빈 search_path·직접쓰기 차단으로 검토. private 운영 테이블 RLS no-policy INFO 2개는 의도된 client 접근 불가. Auth 비밀번호 유출검사 비활성 WARN 1개: 초대 이메일 링크/OTP만 제공, 가입·익명 인증 차단, 비밀번호 계정 0 확인. 유료 설정 변경 없이 잔여 권고로 기록하며 비밀번호 인증 도입 전 재검토 필요.
 - 대규모 리팩터링 불필요: 기존 금융 함수/저장 형식 유지, 시계·게이트 계약만 국소 분리. 실제 프로젝트는 검증 당시 장외이므로 장중 실제 서버 체결은 미검증(격리 DB 체결/경계/동시성은 PASS). 실제 증권/결제 API 호출 없음.
 - 배포: 앱 00780ac4eb633e91494ad783c1599ff7a951cfd1을 main fast-forward·푸시, Pages run 40423800881 성공(npm ci/build/deploy). 실제 https://pchjesus.github.io/us-stock-lab/ PC·모바일 HTTP200, CSS/JS/차트8주기·탐색/새로고침·관심목록/알림/캘린더/튜토리얼/KRW·장외 주문 제한/분석 PASS, 런타임 오류0. 실제 사이트 Supabase A/B 장외 직접 RPC·시계 조작 무효/복원/로그아웃 로컬 보존 재검증 PASS, 임시 계정/cascade 정리. 후속 커밋은 이 검증 기록만 추가.
+
+## 2026-10-27 · v0.5-A 데이터 공급자 조사·설계 (구현 전)
+- 원격 최신 main `154a9f4714c472b85ec7711ca5ccc43e3b10cb9d` 인수인계 SHA와 동일 확인. AGENTS/SPEC/DEVLOG 및 data/marketInfo/accountStore/serverAccount/TradingUI/market-hours migration 관련 파일만 조회.
+- Twelve Data/Massive/Alpha Vantage/Finnhub/FRED/KRX/Frankfurter/ECB 공식 자료 및 접근권·가격·지연·갱신 주기를 조사. 특히 무료 API 호출과 제3자 시세 표시 권리를 분리: 미국주식·지수/한국지수 친구 대상 표시 미승인. USD/KRW 일별 Frankfurter 우선 후보.
+- 별도 개발 브랜치 `codex/market-data-v0.5-a-design`의 `docs/market-data/V0_5_A_PROVIDER_RESEARCH_AND_DESIGN_20261027.md`에 공급자 표·정규화 계약·보안 계층·영향 범위·단계별 테스트 게이트 문서화.
+- 설계/문서만 변경. 소스코드·실제 시세/환율·Supabase DB/Functions·키/과금·main·Pages 변경 없음. 빌드/자동테스트/실제 API 요청/실서버 주문 검증은 수행하지 않았으므로 PASS 아님.
+
+## 2026-10-27 · v0.5-A1/A2 개발 브랜치 1차 구현
+- `codex/market-data-v0.5-a-implementation`에서 시장정보 전용 타입/환율 파서·Fetch 어댑터, 서버 읽기전용 `market-fx` Edge Function, 실제 참고환율 별도 카드, opt-in `VITE_ENABLE_MARKET_FX=false` 기본, mock 기반 Playwright 테스트 추가.
+- 서버 원장/가격표/RPC/인증/RLS/시장시간 게이트와 금융 테스트는 변경하지 않음. 기존 UI 유지, 외부 시세를 주문 평가액에 혼합하지 않음. 주식·ETF 및 한국 지수의 권리 미승인 실데이터 호출·표시 없음.
+- 전용 GitHub Actions 브랜치 검증 워크플로 추가(빌드·기존/신규 UI 금융·인증 테스트). 기록 시점의 CI PASS 상태는 **미확인**; 로컬 전체 소스 checkout이 불가하여 수동 전체 빌드/Playwright 재실행도 **미실행**. 외부 실제 환율 요청·Supabase Edge Function 배포·Pages/main 반영은 테스트 통과 확인까지 보류.
+
+## 2026-10-27 · v0.5-A1/A2 CI 및 Edge Function 배포
+- GitHub Actions run 40428677537 / head 814ba98: npm ci, npm run build PASS; npm test **66 PASS**, npm run test:auth **12 PASS**. 총 78개(PC·모바일 프로젝트 포함) 통과.
+- Supabase 프로젝트 vveljtqmujdzkzmoncjx에 공개 읽기 전용 `market-fx` Edge Function version 1 ACTIVE 배포. verify_jwt=false, DB/금융 테이블 접근 없음. 함수 HTTP 실호출은 환경 접근 제한으로 **미검증**이며 실제 Frankfurter 응답 성공을 주장하지 않음.
+- 앱 기능 플래그 VITE_ENABLE_MARKET_FX=false, GitHub Pages main 변경 없음. 따라서 실제 사이트에는 새 카드/실환율이 아직 배포되지 않음. 미검증 실데이터를 활성화하지 않음.
+
+## 2026-10-27 · v0.5-A 공개위젯 실가격·환율 활성화 후보
+- `codex/licensed-market-widgets-v0.5-a`에서 TradingView 공식 ticker-tape/market-overview/advanced-chart 위젯을 사용자 작동 시 로드. 명시된 8종목·5지수 심볼 및 원문 링크/출처/지연 가능성 포함; 비공식 네이버 증권 API 미사용.
+- 기존 React 화면과 합성 차트·가격·주문·원장/시장시간 기능 보존. 첫 회귀에서 홈 계좌 요약 상단 위젯에 의한 스포트라이트 스크린샷 실패 2건을 확인, 계좌 요약 아래로 이동해 원래 정보 위계 복구.
+- GitHub Actions run 40430748282: npm build PASS / 브라우저·금융 70 PASS / 인증 12 PASS / deployed public `market-fx` 실제 HTTP PASS (Frankfurter UTC 기준일 2026-10-27). 후속 production FX opt-in 테스트 및 Pages 자동배포는 최종 검증/브랜치 통합 완료 전까지 미완료.
+
+- 추가 확장: TradingView 공식 경제 발표(events) 및 금융 뉴스(timeline) 위젯을 캘린더/뉴스 화면에 분리. FOMC/CPI/PCE 실제 일정의 존재는 외부 화면에서만 확인하며, 기존 합성 이벤트 8종은 원본 보존. 새 회귀 테스트 추가.
+- 운영 배포 게이트: `VITE_ENABLE_MARKET_FX=true` 전용 빌드 및 브라우저 mock 검증, live HTTP smoke, 기존 금융/인증 자동검증 완료 후 PR main 통합. Pages는 main push 자동 workflow가 실행되도록 변경(배포 결과 별도 확인).

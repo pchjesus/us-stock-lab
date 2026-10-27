@@ -1,0 +1,26 @@
+name: Verify finance v0.6 foundation
+on:
+  push:
+    branches: [codex/manual-trading-dividends-v0.6-foundation]
+permissions:
+  contents: read
+jobs:
+  finance-safe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Find Chromium executable for repository tests
+        run: |
+          CHROME=$(find "$HOME/.cache/ms-playwright" -path '*/chrome-linux64/chrome' -type f | head -n 1)
+          test -n "$CHROME"
+          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+      - run: npm test
+      - run: npm run test:auth

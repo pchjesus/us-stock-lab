@@ -39,7 +39,7 @@ export function HostedWidget({type,config,height}:{type:WidgetType;config:Record
   root.replaceChildren(widget,script);
   return()=>{script.onerror=null;root.replaceChildren();};
  },[type,options]);
- return <><div className="tv-host" ref={ref} data-testid={'tv-'+type} aria-label={'TradingView 외부 '+type+' 시세 위젯'} style={{height,width:'100%',minWidth:0}}/>{failed&&<p role="alert">외부 시세 위젯을 불러오지 못했습니다. 아래 TradingView 원문에서 확인해 주세요.</p>}</>;
+ return <><div className="tv-host tradingview-widget-container" ref={ref} data-testid={'tv-'+type} aria-label={'TradingView 외부 '+type+' 시세 위젯'} style={{height,width:'100%',minWidth:0}}/><small className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" target="_blank" rel="noopener nofollow noreferrer">Market charts and data</a> by TradingView</small>{failed&&<p role="alert">외부 시세 위젯을 불러오지 못했습니다. 아래 TradingView 원문에서 확인해 주세요.</p>}</>;
 }
 const info=<p className="tv-source-note">실제 시장 참고자료 · TradingView 호스팅 위젯 · 거래소별 지연·표시 제한 가능. 시세 갱신시각은 위젯에서 확인하세요. 아래 가상 주문/수익률은 <strong>별도의 합성가격</strong> 기준이며 이 위젯의 가격으로 체결되지 않습니다.</p>;
 export function LiveTickerTape(){

@@ -28,3 +28,18 @@ test('real market widgets are user-loaded, attributed and independent of paper p
  await expect(page.locator('.detail-order')).toContainText('합성 가격');
  expect(errors).toEqual([]);
 });
+
+test('licensed actual event and news widgets never replace synthetic demo fixtures',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('https://s3.tradingview.com/external-embedding/**',route=>route.fulfill({status:200,contentType:'application/javascript',body:'/* embed fixture */'}));
+ await page.goto('/#calendar');
+ await expect(page.getByTestId('live-economic-calendar')).toContainText('교육용 합성 일정');
+ await expect(page.locator('.event-list article')).toHaveCount(8);
+ await page.getByRole('button',{name:'실제 FOMC·CPI·PCE 등 경제 일정 보기'}).click();
+ await expect(page.getByTestId('tv-events')).toHaveCount(1);
+ await page.goto('/#news');
+ await expect(page.getByRole('heading',{name:'수신된 뉴스가 없습니다'})).toBeVisible();
+ await page.getByRole('button',{name:'실제 금융 뉴스 보기'}).click();
+ await expect(page.getByTestId('tv-timeline')).toHaveCount(1);
+ expect(errors).toEqual([]);
+});

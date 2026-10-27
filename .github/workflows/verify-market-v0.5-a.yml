@@ -1,7 +1,7 @@
 name: Verify Market v0.5-A
 on:
   push:
-    branches: [codex/market-data-v0.5-a-implementation]
+    branches: [codex/market-data-v0.5-a-implementation, codex/licensed-market-widgets-v0.5-a]
 permissions:
   contents: read
 jobs:
@@ -24,3 +24,5 @@ jobs:
           echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
       - run: npm test
       - run: npm run test:auth
+      - name: Verify deployed public read-only FX reference
+        run: node scripts/check-market-fx.mjs

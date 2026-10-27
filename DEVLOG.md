@@ -86,3 +86,9 @@
 - Security Advisor: ERROR 0 / WARN 3 / INFO 2. 기존 authenticated SECURITY DEFINER 2개는 소유권·실행권한·빈 search_path·직접쓰기 차단으로 검토. private 운영 테이블 RLS no-policy INFO 2개는 의도된 client 접근 불가. Auth 비밀번호 유출검사 비활성 WARN 1개: 초대 이메일 링크/OTP만 제공, 가입·익명 인증 차단, 비밀번호 계정 0 확인. 유료 설정 변경 없이 잔여 권고로 기록하며 비밀번호 인증 도입 전 재검토 필요.
 - 대규모 리팩터링 불필요: 기존 금융 함수/저장 형식 유지, 시계·게이트 계약만 국소 분리. 실제 프로젝트는 검증 당시 장외이므로 장중 실제 서버 체결은 미검증(격리 DB 체결/경계/동시성은 PASS). 실제 증권/결제 API 호출 없음.
 - 배포: 앱 00780ac4eb633e91494ad783c1599ff7a951cfd1을 main fast-forward·푸시, Pages run 40423800881 성공(npm ci/build/deploy). 실제 https://pchjesus.github.io/us-stock-lab/ PC·모바일 HTTP200, CSS/JS/차트8주기·탐색/새로고침·관심목록/알림/캘린더/튜토리얼/KRW·장외 주문 제한/분석 PASS, 런타임 오류0. 실제 사이트 Supabase A/B 장외 직접 RPC·시계 조작 무효/복원/로그아웃 로컬 보존 재검증 PASS, 임시 계정/cascade 정리. 후속 커밋은 이 검증 기록만 추가.
+
+## 2026-10-27 · v0.5-A 데이터 공급자 조사·설계 (구현 전)
+- 원격 최신 main `154a9f4714c472b85ec7711ca5ccc43e3b10cb9d` 인수인계 SHA와 동일 확인. AGENTS/SPEC/DEVLOG 및 data/marketInfo/accountStore/serverAccount/TradingUI/market-hours migration 관련 파일만 조회.
+- Twelve Data/Massive/Alpha Vantage/Finnhub/FRED/KRX/Frankfurter/ECB 공식 자료 및 접근권·가격·지연·갱신 주기를 조사. 특히 무료 API 호출과 제3자 시세 표시 권리를 분리: 미국주식·지수/한국지수 친구 대상 표시 미승인. USD/KRW 일별 Frankfurter 우선 후보.
+- 별도 개발 브랜치 `codex/market-data-v0.5-a-design`의 `docs/market-data/V0_5_A_PROVIDER_RESEARCH_AND_DESIGN_20261027.md`에 공급자 표·정규화 계약·보안 계층·영향 범위·단계별 테스트 게이트 문서화.
+- 설계/문서만 변경. 소스코드·실제 시세/환율·Supabase DB/Functions·키/과금·main·Pages 변경 없음. 빌드/자동테스트/실제 API 요청/실서버 주문 검증은 수행하지 않았으므로 PASS 아님.

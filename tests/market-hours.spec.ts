@@ -25,13 +25,13 @@ test('closed local orders stay unchanged; analysis, currency and navigation rema
  await page.clock.install({time:new Date('2026-11-27T18:00:00Z')});await page.goto('/#stock/AAPL');
  await expect(page.getByTestId('order-session')).toContainText('신규 주문 제한');await expect(page.getByTestId('order-session')).toContainText('조기폐장');await expect(page.getByRole('button',{name:'주문 검토',exact:true})).toBeDisabled();
  await page.getByLabel('추가매수 가격',{exact:true}).fill('80');await page.getByLabel('추가매수 수량',{exact:true}).fill('5');await expect(page.getByTestId('simulation')).toContainText('5주');
- for(const period of ['1분','5분','15분','30분','1시간','일','주','월'])await page.getByRole('button',{name:period,exact:true}).click();await expect(page.locator('canvas').first()).toBeVisible();
- expect(await page.evaluate(k=>localStorage.getItem(k),accountKey)).toBeNull();await page.reload();await expect(page.getByRole('button',{name:'주문 검토',exact:true})).toBeDisabled();
+ await page.getByRole('link',{name:/차트 학습실에서 연습하기/}).click();for(const period of ['1분','5분','15분','30분','1시간','일','주','월'])await page.getByRole('button',{name:period,exact:true}).click();await expect(page.locator('canvas').first()).toBeVisible();
+ expect(await page.evaluate(k=>localStorage.getItem(k),accountKey)).toBeNull();await page.reload();await page.goto('/#stock/AAPL');await expect(page.getByRole('button',{name:'주문 검토',exact:true})).toBeDisabled();
  await page.goto('/#settings');await page.getByLabel('기본 표시 통화').selectOption('KRW');await page.goto('/#home');await expect(page.getByTestId('total-assets')).toHaveText('₩136,000,000');await expect(page.locator('.live-times')).toContainText('ET');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.screenshot({path:`test-results/hours-closed-${test.info().project.name}.png`,fullPage:true});
 });
 test('opening/closing updates UI; close while waiting for local lock never writes',async({page})=>{
- await page.clock.install({time:new Date('2026-10-27T13:29:59Z')});await page.goto('/#stock/AAPL');await expect(page.getByRole('button',{name:'주문 검토',exact:true})).toBeDisabled();
+ await page.clock.install({time:new Date('2026-10-27T13:29:59Z')});await page.clock.pauseAt(new Date('2026-10-27T13:29:59Z'));await page.goto('/#stock/AAPL');await expect(page.getByRole('button',{name:'주문 검토',exact:true})).toBeDisabled();
  await page.clock.setFixedTime(new Date('2026-10-27T13:30:00Z'));await page.clock.runFor(1100);await expect(page.getByRole('button',{name:'주문 검토',exact:true})).toBeEnabled();
  await page.getByRole('button',{name:'주문 검토',exact:true}).click();
  await page.evaluate(async key=>{await new Promise<void>(ready=>{void navigator.locks.request(key,()=>new Promise<void>(release=>{(window as any).release=release;ready();}));});},accountKey);

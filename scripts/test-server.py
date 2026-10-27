@@ -6,10 +6,26 @@ def sql(s,database=db):return shell(['docker','exec','-i',name,'psql','-U','post
 def file(p,database=db):return sql((root/p).read_text(),database)
 try:
  shell(['docker','run','--rm','-d','--name',name,'-e','POSTGRES_HOST_AUTH_METHOD=trust','postgres:17'])
- for _ in range(60):
-  if subprocess.run(['docker','exec',name,'pg_isready','-U','postgres'],capture_output=True).returncode==0:break
-  import time;time.sleep(.3)
- sql('create database stock_test;',database='postgres')
+ # pg_isready can briefly succeed during PostgreSQL init/restart before a
+ # real SQL connection is ready. Probe an actual SELECT; fail visibly on timeout.
+ import time
+ ready=False;last=''
+ for _ in range(120):
+  probe=subprocess.run(['docker','exec','-i',name,'psql','-U','postgres','-d','postgres','-v','ON_ERROR_STOP=1','-Atq','-c','select 1'],capture_output=True,text=True)
+  if probe.returncode==0 and probe.stdout.strip()=='1':
+   ready=True;break
+  last=probe.stderr.strip()[-400:]
+  time.sleep(.25)
+ if not ready:raise RuntimeError('Disposable PostgreSQL SQL readiness timeout: '+last)
+ # A post-initialization restart may race this call; retries are scoped only
+ # to connection-not-ready failures, not real SQL validation errors.
+ for attempt in range(20):
+  result=subprocess.run(['docker','exec','-i',name,'psql','-U','postgres','-d','postgres','-v','ON_ERROR_STOP=1','-Atq','-c','create database stock_test;'],capture_output=True,text=True)
+  if result.returncode==0:break
+  if 'already exists' in result.stderr:break
+  if 'could not connect' not in result.stderr and 'connection to server' not in result.stderr:raise RuntimeError('Create test database failed: '+result.stderr[-600:])
+  if attempt==19:raise RuntimeError('Create test database connection failed: '+result.stderr[-600:])
+  time.sleep(.25)
  file('tests/sql/bootstrap.sql')
  for p in sorted((root/'supabase/migrations').glob('*.sql')):sql(p.read_text())
  file('tests/sql/clock-fixture.sql');print(file('tests/sql/server.sql').splitlines()[-1])

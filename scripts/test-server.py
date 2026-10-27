@@ -88,6 +88,22 @@ try:
  assert sql("select count(*) from public.dividend_credits c join public.dividend_events e on e.id=c.event_id where e.symbol='GOOGL'")=='1'
  assert sql("select bool_and(cash_cents=(select sum(delta_cents) from public.manual_ledger where account_id=a.id)) from public.manual_accounts a")=='t'
  print('PASS overlapping settlement / manual order locks and single-credit invariant')
+ print(file('tests/sql/tax.sql').splitlines()[-1])
+
+ # Independent devices race to save the same tax version; exactly one new version wins.
+ tax_body='{"inputClass":"user_supplied","policy":"fifo-v1","records":[],"external":[]}'
+ def tax_save(key,version):
+  try:sql("set role authenticated;set request.jwt.claim.sub='00000000-0000-0000-0000-000000000002';select public.manual_tax_save('"+key+"',"+str(version)+",'"+tax_body+"');");return True
+  except subprocess.CalledProcessError as e:
+   assert 'tax_revision_conflict' in e.stderr;return False
+ import uuid
+ with concurrent.futures.ThreadPoolExecutor(2) as pool:result=list(pool.map(lambda _:tax_save(str(uuid.uuid4()),0),range(2)))
+ assert sum(result)==1
+ key=str(uuid.uuid4())
+ with concurrent.futures.ThreadPoolExecutor(2) as pool:result=list(pool.map(lambda _:tax_save(key,1),range(2)))
+ assert all(result)
+ assert sql("select count(*) from public.manual_tax_documents where account_id=(select id from public.manual_accounts where user_id='00000000-0000-0000-0000-000000000002')")=='2'
+ print('PASS concurrent tax evidence CAS and duplicate request recovery')
  # Separate database for pre-existing RLS/schema negative tests.
  sql('create database stock_rls;',database='postgres');sql((root/'tests/sql/bootstrap.sql').read_text().replace('create role anon nologin;','').replace('create role authenticated nologin;',''),'stock_rls')
  for p in sorted((root/'supabase/migrations').glob('*.sql')):sql(p.read_text(),'stock_rls')

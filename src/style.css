@@ -12,3 +12,4 @@ header{display:grid;grid-template-columns:140px minmax(0,1fr) auto;min-height:14
 @media(max-width:900px){.manual-layout{grid-template-columns:minmax(0,1fr)}}
 
 .manual-layout .trade-form label{min-width:0}.manual-mark label{display:flex;flex-direction:column;gap:6px;margin:10px 0;font-size:13px}.manual-mark input{width:100%;box-sizing:border-box;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit}.manual-mark small{display:block;margin:10px 0}
+.tax-panel fieldset{min-width:0;border:1px solid var(--line);border-radius:10px;margin:14px 0;padding:14px}.tax-panel input,.tax-panel select{max-width:100%;box-sizing:border-box}.tax-panel label{display:block;margin:10px 0}.tax-panel a,.tax-panel small{overflow-wrap:anywhere}

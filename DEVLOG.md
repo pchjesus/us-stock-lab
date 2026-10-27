@@ -113,3 +113,6 @@
 - 해외주식 매매 250만원 공제/22% 추정, 미국 배당 원천징수 15% 기본 가정, ex-date 권리/지급일 개념과 계좌·배당분개 분리 확정. 공식 근거와 예외는 `docs/finance/V0_6_MANUAL_ORDER_TAX_DIVIDEND_DESIGN_20261027.md` 참조.
 - 분리된 금융 순수 계산 `src/paperFinance.ts`, 테스트 `tests/paper-finance.spec.ts`, 브랜치 전용 빌드/회귀 Actions를 추가. 기존 서버 RPC, DB, 마이그레이션, 기존 계좌·주문 UI, 배포는 변경하지 않음.
 - 배당 지급 자동화·공식 일정 수집·서버 수기 주문·세금 원장 결합은 **미구현**. 배당 자동 지급됐다는 주장 금지.
+
+- 검증: GitHub Actions [40436100277](https://github.com/pchjesus/us-stock-lab/actions/runs/40436100277)에서 `npm ci`, `npm run build`, 일반 UI·금융 `78/78 PASS`, 별도 인증·복구 `12/12 PASS` (총 90회 PC/모바일 테스트). 신규 금융 계산 테스트 포함. 첫 실행의 VITE FX 플래그 누락으로 발생한 기존 시장테스트 2개 실패는 CI 설정 보정 후 재검증 완료.
+- 이 개발 브랜치는 main/Pages/Supabase 금융 DB 미반영. 기존 시장 데이터 표시 플래그를 CI에 반영한 것은 검증 환경 변경이며 실서버 주문정책 변경 아님.

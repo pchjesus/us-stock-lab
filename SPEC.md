@@ -114,3 +114,15 @@
 - 수기 전용 TaxPanel: 연도/정책/외부 입력·거래별 예상/확인 결제일·각 비용 FX 근거·실현 상세·공제/국세/지방세/합계·이력/정정·임시 보관·동일 ID 복구. 확정 거절은 초안 보존 후 최신 revision 재조회, 불확실한 전송은 입력 잠금·같은 ID 유지, 저장소 손상은 원본 보존/새 저장 차단. 앱 원화 매매 성과의 예상세 전/후는 외부 입력 없을 때만 표시; USD 배당/원천세/순입금과 분리, 기납부 미반영 참고부채이며 현금 미차감. 현재 전체 총수익률/금융소득종합과세/외국납부세액공제는 별도 검토.
 - 공식 확인 URL·확인일·적용 범위/미확정 항목은 기존 금융 설계 E절. 국세청20%/250만원·5월신고/일반 대금청산 원칙 및 SEC T+1·Fed 은행휴일은 확인. 지방세 조문/외화환산 조문·FIFO/평균 법적 적합성·완전 DTCC 달력은 이번 환경에서 완전 확인하지 못해 잠정 제한. 2027 선택은2026 가정 모델 비교이며 해당 연도 개정 미검증.
 - F 재개: 본 브랜치에서 수수료 서버 정책/주문 다기기 revision CAS, 법정 외화환산·원가/국내통산 예외/한국 귀속일·결제 달력/합법 FX출처, 전체 RLS/배당/세금 통합 High 감사. 운영 migration/Cron·main/Pages 적용은 사용자 승인 전 금지. 검증 명령: `VITE_ENABLE_MARKET_FX=true VITE_ENABLE_TREASURY_STATS=true npm run build`, `npm test`, `npm run test:auth`, `python3 scripts/test-server.py`, `python3 scripts/test-dividend-cron.py`.
+
+## v0.6-F 금융·보안 감사 (격리 검증 / 운영 전환 별도 승인)
+- 감사 근거/위험 목록/적용·복구 절차: `docs/finance/V0_6_F_AUDIT_20261027.md`. 이전 B/C의 자기신고 수수료·서버 CAS 미구현 계약은 본 절로 대체한다. 기존 체결·배당·세금 문서 원본과 paper_* 계좌는 변경하지 않는다.
+- 007 migration: 계좌별 append-only manual_fee_policies와 별도 private.finance_admins, 초기 예시10bp/최소0. 정책 변경은 승인 allowlist+expected_version+감사 사유. 과거 주문의 정책 version은 NULL 그대로, 신규 주문만 확정 정책 참조. 개인 사용자의 임의 수수료 변경/직접 테이블 쓰기 금지.
+- manual_order_v2는 계좌 잠금 후 서버 revision/CAS·활성 정책·JSON 타입/8KB·안전 gross 검사 후 기존 시장 gate/원자 금융 계산을 실행한다. 주문/배당/정책 변경이 revision을 증가시킨다. 기존 ID는 오래된 revision·장외에도 같은 payload 재조회, 다른 내용 충돌 유지. 구형 manual_order는 기존 ID 조회만 허용하여 신규 쓰기 우회 차단. 내부 execute 함수의 클라이언트 권한 회수/빈 search_path 유지.
+- manual_snapshot에 revision/현재 정책/정책 이력 추가. 클라이언트는 정책/수수료/현금·원장·배당 권리를 재생 검증. 구형 snapshot 조회는 유지하되 신규 주문 차단. 서버 확정 거절은 입력 보존·최신 계좌 갱신, 미확정은 같은 ID/pending 보존. 수수료는 서버 정책 read-only.
+- 배당은 현재 현금뿐 아니라 누적 gross/withholding/net의 센트 안전 상한도 검사하고 초과 지급은 계좌별 전체 롤백/error·재시도 상태. 큰 수수료로 순금액만 안전해지는 gross 초과 주문도 거절. 실현손익 중간 차감 BigInt. 과거 지급 자동 보정·원장 수정 없음.
+- 세금 저장2MB/중첩 타입·크기·외부 공제 한도, 환율 확인일 UTC 검증 보강. 외부 공제 전 순이익/공제 사용분을 분리하고 연250만원 공제를 한 번만 적용한다. FIFO/평균 및 한국 세법·명세 미확정 범위는 E의 교육용 잠정 모델로 유지. USD 배당/매매와 KRW 세액 혼합 금지.
+- spotlight는 scroll/다음 프레임 후에만 대상 좌표를 공개하여 기존 간헐 픽셀 실패의 경합 수정. 기존 UI 전체 재설계 없음.
+- 게이트: disposable PostgreSQL17의 기존 금융/RLS/중복·동시 주문/배당·세금 검사, v2 2사용자·2독립 연결 CAS, 실제 SQL snapshot→클라이언트 replay, populated004→007 금융 해시 보존/실패 rollback, clean install, 실제 격리 pg_cron 자동/반복/중단/재시작/재개 검증. 독립 연결 검사는 실제 두 물리 기기/운영 Auth 검증을 대신하지 않는다.
+- 운영 DB migration·실운영 Cron·main·Pages는 이번 실행에서 금지. 실제 Advisor/운영 이력·백업/두 초대 계정 기기 smoke와 별도 사용자 승인 전 운영 전환 NO-GO. 공개 프론트의 새 비밀키 불필요, DB/관리 키는 trusted operator 환경에만 보관. 단계별 전환/중단·복구는 감사 문서 참조.
+- 재검증: `VITE_ENABLE_MARKET_FX=true VITE_ENABLE_TREASURY_STATS=true npm run build`, `npm test`, `npm run test:auth`, `python3 scripts/test-server.py`, `python3 scripts/test-dividend-cron.py`. `supabase/operations/finance-audit-check.sql`은 별도 승인된 설치 뒤 읽기 전용 운영 검사 준비물이며 Advisor 대체가 아니다.

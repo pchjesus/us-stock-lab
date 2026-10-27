@@ -18,3 +18,9 @@ do $$declare f text;begin
  select pg_get_functiondef('public.manual_snapshot()'::regprocedure) into f;execute replace(f,'clock_timestamp()','paper_private.test_now()');
 end$$;
 create or replace function paper_private.dividend_now() returns timestamptz language sql volatile set search_path='' as $$select paper_private.test_now()$$;
+-- New audited API keeps the reviewed execution function private.
+do $$declare f text;begin
+ if to_regprocedure('paper_private.manual_order_execute(uuid,jsonb)') is not null then
+ select pg_get_functiondef('paper_private.manual_order_execute(uuid,jsonb)'::regprocedure) into f;
+ execute replace(f,'clock_timestamp()','paper_private.test_now()');end if;
+end$$;

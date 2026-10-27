@@ -4,8 +4,8 @@ import {allocatedCost,amount,integer,type Holding} from './trading';
 import {instruments} from './data';
 import type {MarketState} from './marketHours';
 export type ManualInput={symbol:string;side:'buy'|'sell';quantity:number;priceCents:number;rateBps:number;minCents:number;source:string;observedAt:string};
-export type ManualRequest={id:string;order:ManualInput};
-export type ManualState={id:string;cash:number;realized:number;fees:number;holdings:Record<string,Holding>;orders:any[];ledger:any[];market:MarketState;receivedAt:number;token:string;dividends:any[];events:any[];entitlements:any[];delivery:any[];gross:number;withheld:number;net:number};
+export type ManualRequest={id:string;order:ManualInput;revision?:number;policyVersion?:number};
+export type ManualState={id:string;cash:number;realized:number;fees:number;holdings:Record<string,Holding>;orders:any[];ledger:any[];market:MarketState;receivedAt:number;token:string;revision:number|null;feePolicy:{version:number;rateBps:number;minCents:number}|null;dividends:any[];events:any[];entitlements:any[];delivery:any[];gross:number;withheld:number;net:number};
 export class ManualDataError extends Error {constructor(public raw:unknown){super('수기 계좌 응답/원장 불일치. 원본을 수정하지 않았습니다.');}}
 export function cents(v:unknown,signed=false):number {if(!['number','string'].includes(typeof v)||!new RegExp(signed?'^-?\\d+$':'^\\d+$').test(String(v)))throw Error('정수 형식 오류');const n=Number(v);if(!Number.isSafeInteger(n)||(!signed&&n<0))throw Error('정수 범위 오류');return n;}
 export function validateManualInput(o:ManualInput){
@@ -22,7 +22,8 @@ export function preview(a:Pick<ManualState,'cash'|'holdings'>,o:ManualInput){
 }
 export function decodeManual(raw:any):ManualState {try{
  if(!raw||typeof raw.id!=='string'||!raw.id||!Array.isArray(raw.orders)||!Array.isArray(raw.positions)||!Array.isArray(raw.ledger))throw Error();
- const a:ManualState={id:raw.id,cash:10000000,realized:0,fees:0,holdings:{},orders:raw.orders,ledger:raw.ledger,market:raw.market,receivedAt:performance.now(),token:'',dividends:raw.dividends??[],events:raw.dividend_events??[],entitlements:raw.entitlements??[],delivery:raw.dividend_status??[],gross:0,withheld:0,net:0};
+ const a:ManualState={id:raw.id,cash:10000000,realized:0,fees:0,holdings:{},orders:raw.orders,ledger:raw.ledger,market:raw.market,receivedAt:performance.now(),token:'',revision:raw.revision===undefined?null:cents(raw.revision),feePolicy:null,dividends:raw.dividends??[],events:raw.dividend_events??[],entitlements:raw.entitlements??[],delivery:raw.dividend_status??[],gross:0,withheld:0,net:0};
+ if(raw.fee_policy!==undefined){const f=raw.fee_policy;if(!f||f.account_id!==a.id||cents(f.version)<1||!Array.isArray(raw.fee_policies))throw Error();brokerFeeCents(1,{rateBps:cents(f.rate_bps),minCents:cents(f.min_cents)});const policies=new Map<number,any>();for(const p of raw.fee_policies){if(p.account_id!==a.id||cents(p.version)!==policies.size+1)throw Error();brokerFeeCents(1,{rateBps:cents(p.rate_bps),minCents:cents(p.min_cents)});policies.set(cents(p.version),p);}const current=policies.get(cents(f.version));if(!current||cents(current.rate_bps)!==cents(f.rate_bps)||cents(current.min_cents)!==cents(f.min_cents))throw Error();a.feePolicy={version:cents(f.version),rateBps:cents(f.rate_bps),minCents:cents(f.min_cents)};for(const o of raw.orders)if(o.fee_policy_version!=null){const p=policies.get(cents(o.fee_policy_version));if(!p||cents(o.payload.rateBps)!==cents(p.rate_bps)||cents(o.payload.minCents)!==cents(p.min_cents))throw Error();}}
  const ids=new Set<string>(),requestIds=new Set<string>();let seq=0,tradeIndex=0,last=0;const credits=new Map<string,any>(),eventIds=new Set<string>();
  if(![a.dividends,a.events,a.entitlements,a.delivery].every(Array.isArray))throw Error();
  const eventKeys=new Set<string>(),entitlementKeys=new Set<string>(),deliveryKeys=new Set<string>();
@@ -53,17 +54,17 @@ export function decodeManual(raw:any):ManualState {try{
  if(o.symbol!==r.symbol||o.side!==r.side||cents(r.payload.quantity)!==o.quantity||cents(r.payload.priceCents)!==o.priceCents||o.source!==r.source||Date.parse(o.observedAt)!==Date.parse(r.observed_at)||![r.received_at,r.filled_at].every(t=>typeof t==='string'&&Number.isFinite(Date.parse(t)))||Date.parse(r.filled_at)<Date.parse(r.received_at))throw Error();
  const p=preview(a,o);if(p.fee!==cents(r.fee_cents)||p.basis!==cents(r.basis_cents))throw Error();
  const h=a.holdings[o.symbol]??{quantity:0,cost:0};const next=o.side==='buy'?{quantity:h.quantity+o.quantity,cost:h.cost+p.value+p.fee}:{quantity:h.quantity-o.quantity,cost:h.cost-p.basis};integer(next.cost,'원가',true);integer(next.quantity,'수량',true);
- if(next.quantity)a.holdings[o.symbol]=next;else delete a.holdings[o.symbol];a.cash=p.cash;a.fees+=p.fee;a.realized+=o.side==='sell'?p.delta-p.basis:0;
+ if(next.quantity)a.holdings[o.symbol]=next;else delete a.holdings[o.symbol];a.cash=p.cash;a.fees+=p.fee;a.realized=cents(Number(BigInt(a.realized)+(o.side==='sell'?BigInt(p.delta)-BigInt(p.basis):0n)),true);
  if(!Number.isSafeInteger(a.realized)||!Number.isSafeInteger(a.fees))throw Error();if(cents(l.delta_cents,true)!==p.delta||cents(l.balance_cents)!==p.cash)throw Error();
  }
  if(a.cash!==cents(raw.cash)||a.realized!==cents(raw.realized,true)||a.fees!==cents(raw.fees))throw Error();
  const positions:Record<string,Holding>={};for(const p of raw.positions){if(positions[p.symbol])throw Error();positions[p.symbol]={quantity:cents(p.quantity),cost:cents(p.cost)};}
  if(Object.keys(positions).length!==Object.keys(a.holdings).length||Object.entries(a.holdings).some(([s,h])=>positions[s]?.quantity!==h.quantity||positions[s]?.cost!==h.cost))throw Error();
  if(credits.size||tradeIndex!==raw.orders.length)throw Error();
- for(const t of a.entitlements){const e=a.events.find(e=>e.id===t.event_id);if(Number(t.event_version)===Number(e.version)){const q=a.orders.filter(o=>o.symbol===e.symbol&&newYorkDate(o.filled_at)<e.ex_date).reduce((sum,o)=>sum+(o.side==='buy'?1:-1)*cents(o.quantity),0);if(q!==cents(t.eligible_quantity))throw Error();}}
+ for(const t of a.entitlements){const e=a.events.find(e=>e.id===t.event_id);if(Number(t.event_version)===Number(e.version)||a.dividends.some(c=>c.event_id===t.event_id)){const q=a.orders.filter(o=>o.symbol===e.symbol&&newYorkDate(o.filled_at)<e.ex_date).reduce((sum,o)=>sum+(o.side==='buy'?1:-1)*cents(o.quantity),0);if(q!==cents(t.eligible_quantity))throw Error();}}
  for(const d of a.delivery){const c=a.dividends.find(c=>c.event_id===d.event_id);if((d.state==='paid')!==!!c)throw Error();}
 
- a.token=JSON.stringify([a.id,raw.orders.map((r:any)=>r.request_id),a.cash,a.fees,a.net]);return a;
+ a.token=JSON.stringify([a.id,raw.orders.map((r:any)=>r.request_id),a.cash,a.fees,a.net,a.revision,a.feePolicy]);return a;
  }catch{throw new ManualDataError(raw);}}
 const pendingKey=(uid:string)=>'us-stock.manual.pending.v1.'+uid;
 export function readManualPending(uid:string):ManualRequest|null {const raw=localStorage.getItem(pendingKey(uid));if(!raw)return null;try{const r=JSON.parse(raw);if(typeof r.id!=='string'||!r.id||!r.order)throw Error();validateManualInput(r.order);return r;}catch{throw Error('미확정 주문 기록 손상. 원본을 보존했습니다. 새 주문을 보내지 마세요.');}}
@@ -76,13 +77,13 @@ export async function submitManual(uid:string,request:ManualRequest,expectedToke
 async function sendManual(uid:string,request:ManualRequest,expectedToken:string){
  const prior=readManualPending(uid);if(prior&&(prior.id!==request.id||JSON.stringify(prior.order)!==JSON.stringify(request.order)))throw Error('기존 미확정 주문부터 재확인하세요.');
  const {c,jwt}=await session(uid);
- if(!prior){const fresh=await manualSnapshot(uid);if(fresh.token!==expectedToken)throw Error('다른 화면에서 수기 계좌가 변경되었습니다. 다시 조회 후 검토하세요.');}
+ if(!prior){const fresh=await manualSnapshot(uid);if(fresh.token!==expectedToken)throw Error('다른 화면에서 수기 계좌가 변경되었습니다. 다시 조회 후 검토하세요.');if(fresh.revision===null||!fresh.feePolicy)throw Error('서버 주문 보안 버전 미적용 · 신규 주문 제한');request={...request,revision:fresh.revision,policyVersion:fresh.feePolicy.version};}
  // Persist before transport: quota errors never submit an untracked order.
  localStorage.setItem(pendingKey(uid),JSON.stringify(request));
- const r=await c.rpc('manual_order',{p_request_id:request.id,p_order:request.order}).setHeader('Authorization','Bearer '+jwt);
+ const r=await c.rpc('manual_order_v2',{p_request_id:request.id,p_expected_revision:request.revision??null,p_policy_version:request.policyVersion??null,p_order:request.order}).setHeader('Authorization','Bearer '+jwt);
  if(!r.error){const a=decodeManual(r.data);if(!matchesReceipt(a,request))throw new ManualDataError(r.data);localStorage.removeItem(pendingKey(uid));return a;}
  try{const a=await manualSnapshot(uid);if(matchesReceipt(a,request)){localStorage.removeItem(pendingKey(uid));return a;}}catch{/* keep same id on uncertainty */}
- if(r.error.code==='P0001'&&['insufficient_cash','insufficient_shares','invalid_order','invalid_number','invalid_fields','invalid_observation','market_closed','unsafe_amount'].includes(r.error.message)){localStorage.removeItem(pendingKey(uid));throw Error('주문 거절: '+r.error.message);}
+ if(r.error.code==='P0001'&&['insufficient_cash','insufficient_shares','invalid_order','invalid_number','invalid_fields','invalid_observation','market_closed','unsafe_amount','account_revision_conflict','fee_policy_conflict','client_upgrade_required'].includes(r.error.message)){localStorage.removeItem(pendingKey(uid));throw Error('주문 거절: '+r.error.message);}
  throw Error('체결 여부 미확정. 새 주문을 만들지 말고 같은 ID로 재확인하세요.');
 }
 

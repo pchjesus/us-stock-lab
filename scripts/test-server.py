@@ -30,7 +30,8 @@ try:
   if attempt==19:raise RuntimeError('Create test database connection failed: '+result.stderr[-600:])
   time.sleep(.25)
  file('tests/sql/bootstrap.sql')
- for p in sorted((root/'supabase/migrations').glob('*.sql')):sql(p.read_text())
+ for p in sorted((root/'supabase/migrations').glob('*.sql')):
+  if p.name<'202610270007':sql(p.read_text())
  file('tests/sql/clock-fixture.sql');print(file('tests/sql/server.sql').splitlines()[-1])
  print('\n'.join(x for x in file('tests/sql/manual.sql').splitlines() if x.startswith('PASS')))
  # Existing concurrent financial regression before any extra boundary trades.
@@ -104,6 +105,51 @@ try:
  assert all(result)
  assert sql("select count(*) from public.manual_tax_documents where account_id=(select id from public.manual_accounts where user_id='00000000-0000-0000-0000-000000000002')")=='2'
  print('PASS concurrent tax evidence CAS and duplicate request recovery')
+ print(file('tests/sql/audit-before.sql').splitlines()[-1])
+ # Upgrade a populated A-E database without rewriting any historical financial row.
+ before=sql("select md5(jsonb_build_array((select jsonb_agg(o order by execution_seq) from public.manual_orders o),(select jsonb_agg(l order by id) from public.manual_ledger l),(select jsonb_agg(c order by id) from public.dividend_credits c),(select jsonb_agg(d order by id) from public.manual_tax_documents d),(select jsonb_agg(p order by account_id,symbol) from public.manual_positions p),(select jsonb_agg(jsonb_build_array(id,cash_cents,realized_cents,fees_cents) order by id) from public.manual_accounts))::text)")
+ function_hash=sql("select md5(pg_get_functiondef('public.manual_order(uuid,jsonb)'::regprocedure))")
+ migration=(root/'supabase/migrations/202610270007_finance_audit.sql').read_text()
+ try:sql(migration.replace('commit;',"do $$begin raise exception 'intentional_upgrade_failure';end$$;commit;"));raise AssertionError('upgrade failure not injected')
+ except subprocess.CalledProcessError as e:assert 'intentional_upgrade_failure' in e.stderr
+ assert sql("select to_regclass('public.manual_fee_policies') is null")=='t'
+ assert sql("select md5(pg_get_functiondef('public.manual_order(uuid,jsonb)'::regprocedure))")==function_hash
+ print('PASS interrupted 007 migration rolls back all DDL and preserves old RPC')
+ sql(migration)
+ after=sql("select md5(jsonb_build_array((select jsonb_agg(to_jsonb(o)-'fee_policy_version' order by execution_seq) from public.manual_orders o),(select jsonb_agg(l order by id) from public.manual_ledger l),(select jsonb_agg(c order by id) from public.dividend_credits c),(select jsonb_agg(d order by id) from public.manual_tax_documents d),(select jsonb_agg(p order by account_id,symbol) from public.manual_positions p),(select jsonb_agg(jsonb_build_array(id,cash_cents,realized_cents,fees_cents) order by id) from public.manual_accounts))::text)")
+ assert before==after,'upgrade changed historical finance'
+ # Patch ONLY isolated math time sources after upgrade.
+ sql("do $$declare f text;begin select pg_get_functiondef('paper_private.manual_order_execute(uuid,jsonb)'::regprocedure) into f;execute replace(f,'clock_timestamp()','paper_private.test_now()');end$$;")
+ print('PASS populated 004/005/006 -> 007 upgrade: historical finance hash unchanged')
+ print('\n'.join(x for x in file('tests/sql/finance-audit.sql').splitlines() if x.startswith('PASS')))
+ boundary=file('tests/sql/boundary-audit.sql');print(boundary.splitlines()[-1])
+ boundary_snapshot=json.loads(next(x.removeprefix('BOUNDARY_SNAPSHOT:') for x in boundary.splitlines() if x.startswith('BOUNDARY_SNAPSHOT:')))
+
+ # Two independent device requests share one captured revision. Exactly one fills;
+ # a separate user may trade concurrently without leaking rows or consuming its CAS.
+ captured=sql("set request.jwt.claim.sub='00000000-0000-0000-0000-000000000002';select (public.manual_snapshot()->>'revision')")
+ body='{"symbol":"AAPL","side":"buy","quantity":1,"priceCents":10000,"rateBps":10,"minCents":0,"source":"device fixture","observedAt":"2026-11-03T14:59:00Z"}'
+ def device_order(i):
+  uid='00000000-0000-0000-0000-000000000002' if i<2 else '00000000-0000-0000-0000-000000000001'
+  rev=captured if i<2 else sql("set request.jwt.claim.sub='"+uid+"';select(public.manual_snapshot()->>'revision')")
+  payload=body if i<2 else body.replace('"rateBps":10','"rateBps":25').replace('"minCents":0','"minCents":1')
+  try:sql("set role authenticated;set request.jwt.claim.sub='"+uid+"';select public.manual_order_v2('"+str(uuid.uuid4())+"',"+rev+","+('1' if i<2 else '2')+",'"+payload+"');");return True
+  except subprocess.CalledProcessError as e:
+   assert 'account_revision_conflict' in e.stderr;return False
+ with concurrent.futures.ThreadPoolExecutor(3) as pool:results=list(pool.map(device_order,range(3)))
+ assert sum(results[:2])==1 and results[2]
+ print('PASS two devices / two users: one stale review rejected; independent owner trades isolated')
+ import tempfile
+ snapshots=[]
+ for uid in ['00000000-0000-0000-0000-000000000001','00000000-0000-0000-0000-000000000002','00000000-0000-0000-0000-000000000003']:
+  snapshots.append(json.loads(sql("set request.jwt.claim.sub='"+uid+"';select public.manual_snapshot()")))
+ snapshot=json.dumps([*snapshots,boundary_snapshot])
+ with tempfile.NamedTemporaryFile(mode='w',suffix='.json',delete=False) as f:
+  f.write(snapshot);snapshot_path=f.name
+ try:
+  output=shell(['npx','playwright','test','--config','playwright.finance.config.ts'],cwd=str(root),env={**os.environ,'AUDIT_SNAPSHOT_PATH':snapshot_path})
+  print('PASS real SQL snapshot -> client financial replay (separate integration test)')
+ finally:pathlib.Path(snapshot_path).unlink(missing_ok=True)
  # Separate database for pre-existing RLS/schema negative tests.
  sql('create database stock_rls;',database='postgres');sql((root/'tests/sql/bootstrap.sql').read_text().replace('create role anon nologin;','').replace('create role authenticated nologin;',''),'stock_rls')
  for p in sorted((root/'supabase/migrations').glob('*.sql')):sql(p.read_text(),'stock_rls')

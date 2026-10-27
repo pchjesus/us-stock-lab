@@ -149,3 +149,13 @@
 - 전체 회귀 중 기존 spotlight 픽셀 비교1회 실패(일반99 PASS). 테스트를 수정/삭제하지 않고 임시 좌표·PNG 진단 후 원본 복원: 1440/768/390 각2프로젝트의 대상크기·배경 픽셀6조건 동일 PASS, 원인 미확정·비재현. 원본 전체 일반 재실행100 PASS. 금융/세금 기능 실패로 분류하지 않으며 F에서 화면 테스트 안정성 확인 대상.
 - 최종 문서 형식/정책·달력 버전 검사·손상 임시/미확정 저장 차단·원본 다운로드·외부 공제 중복 방지/세후 범위 검산을 보강. 원화 ₩2,178 검산 fixture의 USD잔고/배당 원장 불변, 송신 유실 같은 ID 복구·불변 정책 버전 PC/mobile PASS. 총 기대조합128(기존112+엔진10+store2+UI4), 마지막 빌드·일반100·인증/UI28 전체 재검증 후 기록 확정.
 - 검증 확정 PASS: 최종 TypeScript/Vite build, 원본 일반100개 + 인증/복구/UI28개 = 총128개. 격리 PostgreSQL 전체 금융/RLS/배당/세금 CAS 및 실제 isolated pg_cron 반복·재시작 PASS. 공식 국세청 2026 게시/2025귀속 FAQ의 국내 통산 제한 범위 추가 확인·기록. 세금 원본 손상 형식은 UI 계산·저장 차단하며 미확정/실제 세법 미검증 한계는 유지. 운영 DB migration/Cron·main/Pages 미적용.
+
+## 2026-10-27 · v0.6-F 금융·보안 통합 감사
+- 기준 local/원격 branch7c65999, main e9c4ab1 유지. 위험도별 재현·수정·운영 전환/복구는 `docs/finance/V0_6_F_AUDIT_20261027.md`. Critical0, 재현 High4 해결(자기신고 수수료/독립기기 stale확인/JSON 원장 오염/정수 총액·누적 경계), Medium4 해결(정정 권리/중첩 세금 입력/FX UTC/spotlight 경합). Low 외부 페이지 최종 렌더링·권리 확인은 운영 제한 유지.
+- additive007: 별도 finance_admins/계좌별 서버 정책 append-only, 신규 주문 policy참조·revision/CAS, 과거ID 조회·충돌 복구, 구형API 신규쓰기 차단. 배당이 revision도 갱신하며 gross/누적배당 상한 거절·원자 rollback. 새 공개 입력 크기/타입/권한 검사와 private execute 접근 회수. 원래 001~006 migration/과거 체결·원장·배당·세금 이력/paper_* 금융 불변.
+- 클라이언트는 서버 정책 read-only/이력검증, 확정 CAS실패 입력 보존·재조회, 미확정 동일ID 유지, 지급 정정 권리 재생, 실현손익 중간 BigInt, FX 확인일 UTC 일치. 기존 spotlight 실패를 가상시계+DOM mutation으로 재현 후 scroll/다음frame 전 좌표 공개를 차단. 기존 픽셀/금융 테스트 삭제·약화 없음, 전면 리팩터링 보류.
+- PASS: 최종 활성화 TypeScript/Vite build, 일반108 + 인증/UI30 = PC/mobile138개(기준128 유지), 최종 영향 수기UI12/감사8 재검증. SQL runner30개 PASS 검사 묶음 + 실제SQL→shipping client replay3개. 두 독립기기 연결 동일 revision에서1체결/1거절+A별도 동시주문, RLS/직접쓰기/SECURITY DEFINER ACL·빈search_path/NULL UID, 금융/배당/세금/정규장 전체 유지.
+- PASS: populated004~006→007 전후 금융 해시 동일, 의도된 migration 실패 후 모든DDL/구형RPC 정의 rollback, clean install. gross1e16/누적 gross1e16 거절 후 잔고/revision/원장 불변, 별도 극단 SQL이력 cash35331003/realized-7649999974668997/net배당7650000000000000 정확 재생. 세금 외부 손익·공제 배분/앱 손익 ±300만원/원화 상한 BigInt 검산.
+- 실제 격리 pg_cron3시나리오 PASS: 앱 없이 net85센트 지급/반복1회, 관리자 중단 중 지급 금지, DB 재시작 후 중단 유지·재개하면 미지급85센트 추가1회(최종cash9990170). 모든 일회용 컨테이너/임시 snapshot 정리. 외부링크 HTTP24/24, 민감 번들key 검출0. 외부 최종 화면/실시세 정확성·라이선스, 물리2기기/운영 Auth 및 실제 Supabase Advisor는 미검증.
+- 운영 판단 NO-GO: 코드 격리 범위 미해결 High0이나 실제 migration이력/백업·복구/Advisor/초대2계정 기기 smoke/공시 원문/수수료 초기정책·관리자 UUID·Cron 준비 및 별도 사용자 승인이 필요. 새 프론트 비밀키 불필요, 관리키는 trusted operator 환경만. 운영검사 읽기SQL와 적용/중단·복구 체크리스트 준비. 이번 작업은 운영 DB migration/Cron·main/Pages·실제거래 변경 없음.
+- 재개/검증 명령은 SPEC F절. 개발 브랜치만 커밋·일반 fast-forward push하며 다음 운영 실행은 정확 SHA를 기준으로 별도 결정한다.

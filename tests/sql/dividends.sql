@@ -5,7 +5,7 @@ set role authenticated;
 select public.dividend_manage(null,'{"symbol":"AAPL","kind":"regular_cash","announced":"2026-01-01","ex_date":"2026-10-27","record_date":"2026-10-27","pay_date":"2026-10-28","amount_units":2500,"source_url":"https://investor.apple.com/test-fixture","verified_at":"2026-10-26T00:00:00Z","standard_tax":true,"status":"confirmed"}');
 reset role;
 -- Existing trades were filled ON ex-date. Add historical pre-ex fills in this disposable DB only.
-update public.manual_orders set filled_at='2026-10-26T14:00:00Z' where account_id=(select id from public.manual_accounts where user_id='00000000-0000-0000-0000-000000000002');
+update public.manual_orders set filled_at='2026-10-26T14:00:00Z',received_at='2026-10-26T14:00:00Z',observed_at='2026-10-26T13:59:00Z',payload=jsonb_set(payload,'{observedAt}','"2026-10-26T13:59:00Z"') where account_id=(select id from public.manual_accounts where user_id='00000000-0000-0000-0000-000000000002');
 update paper_private.test_clock set value='2026-10-28T03:59:59Z';
 select paper_private.settle_dividends();
 do $$begin if exists(select 1 from public.dividend_credits) then raise exception 'early payment';end if;end$$;

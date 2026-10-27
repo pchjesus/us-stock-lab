@@ -25,7 +25,7 @@ function allocate(cost:bigint,q:bigint,total:bigint){if(q<1n||q>total)throw Erro
 function fxMoney(value:number,fx:FxEvidence,date:string,now:Date,warnings:string[]){
  if(!fx||day(fx.date)!==date||!['base','cross'].includes(fx.kind)||!fx.provider.trim()||!['user_entered','document_reviewed'].includes(fx.status))throw Error('결제/지출 기준일과 환율 기준일 불일치 또는 근거 누락');
  const u=new URL(fx.url);if(u.protocol!=='https:'||u.username||u.password)throw Error('환율 출처 HTTPS URL 필요');
- if(!/(Z|[+-]\d{2}:\d{2})$/.test(fx.checkedAt)||!Number.isFinite(Date.parse(fx.checkedAt))||Date.parse(fx.checkedAt)>now.getTime()+300000||fx.checkedAt.slice(0,10)<date)throw Error('환율 확인시각 오류');
+ if(!/(Z|[+-]\d{2}:\d{2})$/.test(fx.checkedAt)||!Number.isFinite(Date.parse(fx.checkedAt))||Date.parse(fx.checkedAt)>now.getTime()+300000||new Date(fx.checkedAt).toISOString().slice(0,10)<date)throw Error('환율 확인시각 오류');
  if(now.getTime()-Date.parse(fx.checkedAt)>90*86400000)warnings.push('90일 이상 지난 출처 확인: 원문 재확인 필요');
  if(/frankfurter/i.test(fx.provider+' '+fx.url)||/synthetic|합성/i.test(fx.provider))throw Error('참고/합성 환율은 세금 환율로 사용할 수 없습니다.');
  return BigInt(usdCentsToKrw(value,fx.rate));

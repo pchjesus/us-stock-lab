@@ -2,16 +2,16 @@ import {test,expect,type Page} from '@playwright/test';
 import {fixture} from './manual-fixture';
 const uid='00000000-0000-0000-0000-000000000001';
 async function setup(page:Page){
- let raw=fixture(),lose=false,offline=false,badReceipt=false,count=0,lastId='';
+ let raw=fixture(),lose=false,offline=false,badReceipt=false,race=false,count=0,lastId='';
  const user={id:uid,aud:'authenticated',role:'authenticated',email:'manual@example.invalid',app_metadata:{},user_metadata:{},created_at:'2026-10-26T00:00:00Z'};const payload=Buffer.from(JSON.stringify({sub:uid,aud:'authenticated',role:'authenticated',exp:2208988800})).toString('base64url');
  await page.addInitScript(({user,payload})=>{if(!localStorage.getItem('sb-auth-test-auth-token'))localStorage.setItem('sb-auth-test-auth-token',JSON.stringify({access_token:`e30.${payload}.test`,refresh_token:'test-refresh',expires_at:2208988800,expires_in:9999999,token_type:'bearer',user}));},{user,payload});
  await page.route('https://auth-test.invalid/**',async r=>{const path=new URL(r.request().url()).pathname;
- if(path.endsWith('/manual_snapshot')){const token=r.request().headers().authorization?.split(' ')[1];const who=token?JSON.parse(Buffer.from(token.split('.')[1],'base64url').toString()).sub:uid;if(who!==uid){const b=fixture();b.id='manual-B';b.ledger[0].account_id=b.id;return r.fulfill({json:b});}return offline?r.abort():r.fulfill({json:raw});}
- if(path.endsWith('/manual_order')){count++;if(badReceipt)return r.fulfill({json:fixture()});const b=r.request().postDataJSON();if(lastId&&b.p_request_id!==lastId)throw Error('new id during recovery');lastId=b.p_request_id;const market=raw.market;raw=fixture(true);raw.market=market;raw.orders[0].request_id=b.p_request_id;raw.orders[0].payload=b.p_order;raw.orders[0].observed_at=b.p_order.observedAt;raw.orders[0].source=b.p_order.source;
+ if(path.endsWith('/manual_snapshot')){const token=r.request().headers().authorization?.split(' ')[1];const who=token?JSON.parse(Buffer.from(token.split('.')[1],'base64url').toString()).sub:uid;if(who!==uid){const b=fixture();b.id='manual-B';b.fee_policy.account_id=b.id;b.fee_policies[0].account_id=b.id;b.ledger[0].account_id=b.id;return r.fulfill({json:b});}return offline?r.abort():r.fulfill({json:raw});}
+ if(path.endsWith('/manual_order_v2')){count++;if(badReceipt)return r.fulfill({json:fixture()});const b=r.request().postDataJSON();expect(b.p_policy_version).toBe(1);expect(b.p_expected_revision).toBe(0);if(race){race=false;raw=fixture(true);return r.fulfill({status:400,json:{code:'P0001',message:'account_revision_conflict'}});}if(lastId&&b.p_request_id!==lastId)throw Error('new id during recovery');lastId=b.p_request_id;const market=raw.market;raw=fixture(true);raw.market=market;raw.orders[0].request_id=b.p_request_id;raw.orders[0].payload=b.p_order;raw.orders[0].observed_at=b.p_order.observedAt;raw.orders[0].source=b.p_order.source;
  if(lose){offline=true;return r.abort();}return r.fulfill({json:raw});}
  if(path.endsWith('/logout'))return r.fulfill({status:204});if(path.endsWith('/user'))return r.fulfill({json:user});if(path.includes('watchlist_items'))return r.fulfill({json:[]});return r.fulfill({status:400,json:{message:'fixture endpoint unavailable'}});
  });
- return {badReceipt:()=>{badReceipt=true;},change:()=>{raw=fixture(true);},lose:()=>{lose=true;},restore:()=>{lose=false;offline=false;raw.market={...raw.market,canTrade:false,state:'closed',reason:'정규장 마감'};},get count(){return count;}};
+ return {race:()=>{race=true;},badReceipt:()=>{badReceipt=true;},change:()=>{raw=fixture(true);},lose:()=>{lose=true;},restore:()=>{lose=false;offline=false;raw.market={...raw.market,canTrade:false,state:'closed',reason:'정규장 마감'};},get count(){return count;}};
 }
 async function form(page:Page){await page.goto('/#stock/AAPL');await expect(page.getByLabel('계좌 화면 모드')).toBeEnabled();await page.getByLabel('계좌 화면 모드').selectOption('manual');await expect(page.getByTestId('manual-cash')).toHaveText('$100,000.00');await page.getByLabel('수기 USD 단가',{exact:true}).fill('100');await page.getByLabel('가격 관측시각 (UTC/offset)',{exact:true}).fill('2026-10-27T13:59:00Z');}
 test('manual UI preview/order/portfolio/mark/draft restore separate from synthetic ledger',async({page})=>{
@@ -40,4 +40,8 @@ test('manual same-browser user switch hides A positions, drafts and valuation fr
 
 test('successful HTTP without matching fill never reports success or clears pending',async({page})=>{
  const f=await setup(page);await form(page);await page.getByRole('button',{name:'수기 주문 검토',exact:true}).click();f.badReceipt();await page.getByRole('button',{name:'수기 체결 확정',exact:true}).click();await expect(page.getByRole('alert').filter({hasText:'원장 불일치'})).toBeVisible();await expect(page.getByRole('button',{name:'불일치 응답 원본 내려받기',exact:true})).toBeVisible();await expect(page.getByRole('status').filter({hasText:'원장 저장 완료'})).toHaveCount(0);expect(await page.evaluate(uid=>localStorage.getItem('us-stock.manual.pending.v1.'+uid),uid)).not.toBeNull();expect(f.count).toBe(1);
+});
+
+test('server CAS race rejects confirmation, refreshes account and preserves input',async({page})=>{
+ const f=await setup(page);await form(page);await expect(page.getByLabel('수수료율 (bp)',{exact:true})).toBeDisabled();await expect(page.getByLabel('최소 수수료 (USD)',{exact:true})).toBeDisabled();await page.getByRole('button',{name:'수기 주문 검토',exact:true}).click();f.race();await page.getByRole('button',{name:'수기 체결 확정',exact:true}).click();await expect(page.getByRole('alert').filter({hasText:'account_revision_conflict'})).toBeVisible();await expect(page.getByTestId('manual-cash')).toHaveText('$99,899.90');await expect(page.getByLabel('수기 USD 단가',{exact:true})).toHaveValue('100');expect(await page.evaluate(uid=>localStorage.getItem('us-stock.manual.pending.v1.'+uid),uid)).toBeNull();await expect(page.getByRole('status').filter({hasText:'원장 저장 완료'})).toHaveCount(0);
 });

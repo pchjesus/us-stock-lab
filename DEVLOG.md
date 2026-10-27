@@ -139,3 +139,13 @@
 - 실제 pg_cron PASS: disposable PostgreSQL17에서 1초 예약, 앱 미접속 자동 net85센트 지급, 반복 실행 credit1개, 서버 재시작 후 예약 복원/중복 없음. 독립 Cron fixture의 auth.users 누락과 초기 SQL 오류 출력 도구 문제를 수정 후 검증. 운영 DB clock/extension/Cron·migration·main·Pages 변경 없음. 설치 확인용 별도 probe 컨테이너 정리.
 - 최종 PASS: 활성화 TypeScript/Vite build, 일반88 + 인증/UI24 = 112개(기존106 유지, 신규6). 배당 fixture로 입금 후 재매수 ledger 순서·tax/net/권리·참조·계좌/날짜·불일치 원본 보존 및 관리자 user_metadata 무시/서버 권한·PC/모바일 UI/알림 복원 검증. 마지막 snapshot 강화 후 전체 재실행 PASS. 격리 SQL 전체·실제 pg_cron 반복/재시작 재검증 PASS, 컨테이너 정리.
 - 준비 migration 202610270005 및 Cron 운영 설치 스크립트만 커밋. 운영 등록/배포/실공시 검증은 미실행. 신뢰된 SQL로 관리자 allowlist bootstrap, 발행사/운용사 원문 검증 등록 후에만 실제 운영 정산 대상 생성. 기지급 금액 정정은 review/감사에 보류되며 자동 보정 분개 미지원(명시적 안전 정책). E/F 재개: 본 브랜치에서 기존 세금 설계·결제일 환율 계약 구현, 금융 High 검토·운영 승인 전 설치 SQL 실행 금지.
+
+## 2026-10-27 · v0.6-E
+- 기준 branch ac6690d/main e9c4ab1 확인, 기존 금융 설계 세금 절·직접 영향 파일만 조회. 공식 국세청 일반 국외주식20%/250만원/신고5월·일반 대금청산·증빙 비용, SEC T+1·Fed휴일 확인. 지방세/외화 조문 접근 실패 및 FIFO/평균·DTCC 완전 달력 미확정은 설계 E절에 정확히 기록, 법적 확정 주장 없음.
+- 독립 원화 FIFO/평균·매수/매도/비용별 고정소수 FX·원가/손익·공제/국세/지방세·외부 손익/공제, 결제일/연말/은행 추가휴일·범위 밖 제한. 외부 손익에 이미 적용한 공제와 잔여 공제를 중복 차감하지 않도록 검산. 원화 매수비용 포함 후 추가 비용 공제 없음, 배당/미실현 제외, 기존 USD/배당 원장 불변.
+- 202610270006은 자기신고 세금 문서의 append-only 이력·CAS/멱등/소유권·직접쓰기 차단만 추가, 운영 미적용. TaxPanel 입력/정책/상세·세후 성과 범위·보관/서버저장/이력·전송 유실 같은 ID·원본 보존. 확정 conflict는 원본초안 보존 후 최신버전 재조회. 실제 명세/환율 API 미확보 시 잠정, 기존 합성 환율 자동 대체 없음.
+- 단계 커밋 2ce70ea(engine/client), 4f605a4(UI/evidence). 영향 PASS: 세금 계산10+store2, PC/mobile 세금 UI4(정확 ₩2,178 기대값, 정책 버전/원본/새로고침·USD잔고 불변/같은 ID 복구). 초기 UI fixture의 실제 buy filled_at에 맞게 예상 T+1 날짜 수정, 검증 약화 없음.
+- 격리SQL PASS: tax 소유권/기록 불변·요청 충돌/정확 date·referenceFX거절/기존 cash/realized/fees 불변·2기기 CAS 및 같은 요청 중복. 기존 financial/RLS/dividend/concurrency 전체 PASS. 실제 격리pg_cron 무접속 net85센트 입금·반복/재시작 credit1개 PASS. 운영 DB/Cron·main/Pages 접근/적용 없음.
+- 전체 회귀 중 기존 spotlight 픽셀 비교1회 실패(일반99 PASS). 테스트를 수정/삭제하지 않고 임시 좌표·PNG 진단 후 원본 복원: 1440/768/390 각2프로젝트의 대상크기·배경 픽셀6조건 동일 PASS, 원인 미확정·비재현. 원본 전체 일반 재실행100 PASS. 금융/세금 기능 실패로 분류하지 않으며 F에서 화면 테스트 안정성 확인 대상.
+- 최종 문서 형식/정책·달력 버전 검사·손상 임시/미확정 저장 차단·원본 다운로드·외부 공제 중복 방지/세후 범위 검산을 보강. 원화 ₩2,178 검산 fixture의 USD잔고/배당 원장 불변, 송신 유실 같은 ID 복구·불변 정책 버전 PC/mobile PASS. 총 기대조합128(기존112+엔진10+store2+UI4), 마지막 빌드·일반100·인증/UI28 전체 재검증 후 기록 확정.
+- 검증 확정 PASS: 최종 TypeScript/Vite build, 원본 일반100개 + 인증/복구/UI28개 = 총128개. 격리 PostgreSQL 전체 금융/RLS/배당/세금 CAS 및 실제 isolated pg_cron 반복·재시작 PASS. 공식 국세청 2026 게시/2025귀속 FAQ의 국내 통산 제한 범위 추가 확인·기록. 세금 원본 손상 형식은 UI 계산·저장 차단하며 미확정/실제 세법 미검증 한계는 유지. 운영 DB migration/Cron·main/Pages 미적용.

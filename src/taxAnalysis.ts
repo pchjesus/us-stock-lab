@@ -31,7 +31,13 @@ function fxMoney(value:number,fx:FxEvidence,date:string,now:Date,warnings:string
  return BigInt(usdCentsToKrw(value,fx.rate));
 }
 export type TaxSale={orderId:string;symbol:string;tradeDate:string;settlementDate:string;year:number;proceedsKrw:number;acquisitionKrw:number;sellFeesKrw:number;buyFeesKrw:number;netKrw:number;buyEvidenceIds:string[]};
+export function assertTaxDocumentShape(doc:any):asserts doc is TaxDocument{
+ if(!doc||doc.inputClass!=='user_supplied'||!['fifo-v1','average-v1'].includes(doc.policy)||!Array.isArray(doc.records)||!Array.isArray(doc.external))throw Error('세금 문서 형식 오류');
+ for(const r of doc.records){if(!r||typeof r.orderId!=='string'||!(r.confirmedSettlement===null||typeof r.confirmedSettlement==='string')||typeof r.settlementSource!=='string'||r.feeDate!==undefined&&typeof r.feeDate!=='string')throw Error('거래 근거 형식 오류');for(const key of ['fx','feeFx']){if(!r[key]||!['date','rate','kind','provider','url','checkedAt','status'].every(k=>typeof r[key][k]==='string'))throw Error('환율 근거 형식 오류');}}
+ for(const e of doc.external)if(!e||![e.year,e.netKrw,e.usedDeductionKrw].every(Number.isSafeInteger))throw Error('외부 세금 입력 형식 오류');
+}
 export function analyzeTax(a:ManualState,doc:TaxDocument,year:number,now=new Date()){
+ assertTaxDocumentShape(doc);
  if(doc.inputClass!=='user_supplied'||!['fifo-v1','average-v1'].includes(doc.policy)||!Number.isInteger(year)||year<2026||year>2027||!Array.isArray(doc.records)||!Array.isArray(doc.external))throw Error('세금 정책/연도 형식 오류');
  const byId=new Map<string,TaxRecord>();for(const r of doc.records){if(byId.has(r.orderId)||!a.orders.some(o=>o.id===r.orderId))throw Error('중복/다른 계좌의 세금 거래 참조');byId.set(r.orderId,r);}
  const lots:Record<string,{quantity:bigint;cost:bigint;fee:bigint;ids:string[]}[]>={},rows:TaxSale[]=[],missing:string[]=[],warnings:string[]=[];let blocked=false;

@@ -17,10 +17,10 @@ do $$declare before jsonb;p jsonb;begin
  if (before->>'realized')::bigint<>24645 or(before->>'cash')::bigint<>10024645 or(before->>'fees')::bigint<>355 or exists(select 1 from public.manual_positions) then raise exception 'liquidation invariant';end if;
  if(select sum(delta_cents) from public.manual_ledger)<>(before->>'cash')::bigint then raise exception 'ledger invariant';end if;
  p:='{"symbol":"AAPL","side":"buy","quantity":1,"priceCents":10000,"rateBps":10,"minCents":0,"source":"manual test","observedAt":"2026-10-27T13:59:00Z"}';
- begin perform public.manual_order(gen_random_uuid(),p||'{"quantity":0}');raise exception 'invalid accepted' using errcode='XX000';exception when raise_exception then null;end;
- begin perform public.manual_order(gen_random_uuid(),p||'{"priceCents":-1}');raise exception 'invalid accepted' using errcode='XX000';exception when raise_exception then null;end;
- begin perform public.manual_order(gen_random_uuid(),p||'{"quantity":1000000}');raise exception 'overdraft accepted' using errcode='XX000';exception when raise_exception then null;end;
- begin perform public.manual_order(gen_random_uuid(),p||'{"side":"sell"}');raise exception 'oversell accepted' using errcode='XX000';exception when raise_exception then null;end;
+ begin perform public.manual_order(gen_random_uuid(),p||'{"quantity":0}');raise exception 'invalid accepted' using errcode='XX000';exception when raise_exception then if sqlerrm<>'invalid_number' then raise;end if;end;
+ begin perform public.manual_order(gen_random_uuid(),p||'{"priceCents":-1}');raise exception 'invalid accepted' using errcode='XX000';exception when raise_exception then if sqlerrm<>'invalid_number' then raise;end if;end;
+ begin perform public.manual_order(gen_random_uuid(),p||'{"quantity":1000000}');raise exception 'overdraft accepted' using errcode='XX000';exception when raise_exception then if sqlerrm<>'insufficient_cash' then raise;end if;end;
+ begin perform public.manual_order(gen_random_uuid(),p||'{"side":"sell"}');raise exception 'oversell accepted' using errcode='XX000';exception when raise_exception then if sqlerrm<>'insufficient_shares' then raise;end if;end;
  begin update public.manual_accounts set cash_cents=0;raise exception 'direct write accepted' using errcode='XX000';exception when insufficient_privilege then null;end;
  if before is distinct from public.manual_snapshot() then raise exception 'rejected order mutation';end if;
 end$$;

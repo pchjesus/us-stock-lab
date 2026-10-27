@@ -16,6 +16,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
+          VITE_ENABLE_MARKET_FX: 'true'
+          VITE_ENABLE_TREASURY_STATS: 'true'
       - run: npx playwright install --with-deps chromium
       - name: Find Chromium executable for repository tests
         run: |

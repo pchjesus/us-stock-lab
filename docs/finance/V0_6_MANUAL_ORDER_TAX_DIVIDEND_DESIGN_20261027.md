@@ -66,3 +66,10 @@
 - U.S. Securities and Exchange Commission. (n.d.). *Ex-dividend dates: When are you entitled to stock and cash dividends*. https://www.investor.gov/introduction-investing/investing-basics/glossary/ex-dividend-dates-when-are-you-entitled-stock-and
 - United States & Republic of Korea. (1976). *Convention for the avoidance of double taxation, Article 12 (Dividends)*. https://www.forvismazars.com/kr/en/insights/korean-insights/korea-tax-treaty/the-united-states-of-america-korea-tax-treaty
 - Supabase. (n.d.). *Scheduling Edge Functions*. https://supabase.com/docs/guides/functions/schedule-functions
+
+## B/C 수수료 정책 High 검토안 (운영 RPC 변경 없음)
+- 현재 manual_order의 rateBps/minCents는 자기신고 값이다. 브라우저 검증은 조작 방지가 아니며 UI는 실제 증권사 고정 요율/친구간 공정 순위로 표현하지 않는다. 거래 payload의 과거 수수료는 불변 유지.
+- 후속 서버 계약: manual_fee_policies(id,account_id,version,rate_bps,min_fee_cents,effective_at,created_at) append-only, unique(account_id,version). 계좌에 current_fee_policy_id FK. 자기 계좌만 SELECT, 금융 클라이언트 직접 쓰기 금지. 사용자 정책 변경은 별도 제한 RPC에서 계좌 잠금·검증·새 버전 삽입; 과거 정책 UPDATE/DELETE 금지.
+- 새 주문은 fee_policy_id/version만 전달, 서버가 계좌 소유권/정책 버전 일치·유효시각 검증 후 fee 산출. 주문에 적용 정책과 실제 fee 불변 저장. 정책 변경 이후 오래된 확인은 policy_conflict로 재검토. 기존 ID 재조회는 정책 변경/장외에도 기존 체결 반환. 기존 자기신고 주문 재계산·강제 이관 금지.
+- High 집중 검증: 정책 변경/주문 경쟁, 두 기기의 stale review(CAS 계좌 revision) 차단, 최소수수료가 매도대금을 넘는 경우, 수수료 상한/원가 분배·JS 안전 범위, snapshot replay와 배당 원장 통합. 현재 클라이언트는 Web Locks+사전 snapshot 비교로 협력하는 탭을 직렬화하지만, 독립 기기의 사전조회 이후 발생하는 경쟁까지 CAS로 차단하지는 못한다. 서버 잔고/수량 잠금 검증은 유지된다.
+- 배당 D·양도세 E 계약은 위 2~5절 전체를 그대로 유지. 정책/배당/환율 migration은 격리 통합 검증 및 High 리뷰 후에만 운영 적용.

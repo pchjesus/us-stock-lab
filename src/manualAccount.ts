@@ -25,7 +25,7 @@ export function decodeManual(raw:any):ManualState {try{
  const a:ManualState={id:raw.id,cash:10000000,realized:0,fees:0,holdings:{},orders:raw.orders,ledger:raw.ledger,market:raw.market,receivedAt:performance.now(),token:''};
  const ids=new Set<string>(),requestIds=new Set<string>();const expected=new Map<string,{delta:number;balance:number}>();let seq=0;
  for(const r of raw.orders){
- if(r.account_id!==raw.id||typeof r.id!=='string'||ids.has(r.id)||typeof r.request_id!=='string'||requestIds.has(r.request_id)||cents(r.execution_seq)<=seq)throw Error();ids.add(r.id);requestIds.add(r.request_id);seq=cents(r.execution_seq);
+ if(r.account_id!==raw.id||typeof r.id!=='string'||!r.id||ids.has(r.id)||typeof r.request_id!=='string'||!r.request_id||requestIds.has(r.request_id)||cents(r.execution_seq)<=seq)throw Error();ids.add(r.id);requestIds.add(r.request_id);seq=cents(r.execution_seq);
  const o:ManualInput={...r.payload,quantity:cents(r.quantity),priceCents:cents(r.price_cents)};
  if(o.symbol!==r.symbol||o.side!==r.side||cents(r.payload.quantity)!==o.quantity||cents(r.payload.priceCents)!==o.priceCents||o.source!==r.source||Date.parse(o.observedAt)!==Date.parse(r.observed_at)||![r.received_at,r.filled_at].every(t=>typeof t==='string'&&Number.isFinite(Date.parse(t)))||Date.parse(r.filled_at)<Date.parse(r.received_at))throw Error();
  const p=preview(a,o);if(p.fee!==cents(r.fee_cents)||p.basis!==cents(r.basis_cents))throw Error();

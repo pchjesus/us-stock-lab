@@ -102,3 +102,8 @@
 - GitHub Actions run 40428677537 / head 814ba98: npm ci, npm run build PASS; npm test **66 PASS**, npm run test:auth **12 PASS**. 총 78개(PC·모바일 프로젝트 포함) 통과.
 - Supabase 프로젝트 vveljtqmujdzkzmoncjx에 공개 읽기 전용 `market-fx` Edge Function version 1 ACTIVE 배포. verify_jwt=false, DB/금융 테이블 접근 없음. 함수 HTTP 실호출은 환경 접근 제한으로 **미검증**이며 실제 Frankfurter 응답 성공을 주장하지 않음.
 - 앱 기능 플래그 VITE_ENABLE_MARKET_FX=false, GitHub Pages main 변경 없음. 따라서 실제 사이트에는 새 카드/실환율이 아직 배포되지 않음. 미검증 실데이터를 활성화하지 않음.
+
+## 2026-10-27 · v0.5-A 공개위젯 실가격·환율 활성화 후보
+- `codex/licensed-market-widgets-v0.5-a`에서 TradingView 공식 ticker-tape/market-overview/advanced-chart 위젯을 사용자 작동 시 로드. 명시된 8종목·5지수 심볼 및 원문 링크/출처/지연 가능성 포함; 비공식 네이버 증권 API 미사용.
+- 기존 React 화면과 합성 차트·가격·주문·원장/시장시간 기능 보존. 첫 회귀에서 홈 계좌 요약 상단 위젯에 의한 스포트라이트 스크린샷 실패 2건을 확인, 계좌 요약 아래로 이동해 원래 정보 위계 복구.
+- GitHub Actions run 40430748282: npm build PASS / 브라우저·금융 70 PASS / 인증 12 PASS / deployed public `market-fx` 실제 HTTP PASS (Frankfurter UTC 기준일 2026-10-27). 후속 production FX opt-in 테스트 및 Pages 자동배포는 최종 검증/브랜치 통합 완료 전까지 미완료.

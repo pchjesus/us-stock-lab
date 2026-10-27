@@ -131,3 +131,11 @@
 - 신규 영향 PASS: client 6개(PC/mobile 프로젝트), manual UI 8개(주문/수수료·평가/복원·중복 클릭·불확실 응답/장외 동일 ID·저장 실패·stale preflight·A/B 전환/로그아웃). 실제 모바일 screenshot 확인 후 새 폼 폭/평가 입력 배치 국소 개선. mock 복구 서버가 장외 상태를 초기화하던 fixture를 수정했으며 검증 약화 없음.
 - 격리 PostgreSQL PASS: 기존/수기 금융·RLS·동시 주문·중복/원장·롤백·정규장/730일/DST/마감 대기. 운영 DB 접근/적용·main 병합·Pages 배포 없음. 수수료 서버 정책/독립 기기 revision CAS·실서버 통합 및 배당/세금 후속은 SPEC/기존 설계 문서에 유지.
 - 최종 검증 PASS: TypeScript/Vite 활성화 빌드, 전체 일반84개(기존78+신규6), 인증/복구/UI22개(기존12+신규10), 총106개. 영수증 ID/요청 불일치 시 HTTP200이어도 성공 오표시/미확정 기록 삭제 없음·응답 원본 다운로드 테스트 추가. 최종 client 영향6개 재실행 PASS. 독립 기기 CAS/서버 수수료 정책 및 운영 미적용 상태는 잔여 High 검토 대상이며 실서버 수기 체결 PASS로 주장하지 않음.
+
+## 2026-10-27 · v0.6-D
+- 기준 5c9ac88 유지. 공식 배당 관리자 서버 allowlist·발행사/운용사 도메인·일정/상태/버전·정정 감사, 과거 filled_at 권리 산정, 계좌별 원자 지급·중복 제약·오류 재시도·private pg_cron 엔진 추가. 공식 공시 실제 seed 없음, SQL fixture는 격리 테스트 전용 가상 공시.
+- 배당 현금원장/credit FK 추가, ledger 발생순서로 trade/dividend 재생. gross/15%/net/권리·지급 참조 검증, 과거 주문-only 호환·원본 보존. 수기 UI에 배당 일정/예상·완료/보류·오류/누적·출처·입금 알림 및 관리자 등록·수정·취소·중단/감사 연결. synthetic 금융/시세/계좌 불변, E/F 계약 유지.
+- 영향 PASS: 기존 manual client6 + dividend client4, 배당 UI PC/mobile2. 격리SQL: 전날/배당락 당일 매수·매도/부분/전량매도·늦은 등록·DST NY 자정·정확 세금 반올림·0주·중복/병렬 실행·수기 주문 경쟁·오류 주입 전체 롤백/다른 계좌 정상 지급/재시도·관리자/RLS/직접쓰기 차단·정정/취소/중복/공식 출처/버전·중단/감사 검증.
+- 실제 pg_cron PASS: disposable PostgreSQL17에서 1초 예약, 앱 미접속 자동 net85센트 지급, 반복 실행 credit1개, 서버 재시작 후 예약 복원/중복 없음. 독립 Cron fixture의 auth.users 누락과 초기 SQL 오류 출력 도구 문제를 수정 후 검증. 운영 DB clock/extension/Cron·migration·main·Pages 변경 없음. 설치 확인용 별도 probe 컨테이너 정리.
+- 최종 PASS: 활성화 TypeScript/Vite build, 일반88 + 인증/UI24 = 112개(기존106 유지, 신규6). 배당 fixture로 입금 후 재매수 ledger 순서·tax/net/권리·참조·계좌/날짜·불일치 원본 보존 및 관리자 user_metadata 무시/서버 권한·PC/모바일 UI/알림 복원 검증. 마지막 snapshot 강화 후 전체 재실행 PASS. 격리 SQL 전체·실제 pg_cron 반복/재시작 재검증 PASS, 컨테이너 정리.
+- 준비 migration 202610270005 및 Cron 운영 설치 스크립트만 커밋. 운영 등록/배포/실공시 검증은 미실행. 신뢰된 SQL로 관리자 allowlist bootstrap, 발행사/운용사 원문 검증 등록 후에만 실제 운영 정산 대상 생성. 기지급 금액 정정은 review/감사에 보류되며 자동 보정 분개 미지원(명시적 안전 정책). E/F 재개: 본 브랜치에서 기존 세금 설계·결제일 환율 계약 구현, 금융 High 검토·운영 승인 전 설치 SQL 실행 금지.

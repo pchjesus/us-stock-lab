@@ -2,7 +2,10 @@
 import subprocess,pathlib,json,datetime,zoneinfo,os
 root=pathlib.Path(__file__).resolve().parents[1];name='stock-v04-test';db='stock_test'
 def shell(args,**kw):return subprocess.run(args,check=True,text=True,capture_output=True,**kw)
-def sql(s,database=db):return shell(['docker','exec','-i',name,'psql','-U','postgres','-d',database,'-v','ON_ERROR_STOP=1','-Atq'],input=s).stdout.strip()
+def sql(s,database=db):
+ try:return shell(['docker','exec','-i',name,'psql','-U','postgres','-d',database,'-v','ON_ERROR_STOP=1','-Atq'],input=s).stdout.strip()
+ except subprocess.CalledProcessError as e:
+  print('Isolated SQL diagnostic: '+e.stderr[-2000:],flush=True);raise
 def file(p,database=db):return sql((root/p).read_text(),database)
 try:
  shell(['docker','run','--rm','-d','--name',name,'-e','POSTGRES_HOST_AUTH_METHOD=trust','postgres:17'])
@@ -69,6 +72,22 @@ try:
   lock.stdin.write('commit;\n');lock.stdin.close();assert f.result()
  lock.wait();assert sql('select count(*) from public.paper_orders')==before
  print('PASS account-lock wait crosses close; no fill')
+ print('\n'.join(x for x in file('tests/sql/dividends.sql').splitlines() if x.startswith('PASS')))
+ sql("set request.jwt.claim.sub='00000000-0000-0000-0000-000000000001';select public.manual_snapshot();")
+
+ # Parallel private settlements and a live manual order share account locks.
+ sql("""set request.jwt.claim.sub='00000000-0000-0000-0000-000000000001';
+ update paper_private.test_clock set value='2026-10-26T14:00:00Z';
+ select public.manual_order(gen_random_uuid(),'{"symbol":"GOOGL","side":"buy","quantity":1,"priceCents":100,"rateBps":0,"minCents":0,"source":"test","observedAt":"2026-10-26T13:59:00Z"}');
+ select public.dividend_manage(null,'{"symbol":"GOOGL","kind":"regular_cash","announced":"2026-01-01","ex_date":"2026-10-27","record_date":"2026-10-27","pay_date":"2026-10-28","amount_units":10000,"source_url":"https://abc.xyz/test-fixture","verified_at":"2026-10-26T00:00:00Z","standard_tax":true,"status":"confirmed"}');
+ update paper_private.test_clock set value='2026-11-03T15:00:00Z';""")
+ def settle_or_order(i):
+  if i<2:return sql('select paper_private.settle_dividends()')
+  return sql("""set request.jwt.claim.sub='00000000-0000-0000-0000-000000000001';select public.manual_order(gen_random_uuid(),'{"symbol":"MSFT","side":"buy","quantity":1,"priceCents":100,"rateBps":0,"minCents":0,"source":"test","observedAt":"2026-11-03T14:59:00Z"}');""")
+ with concurrent.futures.ThreadPoolExecutor(3) as pool:list(pool.map(settle_or_order,range(3)))
+ assert sql("select count(*) from public.dividend_credits c join public.dividend_events e on e.id=c.event_id where e.symbol='GOOGL'")=='1'
+ assert sql("select bool_and(cash_cents=(select sum(delta_cents) from public.manual_ledger where account_id=a.id)) from public.manual_accounts a")=='t'
+ print('PASS overlapping settlement / manual order locks and single-credit invariant')
  # Separate database for pre-existing RLS/schema negative tests.
  sql('create database stock_rls;',database='postgres');sql((root/'tests/sql/bootstrap.sql').read_text().replace('create role anon nologin;','').replace('create role authenticated nologin;',''),'stock_rls')
  for p in sorted((root/'supabase/migrations').glob('*.sql')):sql(p.read_text(),'stock_rls')

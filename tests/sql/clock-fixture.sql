@@ -17,3 +17,4 @@ do $$declare f text;begin
  select pg_get_functiondef('public.manual_order(uuid,jsonb)'::regprocedure) into f;execute replace(f,'clock_timestamp()','paper_private.test_now()');
  select pg_get_functiondef('public.manual_snapshot()'::regprocedure) into f;execute replace(f,'clock_timestamp()','paper_private.test_now()');
 end$$;
+create or replace function paper_private.dividend_now() returns timestamptz language sql volatile set search_path='' as $$select paper_private.test_now()$$;

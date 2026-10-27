@@ -102,3 +102,8 @@
 - GitHub Actions run 40428677537 / head 814ba98: npm ci, npm run build PASS; npm test **66 PASS**, npm run test:auth **12 PASS**. 총 78개(PC·모바일 프로젝트 포함) 통과.
 - Supabase 프로젝트 vveljtqmujdzkzmoncjx에 공개 읽기 전용 `market-fx` Edge Function version 1 ACTIVE 배포. verify_jwt=false, DB/금융 테이블 접근 없음. 함수 HTTP 실호출은 환경 접근 제한으로 **미검증**이며 실제 Frankfurter 응답 성공을 주장하지 않음.
 - 앱 기능 플래그 VITE_ENABLE_MARKET_FX=false, GitHub Pages main 변경 없음. 따라서 실제 사이트에는 새 카드/실환율이 아직 배포되지 않음. 미검증 실데이터를 활성화하지 않음.
+
+## 2026-10-27 · 공개사용 가능한 거시경제 데이터 추가
+- 미국 재무부 FiscalData의 공개 API 이용 조건(표시·분석 서비스 개발 허용) 조사 후, 별도 `treasury-stats` Edge Function 및 UI 카드/검증 테스트 추가. 일별 연방 총부채와 월간 국채 유형별 평균 조달금리만 사용하며 **실시간 10년물 수익률로 표기하지 않음**.
+- 네이버 증권 화면과 비공식 내부 시세 API 재호스팅은 약관/재표시 권리 미승인으로 배제. FRED는 시리즈별 저작권 구분이 필요하여 일괄 재배포 안 함. Frankfurter 일별 혼합 환율은 무료 캐시·재사용 허용 확인.
+- 주가·합성 캔들·가격표·USD 센트 원장·장중 게이트 변경 없음. 두 외부 데이터 기능은 검증 전 opt-in OFF, main/Pages 미변경.

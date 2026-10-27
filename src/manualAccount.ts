@@ -55,8 +55,10 @@ async function sendManual(uid:string,request:ManualRequest,expectedToken:string)
  // Persist before transport: quota errors never submit an untracked order.
  localStorage.setItem(pendingKey(uid),JSON.stringify(request));
  const r=await c.rpc('manual_order',{p_request_id:request.id,p_order:request.order}).setHeader('Authorization','Bearer '+jwt);
- if(!r.error){const a=decodeManual(r.data);localStorage.removeItem(pendingKey(uid));return a;}
- try{const a=await manualSnapshot(uid);if(a.orders.some(o=>o.request_id===request.id)){localStorage.removeItem(pendingKey(uid));return a;}}catch{/* keep same id on uncertainty */}
+ if(!r.error){const a=decodeManual(r.data);if(!matchesReceipt(a,request))throw new ManualDataError(r.data);localStorage.removeItem(pendingKey(uid));return a;}
+ try{const a=await manualSnapshot(uid);if(matchesReceipt(a,request)){localStorage.removeItem(pendingKey(uid));return a;}}catch{/* keep same id on uncertainty */}
  if(r.error.code==='P0001'&&['insufficient_cash','insufficient_shares','invalid_order','invalid_number','invalid_fields','invalid_observation','market_closed','unsafe_amount'].includes(r.error.message)){localStorage.removeItem(pendingKey(uid));throw Error('주문 거절: '+r.error.message);}
  throw Error('체결 여부 미확정. 새 주문을 만들지 말고 같은 ID로 재확인하세요.');
 }
+
+function matchesReceipt(a:ManualState,r:ManualRequest){return a.orders.some(o=>o.request_id===r.id&&Object.entries(r.order).every(([key,value])=>o.payload[key]===value));}

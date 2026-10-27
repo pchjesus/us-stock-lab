@@ -1,6 +1,8 @@
 name: Deploy Pages
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 permissions:
   contents: read
   pages: write
@@ -25,6 +27,7 @@ jobs:
         env:
           VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_IGTsGZshQZAE92bE0_xpYg__bOTs3GU
+          VITE_ENABLE_MARKET_FX: 'true'
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

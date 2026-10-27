@@ -1,8 +1,8 @@
 name: Deploy Pages
+# The production DB is not yet migrated for v0.6 (004-007).
+# Publish only after separately approved finance deployment gates.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
 permissions:
   contents: read
   pages: write

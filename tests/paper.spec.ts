@@ -9,7 +9,7 @@ async function order(page:Page,side:'buy'|'sell',qty:string){await page.getByLab
 const cash=(n:number)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n/100);
 test('buy, additional buy, simulation, partial/full sell and confirmed reset survive restart',async({page,context})=>{
  await page.goto('/#stock/AAPL');await order(page,'buy','10');await expect(page.getByRole('status')).toContainText('체결되고 저장');
- await page.reload();await expect(page.getByText(/보유 10주/)).toBeVisible();await page.getByLabel('추가매수 가격',{exact:true}).fill('80');await page.getByLabel('추가매수 수량',{exact:true}).fill('5');
+ await page.reload();await expect(page.getByText(/보유 10주/)).toBeVisible();await expect(page.getByTestId('stock-holding')).toContainText('평단');await expect(page.getByTestId('stock-holding')).toContainText('합성 평가손익 $0.00');await page.getByLabel('추가매수 가격',{exact:true}).fill('80');await page.getByLabel('추가매수 수량',{exact:true}).fill('5');
  await expect(page.getByTestId('simulation')).toContainText('15주');expect(JSON.parse((await page.evaluate(k=>localStorage.getItem(k),accountKey))!).trades).toHaveLength(1);
  await order(page,'buy','5');await expect(page.getByRole('status')).toContainText('체결되고 저장');await order(page,'sell','5');await expect(page.getByRole('status')).toContainText('체결되고 저장');
  await page.goto('/#portfolio');await expect(page.getByTestId('cash')).toHaveText(cash(10000000-price*10));await expect(page.locator('.holding')).toContainText('10주');await expect(page.locator('.history-row')).toHaveCount(3);

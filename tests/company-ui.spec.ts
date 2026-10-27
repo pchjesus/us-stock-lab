@@ -1,0 +1,9 @@
+import {test,expect} from '@playwright/test';
+import {companyProfiles} from '../src/companyProfiles';
+test('company and ETF details separate official information from synthetic prices',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/#home');const before=await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'));
+ for(const profile of companyProfiles){await page.goto('/#stock/'+profile.symbol);await expect(page.getByText(profile.tenSecondSummary,{exact:true})).toBeVisible();await expect(page.getByText('공식 배당 자료 미확인 · 무배당을 의미하지 않습니다.')).toBeVisible();await expect(page.getByText('공식 실적 자료가 아직 입력되지 않았습니다.',{exact:false})).toBeVisible();const source=profile.sources.find(s=>s.id===profile.profileSourceId)!;await expect(page.getByRole('link',{name:/공식 10-K 원문/})).toHaveAttribute('href',source.url);await expect(page.getByText(new RegExp('제출 '+source.filedAt))).toContainText('공식 자료 확인');await page.getByRole('button',{name:'분기',exact:true}).click();await expect(page.getByText(/연초 누적값은 단독 분기와 섞지 않습니다/)).toBeVisible();}
+ for(const symbol of ['VOO','QQQ','SCHD']){await page.goto('/#stock/'+symbol);await expect(page.getByRole('heading',{name:'핵심 투자지표'})).toHaveCount(0);await expect(page.getByRole('heading',{name:'종목 정보'})).toBeVisible();await expect(page.locator('section:has(> h2:text-is("외부 시세 확인"))')).toHaveCount(1);if(symbol==='VOO')await expect(page.getByRole('link',{name:/네이버 VOO/})).toHaveCount(0);}
+ for(const width of [1440,768,390,320]){await page.setViewportSize({width,height:900});await page.goto('/#stock/AAPL');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}
+ expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(before);expect(errors).toEqual([]);
+});

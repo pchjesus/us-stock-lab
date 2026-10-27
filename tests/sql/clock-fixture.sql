@@ -12,3 +12,8 @@ do $$declare f text;begin
  select pg_get_functiondef('public.paper_snapshot()'::regprocedure) into f;
  execute replace(f,'clock_timestamp()','paper_private.test_now()');
 end$$;
+
+do $$declare f text;begin
+ select pg_get_functiondef('public.manual_order(uuid,jsonb)'::regprocedure) into f;execute replace(f,'clock_timestamp()','paper_private.test_now()');
+ select pg_get_functiondef('public.manual_snapshot()'::regprocedure) into f;execute replace(f,'clock_timestamp()','paper_private.test_now()');
+end$$;

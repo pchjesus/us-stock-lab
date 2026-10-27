@@ -15,3 +15,15 @@ assert all(p.returncode==0 for p in r)
 assert sql("select count(*) from public.paper_orders where client_request_id='"+key+"';").stdout.strip()=='1'
 assert sql("select cash_cents>=0 and cash_cents=(select sum(delta_cents) from public.paper_cash_ledger where account_id=a.id) from public.paper_accounts a;").stdout.strip().splitlines()==['t','t']
 print('PASS concurrent overdraft/oversell, repeated id, cash-ledger invariants')
+import json
+def manual(key,quantity):
+ payload=json.dumps({'symbol':'AAPL','side':'buy','quantity':quantity,'priceCents':10000,'rateBps':10,'minCents':0,'source':'concurrency test','observedAt':'2026-10-27T13:59:00Z'})
+ return sql("set role authenticated;set request.jwt.claim.sub='00000000-0000-0000-0000-000000000002';select public.manual_order('"+key+"','"+payload+"'::jsonb);",False)
+with concurrent.futures.ThreadPoolExecutor(2) as pool:r=list(pool.map(lambda _:manual(str(uuid.uuid4()),600),range(2)))
+assert sum(p.returncode==0 for p in r)==1
+key=str(uuid.uuid4())
+with concurrent.futures.ThreadPoolExecutor(2) as pool:r=list(pool.map(lambda _:manual(key,1),range(2)))
+assert all(p.returncode==0 for p in r)
+assert sql("select count(*) from public.manual_orders where request_id='"+key+"';").stdout.strip()=='1'
+assert sql("select cash_cents>=0 and cash_cents=(select sum(delta_cents) from public.manual_ledger where account_id=a.id) from public.manual_accounts a;").stdout.strip().splitlines()==['t','t']
+print('PASS manual concurrent overdraft/duplicate id and cash-ledger invariants')

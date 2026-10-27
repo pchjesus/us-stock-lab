@@ -79,3 +79,10 @@
 - `src/paperFinance.ts` 에 USD 센트 수수료(요율 basis points, 최소수수료), USD/KRW 고정소수점 환산, KRW 연간 순실현 양도차익 기본공제 250만원+국세 20%/지방세 2% 단순 **예상치**, 미국 주식 일반 배당의 ex-date 보유권리 및 기본 15% 원천세·지급일 예정액 **계산만 구현**.
 - 이 모듈은 기존 `trading.ts`, `paper_order`, `paper_prices`, `paper_snapshot`, RLS, 원장, 장 게이트와 연결되지 않는다. 지금은 수기 주문·수수료 공제·배당금 입금 **동작하지 않음**. 자동 배당에는 확정 공시/서버 Cron/원자적 멱등 분개가 필수.
 - v0.4/v0.5 기존 계좌는 비용 0·합성 체결가·합성 평가 상태 그대로 보존. 수기모드는 **계좌 분리** 후 검증되어야만 실제 사용 가능.
+
+## v0.6-A 수기 주문 서버 체크포인트 — 운영 미적용
+- `202610270004_manual_trading.sql`은 격리 DB에서만 검증한 초안. 별도 manual_accounts/orders/positions/ledger, 사용자당 초기자금 1회. 기존 paper_* RPC/자산/저장 형식은 변경하지 않는다.
+- manual_order(request UUID, JSON)의 필수 8필드: symbol, side, quantity, priceCents, rateBps, minCents, source, observedAt(offset 포함). 사용자 소유자 지정 불가, 양수 정수·상한·출처·관측시각·잔고/보유 검증. 수수료 규칙은 요청과 함께 동결 기록, 매수 원가 포함/매도 실현손익 차감. 서버 수신·체결시각 별도 기록. manual_snapshot은 조회와 계좌 초기화 제공.
+- 계좌 행 잠금, 요청별 멱등/내용 충돌, 기존 서버 시장시간 helper 사용·쓰기 전/후 마감 검사, 원자적 현금/포지션/주문/원장. 금융 직접 쓰기 금지·자기 행 SELECT RLS. 외부 시세/합성 평가값을 이 계좌에 공급하지 않는다.
+- **전체 v0.6 미완료**: 서버 응답 재생 검증/프론트 어댑터·불확실 주문 복구·설정/주문 UI·외부 링크/평가가격·수수료/세금 화면·공식 세법 재검증·배당 공시 관리자/권리/Cron/멱등 지급/정정 감사/알림·신규 전체 통합 및 High 보안 검토가 남았다. 이 단계에서는 신규 기능을 화면에 정상 기능처럼 표시하지 않는다. 운영 migration 적용·main 병합·Pages 배포 없음.
+- 재개: 이 브랜치에서 `VITE_ENABLE_MARKET_FX=true VITE_ENABLE_TREASURY_STATS=true npm run build`, `npm test`, `npm run test:auth`, `python3 scripts/test-server.py`. 다음은 수기 원장 replay 검증/서버 클라이언트와 모드 분리 UI(B/C), 이어 공식 배당 입력/정정 및 서버 예약 지급(D), 세금/환율 증빙(E), 최종 통합/금융 High 검증(F). 운영 반영은 사용자 확인 후 별도 수행.

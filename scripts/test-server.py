@@ -13,6 +13,7 @@ try:
  file('tests/sql/bootstrap.sql')
  for p in sorted((root/'supabase/migrations').glob('*.sql')):sql(p.read_text())
  file('tests/sql/clock-fixture.sql');print(file('tests/sql/server.sql').splitlines()[-1])
+ print('\n'.join(x for x in file('tests/sql/manual.sql').splitlines() if x.startswith('PASS')))
  # Existing concurrent financial regression before any extra boundary trades.
  r=shell(['python3',str(root/'tests/sql/concurrency.py')]);print(r.stdout.strip())
  print(file('tests/sql/market-hours.sql').splitlines()[-1])

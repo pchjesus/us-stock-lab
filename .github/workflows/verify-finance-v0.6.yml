@@ -28,3 +28,4 @@ jobs:
           echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
       - run: npm test
       - run: npm run test:auth
+      - run: python3 scripts/test-server.py

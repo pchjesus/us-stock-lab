@@ -116,3 +116,10 @@
 
 - 검증: GitHub Actions [40436100277](https://github.com/pchjesus/us-stock-lab/actions/runs/40436100277)에서 `npm ci`, `npm run build`, 일반 UI·금융 `78/78 PASS`, 별도 인증·복구 `12/12 PASS` (총 90회 PC/모바일 테스트). 신규 금융 계산 테스트 포함. 첫 실행의 VITE FX 플래그 누락으로 발생한 기존 시장테스트 2개 실패는 CI 설정 보정 후 재검증 완료.
 - 이 개발 브랜치는 main/Pages/Supabase 금융 DB 미반영. 기존 시장 데이터 표시 플래그를 CI에 반영한 것은 검증 환경 변경이며 실서버 주문정책 변경 아님.
+
+## 2026-10-27 · v0.6-A 수기 서버 체크포인트
+- 최신 main e9c4ab1 및 기준 개발 브랜치 34c64c8 비교·설계/계약 확인. 기존 paperFinance 계산 기반 위에 별도 manual 계좌·주문·보유·원장과 manual_snapshot/manual_order 초안 추가. 기존 paper_order/paper_snapshot/시장 게이트/시세·UI 변경 없음.
+- 운영 DB에 migration 미적용. 일회용 PostgreSQL17에서 수수료 포함 원가 140200센트, 부분매도 잔여원가 93467센트/실현 8212센트, 전량매도 현금10024645센트/누적수수료355센트/실현24645센트 정확값 PASS. 장외·재조회/충돌·잔고/수량/가격·A/B 읽기격리·직접쓰기 차단·중간 실패 전체 롤백·동시 과매수/중복ID/현금원장 일치 PASS. 기존 SQL 금융/RLS/DST730일/잠금 마감 회귀 PASS, 컨테이너 정리.
+- 기존 UI 회귀 첫 실행은 기능 플래그 없이 빌드해 FX 표기 2개 실패(76 PASS). 테스트는 수정하지 않고 기존 CI와 같은 FX/통계 활성화 빌드로 재검증. 빌드/타입 PASS. CI에 격리 SQL 실행 추가.
+- 이번 체크포인트는 v0.6 전체 완료가 아니다. 미완료와 재개 명령은 SPEC 마지막 절에 기록. 신규 UI/원장 replay·세금/공식 배당/Cron·실서버 보안/통합 검증 전 운영 DB·main·Pages 변경 금지.
+- 최종 PASS: FX/통계 활성화 TypeScript/Vite 빌드, 일반 78개 + 인증·복구 12개(총90), 추가 격리 manual SQL 금융/동시성/롤백 검사. 신규 수기 UI와 실서버 적용·자동배당·세금 통합은 미구현/미검증.

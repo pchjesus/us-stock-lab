@@ -24,3 +24,21 @@ jobs:
           echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
       - run: npm test
       - run: npm run test:auth
+      - name: Live public-data endpoint smoke (non-financial)
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,urllib.request
+          root="https://vveljtqmujdzkzmoncjx.supabase.co/functions/v1/"
+          for name in ["market-fx","treasury-stats"]:
+              req=urllib.request.Request(root+name,headers={"Accept":"application/json"})
+              with urllib.request.urlopen(req,timeout=20) as resp:
+                  assert resp.status==200,(name,resp.status)
+                  val=json.load(resp)
+              if name=="market-fx":
+                  assert val.get("base")=="USD" and val.get("quote")=="KRW" and 100<float(val["rateDecimal"])<10000
+                  print(name,"PASS",val.get("observedOn"))
+              else:
+                  assert val.get("provider")=="US Treasury FiscalData" and float(val["debtUsd"])>0 and len(val.get("averageRates",[]))>0
+                  print(name,"PASS",val.get("asOfDebt"),val.get("asOfRates"))
+          PY

@@ -41,26 +41,30 @@ export function HostedWidget({type,config,height}:{type:WidgetType;config:Record
 }
 const info=<p className="tv-source-note">실제 시장 참고자료 · TradingView 호스팅 위젯 · 거래소별 지연·표시 제한 가능. 시세 갱신시각은 위젯에서 확인하세요. 아래 가상 주문/수익률은 <strong>별도의 합성가격</strong> 기준이며 이 위젯의 가격으로 체결되지 않습니다.</p>;
 export function LiveTickerTape(){
+ const [open,setOpen]=useState(false);
  return <section className="panel live-market" data-testid="live-stock-board"><div className="section-title"><h2>미국주식·ETF 실제 시세 참고</h2><span>외부 위젯 · 지연 가능</span></div>
   {info}
-  <HostedWidget type="ticker-tape" height={115} config={{
+  <button aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open?'외부 시세 접기':'8개 종목 실제 시장 시세 보기'}</button>
+  {open&&<HostedWidget type="ticker-tape" height={115} config={{
    symbols:Object.values(stockSymbols).map(s=>({proName:s,title:s.split(':')[1]})),
    showSymbolLogo:true,colorTheme:'light',isTransparent:true,displayMode:'adaptive',locale:'ko'
-  }}/>
+  }}/>} 
   <p><a href="https://www.tradingview.com/markets/stocks-usa/" target="_blank" rel="noopener noreferrer">TradingView 미국 주식시장 열기 ↗</a> · 원본 시세를 추출하거나 별도 API로 재배포하지 않습니다.</p>
   <small>TradingView 제공 위젯 및 시세 표시. 로고·출처표시 유지.</small>
  </section>;
 }
 export function LiveIndicesBoard(){
+ const [open,setOpen]=useState(false);
  return <section className="panel live-market" data-testid="live-index-board"><div className="section-title"><h2>미국·한국 주요 지수</h2><span>TradingView 외부 시세 · 지연 가능</span></div>
  {info}
- <HostedWidget type="market-overview" height={480} config={{
+ <button aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open?'외부 지수 시세 접기':'미국·한국 지수 실제 시장 시세 보기'}</button>
+ {open&&<HostedWidget type="market-overview" height={480} config={{
    colorTheme:'light',dateRange:'1M',showChart:true,locale:'ko',width:'100%',height:'100%',isTransparent:true,showSymbolLogo:false,
    tabs:[
     {title:'미국 주요 지수',symbols:indexSymbols.slice(0,3).map(i=>({s:i.symbol,d:i.name}))},
     {title:'한국 주요 지수',symbols:indexSymbols.slice(3).map(i=>({s:i.symbol,d:i.name}))}
    ]
- }}/>
+ }}/>} 
  <div className="tv-index-links">{indexSymbols.map(item=><a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer">{item.name} 원문 ↗</a>)}</div>
  <small>일부 지수는 거래소 정책 때문에 임베드에 제공되지 않을 수 있습니다. 위젯 오류 시 원문에서 확인하세요.</small>
  </section>;

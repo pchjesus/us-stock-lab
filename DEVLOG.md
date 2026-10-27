@@ -179,3 +179,11 @@
 ## 2026-10-27 · v0.7-B0 외부 시세 중복 생성 정리
 - 수기 모드의 숨겨진 ExternalQuotes 인스턴스만 조건부 제거. 합성·수기 모드 각각 DOM 1개 및 기존 외부 링크를 PC/모바일에서 검증. 기존 수기 주문 검토·확정·복구와 CSS 유지.
 - PASS: 활성화 빌드, 일반 118회, 인증/UI 30회, git diff --check. 수기 모드에서 종목 정보와 학습실 링크가 CSS로 숨겨지는 문제는 B2 후속으로 유지. 운영 DB/Cron·main/Pages 변경 없음.
+
+## 2026-10-27 · v0.7-B1 기업정보 데이터 계약
+- B0 CI [40500830334](https://github.com/pchjesus/us-stock-lab/actions/runs/40500830334)의 completed/success 확인 후 구현 시작. 확인 HEAD f5862cb, 작업 트리 clean. 기존 코드는 재작성하지 않고 독립 데이터/검증 모듈과 테스트만 추가.
+- SEC submissions의 공식 name/cik/tickers/sicDescription과 원문 10-K Item1/1A·사업부 정보를 수동 확인. source.checkedAt은 UTC 확인시각, 사용자 날짜는 2026-10-27 KST. 산업명은 SEC SIC 분류이며 현대적 산업 분석 라벨이 아니다. 한국어 사업·위험 요약은 원문 기반 편집 설명이다.
+- 공식 원문/제출일: AAPL [2025-10-31](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm), MSFT [2026-07-29](https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm), NVDA [2026-02-25](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm), AMZN [2026-02-06](https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm), GOOGL [2026-02-05](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm). SEC 프로필 URL/CIK와 원문 locator는 companyProfiles에 함께 보관.
+- 재무 표의 개별 금액/단위/분기, 배당 일정·금액은 미확인으로 명시적으로 비워 두었다. 재무/배당 데이터는 원문 대조 후 출처·기간·정정 관계를 갖춰 추가해야 한다. 테스트의 100.10/20.03 등은 격리 가상 수치이며 실제 기업 보고값이 아니다.
+- B2 준비: 최소 기업 프로필과 검증 API 사용 가능. 전체 실적 화면의 숫자 제공, 가격 의존 비율, ETF 실데이터는 별도 검증 필요. UI/금융/RPC/RLS/SQL/Cron·main/Pages 변경 없음. 전문 계산 재구성이나 추상화 확대는 보류.
+- 최종 검증 PASS: `npm run build`, `npm test` 128회(첫 전체), `npm run test` 130회(정정 계산 이력 테스트 포함 최종 전체), `npm run test:auth` 30회, `git diff --check`. 최종 기업정보 전용 테스트는 6사례×PC/mobile 프로젝트=12회. 금융 코드/SQL 변경 없어 로컬 SQL·Cron 재실행은 생략했으며 B0 CI의 SQL·Cron 성공과 구분한다.

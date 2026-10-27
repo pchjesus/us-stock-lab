@@ -22,11 +22,11 @@ export function FxReferenceCard(){
   return()=>{alive=false;};
  },[endpoint,refresh]);
  return <section className="panel fx-reference" data-testid="fx-reference">
-   <div className="section-title"><h2>USD/KRW · 실제 기준환율</h2><span>{fx?.status==='verified'?'일별 참고환율':endpoint?'조회 불가':'연동 준비 중'}</span></div>
+   <div className="section-title"><h2>USD/KRW · 실제 기준환율</h2><span>{fx?.status==='verified'?'일별 참고환율':endpoint?(error?'조회 불가':'조회 중'):'연동 준비 중'}</span></div>
    {fx?.status==='verified'?<>
     <h3>1 USD = {Number(fx.rateDecimal).toLocaleString('ko-KR',{maximumFractionDigits:4})} KRW</h3>
     <small>Frankfurter 혼합 기준환율 · 기준일 {fx.observedOn} · 조회 {kstTime(fx.fetchedAtUtc)}</small>
-   </>:<p role={error?'alert':undefined}>{error||'확인된 실제 환율이 아직 없습니다.'}</p>}
+   </>:<p role={error?'alert':undefined}>{error||(endpoint?'기준환율 조회 중…':'확인된 실제 환율이 아직 없습니다.')}</p>}
    <p>실시간 환전가격이 아니며, 현재 가상계좌의 KRW 표시·주문 체결·현금원장은 기존 합성 환율과 USD 기준을 유지합니다.</p>
    <a href="https://frankfurter.dev/" target="_blank" rel="noreferrer">Frankfurter 출처 및 기준 확인 ↗</a>
    {endpoint&&<button onClick={()=>setRefresh(n=>n+1)}>기준환율 다시 조회</button>}

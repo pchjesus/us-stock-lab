@@ -180,3 +180,8 @@
 - Alphabet은 연결 Revenues/NetIncomeLoss와 공시 연결 열 희석EPS를 사용한다. GOOGL Class A/GOOG Class C의 개별EPS와 다를 수 있음을 표시한다. 우선주 배당 차감 전 연결순이익을 유지하고 보통주 귀속순이익·if-converted 가산/희석주식 증가와 혼합하지 않는다. CP0은 원문 ixt:fixed-zero/no 및 Company Facts를 대조한 보고값으로 결측 대체가 아니다.
 - 신규 회사별 concept 예외·두 계산 공식만 제한 추가. 기존 원문 verifier/정정 공시 FCF 계약을 보존하고 본문 주석·EPS/차입금 정의와 단위/form/filed까지 대조한다. BigInt 및 독립 Decimal 검산. CompanyDetail/기간 선택/외부 시세/계좌·주문 상태는 재사용한다.
 - Q4/TTM·YTD 분기 전환·EPS 역산 없음. 분기 현금흐름·공식 배당 전체 날짜/금액·영업이익률·PER/PBR/배당수익률은 미제공. 금융 RPC/원장/수수료·배당·세금/RLS/SQL/운영 DB/Cron·main/Pages 변경 없음. B3-C 통합 감사·UI 개편은 별도 후속 범위다.
+
+## v0.7-B3-C 재무정보 통합 감사 (2026-11-01)
+- `docs/company-data/B3_C_INTEGRATION_AUDIT_20261101.md`: 5기업219관측/200원문증거/19계산의 기준 내용 해시 보존, 원문25건·Company Facts·context CIK·기간·단위·FY/FP/frame·공식 계산 전수 재검증. SEC verified 보고값은 evidence 필수. 캐시 누락은 명시적 미수행 오류이며 미래 미검토 정정은 실패 처리한다.
+- CompanyDetail의 긴 회계 정의는 펼침 영역으로, AMZN FCF/GOOGL EPS/NVDA 회계 기준 핵심은 상시 표시한다. 그래프의 비연속 fiscal 기간은 실제 봉만 유지하고 간격·점선·라벨로 구분한다. 0/음수·정확값/단위 및 기존 결측 처리 유지. 금융 가격·주문·원장·학습 데이터와 연결하지 않는다.
+- PC1440/태블릿768/모바일390·320의5기업·3ETF 및 인증 mock 기반 수기 화면, 기존 주문/복구/사용자격리·fixture·SQL/Cron 회귀를 검증한다. main 통합 준비와 운영 배포 준비를 분리한다. v0.6-F 운영004~007/Advisor·백업·allowlist/Cron·실기기 smoke·별도 승인 전 운영 배포 NO-GO. main/Pages·운영 DB 변경 없음.

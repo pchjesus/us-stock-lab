@@ -30,7 +30,7 @@ test('input rejection, storage failure and duplicate click never commit twice',a
  await page.goto('/#portfolio');await page.evaluate(()=>{Storage.prototype.setItem=()=>{throw Error('quota');};});await page.getByRole('button',{name:'계좌 전체 초기화',exact:true}).click();await page.getByLabel('초기화 확인 문구').fill('초기화');await page.getByRole('button',{name:'초기화 확정',exact:true}).click();await expect(page.getByRole('alert')).toContainText('반영하지 않았습니다');await page.reload();await expect(page.locator('.holding')).toContainText('2주');
 });
 test('corrupt data preserved, blocked orders and explicit recovery',async({page})=>{
- await page.goto('/');await page.evaluate(k=>localStorage.setItem(k,'broken account'),accountKey);await page.reload();await expect(page.getByRole('alert')).toContainText('손상');
+ await page.goto('/');await page.evaluate(k=>localStorage.setItem(k,'broken account'),accountKey);await page.reload();await expect(page.getByRole('alert').filter({hasText:'저장된 가상계좌'})).toContainText('손상');
  await page.goto('/#stock/AAPL');await expect(page.getByRole('button',{name:'주문 검토',exact:true})).toBeDisabled();expect(await page.evaluate(k=>localStorage.getItem(k),accountKey)).toBe('broken account');
  await page.goto('/#portfolio');await page.getByRole('button',{name:'계좌 전체 초기화',exact:true}).click();await page.getByLabel('초기화 확인 문구').fill('초기화');await page.getByRole('button',{name:'초기화 확정',exact:true}).click();await expect(page.getByTestId('cash')).toHaveText('$100,000.00');
 });

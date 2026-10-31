@@ -7,12 +7,17 @@ from decimal import Decimal
 from lxml import html
 parser=argparse.ArgumentParser();parser.add_argument('--cache-dir',type=pathlib.Path,required=True);cache=parser.parse_args().cache_dir
 root=pathlib.Path(__file__).resolve().parents[1]
-data=json.loads((root/'src/companyFinancials.json').read_text());proof={r['id']:r for r in json.loads((root/'tests/fixtures/company-financial-evidence.json').read_text())}
+data=json.loads((root/'src/companyFinancials.json').read_text());records=json.loads((root/'tests/fixtures/company-financial-evidence.json').read_text());proof={r['id']:r for r in records}
+assert len(proof)==len(records),'Duplicate evidence ID'
+required=[cache/f"{c['symbol']}-{kind}.json" for c in data for kind in ['submissions','facts']]+[cache/f"{c['symbol']}-{s['accession']}.htm" for c in data for s in c['sources']]
+missing=[str(p) for p in required if not p.is_file()]
+if missing:parser.error('Missing official cache files (verification NOT performed): '+', '.join(missing))
 def name(e):return e.tag.split(':')[-1].lower() if isinstance(e.tag,str) else ''
 count=0;calculations=0
 assert {f['id'] for c in data for f in c['financials'] if f['origin']['kind']=='reported'}==set(proof),'Evidence coverage mismatch'
 for company in data:
  start_count,start_calculations=count,calculations
+ assert len({f['id'] for f in company['financials']})==len(company['financials']),'Duplicate observation ID'
  symbol=company['symbol'];sources={s['id']:s for s in company['sources']};facts={f['id']:f for f in company['financials']};documents={}
  submissions=json.loads((cache/f'{symbol}-submissions.json').read_text())['filings']['recent']
  eligible=[i for i,f in enumerate(submissions['form']) if f in ['10-K','10-Q','10-K/A','10-Q/A'] and submissions['filingDate'][i]<=company['asOf']]
@@ -22,9 +27,14 @@ for company in data:
  assert not any(submissions['form'][i].endswith('/A') and submissions['reportDate'][i] in {f['period']['end'] for f in facts.values()} for i in eligible),'Review amendments before acceptance'
  xbrl=json.loads((cache/f'{symbol}-facts.json').read_text(),parse_float=Decimal)['facts']['us-gaap']
  for f in facts.values():
+  assert f['status']=='verified' and f['currency']=='USD' and f['unit']==('USD/share' if f['metric']=='dilutedEps' else 'USD'),'Invalid fact status/unit'
   if f['origin']['kind']=='calculated':
    inputs=[facts[i] for i in f['origin']['inputIds']];vals=[Decimal(i['value']) for i in inputs]
-   result=vals[0]-vals[1] if f['metric'] in ['freeCashFlow','liabilities'] else sum(vals)
+   contracts={'operatingCashFlow - capitalExpenditure':('freeCashFlow',['operatingCashFlow','capitalExpenditure']),'assets - equity':('liabilities',['assets','equity']),'debtCurrent + debtNoncurrent + commercialPaper':('debt',['debtCurrent','debtNoncurrent','commercialPaper']),'debtCurrent + debtNoncurrent + shortTermBorrowings':('debt',['debtCurrent','debtNoncurrent','shortTermBorrowings'])}
+   metric,components=contracts[f['origin']['formula']];assert f['metric']==metric and [i['metric'] for i in inputs]==components
+   assert all(i['status']=='verified' and i['origin']['kind']=='reported' and i['unit']=='USD' and i['currency']=='USD' for i in inputs)
+   if metric=='freeCashFlow':assert vals[1]>=0
+   result=vals[0]-vals[1] if metric in ['freeCashFlow','liabilities'] else sum(vals)
    assert result==Decimal(f['value']);assert all(i['period']==f['period'] for i in inputs);calculations+=1;continue
   source=sources[f['sourceId']];e=f['evidence'];p=proof[f['id']];assert source['filedAt']<=company['asOf'] and e['accession']==source['accession']
   key=source['accession']
@@ -45,6 +55,7 @@ for company in data:
    if v==Decimal(f['value']):
     assert Decimal(raw_value)*sign==Decimal(e['rawValue']) and int(n.get('scale','0'))==e['scale']
     context=tree.xpath('//*[@id=$id]',id=e['contextRef'])[0];dates={name(c):c.text for c in context.iter() if name(c) in ['startdate','enddate','instant']}
+    identifier=next(c for c in context.iter() if name(c)=='identifier');assert int(identifier.text)=={'AAPL':320193,'MSFT':789019,'NVDA':1045810,'AMZN':1018724,'GOOGL':1652044}[symbol]
     assert not any(name(c) in ['explicitmember','typedmember'] for c in context.iter())
     assert dates.get('enddate',dates.get('instant'))==f['period']['end'] and dates.get('startdate',dates.get('instant'))==f['period']['start']
     unit=tree.xpath('//*[@id=$id]',id=n.get('unitref'))[0];unit_text=''.join(unit.itertext());assert 'USD' in unit_text and ('shares' in unit_text)==(f['unit']=='USD/share') and ' '.join(unit_text.split())==p['htmlUnit']

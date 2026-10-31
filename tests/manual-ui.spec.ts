@@ -45,3 +45,14 @@ test('successful HTTP without matching fill never reports success or clears pend
 test('server CAS race rejects confirmation, refreshes account and preserves input',async({page})=>{
  const f=await setup(page);await form(page);await expect(page.getByLabel('수수료율 (bp)',{exact:true})).toBeDisabled();await expect(page.getByLabel('최소 수수료 (USD)',{exact:true})).toBeDisabled();await page.getByRole('button',{name:'수기 주문 검토',exact:true}).click();f.race();await page.getByRole('button',{name:'수기 체결 확정',exact:true}).click();await expect(page.getByRole('alert').filter({hasText:'account_revision_conflict'})).toBeVisible();await expect(page.getByTestId('manual-cash')).toHaveText('$99,899.90');await expect(page.getByLabel('수기 USD 단가',{exact:true})).toHaveValue('100');expect(await page.evaluate(uid=>localStorage.getItem('us-stock.manual.pending.v1.'+uid),uid)).toBeNull();await expect(page.getByRole('status').filter({hasText:'원장 저장 완료'})).toHaveCount(0);
 });
+
+for(const width of [1440,768,390,320])test(`financial audit manual detail isolation at ${width}px`,async({page})=>{
+ const f=await setup(page);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewportSize({width,height:950});await form(page);
+ for(const symbol of ['AAPL','MSFT','NVDA','AMZN','GOOGL','VOO','QQQ','SCHD']){
+  await page.goto('/#stock/'+symbol);await expect(page.getByLabel('계좌 화면 모드')).toHaveValue('manual');await expect(page.getByTestId('manual-cash')).toHaveText('$100,000.00');await expect(page.locator('section:has(> h2:text-is("외부 시세 확인"))')).toHaveCount(1);
+  await page.getByLabel('수기 USD 단가',{exact:true}).fill('123.45');
+  if(!['VOO','QQQ','SCHD'].includes(symbol)){await page.getByRole('button',{name:'분기',exact:true}).click();await page.getByRole('button',{name:'연간',exact:true}).click();await expect(page.getByRole('img',{name:'검증된 매출 실적 그래프'})).toBeVisible();}
+  await expect(page.getByLabel('수기 USD 단가',{exact:true})).toHaveValue('123.45');await expect(page.getByRole('link',{name:'차트 학습실에서 연습하기 →'})).toHaveAttribute('href','#learn/'+symbol);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ }
+ expect(f.count).toBe(0);expect(errors).toEqual([]);expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBeNull();
+});

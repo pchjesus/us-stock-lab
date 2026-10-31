@@ -219,3 +219,11 @@
 - 중간 영향 검사에서 임시 추가한 동일문서 조건이 기존 정정 OCF+기존 Capex 재사용을 거절한2회 실패를 재현했다. 테스트를 바꾸지 않고 새 조건을 신규 재무상태 계산에만 한정해 호환성 복구. 이후 영향60/60 및 최종 회귀 전부 PASS. 기존 빈자료 기대는 AMZN/GOOGL의 실제 값 검증으로 전환했으며 가상 실적 fixture/결측/YTD/ETF 검사는 유지했다.
 - 로컬 실제 PASS: 활성화 TypeScript/Vite build; npm test PC·모바일178/178; npm run test:auth30/30; npx playwright test --config playwright.company-dev.config.ts2/2; python3 scripts/verify-company-evidence.py --cache-dir /tmp/us-b3(200보고/19계산); git diff --check(신규 파일 포함). 별도1440/390px Chromium 화면의 두 기업 자료/가로넘침/런타임오류 확인. 기존 bundle 크기 경고는 유지되며 앱 의존성 추가 없음.
 - 기존 finance-safe CI 워크플로 유지. 금융 SQL/RPC·원장·수수료/배당/세금·RLS/SQL migration 변경 없어 로컬 DB 재실행은 생략; 푸시 후 신규 CI의 실제 SQL/Cron 결과를 최종 보고에서 과거 기준 CI와 구분한다. 운영 Supabase/Cron·main·Pages 변경 없음. 배당 전체 공시/분기 현금흐름/Q4·TTM/영업이익률·주가 의존 지표 미제공. B3-C5기업 통합 감사/추가 UI 개편은 후속 작업으로 남긴다.
+
+## 2026-11-01 · v0.7-B3-C 통합 감사·안정화
+- 기준/원격efe4b02 및 CI41223806332 SUCCESS 확인. 5기업219관측/200증거의 전체 내용 SHA256 고정·불변 확인. 기존 원문 캐시25 HTML+10 SEC JSON을 사용해200보고/19계산을 다시 대조·독립 Decimal 검산했다. 신규 CIK/context·공식/입력 metric·중복 ID·단위/상태 검사와 캐시 사전 검사도 PASS. 없는 캐시 경로는 명시적 미수행 exit2로 실패.
+- Medium: SEC verified 보고값의 evidence 누락을 도메인 검증이 허용하던 경로 차단. 기존 비SEC fixture/정정 계약 보존. 계산 검증기 기본 sum 처리 대신 정확한 허용 공식·입력·양수Capex 검사 보강. 실제 데이터 오류/수정은0건, 금융 RPC/원장/RLS/SQL·가격·모의주문 데이터 변경 없음.
+- Low: FinancialGraph로 기존 그래프 표시만 분리, 비연속 fiscal 기간에 간격·점선·미제공 라벨(가상 막대 없음), FY/Q 두 줄과0 기준선/음수/0 표시·정확값 title 보강. 긴 기업별 회계 정의는 details, 핵심 EPS/FCF/분할 기준은 상시 표시. 모바일 정확값 줄바꿈 CSS만 보강.
+- 실제 PASS: 활성화 npm run build, 영향44/44, 최종 npm test190/190, npm run test:auth38/38, dev fixture2/2, 원문200보고/19계산, 신규 파일 포함 diff 검사. 초기 전체189 PASS/1 FAIL은 외부 재무부 오류+계좌 손상 alert 선택자 충돌; 계좌 알림을 구체적으로 지정하고 전체190개 재실행 PASS. 기존 기능/검증을 삭제하거나 오류 알림을 숨기지 않았다.
+- 1440/768/390/320폭에서5기업·3ETF의 합성/인증 mock 수기 화면, 연간·분기/실제 표시값·출처·계산근거·외부시세1개·학습실 링크/가로폭/런타임오류 검사 PASS. 수기 USD직접입력 가격 불변, 신규 주문0/합성 원장 미생성 검사. GOOGL 그래프4폭 캡처 시각 확인. 운영 Auth·물리 기기/외부 사이트 가용성은 미검증.
+- 감사 보고: docs/company-data/B3_C_INTEGRATION_AUDIT_20261101.md. 원격main35d37cd는 개발 HEAD의 조상, Pages는 manual dispatch. 최종 CI 성공 조건으로 코드·재무 통합 PASS/main 병합 준비 GO(실행은 안 함). 운영 배포는 v0.6-F004~007/Advisor·백업·allowlist/Cron·두 초대 계정/실기기 smoke·별도 승인 미완료로 NO-GO 유지. main/Pages·운영 DB/Cron 미변경. finance-safe 기존 SQL/Cron은 푸시 후 신규 CI의 실제 결과를 최종 보고에서 구분한다.

@@ -24,13 +24,13 @@ for company in data:
  for f in facts.values():
   if f['origin']['kind']=='calculated':
    inputs=[facts[i] for i in f['origin']['inputIds']];vals=[Decimal(i['value']) for i in inputs]
-   result=vals[0]-vals[1] if f['metric']=='freeCashFlow' else sum(vals)
+   result=vals[0]-vals[1] if f['metric'] in ['freeCashFlow','liabilities'] else sum(vals)
    assert result==Decimal(f['value']);assert all(i['period']==f['period'] for i in inputs);calculations+=1;continue
   source=sources[f['sourceId']];e=f['evidence'];p=proof[f['id']];assert source['filedAt']<=company['asOf'] and e['accession']==source['accession']
   key=source['accession']
   if key not in documents:
    raw=(cache/f'{symbol}-{key}.htm').read_bytes();documents[key]=(html.fromstring(raw),hashlib.sha256(raw).hexdigest())
-  tree,digest=documents[key];assert digest==p['documentSha256'];assert p['url']==source['url'] and p['accession']==key
+  tree,digest=documents[key];assert digest==p['documentSha256'];assert p['url']==source['url'] and p['accession']==key and p['filed']==source['filedAt'] and p['unit']==e['unit']
   fy=tree.xpath('//*[@name="dei:DocumentFiscalYearFocus"]');fp=tree.xpath('//*[@name="dei:DocumentFiscalPeriodFocus"]')
   assert fy and fp and int(''.join(fy[0].itertext()).strip())==e['reportFiscalYear'] and ''.join(fp[0].itertext()).strip()==e['reportFiscalPeriod']
   nodes=tree.xpath('//*[@name=$concept and @contextref=$context]',concept=e['concept'],context=e['contextRef']);assert nodes
@@ -38,6 +38,8 @@ for company in data:
   for n in nodes:
    if any(name(a)=='hidden' for a in n.iterancestors()):continue
    raw_value=''.join(n.itertext()).strip().replace(',','').replace('$','');sign=-1 if n.get('sign')=='-' else 1
+   if e.get('transformation')=='ixt:fixed-zero':
+    assert symbol=='GOOGL' and f['metric']=='commercialPaper' and n.get('format')=='ixt:fixed-zero' and raw_value=='no';raw_value='0'
    try:v=Decimal(raw_value)*Decimal(10)**int(n.get('scale','0'))*sign
    except Exception:continue
    if v==Decimal(f['value']):
@@ -45,12 +47,20 @@ for company in data:
     context=tree.xpath('//*[@id=$id]',id=e['contextRef'])[0];dates={name(c):c.text for c in context.iter() if name(c) in ['startdate','enddate','instant']}
     assert not any(name(c) in ['explicitmember','typedmember'] for c in context.iter())
     assert dates.get('enddate',dates.get('instant'))==f['period']['end'] and dates.get('startdate',dates.get('instant'))==f['period']['start']
-    unit=tree.xpath('//*[@id=$id]',id=n.get('unitref'))[0];unit_text=''.join(unit.itertext());assert 'USD' in unit_text and ('shares' in unit_text)==(f['unit']=='USD/share')
-    row=next(a for a in n.iterancestors() if name(a)=='tr');assert ' '.join(''.join(row.itertext()).split())==p['tableRow'];matched=True;break
+    unit=tree.xpath('//*[@id=$id]',id=n.get('unitref'))[0];unit_text=''.join(unit.itertext());assert 'USD' in unit_text and ('shares' in unit_text)==(f['unit']=='USD/share') and ' '.join(unit_text.split())==p['htmlUnit']
+    row=next((a for a in n.iterancestors() if name(a)=='tr'),None)
+    # Amazon's short-term borrowing balance is disclosed in a visible prose note.
+    if row is None and symbol=='AMZN' and f['metric']=='shortTermBorrowings' and e['concept']=='us-gaap:ShortTermBorrowings':row=next(a for a in n.iterancestors() if name(a)=='div')
+    if row is None and symbol=='GOOGL' and f['metric']=='commercialPaper' and e.get('transformation')=='ixt:fixed-zero':row=next(a for a in n.iterancestors() if name(a)=='div')
+    assert row is not None and ' '.join(''.join(row.itertext()).split())==p['tableRow'];matched=True;break
   assert matched
-  cf=[r for r in xbrl[e['concept'].split(':')[1]]['units'][e['unit']] if r['accn']==key and r['end']==f['period']['end'] and r.get('start',r['end'])==f['period']['start'] and Decimal(str(r['val']))==Decimal(f['value']) and r['filed']==source['filedAt'] and r['fy']==e['reportFiscalYear'] and r['fp']==e['reportFiscalPeriod'] and r.get('frame')==e['frame']];assert cf
+  cf=[r for r in xbrl[e['concept'].split(':')[1]]['units'][e['unit']] if r['accn']==key and r['form']==source['form'] and r['end']==f['period']['end'] and r.get('start',r['end'])==f['period']['start'] and Decimal(str(r['val']))==Decimal(f['value']) and r['filed']==source['filedAt'] and r['fy']==e['reportFiscalYear'] and r['fp']==e['reportFiscalPeriod'] and r.get('frame')==e['frame']];assert cf
   assert Decimal(p['xbrlValue'])==Decimal(p['htmlNormalizedValue'])==Decimal(f['value']);count+=1
  if symbol=='NVDA':
   notes=json.loads((root/'tests/fixtures/nvda-report-notes.json').read_text());tree,digest=documents[notes['accession']];assert digest==notes['documentSha256'];text=' '.join(tree.text_content().split());assert all(q in text for q in notes['quotes']),'Missing split/Capex source notes'
+ if symbol in ['AMZN','GOOGL']:
+  notes=[n for n in json.loads((root/'tests/fixtures/amazon-alphabet-report-notes.json').read_text()) if n['symbol']==symbol];assert notes,'Missing company-specific definition evidence'
+  for note in notes:
+   tree,digest=documents[note['accession']];assert digest==note['documentSha256'];text=' '.join(tree.text_content().split());assert all(q in text for q in note['quotes']),'Missing Capex/debt/EPS definition evidence'
  print('PASS',symbol,f'{count-start_count} original facts / {calculations-start_calculations} calculations: documents, periods, units, focus/frame and independent Decimal calculations')
 print(f'PASS {count} reported facts / {calculations} calculations; cached originals + Company Facts match')

@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "AMZN",
+    "accession": "0001018724-26-000004",
+    "documentSha256": "4807c682c335a47b30c1911e48fcc7bfda135677cf29dca52660dce2b5932e74",
+    "quotes": [
+      "Purchases of property and equipment(52,729)(82,999)(131,819)",
+      "Property and equipment acquired under finance leases, net of remeasurements and modifications642 854 2,911",
+      "Free cash flow$38,219 $11,194"
+    ]
+  },
+  {
+    "symbol": "AMZN",
+    "accession": "0001018724-26-000040",
+    "documentSha256": "7bd0eb2174fa15e5ad97323465155e665cf989f60b6c66698f13bde143640f4f",
+    "quotes": [
+      "Total face value of long-term debt68,836 180,887",
+      "Unamortized discount and issuance costs, net(440)(935)",
+      "Less: current portion of long-term debt(2,748)(6,827)",
+      "Total current liabilities218,005 257,982",
+      "Long-term lease liabilities87,339 98,824",
+      "Other long-term liabilities35,985 99,858",
+      "There were no borrowings outstanding under the Commercial Paper Programs as of December 31, 2025 and September 30, 2026.",
+      "There were $455 million and $380 million of borrowings outstanding under these facilities as of December 31, 2025 and September 30, 2026, which were included in “Accrued expenses and other” on our consolidated balance sheets."
+    ]
+  },
+  {
+    "symbol": "GOOGL",
+    "accession": "0001652044-26-000018",
+    "documentSha256": "4c2c70bdf3a41acf97d7e8ded47e4da4d4755ef9fa1a8d5dbd47d34cae8bcb46",
+    "quotes": [
+      "Diluted net income per share$10.82 $10.81 $10.80 $10.81",
+      "Purchases of property and equipment(32,251)(52,535)(91,447)"
+    ]
+  },
+  {
+    "symbol": "GOOGL",
+    "accession": "0001652044-26-000084",
+    "documentSha256": "bb03749202b4f1a27dd8bf8e6ed8fa651b9c33c245ba25ad78f346a2b5490f18",
+    "quotes": [
+      "Net income34,979 26,468 97,715 201,239",
+      "Preferred stock dividends0 298 0 384",
+      "Net income available to common stockholders$34,979 $26,170 $97,715 $200,855",
+      "Diluted net income per common share$2.87 $2.87 $2.86 $2.87 $2.12 $2.12 $2.11 $2.12",
+      "Conversion of preferred stock(2)0 0 0 0 12 0 12 24",
+      "Number of shares used in per share computation6,674 852 5,556 12,230 6,692 834 5,632 12,324",
+      "Pursuant to the if-converted method, preferred dividends are added back and preferred shares are assumed to have been converted to common shares only if they have a dilutive effect on net income per common share.",
+      "Total face value of long-term debt49,085 127,485",
+      "Unamortized discount and debt issuance costs(2)(542)(1,110)",
+      "Hedge accounting fair value adjustments(3)0 (257)",
+      "Less: current portion of long-term notes(4)(1,996)(1,016)",
+      "Total long-term debt$46,547 $125,102",
+      "We had no commercial paper outstanding as of December 31, 2025 and September 30, 2026.",
+      "Marketable securities96,135 208,764"
+    ]
+  }
+]

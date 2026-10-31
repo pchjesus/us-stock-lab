@@ -274,7 +274,7 @@ for(const data of financialData){
  profile.sources.push(...data.sources as CompanyProfile['sources']);
  profile.financials=data.financials as CompanyProfile['financials'];
  profile.financialAsOf=data.asOf;
- profile.financialCoverage={status:'partial',reason:data.symbol==='NVDA'?'FY2024~2026 및 직접 보고된 10-Q 4개 분기. 공시의 분할 반영 GAAP EPS 사용. 현금 Capex는 공시의 설비·무형자산 지출이며 Q4 역산·분기 현금흐름·배당 미제공.':'최근 연간 3개년·직접 보고된 10-Q 4개 분기 및 최신 재무상태 확인. Q4 역산·분기 현금흐름·배당 미제공.'};
+ profile.financialCoverage={status:'partial',reason:data.symbol==='GOOGL'?'FY2023~2025 및 직접 보고된 10-Q 4개 분기. 순이익은 우선주 배당 차감 전 연결값입니다. 희석 EPS는 클래스별 값이 아닌 공시 연결 열로, 우선주 전환 효과를 반영합니다. Q4 역산·분기 현금흐름·배당 미제공.':data.symbol==='AMZN'?'FY2023~2025 및 직접 보고된 10-Q 4개 분기. 현금 Capex는 설비취득 현금총액이며 매각대금·인센티브 차감 전입니다. 앱 FCF는 회사 발표 정의와 다릅니다. 부채=자산−자기자본, 차입금=유동+비유동 장부가액+단기 차입금(리스 제외) 계산. Q4 역산·분기 현금흐름·배당 미제공.':data.symbol==='NVDA'?'FY2024~2026 및 직접 보고된 10-Q 4개 분기. 공시의 분할 반영 GAAP EPS 사용. 현금 Capex는 공시의 설비·무형자산 지출이며 Q4 역산·분기 현금흐름·배당 미제공.':'최근 연간 3개년·직접 보고된 10-Q 4개 분기 및 최신 재무상태 확인. Q4 역산·분기 현금흐름·배당 미제공.'};
 }
 companyProfiles.forEach(validateCompany);
 export function findCompanyProfile(symbol:string){return companyProfiles.find(p=>p.symbol===symbol)??null;}

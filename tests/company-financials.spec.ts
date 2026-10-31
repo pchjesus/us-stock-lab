@@ -31,8 +31,8 @@ test('FCF, corrected latest observations and income periods remain coherent',()=
  }
  const p=structuredClone(findCompanyProfile('AAPL')!),f=latestFinancialFact(p,'revenue','annual')!,source=p.sources.find(s=>s.id===f.sourceId)!;p.sources.push({...source,id:'test-amendment',form:'10-K/A',accession:undefined,amends:source.id});p.financials.push({...f,id:'test-corrected',value:'1',evidence:undefined,sourceId:'test-amendment',supersedes:f.id});validateCompany(p);expect(latestFinancialFact(p,'revenue','annual')!.value).toBe('1');
 });
-test('incorrect evidence and debt calculations fail safely; remaining companies stay unreviewed',()=>{
+test('incorrect evidence and debt calculations fail safely; all dividends stay unreviewed',()=>{
  for(const mutate of [(p:any)=>p.financials[0].evidence.scale=3,(p:any)=>p.financials[0].evidence.unit='USD/shares',(p:any)=>p.financials[0].evidence.concept='us-gaap:NetIncomeLoss',(p:any)=>p.sources.at(-1).filedAt='2026-11-02',(p:any)=>p.financials.find((f:any)=>f.metric==='debt').value='275746000000']){const p=structuredClone(findCompanyProfile('AAPL')!);mutate(p);expect(()=>validateCompany(p)).toThrow();}
- for(const symbol of ['AMZN','GOOGL']){const p=findCompanyProfile(symbol)!;expect(p.financials).toEqual([]);expect(p.financialCoverage.status).toBe('not-reviewed');expect(p.financialAsOf).toBeUndefined();}for(const p of companyProfiles)expect(p.dividends.status).toBe('not-reviewed');for(const s of ['VOO','QQQ','SCHD'])expect(findCompanyProfile(s)).toBeNull();
+ for(const symbol of ['AMZN','GOOGL']){const p=findCompanyProfile(symbol)!;expect(p.financials.length).toBeGreaterThan(0);expect(p.financialCoverage.status).toBe('partial');expect(p.financialAsOf).toBe('2026-11-01');}for(const p of companyProfiles)expect(p.dividends.status).toBe('not-reviewed');for(const s of ['VOO','QQQ','SCHD'])expect(findCompanyProfile(s)).toBeNull();
  expect(financialValueText(latestFinancialFact(findCompanyProfile('AAPL')!,'revenue','annual')!)).toBe('416,161 백만 USD · 정확값 416161000000 USD');
 });

@@ -34,13 +34,13 @@ test('NVIDIA concepts are company-specific and all evidence remains exact',()=>{
  const bad=structuredClone(p);bad.financials.find(f=>f.metric==='revenue')!.evidence!.concept='us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax';expect(()=>validateCompany(bad)).toThrow();
  const apple=structuredClone(findCompanyProfile('AAPL')!);apple.financials.find(f=>f.metric==='revenue')!.evidence!.concept='us-gaap:Revenues';expect(()=>validateCompany(apple)).toThrow();
 });
-test('all B3-A data and original evidence are unchanged and other companies stay unreviewed',()=>{
+test('all B3-A data and original evidence are unchanged and dividends stay unreviewed',()=>{
  const hash=(value:unknown)=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
  const old=data.filter(p=>['AAPL','MSFT'].includes(p.symbol)),oldProof=proof.filter(p=>p.id.startsWith('AAPL-')||p.id.startsWith('MSFT-'));
  expect(old.reduce((s,p)=>s+p.financials.length,0)).toBe(87);expect(oldProof).toHaveLength(80);
  // Digests taken from verified baseline 3e75bb4 before adding NVIDIA.
  expect(hash(old)).toBe('b968443afb28668c72327eb8c680923fd7b3c92c1c754585315fa00e0c9f22dc');expect(hash(oldProof)).toBe('7b0ecc243901c1f8d3a5d04bf964cba3bc2b36aa059debe3cdbd3bed8754d3ea');
- for(const symbol of ['AMZN','GOOGL']){const other=findCompanyProfile(symbol)!;expect(other.financials).toEqual([]);expect(other.financialCoverage.status).toBe('not-reviewed');}expect(p.dividends.status).toBe('not-reviewed');
+ for(const symbol of ['AMZN','GOOGL']){const other=findCompanyProfile(symbol)!;expect(other.financials.length).toBeGreaterThan(0);expect(other.financialCoverage.status).toBe('partial');}expect(p.dividends.status).toBe('not-reviewed');
 });
 test('NVIDIA UI reflects verified source periods without changing account storage',async({page})=>{
  await page.goto('/#stock/NVDA');const before=await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'));await expect(page.getByTestId('financial-revenue')).toContainText('215938000000 USD');await expect(page.getByTestId('financial-freeCashFlow')).toContainText('96676000000 USD');await expect(page.getByTestId('financial-dilutedEps')).toContainText('4.90 USD/share');await expect(page.getByTestId('financial-debt')).toContainText('33366000000 USD');

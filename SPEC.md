@@ -173,3 +173,10 @@
 - NVIDIA의 revenue=Revenues, capitalExpenditure=PaymentsToAcquireProductiveAssets만 기업별 매핑으로 추가했다. 후자는 공시의 설비·무형자산 현금 지출이며 인수·증권 매수·전체 투자활동 지출과 다르다. 다른 기업의 concept 규칙은 변경하지 않는다.
 - FY2026 10-K의 EPS 비교 열과10:1 분할 소급 반영 문구를 원문·해시로 검증했다. 선택3개 연도는52주이며 FY2027 Q2는 달력2026-07-26 종료다. 현금22,443백만USD/시장성증권, 총부채91,288백만USD/차입금33,366백만USD를 구분한다. 차입금은 debt note의 Net carrying amount 보고값이다.
 - 기존 Apple·Microsoft87개 관측/80개 원문 근거의 내용 해시를 보존한다. 기존 원문 스크립트 전수 검사에 NVIDIA와 분할/Capex 인용문 검사를 추가했다. 기존 CompanyDetail/기간 선택을 그대로 사용한다. AMZN·GOOGL, 배당 상세·영업이익률·주가 의존 지표는 미검토/미제공 유지. 운영 DB/금융 RPC/RLS/SQL/Cron·main/Pages 및 B3-B2·5기업 통합 감사는 변경/수행하지 않는다.
+
+## v0.7-B3-B2 Amazon·Alphabet 공식 재무자료 (기준 2026-11-01)
+- 근거·최신 공시·계산·예외: `docs/company-data/B3_B2_AMAZON_ALPHABET_20261101.md`. 두 기업 FY2023~25 연간3개년, FY2025Q3/FY2026Q1~Q3 직접 단독분기 및2026-09-30 재무상태를 추가한다. AMZN보고40+계산5, GOOGL보고41+계산4; 기존129개 관측과119개 원문증거 내용 해시를 보존한다.
+- Amazon 현금Capex는 gross 설비취득 PaymentsToAcquireProductiveAssets. 앱 FCF=OCF−현금Capex로 회사 발표(매각대금·인센티브 차감)와 정의가 다름을 표시한다. 총부채는 검증된 자산−자기자본, 차입금은 유동+비유동 장부가액+본문 확인 단기차입380백만USD(리스 제외)로 계산하며 원금과 구분한다.
+- Alphabet은 연결 Revenues/NetIncomeLoss와 공시 연결 열 희석EPS를 사용한다. GOOGL Class A/GOOG Class C의 개별EPS와 다를 수 있음을 표시한다. 우선주 배당 차감 전 연결순이익을 유지하고 보통주 귀속순이익·if-converted 가산/희석주식 증가와 혼합하지 않는다. CP0은 원문 ixt:fixed-zero/no 및 Company Facts를 대조한 보고값으로 결측 대체가 아니다.
+- 신규 회사별 concept 예외·두 계산 공식만 제한 추가. 기존 원문 verifier/정정 공시 FCF 계약을 보존하고 본문 주석·EPS/차입금 정의와 단위/form/filed까지 대조한다. BigInt 및 독립 Decimal 검산. CompanyDetail/기간 선택/외부 시세/계좌·주문 상태는 재사용한다.
+- Q4/TTM·YTD 분기 전환·EPS 역산 없음. 분기 현금흐름·공식 배당 전체 날짜/금액·영업이익률·PER/PBR/배당수익률은 미제공. 금융 RPC/원장/수수료·배당·세금/RLS/SQL/운영 DB/Cron·main/Pages 변경 없음. B3-C 통합 감사·UI 개편은 별도 후속 범위다.

@@ -4494,5 +4494,3122 @@
     }
    }
   ]
+ },
+ {
+  "symbol": "AMZN",
+  "asOf": "2026-11-01",
+  "sources": [
+   {
+    "id": "sec-0001018724-26-000004",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+    "accession": "0001018724-26-000004",
+    "form": "10-K",
+    "filedAt": "2026-02-06",
+    "checkedAt": "2026-10-31T17:07:05.899601+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001018724-26-000040",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+    "accession": "0001018724-26-000040",
+    "form": "10-Q",
+    "filedAt": "2026-10-30",
+    "checkedAt": "2026-10-31T17:07:05.899601+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001018724-26-000026",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+    "accession": "0001018724-26-000026",
+    "form": "10-Q",
+    "filedAt": "2026-07-31",
+    "checkedAt": "2026-10-31T17:07:05.899601+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001018724-26-000014",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000014/amzn-20260331.htm",
+    "accession": "0001018724-26-000014",
+    "form": "10-Q",
+    "filedAt": "2026-04-30",
+    "checkedAt": "2026-10-31T17:07:05.899601+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001018724-25-000123",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000123/amzn-20250930.htm",
+    "accession": "0001018724-25-000123",
+    "form": "10-Q",
+    "filedAt": "2025-10-31",
+    "checkedAt": "2026-10-31T17:07:05.899601+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   }
+  ],
+  "financials": [
+   {
+    "id": "AMZN-revenue-annual-2023-12-31",
+    "metric": "revenue",
+    "value": "574785000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-8",
+     "rawValue": "574785",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-revenue-annual-2024-12-31",
+    "metric": "revenue",
+    "value": "637959000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-4",
+     "rawValue": "637959",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-revenue-annual-2025-12-31",
+    "metric": "revenue",
+    "value": "716924000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "716924",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-operatingIncome-annual-2023-12-31",
+    "metric": "operatingIncome",
+    "value": "36852000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-8",
+     "rawValue": "36852",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-operatingIncome-annual-2024-12-31",
+    "metric": "operatingIncome",
+    "value": "68593000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-4",
+     "rawValue": "68593",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-operatingIncome-annual-2025-12-31",
+    "metric": "operatingIncome",
+    "value": "79975000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "79975",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-netIncome-annual-2023-12-31",
+    "metric": "netIncome",
+    "value": "30425000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-8",
+     "rawValue": "30425",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-netIncome-annual-2024-12-31",
+    "metric": "netIncome",
+    "value": "59248000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-4",
+     "rawValue": "59248",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-netIncome-annual-2025-12-31",
+    "metric": "netIncome",
+    "value": "77670000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "77670",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-dilutedEps-annual-2023-12-31",
+    "metric": "dilutedEps",
+    "value": "2.90",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-8",
+     "rawValue": "2.90",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-dilutedEps-annual-2024-12-31",
+    "metric": "dilutedEps",
+    "value": "5.53",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-4",
+     "rawValue": "5.53",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-dilutedEps-annual-2025-12-31",
+    "metric": "dilutedEps",
+    "value": "7.17",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "7.17",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-operatingCashFlow-annual-2023-12-31",
+    "metric": "operatingCashFlow",
+    "value": "84946000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-8",
+     "rawValue": "84946",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-operatingCashFlow-annual-2024-12-31",
+    "metric": "operatingCashFlow",
+    "value": "115877000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-4",
+     "rawValue": "115877",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-operatingCashFlow-annual-2025-12-31",
+    "metric": "operatingCashFlow",
+    "value": "139514000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "139514",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-capitalExpenditure-annual-2023-12-31",
+    "metric": "capitalExpenditure",
+    "value": "52729000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+     "unit": "USD",
+     "contextRef": "c-8",
+     "rawValue": "52729",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-capitalExpenditure-annual-2024-12-31",
+    "metric": "capitalExpenditure",
+    "value": "82999000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+     "unit": "USD",
+     "contextRef": "c-4",
+     "rawValue": "82999",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-capitalExpenditure-annual-2025-12-31",
+    "metric": "capitalExpenditure",
+    "value": "131819000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "131819",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001018724-26-000004"
+    }
+   },
+   {
+    "id": "AMZN-revenue-quarter-2026-09-30",
+    "metric": "revenue",
+    "value": "201944000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-23",
+     "rawValue": "201944",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-operatingIncome-quarter-2026-09-30",
+    "metric": "operatingIncome",
+    "value": "28076000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-23",
+     "rawValue": "28076",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-netIncome-quarter-2026-09-30",
+    "metric": "netIncome",
+    "value": "20685000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-23",
+     "rawValue": "20685",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-dilutedEps-quarter-2026-09-30",
+    "metric": "dilutedEps",
+    "value": "1.89",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-23",
+     "rawValue": "1.89",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-assets-instant-2026-09-30",
+    "metric": "assets",
+    "value": "1243390000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Assets",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "1243390",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-equity-instant-2026-09-30",
+    "metric": "equity",
+    "value": "613601000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:StockholdersEquity",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "613601",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-cashAndEquivalents-instant-2026-09-30",
+    "metric": "cashAndEquivalents",
+    "value": "55783000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "55783",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-debtCurrent-instant-2026-09-30",
+    "metric": "debtCurrent",
+    "value": "6827000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebtCurrent",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "6827",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-debtNoncurrent-instant-2026-09-30",
+    "metric": "debtNoncurrent",
+    "value": "173125000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebtNoncurrent",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "173125",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-shortTermBorrowings-instant-2026-09-30",
+    "metric": "shortTermBorrowings",
+    "value": "380000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:ShortTermBorrowings",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "380",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001018724-26-000040"
+    }
+   },
+   {
+    "id": "AMZN-revenue-quarter-2026-06-30",
+    "metric": "revenue",
+    "value": "200606000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001018724-26-000026",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "200606",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001018724-26-000026"
+    }
+   },
+   {
+    "id": "AMZN-operatingIncome-quarter-2026-06-30",
+    "metric": "operatingIncome",
+    "value": "27461000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001018724-26-000026",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "27461",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001018724-26-000026"
+    }
+   },
+   {
+    "id": "AMZN-netIncome-quarter-2026-06-30",
+    "metric": "netIncome",
+    "value": "62647000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001018724-26-000026",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "62647",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001018724-26-000026"
+    }
+   },
+   {
+    "id": "AMZN-dilutedEps-quarter-2026-06-30",
+    "metric": "dilutedEps",
+    "value": "5.75",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001018724-26-000026",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-19",
+     "rawValue": "5.75",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001018724-26-000026"
+    }
+   },
+   {
+    "id": "AMZN-revenue-quarter-2026-03-31",
+    "metric": "revenue",
+    "value": "181519000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001018724-26-000014",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "181519",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001018724-26-000014"
+    }
+   },
+   {
+    "id": "AMZN-operatingIncome-quarter-2026-03-31",
+    "metric": "operatingIncome",
+    "value": "23852000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001018724-26-000014",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "23852",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001018724-26-000014"
+    }
+   },
+   {
+    "id": "AMZN-netIncome-quarter-2026-03-31",
+    "metric": "netIncome",
+    "value": "30255000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001018724-26-000014",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "30255",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001018724-26-000014"
+    }
+   },
+   {
+    "id": "AMZN-dilutedEps-quarter-2026-03-31",
+    "metric": "dilutedEps",
+    "value": "2.78",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001018724-26-000014",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "2.78",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001018724-26-000014"
+    }
+   },
+   {
+    "id": "AMZN-revenue-quarter-2025-09-30",
+    "metric": "revenue",
+    "value": "180169000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001018724-25-000123",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "180169",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001018724-25-000123"
+    }
+   },
+   {
+    "id": "AMZN-operatingIncome-quarter-2025-09-30",
+    "metric": "operatingIncome",
+    "value": "17422000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001018724-25-000123",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "17422",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001018724-25-000123"
+    }
+   },
+   {
+    "id": "AMZN-netIncome-quarter-2025-09-30",
+    "metric": "netIncome",
+    "value": "21187000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001018724-25-000123",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "21187",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001018724-25-000123"
+    }
+   },
+   {
+    "id": "AMZN-dilutedEps-quarter-2025-09-30",
+    "metric": "dilutedEps",
+    "value": "1.95",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001018724-25-000123",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-10",
+     "rawValue": "1.95",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001018724-25-000123"
+    }
+   },
+   {
+    "id": "AMZN-freeCashFlow-annual-2023-12-31",
+    "metric": "freeCashFlow",
+    "value": "32217000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "AMZN-operatingCashFlow-annual-2023-12-31",
+      "AMZN-capitalExpenditure-annual-2023-12-31"
+     ]
+    }
+   },
+   {
+    "id": "AMZN-freeCashFlow-annual-2024-12-31",
+    "metric": "freeCashFlow",
+    "value": "32878000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "AMZN-operatingCashFlow-annual-2024-12-31",
+      "AMZN-capitalExpenditure-annual-2024-12-31"
+     ]
+    }
+   },
+   {
+    "id": "AMZN-freeCashFlow-annual-2025-12-31",
+    "metric": "freeCashFlow",
+    "value": "7695000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001018724-26-000004",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "AMZN-operatingCashFlow-annual-2025-12-31",
+      "AMZN-capitalExpenditure-annual-2025-12-31"
+     ]
+    }
+   },
+   {
+    "id": "AMZN-liabilities-instant-2026-09-30",
+    "metric": "liabilities",
+    "value": "629789000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "assets - equity",
+     "inputIds": [
+      "AMZN-assets-instant-2026-09-30",
+      "AMZN-equity-instant-2026-09-30"
+     ]
+    }
+   },
+   {
+    "id": "AMZN-debt-instant-2026-09-30",
+    "metric": "debt",
+    "value": "180332000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001018724-26-000040",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "debtCurrent + debtNoncurrent + shortTermBorrowings",
+     "inputIds": [
+      "AMZN-debtCurrent-instant-2026-09-30",
+      "AMZN-debtNoncurrent-instant-2026-09-30",
+      "AMZN-shortTermBorrowings-instant-2026-09-30"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "symbol": "GOOGL",
+  "asOf": "2026-11-01",
+  "sources": [
+   {
+    "id": "sec-0001652044-26-000018",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+    "accession": "0001652044-26-000018",
+    "form": "10-K",
+    "filedAt": "2026-02-05",
+    "checkedAt": "2026-10-31T17:09:45.948932+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact. Diluted EPS uses the reported consolidated column, not individual share-class EPS; net income is consolidated before preferred dividends.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001652044-26-000084",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
+    "accession": "0001652044-26-000084",
+    "form": "10-Q",
+    "filedAt": "2026-10-29",
+    "checkedAt": "2026-10-31T17:09:45.948932+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact. Diluted EPS uses the reported consolidated column, not individual share-class EPS; net income is consolidated before preferred dividends.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001652044-26-000071",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+    "accession": "0001652044-26-000071",
+    "form": "10-Q",
+    "filedAt": "2026-07-23",
+    "checkedAt": "2026-10-31T17:09:45.948932+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact. Diluted EPS uses the reported consolidated column, not individual share-class EPS; net income is consolidated before preferred dividends.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001652044-26-000048",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+    "accession": "0001652044-26-000048",
+    "form": "10-Q",
+    "filedAt": "2026-04-30",
+    "checkedAt": "2026-10-31T17:09:45.948932+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact. Diluted EPS uses the reported consolidated column, not individual share-class EPS; net income is consolidated before preferred dividends.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001652044-25-000091",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000091/goog-20250930.htm",
+    "accession": "0001652044-25-000091",
+    "form": "10-Q",
+    "filedAt": "2025-10-30",
+    "checkedAt": "2026-10-31T17:09:45.948932+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact. Diluted EPS uses the reported consolidated column, not individual share-class EPS; net income is consolidated before preferred dividends.",
+    "amends": null
+   }
+  ],
+  "financials": [
+   {
+    "id": "GOOGL-revenue-annual-2023-12-31",
+    "metric": "revenue",
+    "value": "307394000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "307394",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-revenue-annual-2024-12-31",
+    "metric": "revenue",
+    "value": "350018000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-28",
+     "rawValue": "350018",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-revenue-annual-2025-12-31",
+    "metric": "revenue",
+    "value": "402836000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "402836",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-operatingIncome-annual-2023-12-31",
+    "metric": "operatingIncome",
+    "value": "84293000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "84293",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-operatingIncome-annual-2024-12-31",
+    "metric": "operatingIncome",
+    "value": "112390000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-28",
+     "rawValue": "112390",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-operatingIncome-annual-2025-12-31",
+    "metric": "operatingIncome",
+    "value": "129039000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "129039",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-netIncome-annual-2023-12-31",
+    "metric": "netIncome",
+    "value": "73795000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "73795",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-netIncome-annual-2024-12-31",
+    "metric": "netIncome",
+    "value": "100118000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-28",
+     "rawValue": "100118",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-netIncome-annual-2025-12-31",
+    "metric": "netIncome",
+    "value": "132170000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "132170",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-dilutedEps-annual-2023-12-31",
+    "metric": "dilutedEps",
+    "value": "5.80",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-27",
+     "rawValue": "5.80",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-dilutedEps-annual-2024-12-31",
+    "metric": "dilutedEps",
+    "value": "8.04",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-28",
+     "rawValue": "8.04",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-dilutedEps-annual-2025-12-31",
+    "metric": "dilutedEps",
+    "value": "10.81",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "10.81",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-operatingCashFlow-annual-2023-12-31",
+    "metric": "operatingCashFlow",
+    "value": "101746000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "101746",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-operatingCashFlow-annual-2024-12-31",
+    "metric": "operatingCashFlow",
+    "value": "125299000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-28",
+     "rawValue": "125299",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-operatingCashFlow-annual-2025-12-31",
+    "metric": "operatingCashFlow",
+    "value": "164713000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "164713",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-capitalExpenditure-annual-2023-12-31",
+    "metric": "capitalExpenditure",
+    "value": "32251000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "c-27",
+     "rawValue": "32251",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-01",
+     "end": "2023-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-capitalExpenditure-annual-2024-12-31",
+    "metric": "capitalExpenditure",
+    "value": "52535000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "c-28",
+     "rawValue": "52535",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-01",
+     "end": "2024-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-capitalExpenditure-annual-2025-12-31",
+    "metric": "capitalExpenditure",
+    "value": "91447000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "91447",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-01",
+     "end": "2025-12-31",
+     "accession": "0001652044-26-000018"
+    }
+   },
+   {
+    "id": "GOOGL-revenue-quarter-2026-09-30",
+    "metric": "revenue",
+    "value": "127577000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-41",
+     "rawValue": "127577",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-operatingIncome-quarter-2026-09-30",
+    "metric": "operatingIncome",
+    "value": "40576000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-41",
+     "rawValue": "40576",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-netIncome-quarter-2026-09-30",
+    "metric": "netIncome",
+    "value": "26468000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-41",
+     "rawValue": "26468",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-dilutedEps-quarter-2026-09-30",
+    "metric": "dilutedEps",
+    "value": "2.12",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-41",
+     "rawValue": "2.12",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-assets-instant-2026-09-30",
+    "metric": "assets",
+    "value": "1003312000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Assets",
+     "unit": "USD",
+     "contextRef": "c-32",
+     "rawValue": "1003312",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-liabilities-instant-2026-09-30",
+    "metric": "liabilities",
+    "value": "325763000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Liabilities",
+     "unit": "USD",
+     "contextRef": "c-32",
+     "rawValue": "325763",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-equity-instant-2026-09-30",
+    "metric": "equity",
+    "value": "677549000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:StockholdersEquity",
+     "unit": "USD",
+     "contextRef": "c-32",
+     "rawValue": "677549",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-cashAndEquivalents-instant-2026-09-30",
+    "metric": "cashAndEquivalents",
+    "value": "56334000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "unit": "USD",
+     "contextRef": "c-32",
+     "rawValue": "56334",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-debtCurrent-instant-2026-09-30",
+    "metric": "debtCurrent",
+    "value": "1016000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebtCurrent",
+     "unit": "USD",
+     "contextRef": "c-32",
+     "rawValue": "1016",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-debtNoncurrent-instant-2026-09-30",
+    "metric": "debtNoncurrent",
+    "value": "125102000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebtNoncurrent",
+     "unit": "USD",
+     "contextRef": "c-32",
+     "rawValue": "125102",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-commercialPaper-instant-2026-09-30",
+    "metric": "commercialPaper",
+    "value": "0",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:CommercialPaper",
+     "unit": "USD",
+     "contextRef": "c-32",
+     "rawValue": "0",
+     "scale": 9,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q3I",
+     "transformation": "ixt:fixed-zero",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001652044-26-000084"
+    }
+   },
+   {
+    "id": "GOOGL-revenue-quarter-2026-06-30",
+    "metric": "revenue",
+    "value": "119796000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001652044-26-000071",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-41",
+     "rawValue": "119796",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001652044-26-000071"
+    }
+   },
+   {
+    "id": "GOOGL-operatingIncome-quarter-2026-06-30",
+    "metric": "operatingIncome",
+    "value": "40770000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001652044-26-000071",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-41",
+     "rawValue": "40770",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001652044-26-000071"
+    }
+   },
+   {
+    "id": "GOOGL-netIncome-quarter-2026-06-30",
+    "metric": "netIncome",
+    "value": "112193000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001652044-26-000071",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-41",
+     "rawValue": "112193",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001652044-26-000071"
+    }
+   },
+   {
+    "id": "GOOGL-dilutedEps-quarter-2026-06-30",
+    "metric": "dilutedEps",
+    "value": "9.11",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001652044-26-000071",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-41",
+     "rawValue": "9.11",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "accession": "0001652044-26-000071"
+    }
+   },
+   {
+    "id": "GOOGL-revenue-quarter-2026-03-31",
+    "metric": "revenue",
+    "value": "109896000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001652044-26-000048",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "109896",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001652044-26-000048"
+    }
+   },
+   {
+    "id": "GOOGL-operatingIncome-quarter-2026-03-31",
+    "metric": "operatingIncome",
+    "value": "39696000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001652044-26-000048",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "39696",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001652044-26-000048"
+    }
+   },
+   {
+    "id": "GOOGL-netIncome-quarter-2026-03-31",
+    "metric": "netIncome",
+    "value": "62578000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001652044-26-000048",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "62578",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001652044-26-000048"
+    }
+   },
+   {
+    "id": "GOOGL-dilutedEps-quarter-2026-03-31",
+    "metric": "dilutedEps",
+    "value": "5.11",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001652044-26-000048",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "5.11",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001652044-26-000048"
+    }
+   },
+   {
+    "id": "GOOGL-revenue-quarter-2025-09-30",
+    "metric": "revenue",
+    "value": "102346000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001652044-25-000091",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "102346",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001652044-25-000091"
+    }
+   },
+   {
+    "id": "GOOGL-operatingIncome-quarter-2025-09-30",
+    "metric": "operatingIncome",
+    "value": "31228000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001652044-25-000091",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "31228",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001652044-25-000091"
+    }
+   },
+   {
+    "id": "GOOGL-netIncome-quarter-2025-09-30",
+    "metric": "netIncome",
+    "value": "34979000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001652044-25-000091",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "34979",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001652044-25-000091"
+    }
+   },
+   {
+    "id": "GOOGL-dilutedEps-quarter-2025-09-30",
+    "metric": "dilutedEps",
+    "value": "2.87",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001652044-25-000091",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-21",
+     "rawValue": "2.87",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001652044-25-000091"
+    }
+   },
+   {
+    "id": "GOOGL-freeCashFlow-annual-2023-12-31",
+    "metric": "freeCashFlow",
+    "value": "69495000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-01",
+     "end": "2023-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "GOOGL-operatingCashFlow-annual-2023-12-31",
+      "GOOGL-capitalExpenditure-annual-2023-12-31"
+     ]
+    }
+   },
+   {
+    "id": "GOOGL-freeCashFlow-annual-2024-12-31",
+    "metric": "freeCashFlow",
+    "value": "72764000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-01",
+     "end": "2024-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "GOOGL-operatingCashFlow-annual-2024-12-31",
+      "GOOGL-capitalExpenditure-annual-2024-12-31"
+     ]
+    }
+   },
+   {
+    "id": "GOOGL-freeCashFlow-annual-2025-12-31",
+    "metric": "freeCashFlow",
+    "value": "73266000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001652044-26-000018",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "GOOGL-operatingCashFlow-annual-2025-12-31",
+      "GOOGL-capitalExpenditure-annual-2025-12-31"
+     ]
+    }
+   },
+   {
+    "id": "GOOGL-debt-instant-2026-09-30",
+    "metric": "debt",
+    "value": "126118000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001652044-26-000084",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "debtCurrent + debtNoncurrent + commercialPaper",
+     "inputIds": [
+      "GOOGL-debtCurrent-instant-2026-09-30",
+      "GOOGL-debtNoncurrent-instant-2026-09-30",
+      "GOOGL-commercialPaper-instant-2026-09-30"
+     ]
+    }
+   }
+  ]
  }
 ]

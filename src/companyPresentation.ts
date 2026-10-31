@@ -1,5 +1,5 @@
 import type {CompanyProfile,FinancialFact,Metric} from './companyData';
-const instant=new Set<Metric>(['assets','liabilities','equity','cashAndEquivalents','debt','debtCurrent','debtNoncurrent','commercialPaper']);
+const instant=new Set<Metric>(['assets','liabilities','equity','cashAndEquivalents','debt','debtCurrent','debtNoncurrent','commercialPaper','shortTermBorrowings']);
 export function currentFinancialFacts(profile:CompanyProfile){
  const replaced=new Set(profile.financials.flatMap(f=>f.supersedes?[f.supersedes]:[]));
  return profile.financials.filter(f=>f.status==='verified'&&f.value!==null&&!replaced.has(f.id));

@@ -4,7 +4,7 @@ import {findCompanyProfile} from './companyProfiles';
 import type {CompanyProfile,FinancialFact,Metric} from './companyData';
 const descriptions:Partial<Record<Metric,string>>={revenue:'상품과 서비스에서 발생한 매출입니다.',operatingIncome:'본업의 영업이익입니다. 영업이익률은 매출 대비 비율이며 업종과 회계 기준에 따라 비교에 주의하세요.',netIncome:'비용과 세금 등을 반영한 순이익입니다.',dilutedEps:'희석 가능 주식을 고려한 주당 순이익입니다.',assets:'기업이 보유한 자산입니다.',liabilities:'기업의 의무와 부채입니다.',equity:'자산에서 부채를 차감한 자기자본입니다.',cashAndEquivalents:'현금과 단기 현금성 자산입니다.',debt:'공시에 표시된 차입금입니다.',operatingCashFlow:'영업활동에서 발생한 현금흐름입니다.',capitalExpenditure:'설비 등에 사용한 자본적지출입니다.',freeCashFlow:'영업현금흐름에서 자본적지출을 차감한 계산값입니다.'};
 const labels:Partial<Record<Metric,string>>={revenue:'매출액',operatingIncome:'영업이익',netIncome:'순이익',dilutedEps:'희석 EPS',assets:'자산',liabilities:'부채',equity:'자기자본',cashAndEquivalents:'현금 및 현금성자산',debt:'차입금',operatingCashFlow:'영업현금흐름',capitalExpenditure:'자본적지출',freeCashFlow:'FCF'};
-labels.debtCurrent='유동 term debt (1년 내 상환분)';labels.debtNoncurrent='비유동 term debt';labels.commercialPaper='Commercial paper';
+labels.debtCurrent='유동 term debt (1년 내 상환분)';labels.debtNoncurrent='비유동 term debt';labels.commercialPaper='Commercial paper';labels.shortTermBorrowings='단기 차입금';
 const basisLabel={annual:'연간',quarter:'단독 분기',ytd:'연초 누적',instant:'시점'} as const;
 export function CompanyDetail({profile}:{profile:CompanyProfile}){
  const [period,setPeriod]=useState<'annual'|'quarter'>('annual');const series=financialSeries(profile,period);const latest=(metric:Metric)=>latestFinancialFact(profile,metric,period);const source=profile.sources.find(s=>s.id===profile.profileSourceId)!;

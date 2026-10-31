@@ -167,3 +167,9 @@
 - FinancialFact.evidence는 원문 tag/context·rawValue/scale/unit·XBRL FY/FP/frame·기간/accession을 추적한다. OfficialSource.accession과 financialAsOf로 제출 기준일을 확인한다. 원문80개 값과 계산7개는 cached HTML/Company Facts/독립 Decimal 검산으로 일치 확인. 재무 정규화 USD 문자열·BigInt 계산, 정정 이력/기존 FCF 보존 계약 유지.
 - 기본 투자지표는 선택된 연간/단독분기 동일 기간에 맞추고, 없는 단독분기 OCF/Capex/FCF는 연간 값으로 대체하지 않는다. 재무상태는 별도 최신 시점, 그래프는 FY/Q와 정확한 USD 원값 및 백만 USD 표시를 제공한다. 원문 및 계산 입력값을 펼쳐 볼 수 있다.
 - 배당의 주당액·배당락/기준/지급일 전체 대조가 없어 두 기업 모두 not-reviewed 유지. IR/8-K Q4 추가 확인·영업이익률·PER/PBR/배당수익률은 미제공. NVIDIA·Amazon·Alphabet 수치/프로필 원본 및 ETF·합성 계좌·수기 원장은 변경하지 않았다. B3-B/전체 금융 통합 감사/운영 반영은 수행하지 않는다.
+
+## v0.7-B3-B1 NVIDIA 공식 재무자료 (기준 2026-11-01)
+- 근거: `docs/company-data/B3_B1_NVIDIA_20261101.md`. FY2024~26 연간3개년 GAAP 매출·영업/순이익·분할 반영 희석EPS·OCF·현금Capex·FCF, 직접 보고10-Q4개 단독분기와2026-07-26 재무상태를 추가했다. 보고39개+FCF계산3개이며 Q4/YTD 전환·EPS 재산정·TTM 없음.
+- NVIDIA의 revenue=Revenues, capitalExpenditure=PaymentsToAcquireProductiveAssets만 기업별 매핑으로 추가했다. 후자는 공시의 설비·무형자산 현금 지출이며 인수·증권 매수·전체 투자활동 지출과 다르다. 다른 기업의 concept 규칙은 변경하지 않는다.
+- FY2026 10-K의 EPS 비교 열과10:1 분할 소급 반영 문구를 원문·해시로 검증했다. 선택3개 연도는52주이며 FY2027 Q2는 달력2026-07-26 종료다. 현금22,443백만USD/시장성증권, 총부채91,288백만USD/차입금33,366백만USD를 구분한다. 차입금은 debt note의 Net carrying amount 보고값이다.
+- 기존 Apple·Microsoft87개 관측/80개 원문 근거의 내용 해시를 보존한다. 기존 원문 스크립트 전수 검사에 NVIDIA와 분할/Capex 인용문 검사를 추가했다. 기존 CompanyDetail/기간 선택을 그대로 사용한다. AMZN·GOOGL, 배당 상세·영업이익률·주가 의존 지표는 미검토/미제공 유지. 운영 DB/금융 RPC/RLS/SQL/Cron·main/Pages 및 B3-B2·5기업 통합 감사는 변경/수행하지 않는다.

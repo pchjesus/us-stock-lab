@@ -202,3 +202,11 @@
 - PASS: 최종 TypeScript/Vite build, npm test 영향28회, npm run test 일반 PC·모바일146회, npm run test:auth30회, dev 재무 fixture2회, git diff --check. Node ESM의 JSON import 속성을 기존 달력과 동일하게 맞춰 검증했다. python3 scripts/verify-company-evidence.py --cache-dir /tmp/us-b3: 원문80/계산7 PASS. 개발용 lxml만 사용, 앱 의존성 추가 없음.
 - 미제공: Q4(원문을 별도 검증하지 않아 역산하지 않음), 분기 OCF/Capex/FCF, 배당 전체 날짜·금액, 영업이익률과 주가 의존 비율. Apple FY2026 10-K는 기준일 조회 목록에서 확인되지 않아 FY2025까지 제공. NVIDIA/AMZN/GOOGL 원본 프로필 동일·미검토 유지, ETF 기존 동작 유지.
 - SQL/RPC/금융 계산·원장 변경 없어 로컬 SQL/Cron 및 B3-B 전체 통합 감사 미실행. 기존 finance-safe CI 워크플로 보존. 개발 브랜치만 커밋/푸시하며 운영 DB/migration/Cron·main/Pages 미변경.
+
+## 2026-11-01 · v0.7-B3-B1 NVIDIA 공식 재무자료
+- 기준/원격3e75bb4, 작업 트리clean 및 B3-A CI41216293039 completed/success 확인 후 진행. NVIDIA SEC 제출 목록/Company Facts와 최신10-K·최근10-Q4건을 확인했다. Q2 후보0001045810-26-000075는 실제2026-08-26 제출/2026-07-26 종료로 일치, 관련 정정은 조회 범위에서 발견되지 않았다. 상세 원문 목록·수치·계산·한계는 docs/company-data/B3_B1_NVIDIA_20261101.md.
+- 보고39개+FCF3개 추가. FY2024~26 연간3년, FY2026Q2/Q3·FY2027Q1/Q2의 직접 단독분기, 최신 재무상태. FY26 GAAP매출215,938/OCF102,718/Capex6,042/FCF96,676백만USD, 분할 반영 희석EPS4.90. 현금22,443과증권, 총부채91,288과차입금33,366(Net carrying amount)을 구분했다.
+- Revenues와 PaymentsToAcquireProductiveAssets는 NVIDIA에만 허용. Capex에 설비/무형자산 현금 지출이 포함된 원문 정의를 명시하고 인수·시장성증권 매수와 혼합하지 않았다. 원문 분할 문구/표 행·context·단위/scale/FY/FP/frame·문서 해시 대조, BigInt FCF와 독립 Decimal 검산 유지.
+- 기존 AAPL/MSFT 전체87관측과원문80개 배열의 기준내용SHA256 동일 검사 PASS. 두 회사 원문 캐시를 다시 실제 검증해 AAPL41보고/4계산, MSFT39보고/3계산, NVDA39보고/3계산, 총119보고/10계산 PASS. 캐시 미사용/기존 CI 결과로 대체하지 않았다. 원문 verifier의 기존 검사를 보존하고 증거 전수일치·NVDA 분할/Capex 문구 검사를 추가.
+- 로컬 PASS: 최종 활성화 TypeScript/Vite build, npm test 영향40회, npm run test PC·모바일158회, npm run test:auth30회, dev 실적fixture2회, git diff --check. 기존 3기업 미검토 기대 중 NVDA만 실제 수치 검증으로 전환하고 AMZN/GOOGL 미검토·ETF·외부시세·합성/수기 주문·원장·인증 검증 보존. 신규 finance-safe CI는 푸시 후 실제 결과를 최종 보고에서 기준 CI와 구분한다.
+- 미제공: 비연속 분기의 누락 Q4, 분기 OCF/Capex/FCF, 배당 전체 날짜/금액, 영업이익률/주가 의존 지표. B3-B2와5기업 재무 통합 감사 미진행. 금융 SQL/RPC·수수료/배당/세금·운영 DB/migration/Cron·main/Pages 변경 없음. SQL/Cron 로컬 재실행은 하지 않았고 기존 CI 워크플로 유지.

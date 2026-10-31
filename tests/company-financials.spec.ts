@@ -33,6 +33,6 @@ test('FCF, corrected latest observations and income periods remain coherent',()=
 });
 test('incorrect evidence and debt calculations fail safely; remaining companies stay unreviewed',()=>{
  for(const mutate of [(p:any)=>p.financials[0].evidence.scale=3,(p:any)=>p.financials[0].evidence.unit='USD/shares',(p:any)=>p.financials[0].evidence.concept='us-gaap:NetIncomeLoss',(p:any)=>p.sources.at(-1).filedAt='2026-11-02',(p:any)=>p.financials.find((f:any)=>f.metric==='debt').value='275746000000']){const p=structuredClone(findCompanyProfile('AAPL')!);mutate(p);expect(()=>validateCompany(p)).toThrow();}
- for(const symbol of ['NVDA','AMZN','GOOGL']){const p=findCompanyProfile(symbol)!;expect(p.financials).toEqual([]);expect(p.financialCoverage.status).toBe('not-reviewed');expect(p.financialAsOf).toBeUndefined();}for(const p of companyProfiles)expect(p.dividends.status).toBe('not-reviewed');for(const s of ['VOO','QQQ','SCHD'])expect(findCompanyProfile(s)).toBeNull();
+ for(const symbol of ['AMZN','GOOGL']){const p=findCompanyProfile(symbol)!;expect(p.financials).toEqual([]);expect(p.financialCoverage.status).toBe('not-reviewed');expect(p.financialAsOf).toBeUndefined();}for(const p of companyProfiles)expect(p.dividends.status).toBe('not-reviewed');for(const s of ['VOO','QQQ','SCHD'])expect(findCompanyProfile(s)).toBeNull();
  expect(financialValueText(latestFinancialFact(findCompanyProfile('AAPL')!,'revenue','annual')!)).toBe('416,161 백만 USD · 정확값 416161000000 USD');
 });

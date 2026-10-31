@@ -3027,5 +3027,1472 @@
     }
    }
   ]
+ },
+ {
+  "symbol": "NVDA",
+  "asOf": "2026-11-01",
+  "sources": [
+   {
+    "id": "sec-0001045810-26-000021",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "accession": "0001045810-26-000021",
+    "form": "10-K",
+    "filedAt": "2026-02-25",
+    "checkedAt": "2026-10-31T15:54:47.556725+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001045810-26-000075",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+    "accession": "0001045810-26-000075",
+    "form": "10-Q",
+    "filedAt": "2026-08-26",
+    "checkedAt": "2026-10-31T15:54:47.556725+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001045810-26-000052",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+    "accession": "0001045810-26-000052",
+    "form": "10-Q",
+    "filedAt": "2026-05-20",
+    "checkedAt": "2026-10-31T15:54:47.556725+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001045810-25-000230",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+    "accession": "0001045810-25-000230",
+    "form": "10-Q",
+    "filedAt": "2025-11-19",
+    "checkedAt": "2026-10-31T15:54:47.556725+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001045810-25-000209",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+    "accession": "0001045810-25-000209",
+    "form": "10-Q",
+    "filedAt": "2025-08-27",
+    "checkedAt": "2026-10-31T15:54:47.556725+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   }
+  ],
+  "financials": [
+   {
+    "id": "NVDA-revenue-annual-2024-01-28",
+    "metric": "revenue",
+    "value": "60922000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-30",
+     "end": "2024-01-28"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "60922",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-30",
+     "end": "2024-01-28",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-revenue-annual-2025-01-26",
+    "metric": "revenue",
+    "value": "130497000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-29",
+     "end": "2025-01-26"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-9",
+     "rawValue": "130497",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-29",
+     "end": "2025-01-26",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-revenue-annual-2026-01-25",
+    "metric": "revenue",
+    "value": "215938000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-27",
+     "end": "2026-01-25"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "215938",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-27",
+     "end": "2026-01-25",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-operatingIncome-annual-2024-01-28",
+    "metric": "operatingIncome",
+    "value": "32972000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-30",
+     "end": "2024-01-28"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "32972",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-30",
+     "end": "2024-01-28",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-operatingIncome-annual-2025-01-26",
+    "metric": "operatingIncome",
+    "value": "81453000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-29",
+     "end": "2025-01-26"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-9",
+     "rawValue": "81453",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-29",
+     "end": "2025-01-26",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-operatingIncome-annual-2026-01-25",
+    "metric": "operatingIncome",
+    "value": "130387000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-27",
+     "end": "2026-01-25"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "130387",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-27",
+     "end": "2026-01-25",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-netIncome-annual-2024-01-28",
+    "metric": "netIncome",
+    "value": "29760000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-30",
+     "end": "2024-01-28"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "29760",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2023-01-30",
+     "end": "2024-01-28",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-netIncome-annual-2025-01-26",
+    "metric": "netIncome",
+    "value": "72880000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-29",
+     "end": "2025-01-26"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-9",
+     "rawValue": "72880",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2024-01-29",
+     "end": "2025-01-26",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-netIncome-annual-2026-01-25",
+    "metric": "netIncome",
+    "value": "120067000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-27",
+     "end": "2026-01-25"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "120067",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2025-01-27",
+     "end": "2026-01-25",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-dilutedEps-annual-2024-01-28",
+    "metric": "dilutedEps",
+    "value": "1.19",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-30",
+     "end": "2024-01-28"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-10",
+     "rawValue": "1.19",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-30",
+     "end": "2024-01-28",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-dilutedEps-annual-2025-01-26",
+    "metric": "dilutedEps",
+    "value": "2.94",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-29",
+     "end": "2025-01-26"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-9",
+     "rawValue": "2.94",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-29",
+     "end": "2025-01-26",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-dilutedEps-annual-2026-01-25",
+    "metric": "dilutedEps",
+    "value": "4.90",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-27",
+     "end": "2026-01-25"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "4.90",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-27",
+     "end": "2026-01-25",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-operatingCashFlow-annual-2024-01-28",
+    "metric": "operatingCashFlow",
+    "value": "28090000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-30",
+     "end": "2024-01-28"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "28090",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-30",
+     "end": "2024-01-28",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-operatingCashFlow-annual-2025-01-26",
+    "metric": "operatingCashFlow",
+    "value": "64089000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-29",
+     "end": "2025-01-26"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-9",
+     "rawValue": "64089",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-29",
+     "end": "2025-01-26",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-operatingCashFlow-annual-2026-01-25",
+    "metric": "operatingCashFlow",
+    "value": "102718000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-27",
+     "end": "2026-01-25"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "102718",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-27",
+     "end": "2026-01-25",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-capitalExpenditure-annual-2024-01-28",
+    "metric": "capitalExpenditure",
+    "value": "1069000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-30",
+     "end": "2024-01-28"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+     "unit": "USD",
+     "contextRef": "c-10",
+     "rawValue": "1069",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2023-01-30",
+     "end": "2024-01-28",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-capitalExpenditure-annual-2025-01-26",
+    "metric": "capitalExpenditure",
+    "value": "3236000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-29",
+     "end": "2025-01-26"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+     "unit": "USD",
+     "contextRef": "c-9",
+     "rawValue": "3236",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2024-01-29",
+     "end": "2025-01-26",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-capitalExpenditure-annual-2026-01-25",
+    "metric": "capitalExpenditure",
+    "value": "6042000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-27",
+     "end": "2026-01-25"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "6042",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2025-01-27",
+     "end": "2026-01-25",
+     "accession": "0001045810-26-000021"
+    }
+   },
+   {
+    "id": "NVDA-revenue-quarter-2026-07-26",
+    "metric": "revenue",
+    "value": "96221000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-27",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "96221",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-27",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-operatingIncome-quarter-2026-07-26",
+    "metric": "operatingIncome",
+    "value": "63734000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-27",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "63734",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-27",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-netIncome-quarter-2026-07-26",
+    "metric": "netIncome",
+    "value": "59688000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-27",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "59688",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-27",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-dilutedEps-quarter-2026-07-26",
+    "metric": "dilutedEps",
+    "value": "2.46",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2026-04-27",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-3",
+     "rawValue": "2.46",
+     "scale": 0,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2",
+     "start": "2026-04-27",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-assets-instant-2026-07-26",
+    "metric": "assets",
+    "value": "320272000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "instant",
+     "start": "2026-07-26",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Assets",
+     "unit": "USD",
+     "contextRef": "c-6",
+     "rawValue": "320272",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2I",
+     "start": "2026-07-26",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-liabilities-instant-2026-07-26",
+    "metric": "liabilities",
+    "value": "91288000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "instant",
+     "start": "2026-07-26",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Liabilities",
+     "unit": "USD",
+     "contextRef": "c-6",
+     "rawValue": "91288",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2I",
+     "start": "2026-07-26",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-equity-instant-2026-07-26",
+    "metric": "equity",
+    "value": "228984000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "instant",
+     "start": "2026-07-26",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:StockholdersEquity",
+     "unit": "USD",
+     "contextRef": "c-6",
+     "rawValue": "228984",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2I",
+     "start": "2026-07-26",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-cashAndEquivalents-instant-2026-07-26",
+    "metric": "cashAndEquivalents",
+    "value": "22443000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "instant",
+     "start": "2026-07-26",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "unit": "USD",
+     "contextRef": "c-6",
+     "rawValue": "22443",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2I",
+     "start": "2026-07-26",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-debt-instant-2026-07-26",
+    "metric": "debt",
+    "value": "33366000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 2,
+     "basis": "instant",
+     "start": "2026-07-26",
+     "end": "2026-07-26"
+    },
+    "sourceId": "sec-0001045810-26-000075",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebt",
+     "unit": "USD",
+     "contextRef": "c-6",
+     "rawValue": "33366",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q2I",
+     "start": "2026-07-26",
+     "end": "2026-07-26",
+     "accession": "0001045810-26-000075"
+    }
+   },
+   {
+    "id": "NVDA-revenue-quarter-2026-04-26",
+    "metric": "revenue",
+    "value": "81615000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-26",
+     "end": "2026-04-26"
+    },
+    "sourceId": "sec-0001045810-26-000052",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "81615",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-26",
+     "end": "2026-04-26",
+     "accession": "0001045810-26-000052"
+    }
+   },
+   {
+    "id": "NVDA-operatingIncome-quarter-2026-04-26",
+    "metric": "operatingIncome",
+    "value": "53536000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-26",
+     "end": "2026-04-26"
+    },
+    "sourceId": "sec-0001045810-26-000052",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "53536",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-26",
+     "end": "2026-04-26",
+     "accession": "0001045810-26-000052"
+    }
+   },
+   {
+    "id": "NVDA-netIncome-quarter-2026-04-26",
+    "metric": "netIncome",
+    "value": "58321000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-26",
+     "end": "2026-04-26"
+    },
+    "sourceId": "sec-0001045810-26-000052",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "58321",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-26",
+     "end": "2026-04-26",
+     "accession": "0001045810-26-000052"
+    }
+   },
+   {
+    "id": "NVDA-dilutedEps-quarter-2026-04-26",
+    "metric": "dilutedEps",
+    "value": "2.39",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-01-26",
+     "end": "2026-04-26"
+    },
+    "sourceId": "sec-0001045810-26-000052",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "2.39",
+     "scale": 0,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q1",
+     "start": "2026-01-26",
+     "end": "2026-04-26",
+     "accession": "0001045810-26-000052"
+    }
+   },
+   {
+    "id": "NVDA-revenue-quarter-2025-10-26",
+    "metric": "revenue",
+    "value": "57006000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-28",
+     "end": "2025-10-26"
+    },
+    "sourceId": "sec-0001045810-25-000230",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "57006",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2025Q3",
+     "start": "2025-07-28",
+     "end": "2025-10-26",
+     "accession": "0001045810-25-000230"
+    }
+   },
+   {
+    "id": "NVDA-operatingIncome-quarter-2025-10-26",
+    "metric": "operatingIncome",
+    "value": "36010000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-28",
+     "end": "2025-10-26"
+    },
+    "sourceId": "sec-0001045810-25-000230",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "36010",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2025Q3",
+     "start": "2025-07-28",
+     "end": "2025-10-26",
+     "accession": "0001045810-25-000230"
+    }
+   },
+   {
+    "id": "NVDA-netIncome-quarter-2025-10-26",
+    "metric": "netIncome",
+    "value": "31910000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-28",
+     "end": "2025-10-26"
+    },
+    "sourceId": "sec-0001045810-25-000230",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "31910",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2025Q3",
+     "start": "2025-07-28",
+     "end": "2025-10-26",
+     "accession": "0001045810-25-000230"
+    }
+   },
+   {
+    "id": "NVDA-dilutedEps-quarter-2025-10-26",
+    "metric": "dilutedEps",
+    "value": "1.30",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-07-28",
+     "end": "2025-10-26"
+    },
+    "sourceId": "sec-0001045810-25-000230",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-3",
+     "rawValue": "1.30",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2025Q3",
+     "start": "2025-07-28",
+     "end": "2025-10-26",
+     "accession": "0001045810-25-000230"
+    }
+   },
+   {
+    "id": "NVDA-revenue-quarter-2025-07-27",
+    "metric": "revenue",
+    "value": "46743000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-04-28",
+     "end": "2025-07-27"
+    },
+    "sourceId": "sec-0001045810-25-000209",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Revenues",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "46743",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": null,
+     "start": "2025-04-28",
+     "end": "2025-07-27",
+     "accession": "0001045810-25-000209"
+    }
+   },
+   {
+    "id": "NVDA-operatingIncome-quarter-2025-07-27",
+    "metric": "operatingIncome",
+    "value": "28440000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-04-28",
+     "end": "2025-07-27"
+    },
+    "sourceId": "sec-0001045810-25-000209",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "28440",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": null,
+     "start": "2025-04-28",
+     "end": "2025-07-27",
+     "accession": "0001045810-25-000209"
+    }
+   },
+   {
+    "id": "NVDA-netIncome-quarter-2025-07-27",
+    "metric": "netIncome",
+    "value": "26422000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-04-28",
+     "end": "2025-07-27"
+    },
+    "sourceId": "sec-0001045810-25-000209",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-3",
+     "rawValue": "26422",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": null,
+     "start": "2025-04-28",
+     "end": "2025-07-27",
+     "accession": "0001045810-25-000209"
+    }
+   },
+   {
+    "id": "NVDA-dilutedEps-quarter-2025-07-27",
+    "metric": "dilutedEps",
+    "value": "1.08",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-04-28",
+     "end": "2025-07-27"
+    },
+    "sourceId": "sec-0001045810-25-000209",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-3",
+     "rawValue": "1.08",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": null,
+     "start": "2025-04-28",
+     "end": "2025-07-27",
+     "accession": "0001045810-25-000209"
+    }
+   },
+   {
+    "id": "NVDA-freeCashFlow-annual-2024-01-28",
+    "metric": "freeCashFlow",
+    "value": "27021000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-01-30",
+     "end": "2024-01-28"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "NVDA-operatingCashFlow-annual-2024-01-28",
+      "NVDA-capitalExpenditure-annual-2024-01-28"
+     ]
+    }
+   },
+   {
+    "id": "NVDA-freeCashFlow-annual-2025-01-26",
+    "metric": "freeCashFlow",
+    "value": "60853000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-01-29",
+     "end": "2025-01-26"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "NVDA-operatingCashFlow-annual-2025-01-26",
+      "NVDA-capitalExpenditure-annual-2025-01-26"
+     ]
+    }
+   },
+   {
+    "id": "NVDA-freeCashFlow-annual-2026-01-25",
+    "metric": "freeCashFlow",
+    "value": "96676000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-01-27",
+     "end": "2026-01-25"
+    },
+    "sourceId": "sec-0001045810-26-000021",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "NVDA-operatingCashFlow-annual-2026-01-25",
+      "NVDA-capitalExpenditure-annual-2026-01-25"
+     ]
+    }
+   }
+  ]
  }
 ]

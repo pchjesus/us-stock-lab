@@ -10,7 +10,9 @@ root=pathlib.Path(__file__).resolve().parents[1]
 data=json.loads((root/'src/companyFinancials.json').read_text());proof={r['id']:r for r in json.loads((root/'tests/fixtures/company-financial-evidence.json').read_text())}
 def name(e):return e.tag.split(':')[-1].lower() if isinstance(e.tag,str) else ''
 count=0;calculations=0
+assert {f['id'] for c in data for f in c['financials'] if f['origin']['kind']=='reported'}==set(proof),'Evidence coverage mismatch'
 for company in data:
+ start_count,start_calculations=count,calculations
  symbol=company['symbol'];sources={s['id']:s for s in company['sources']};facts={f['id']:f for f in company['financials']};documents={}
  submissions=json.loads((cache/f'{symbol}-submissions.json').read_text())['filings']['recent']
  eligible=[i for i,f in enumerate(submissions['form']) if f in ['10-K','10-Q','10-K/A','10-Q/A'] and submissions['filingDate'][i]<=company['asOf']]
@@ -48,5 +50,7 @@ for company in data:
   assert matched
   cf=[r for r in xbrl[e['concept'].split(':')[1]]['units'][e['unit']] if r['accn']==key and r['end']==f['period']['end'] and r.get('start',r['end'])==f['period']['start'] and Decimal(str(r['val']))==Decimal(f['value']) and r['filed']==source['filedAt'] and r['fy']==e['reportFiscalYear'] and r['fp']==e['reportFiscalPeriod'] and r.get('frame')==e['frame']];assert cf
   assert Decimal(p['xbrlValue'])==Decimal(p['htmlNormalizedValue'])==Decimal(f['value']);count+=1
- print('PASS',symbol,'original documents, periods, units, focus/frame and independent Decimal calculations')
+ if symbol=='NVDA':
+  notes=json.loads((root/'tests/fixtures/nvda-report-notes.json').read_text());tree,digest=documents[notes['accession']];assert digest==notes['documentSha256'];text=' '.join(tree.text_content().split());assert all(q in text for q in notes['quotes']),'Missing split/Capex source notes'
+ print('PASS',symbol,f'{count-start_count} original facts / {calculations-start_calculations} calculations: documents, periods, units, focus/frame and independent Decimal calculations')
 print(f'PASS {count} reported facts / {calculations} calculations; cached originals + Company Facts match')

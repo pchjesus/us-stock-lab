@@ -193,3 +193,12 @@
 - PASS: TypeScript/Vite 빌드, 일반 PC·모바일 132회, 인증/주문·복구 30회, 테스트 전용 검증 재무 fixture 그래프 PC·모바일 2회, 추가 기업·ETF 2회 및 수기 주문/320px 12회, git diff --check. 1440/768/390/320 폭과 공식 출처/빈 상태·사용자 전환/원장 불변을 확인. 검증 전 첫 회귀의 빌드 중 동시 페이지 reload 오류와 fixture 선택자/배치 오류는 원인 수정 후 재실행 통과.
 - 원문 숫자·공식 배당 수집은 B3 후속, 역사적 주가와 ETF 실데이터는 미구현. SQL/RPC/DB·금융 계산 변경 없음, 로컬 SQL/Cron 미실행; 기존 CI 유지. 운영 DB/Cron·main/Pages 미변경.
 - 수기 모드의 합성 가격을 보조 문구로 낮춘 뒤 최종 빌드, 일반 132회, 인증/UI 30회, diff 검사를 다시 통과했다.
+
+## 2026-11-01 · v0.7-B3-A 공식 재무자료 (Apple·Microsoft)
+- 기준/원격208edd4 및 B2 CI40509039031 completed/success 확인. data-integrity-check 흐름으로 SEC 원문→XBRL 대조→USD 정규화→기존 검증→기간별 UI 선택 경계를 확인했다.
+- SEC submissions/Company Facts 4개 JSON 및 최신 10-K/최근 10-Q 10건을 제한적 읽기로 확보. 2026-11-01까지의 제출만 사용, 관련 정정은 조회 범위에서 없었다. visible 연결재무 context와 원문 표 행/scale/unit/date를 Company Facts accession/form/filed/FY/FP/frame과 대조: 보고값80개 PASS, FCF6+Apple차입금1 계산 PASS. 근거 문서·원문 SHA·검증 명령은 docs/company-data/B3_A_OFFICIAL_FINANCIALS_20261101.md.
+- Apple45개/Microsoft42개 관측 추가. Apple FY2023~25 및 Microsoft FY2024~26 연간3개년과 직접 공시10-Q 4분기, 최신 재무상태를 표시. FCF는 양수 현금지출 Capex를 한 번 차감. Apple차입금84,344백만 USD는11,007+71,340+1,997의 장부금액, MSFT35,481백만 USD는 보고된 Total debt. 자산=부채+자본도 검산.
+- 최신 카드의 회계기간을 선택 연간/단독분기로 맞추고 누락된 분기 현금흐름은 연간으로 대체하지 않는다. FY/Q 및 백만 USD/정확값·출처·계산 입력을 표시. Q4/TTM·EPS 역산, 실제 시세·계좌 가격 연결 없음. B1의 빈 재무자료 검사만 실제2기업의 값 검사로 전환하고 나머지3기업 미검토·기존 계약 검증 유지.
+- PASS: 최종 TypeScript/Vite build, npm test 영향28회, npm run test 일반 PC·모바일146회, npm run test:auth30회, dev 재무 fixture2회, git diff --check. Node ESM의 JSON import 속성을 기존 달력과 동일하게 맞춰 검증했다. python3 scripts/verify-company-evidence.py --cache-dir /tmp/us-b3: 원문80/계산7 PASS. 개발용 lxml만 사용, 앱 의존성 추가 없음.
+- 미제공: Q4(원문을 별도 검증하지 않아 역산하지 않음), 분기 OCF/Capex/FCF, 배당 전체 날짜·금액, 영업이익률과 주가 의존 비율. Apple FY2026 10-K는 기준일 조회 목록에서 확인되지 않아 FY2025까지 제공. NVIDIA/AMZN/GOOGL 원본 프로필 동일·미검토 유지, ETF 기존 동작 유지.
+- SQL/RPC/금융 계산·원장 변경 없어 로컬 SQL/Cron 및 B3-B 전체 통합 감사 미실행. 기존 finance-safe CI 워크플로 보존. 개발 브랜치만 커밋/푸시하며 운영 DB/migration/Cron·main/Pages 미변경.

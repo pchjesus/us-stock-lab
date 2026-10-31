@@ -1,3 +1,4 @@
+import financialData from './companyFinancials.json' with {type:'json'};
 import {validateCompany,type CompanyProfile} from './companyData';
 // Manually reviewed SEC sources; Korean prose is an editorial summary, not a quote.
 export const companyProfiles:CompanyProfile[]=[
@@ -268,5 +269,12 @@ export const companyProfiles:CompanyProfile[]=[
   }
  }
 ];
+for(const data of financialData){
+ const profile=companyProfiles.find(p=>p.symbol===data.symbol)!;
+ profile.sources.push(...data.sources as CompanyProfile['sources']);
+ profile.financials=data.financials as CompanyProfile['financials'];
+ profile.financialAsOf=data.asOf;
+ profile.financialCoverage={status:'partial',reason:'최근 연간 3개년·직접 보고된 10-Q 4개 분기 및 최신 재무상태 확인. Q4 역산·분기 현금흐름·배당 미제공.'};
+}
 companyProfiles.forEach(validateCompany);
 export function findCompanyProfile(symbol:string){return companyProfiles.find(p=>p.symbol===symbol)??null;}

@@ -160,3 +160,10 @@
 - 검증된 재무값만 지표·재무건전성에 단위/기간/관측 유형/출처를 붙여 표시한다. 현재 5개 기업의 재무값과 배당은 미검토이며 0이나 무배당으로 표시하지 않는다. 영업이익률은 원문/산식 검증 전 미제공이다. 연간/단독분기 매출 그래프는 각각의 관측만 사용하며 YTD를 섞지 않는다. UI 테스트 fixture 숫자는 운영 데이터에 포함하지 않는다.
 - 수기와 합성 모두 기업 정보·학습실 링크를 표시하며 외부 시세 컴포넌트는 한 개만 렌더링한다. 기업정보와 시세·주문을 넓은 화면에서 분리하고 작은 화면에서는 순차 배치한다. 수기 스냅샷/주문/원장 로직은 유지하고 합성 보유손익은 기존 valuation 함수를 재사용한다.
 - 수기 모드의 합성 가격은 보조 문구로 표시하며 사용자 입력 가격 및 외부 시세와 구분한다.
+
+## v0.7-B3-A Apple·Microsoft 공식 재무자료 (기준 2026-11-01)
+- 근거·기간·원문/계산/미제공 목록: `docs/company-data/B3_A_OFFICIAL_FINANCIALS_20261101.md`. Apple FY2023~25, Microsoft FY2024~26의 매출·영업/순이익·희석EPS·OCF·현금Capex·FCF와 각 회사의 최근 직접 보고 10-Q 4분기 손익을 제공한다. Q4 역산/추정·YTD의 단독 분기 대체·EPS 차감 없음. 분기 목록은 연속4분기/TTM이 아니다.
+- 최신 재무상태: Apple 2026-06-27, Microsoft 2026-09-30. 총부채와 차입금을 분리하며 Apple 차입금만 유동/비유동 term debt+commercial paper의 장부금액 합계로 계산한다. 이를 위한 세 입력 metric·고정 공식만 계약에 추가했다. Microsoft는 원문 Total debt 보고값 사용.
+- FinancialFact.evidence는 원문 tag/context·rawValue/scale/unit·XBRL FY/FP/frame·기간/accession을 추적한다. OfficialSource.accession과 financialAsOf로 제출 기준일을 확인한다. 원문80개 값과 계산7개는 cached HTML/Company Facts/독립 Decimal 검산으로 일치 확인. 재무 정규화 USD 문자열·BigInt 계산, 정정 이력/기존 FCF 보존 계약 유지.
+- 기본 투자지표는 선택된 연간/단독분기 동일 기간에 맞추고, 없는 단독분기 OCF/Capex/FCF는 연간 값으로 대체하지 않는다. 재무상태는 별도 최신 시점, 그래프는 FY/Q와 정확한 USD 원값 및 백만 USD 표시를 제공한다. 원문 및 계산 입력값을 펼쳐 볼 수 있다.
+- 배당의 주당액·배당락/기준/지급일 전체 대조가 없어 두 기업 모두 not-reviewed 유지. IR/8-K Q4 추가 확인·영업이익률·PER/PBR/배당수익률은 미제공. NVIDIA·Amazon·Alphabet 수치/프로필 원본 및 ETF·합성 계좌·수기 원장은 변경하지 않았다. B3-B/전체 금융 통합 감사/운영 반영은 수행하지 않는다.

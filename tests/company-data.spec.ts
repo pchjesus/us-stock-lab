@@ -5,7 +5,7 @@ import {instruments,quote} from '../src/data';
 function fact(id:string,metric:FinancialFact['metric'],value:string|null):FinancialFact{return {id,metric,value,unit:'USD',currency:'USD',period:{fiscalYear:2025,quarter:null,basis:'annual',start:'2024-09-29',end:'2025-09-27'},sourceId:'annual-report',status:'verified',missingReason:null,supersedes:null,origin:{kind:'reported'}};}
 function bundle(){const p=structuredClone(companyProfiles[0]);p.financialCoverage={status:'partial',reason:'isolated test facts, not actual reported amounts'};p.financials=[fact('ocf','operatingCashFlow','100.10'),fact('capex','capitalExpenditure','20.03'),{...fact('fcf','freeCashFlow','80.07'),origin:{kind:'calculated',formula:'operatingCashFlow - capitalExpenditure',inputIds:['ocf','capex']}}];return p;}
 test('five official profiles remain separate from ETFs and existing synthetic prices',()=>{
- const before=instruments.map(quote);expect(companyProfiles).toHaveLength(5);for(const p of companyProfiles){expect(validateCompany(p)).toBe(p);expect(p.financials).toEqual([]);expect(p.dividends.status).toBe('not-reviewed');}
+ const before=instruments.map(quote);expect(companyProfiles).toHaveLength(5);for(const p of companyProfiles){expect(validateCompany(p)).toBe(p);if(!['AAPL','MSFT'].includes(p.symbol))expect(p.financials).toEqual([]);else expect(p.financials.length).toBeGreaterThan(0);expect(p.dividends.status).toBe('not-reviewed');}
  for(const s of ['VOO','QQQ','SCHD','UNKNOWN'])expect(findCompanyProfile(s)).toBeNull();expect(instruments).toHaveLength(8);expect(instruments.map(quote)).toEqual(before);
  for(const patch of [{kind:'etf'},{symbol:'VOO'},{cik:'320193'},{symbol:'aapl'}])expect(()=>validateCompany({...companyProfiles[0],...patch} as CompanyProfile)).toThrow();
 });

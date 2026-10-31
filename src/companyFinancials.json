@@ -1,0 +1,3031 @@
+[
+ {
+  "symbol": "AAPL",
+  "asOf": "2026-11-01",
+  "sources": [
+   {
+    "id": "sec-0000320193-25-000079",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+    "accession": "0000320193-25-000079",
+    "form": "10-K",
+    "filedAt": "2025-10-31",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0000320193-26-000020",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+    "accession": "0000320193-26-000020",
+    "form": "10-Q",
+    "filedAt": "2026-07-31",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0000320193-26-000013",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+    "accession": "0000320193-26-000013",
+    "form": "10-Q",
+    "filedAt": "2026-05-01",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0000320193-26-000006",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000006/aapl-20251227.htm",
+    "accession": "0000320193-26-000006",
+    "form": "10-Q",
+    "filedAt": "2026-01-30",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0000320193-25-000073",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+    "accession": "0000320193-25-000073",
+    "form": "10-Q",
+    "filedAt": "2025-08-01",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   }
+  ],
+  "financials": [
+   {
+    "id": "AAPL-revenue-annual-2023-09-30",
+    "metric": "revenue",
+    "value": "383285000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2022-09-25",
+     "end": "2023-09-30"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "383285",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2022-09-25",
+     "end": "2023-09-30",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-revenue-annual-2024-09-28",
+    "metric": "revenue",
+    "value": "391035000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-10-01",
+     "end": "2024-09-28"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "391035",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-10-01",
+     "end": "2024-09-28",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-revenue-annual-2025-09-27",
+    "metric": "revenue",
+    "value": "416161000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-09-29",
+     "end": "2025-09-27"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "416161",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-09-29",
+     "end": "2025-09-27",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-operatingIncome-annual-2023-09-30",
+    "metric": "operatingIncome",
+    "value": "114301000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2022-09-25",
+     "end": "2023-09-30"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "114301",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2022-09-25",
+     "end": "2023-09-30",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-operatingIncome-annual-2024-09-28",
+    "metric": "operatingIncome",
+    "value": "123216000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-10-01",
+     "end": "2024-09-28"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "123216",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-10-01",
+     "end": "2024-09-28",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-operatingIncome-annual-2025-09-27",
+    "metric": "operatingIncome",
+    "value": "133050000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-09-29",
+     "end": "2025-09-27"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "133050",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-09-29",
+     "end": "2025-09-27",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-netIncome-annual-2023-09-30",
+    "metric": "netIncome",
+    "value": "96995000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2022-09-25",
+     "end": "2023-09-30"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "96995",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2022-09-25",
+     "end": "2023-09-30",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-netIncome-annual-2024-09-28",
+    "metric": "netIncome",
+    "value": "93736000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-10-01",
+     "end": "2024-09-28"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "93736",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-10-01",
+     "end": "2024-09-28",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-netIncome-annual-2025-09-27",
+    "metric": "netIncome",
+    "value": "112010000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-09-29",
+     "end": "2025-09-27"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "112010",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-09-29",
+     "end": "2025-09-27",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-dilutedEps-annual-2023-09-30",
+    "metric": "dilutedEps",
+    "value": "6.13",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2022-09-25",
+     "end": "2023-09-30"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-19",
+     "rawValue": "6.13",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2022-09-25",
+     "end": "2023-09-30",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-dilutedEps-annual-2024-09-28",
+    "metric": "dilutedEps",
+    "value": "6.08",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-10-01",
+     "end": "2024-09-28"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-18",
+     "rawValue": "6.08",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-10-01",
+     "end": "2024-09-28",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-dilutedEps-annual-2025-09-27",
+    "metric": "dilutedEps",
+    "value": "7.46",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-09-29",
+     "end": "2025-09-27"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "7.46",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-09-29",
+     "end": "2025-09-27",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-operatingCashFlow-annual-2023-09-30",
+    "metric": "operatingCashFlow",
+    "value": "110543000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2022-09-25",
+     "end": "2023-09-30"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "110543",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2022-09-25",
+     "end": "2023-09-30",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-operatingCashFlow-annual-2024-09-28",
+    "metric": "operatingCashFlow",
+    "value": "118254000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-10-01",
+     "end": "2024-09-28"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "118254",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-10-01",
+     "end": "2024-09-28",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-operatingCashFlow-annual-2025-09-27",
+    "metric": "operatingCashFlow",
+    "value": "111482000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-09-29",
+     "end": "2025-09-27"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "111482",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-09-29",
+     "end": "2025-09-27",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-capitalExpenditure-annual-2023-09-30",
+    "metric": "capitalExpenditure",
+    "value": "10959000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2022-09-25",
+     "end": "2023-09-30"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "10959",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2023",
+     "start": "2022-09-25",
+     "end": "2023-09-30",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-capitalExpenditure-annual-2024-09-28",
+    "metric": "capitalExpenditure",
+    "value": "9447000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-10-01",
+     "end": "2024-09-28"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "9447",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-10-01",
+     "end": "2024-09-28",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-capitalExpenditure-annual-2025-09-27",
+    "metric": "capitalExpenditure",
+    "value": "12715000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-09-29",
+     "end": "2025-09-27"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "12715",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-09-29",
+     "end": "2025-09-27",
+     "accession": "0000320193-25-000079"
+    }
+   },
+   {
+    "id": "AAPL-revenue-quarter-2026-06-27",
+    "metric": "revenue",
+    "value": "109417000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-03-29",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "109417",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2",
+     "start": "2026-03-29",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-operatingIncome-quarter-2026-06-27",
+    "metric": "operatingIncome",
+    "value": "35695000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-03-29",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "35695",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2",
+     "start": "2026-03-29",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-netIncome-quarter-2026-06-27",
+    "metric": "netIncome",
+    "value": "29789000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-03-29",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "29789",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2",
+     "start": "2026-03-29",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-dilutedEps-quarter-2026-06-27",
+    "metric": "dilutedEps",
+    "value": "2.02",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-03-29",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-18",
+     "rawValue": "2.02",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2",
+     "start": "2026-03-29",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-assets-instant-2026-06-27",
+    "metric": "assets",
+    "value": "383266000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Assets",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "383266",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2I",
+     "start": "2026-06-27",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-liabilities-instant-2026-06-27",
+    "metric": "liabilities",
+    "value": "275746000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Liabilities",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "275746",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2I",
+     "start": "2026-06-27",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-equity-instant-2026-06-27",
+    "metric": "equity",
+    "value": "107520000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:StockholdersEquity",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "107520",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2I",
+     "start": "2026-06-27",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-cashAndEquivalents-instant-2026-06-27",
+    "metric": "cashAndEquivalents",
+    "value": "39544000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "39544",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2I",
+     "start": "2026-06-27",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-debtCurrent-instant-2026-06-27",
+    "metric": "debtCurrent",
+    "value": "11007000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebtCurrent",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "11007",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2I",
+     "start": "2026-06-27",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-debtNoncurrent-instant-2026-06-27",
+    "metric": "debtNoncurrent",
+    "value": "71340000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebtNoncurrent",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "71340",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2I",
+     "start": "2026-06-27",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-commercialPaper-instant-2026-06-27",
+    "metric": "commercialPaper",
+    "value": "1997000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:CommercialPaper",
+     "unit": "USD",
+     "contextRef": "c-21",
+     "rawValue": "1997",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q2I",
+     "start": "2026-06-27",
+     "end": "2026-06-27",
+     "accession": "0000320193-26-000020"
+    }
+   },
+   {
+    "id": "AAPL-revenue-quarter-2026-03-28",
+    "metric": "revenue",
+    "value": "111184000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-12-28",
+     "end": "2026-03-28"
+    },
+    "sourceId": "sec-0000320193-26-000013",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "111184",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q1",
+     "start": "2025-12-28",
+     "end": "2026-03-28",
+     "accession": "0000320193-26-000013"
+    }
+   },
+   {
+    "id": "AAPL-operatingIncome-quarter-2026-03-28",
+    "metric": "operatingIncome",
+    "value": "35885000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-12-28",
+     "end": "2026-03-28"
+    },
+    "sourceId": "sec-0000320193-26-000013",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "35885",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q1",
+     "start": "2025-12-28",
+     "end": "2026-03-28",
+     "accession": "0000320193-26-000013"
+    }
+   },
+   {
+    "id": "AAPL-netIncome-quarter-2026-03-28",
+    "metric": "netIncome",
+    "value": "29578000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-12-28",
+     "end": "2026-03-28"
+    },
+    "sourceId": "sec-0000320193-26-000013",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-18",
+     "rawValue": "29578",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q1",
+     "start": "2025-12-28",
+     "end": "2026-03-28",
+     "accession": "0000320193-26-000013"
+    }
+   },
+   {
+    "id": "AAPL-dilutedEps-quarter-2026-03-28",
+    "metric": "dilutedEps",
+    "value": "2.01",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-12-28",
+     "end": "2026-03-28"
+    },
+    "sourceId": "sec-0000320193-26-000013",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-18",
+     "rawValue": "2.01",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2026Q1",
+     "start": "2025-12-28",
+     "end": "2026-03-28",
+     "accession": "0000320193-26-000013"
+    }
+   },
+   {
+    "id": "AAPL-revenue-quarter-2025-12-27",
+    "metric": "revenue",
+    "value": "143756000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-09-28",
+     "end": "2025-12-27"
+    },
+    "sourceId": "sec-0000320193-26-000006",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "143756",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2025Q4",
+     "start": "2025-09-28",
+     "end": "2025-12-27",
+     "accession": "0000320193-26-000006"
+    }
+   },
+   {
+    "id": "AAPL-operatingIncome-quarter-2025-12-27",
+    "metric": "operatingIncome",
+    "value": "50852000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-09-28",
+     "end": "2025-12-27"
+    },
+    "sourceId": "sec-0000320193-26-000006",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "50852",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2025Q4",
+     "start": "2025-09-28",
+     "end": "2025-12-27",
+     "accession": "0000320193-26-000006"
+    }
+   },
+   {
+    "id": "AAPL-netIncome-quarter-2025-12-27",
+    "metric": "netIncome",
+    "value": "42097000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-09-28",
+     "end": "2025-12-27"
+    },
+    "sourceId": "sec-0000320193-26-000006",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-1",
+     "rawValue": "42097",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2025Q4",
+     "start": "2025-09-28",
+     "end": "2025-12-27",
+     "accession": "0000320193-26-000006"
+    }
+   },
+   {
+    "id": "AAPL-dilutedEps-quarter-2025-12-27",
+    "metric": "dilutedEps",
+    "value": "2.84",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-09-28",
+     "end": "2025-12-27"
+    },
+    "sourceId": "sec-0000320193-26-000006",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-1",
+     "rawValue": "2.84",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2025Q4",
+     "start": "2025-09-28",
+     "end": "2025-12-27",
+     "accession": "0000320193-26-000006"
+    }
+   },
+   {
+    "id": "AAPL-revenue-quarter-2025-06-28",
+    "metric": "revenue",
+    "value": "94036000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-03-30",
+     "end": "2025-06-28"
+    },
+    "sourceId": "sec-0000320193-25-000073",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "94036",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-03-30",
+     "end": "2025-06-28",
+     "accession": "0000320193-25-000073"
+    }
+   },
+   {
+    "id": "AAPL-operatingIncome-quarter-2025-06-28",
+    "metric": "operatingIncome",
+    "value": "28202000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-03-30",
+     "end": "2025-06-28"
+    },
+    "sourceId": "sec-0000320193-25-000073",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "28202",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-03-30",
+     "end": "2025-06-28",
+     "accession": "0000320193-25-000073"
+    }
+   },
+   {
+    "id": "AAPL-netIncome-quarter-2025-06-28",
+    "metric": "netIncome",
+    "value": "23434000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-03-30",
+     "end": "2025-06-28"
+    },
+    "sourceId": "sec-0000320193-25-000073",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "c-19",
+     "rawValue": "23434",
+     "scale": 6,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-03-30",
+     "end": "2025-06-28",
+     "accession": "0000320193-25-000073"
+    }
+   },
+   {
+    "id": "AAPL-dilutedEps-quarter-2025-06-28",
+    "metric": "dilutedEps",
+    "value": "1.57",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2025-03-30",
+     "end": "2025-06-28"
+    },
+    "sourceId": "sec-0000320193-25-000073",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "c-19",
+     "rawValue": "1.57",
+     "scale": 0,
+     "reportFiscalYear": 2025,
+     "reportFiscalPeriod": "Q3",
+     "frame": null,
+     "start": "2025-03-30",
+     "end": "2025-06-28",
+     "accession": "0000320193-25-000073"
+    }
+   },
+   {
+    "id": "AAPL-freeCashFlow-annual-2023-09-30",
+    "metric": "freeCashFlow",
+    "value": "99584000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2023,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2022-09-25",
+     "end": "2023-09-30"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "AAPL-operatingCashFlow-annual-2023-09-30",
+      "AAPL-capitalExpenditure-annual-2023-09-30"
+     ]
+    }
+   },
+   {
+    "id": "AAPL-freeCashFlow-annual-2024-09-28",
+    "metric": "freeCashFlow",
+    "value": "108807000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-10-01",
+     "end": "2024-09-28"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "AAPL-operatingCashFlow-annual-2024-09-28",
+      "AAPL-capitalExpenditure-annual-2024-09-28"
+     ]
+    }
+   },
+   {
+    "id": "AAPL-freeCashFlow-annual-2025-09-27",
+    "metric": "freeCashFlow",
+    "value": "98767000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-09-29",
+     "end": "2025-09-27"
+    },
+    "sourceId": "sec-0000320193-25-000079",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "AAPL-operatingCashFlow-annual-2025-09-27",
+      "AAPL-capitalExpenditure-annual-2025-09-27"
+     ]
+    }
+   },
+   {
+    "id": "AAPL-debt-instant-2026-06-27",
+    "metric": "debt",
+    "value": "84344000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "instant",
+     "start": "2026-06-27",
+     "end": "2026-06-27"
+    },
+    "sourceId": "sec-0000320193-26-000020",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "debtCurrent + debtNoncurrent + commercialPaper",
+     "inputIds": [
+      "AAPL-debtCurrent-instant-2026-06-27",
+      "AAPL-debtNoncurrent-instant-2026-06-27",
+      "AAPL-commercialPaper-instant-2026-06-27"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "symbol": "MSFT",
+  "asOf": "2026-11-01",
+  "sources": [
+   {
+    "id": "sec-0001193125-26-323660",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+    "accession": "0001193125-26-323660",
+    "form": "10-K",
+    "filedAt": "2026-07-29",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001193125-26-436133",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+    "accession": "0001193125-26-436133",
+    "form": "10-Q",
+    "filedAt": "2026-10-28",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001193125-26-191507",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+    "accession": "0001193125-26-191507",
+    "form": "10-Q",
+    "filedAt": "2026-04-29",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001193125-26-027207",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+    "accession": "0001193125-26-027207",
+    "form": "10-Q",
+    "filedAt": "2026-01-28",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   },
+   {
+    "id": "sec-0001193125-25-256321",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312525256321/msft-20250930.htm",
+    "accession": "0001193125-25-256321",
+    "form": "10-Q",
+    "filedAt": "2025-10-29",
+    "checkedAt": "2026-10-31T15:28:13.400283+00:00",
+    "verification": "verified",
+    "locator": "Consolidated income, balance sheet and cash flow statements; debt note. Inline XBRL context and table row retained per fact.",
+    "amends": null
+   }
+  ],
+  "financials": [
+   {
+    "id": "MSFT-revenue-annual-2024-06-30",
+    "metric": "revenue",
+    "value": "245122000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-07-01",
+     "end": "2024-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "C_7f83b284-3c69-4779-90ec-f0c89f19f47e",
+     "rawValue": "245122",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-07-01",
+     "end": "2024-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-revenue-annual-2025-06-30",
+    "metric": "revenue",
+    "value": "281724000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-07-01",
+     "end": "2025-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "C_7575f467-7692-4974-a3da-f27e7e8e1c47",
+     "rawValue": "281724",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-07-01",
+     "end": "2025-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-revenue-annual-2026-06-30",
+    "metric": "revenue",
+    "value": "331839000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-07-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "C_29985a27-1d12-4b7e-9a06-156523f6e71e",
+     "rawValue": "331839",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2026",
+     "start": "2025-07-01",
+     "end": "2026-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-operatingIncome-annual-2024-06-30",
+    "metric": "operatingIncome",
+    "value": "109433000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-07-01",
+     "end": "2024-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_7f83b284-3c69-4779-90ec-f0c89f19f47e",
+     "rawValue": "109433",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-07-01",
+     "end": "2024-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-operatingIncome-annual-2025-06-30",
+    "metric": "operatingIncome",
+    "value": "128528000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-07-01",
+     "end": "2025-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_7575f467-7692-4974-a3da-f27e7e8e1c47",
+     "rawValue": "128528",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-07-01",
+     "end": "2025-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-operatingIncome-annual-2026-06-30",
+    "metric": "operatingIncome",
+    "value": "155237000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-07-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_29985a27-1d12-4b7e-9a06-156523f6e71e",
+     "rawValue": "155237",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2026",
+     "start": "2025-07-01",
+     "end": "2026-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-netIncome-annual-2024-06-30",
+    "metric": "netIncome",
+    "value": "88136000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-07-01",
+     "end": "2024-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_7f83b284-3c69-4779-90ec-f0c89f19f47e",
+     "rawValue": "88136",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2023-07-01",
+     "end": "2024-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-netIncome-annual-2025-06-30",
+    "metric": "netIncome",
+    "value": "101832000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-07-01",
+     "end": "2025-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_7575f467-7692-4974-a3da-f27e7e8e1c47",
+     "rawValue": "101832",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2024-07-01",
+     "end": "2025-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-netIncome-annual-2026-06-30",
+    "metric": "netIncome",
+    "value": "133749000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-07-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_29985a27-1d12-4b7e-9a06-156523f6e71e",
+     "rawValue": "133749",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2026-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-dilutedEps-annual-2024-06-30",
+    "metric": "dilutedEps",
+    "value": "11.80",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-07-01",
+     "end": "2024-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "C_7f83b284-3c69-4779-90ec-f0c89f19f47e",
+     "rawValue": "11.80",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-07-01",
+     "end": "2024-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-dilutedEps-annual-2025-06-30",
+    "metric": "dilutedEps",
+    "value": "13.64",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-07-01",
+     "end": "2025-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "C_7575f467-7692-4974-a3da-f27e7e8e1c47",
+     "rawValue": "13.64",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-07-01",
+     "end": "2025-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-dilutedEps-annual-2026-06-30",
+    "metric": "dilutedEps",
+    "value": "17.95",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-07-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "C_29985a27-1d12-4b7e-9a06-156523f6e71e",
+     "rawValue": "17.95",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2026",
+     "start": "2025-07-01",
+     "end": "2026-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-operatingCashFlow-annual-2024-06-30",
+    "metric": "operatingCashFlow",
+    "value": "118548000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-07-01",
+     "end": "2024-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "C_7f83b284-3c69-4779-90ec-f0c89f19f47e",
+     "rawValue": "118548",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-07-01",
+     "end": "2024-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-operatingCashFlow-annual-2025-06-30",
+    "metric": "operatingCashFlow",
+    "value": "136162000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-07-01",
+     "end": "2025-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "C_7575f467-7692-4974-a3da-f27e7e8e1c47",
+     "rawValue": "136162",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-07-01",
+     "end": "2025-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-operatingCashFlow-annual-2026-06-30",
+    "metric": "operatingCashFlow",
+    "value": "182935000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-07-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "unit": "USD",
+     "contextRef": "C_29985a27-1d12-4b7e-9a06-156523f6e71e",
+     "rawValue": "182935",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2026",
+     "start": "2025-07-01",
+     "end": "2026-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-capitalExpenditure-annual-2024-06-30",
+    "metric": "capitalExpenditure",
+    "value": "44477000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-07-01",
+     "end": "2024-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "C_7f83b284-3c69-4779-90ec-f0c89f19f47e",
+     "rawValue": "44477",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2024",
+     "start": "2023-07-01",
+     "end": "2024-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-capitalExpenditure-annual-2025-06-30",
+    "metric": "capitalExpenditure",
+    "value": "64551000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-07-01",
+     "end": "2025-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "C_7575f467-7692-4974-a3da-f27e7e8e1c47",
+     "rawValue": "64551",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2025",
+     "start": "2024-07-01",
+     "end": "2025-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-capitalExpenditure-annual-2026-06-30",
+    "metric": "capitalExpenditure",
+    "value": "115948000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-07-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "unit": "USD",
+     "contextRef": "C_29985a27-1d12-4b7e-9a06-156523f6e71e",
+     "rawValue": "115948",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "FY",
+     "frame": "CY2026",
+     "start": "2025-07-01",
+     "end": "2026-06-30",
+     "accession": "0001193125-26-323660"
+    }
+   },
+   {
+    "id": "MSFT-revenue-quarter-2026-09-30",
+    "metric": "revenue",
+    "value": "92279000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "C_4ca01806-c4cd-49d2-87c6-16fd7f17ad5d",
+     "rawValue": "92279",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-operatingIncome-quarter-2026-09-30",
+    "metric": "operatingIncome",
+    "value": "45915000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_4ca01806-c4cd-49d2-87c6-16fd7f17ad5d",
+     "rawValue": "45915",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-netIncome-quarter-2026-09-30",
+    "metric": "netIncome",
+    "value": "36629000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_4ca01806-c4cd-49d2-87c6-16fd7f17ad5d",
+     "rawValue": "36629",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-dilutedEps-quarter-2026-09-30",
+    "metric": "dilutedEps",
+    "value": "4.92",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2026-07-01",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "C_4ca01806-c4cd-49d2-87c6-16fd7f17ad5d",
+     "rawValue": "4.92",
+     "scale": 0,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3",
+     "start": "2026-07-01",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-assets-instant-2026-09-30",
+    "metric": "assets",
+    "value": "779403000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Assets",
+     "unit": "USD",
+     "contextRef": "C_10d1f015-3e04-4689-af72-3d5162e04743",
+     "rawValue": "779403",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-liabilities-instant-2026-09-30",
+    "metric": "liabilities",
+    "value": "308894000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:Liabilities",
+     "unit": "USD",
+     "contextRef": "C_10d1f015-3e04-4689-af72-3d5162e04743",
+     "rawValue": "308894",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-equity-instant-2026-09-30",
+    "metric": "equity",
+    "value": "470509000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:StockholdersEquity",
+     "unit": "USD",
+     "contextRef": "C_10d1f015-3e04-4689-af72-3d5162e04743",
+     "rawValue": "470509",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-cashAndEquivalents-instant-2026-09-30",
+    "metric": "cashAndEquivalents",
+    "value": "20281000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "unit": "USD",
+     "contextRef": "C_10d1f015-3e04-4689-af72-3d5162e04743",
+     "rawValue": "20281",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-debt-instant-2026-09-30",
+    "metric": "debt",
+    "value": "35481000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2027,
+     "quarter": 1,
+     "basis": "instant",
+     "start": "2026-09-30",
+     "end": "2026-09-30"
+    },
+    "sourceId": "sec-0001193125-26-436133",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:LongTermDebt",
+     "unit": "USD",
+     "contextRef": "C_10d1f015-3e04-4689-af72-3d5162e04743",
+     "rawValue": "35481",
+     "scale": 6,
+     "reportFiscalYear": 2027,
+     "reportFiscalPeriod": "Q1",
+     "frame": "CY2026Q3I",
+     "start": "2026-09-30",
+     "end": "2026-09-30",
+     "accession": "0001193125-26-436133"
+    }
+   },
+   {
+    "id": "MSFT-revenue-quarter-2026-03-31",
+    "metric": "revenue",
+    "value": "82886000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001193125-26-191507",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "C_c2ccc5b0-c925-4f23-934c-ae4c5790d1f6",
+     "rawValue": "82886",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001193125-26-191507"
+    }
+   },
+   {
+    "id": "MSFT-operatingIncome-quarter-2026-03-31",
+    "metric": "operatingIncome",
+    "value": "38398000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001193125-26-191507",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_c2ccc5b0-c925-4f23-934c-ae4c5790d1f6",
+     "rawValue": "38398",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001193125-26-191507"
+    }
+   },
+   {
+    "id": "MSFT-netIncome-quarter-2026-03-31",
+    "metric": "netIncome",
+    "value": "31778000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001193125-26-191507",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_c2ccc5b0-c925-4f23-934c-ae4c5790d1f6",
+     "rawValue": "31778",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001193125-26-191507"
+    }
+   },
+   {
+    "id": "MSFT-dilutedEps-quarter-2026-03-31",
+    "metric": "dilutedEps",
+    "value": "4.27",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 3,
+     "basis": "quarter",
+     "start": "2026-01-01",
+     "end": "2026-03-31"
+    },
+    "sourceId": "sec-0001193125-26-191507",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "C_c2ccc5b0-c925-4f23-934c-ae4c5790d1f6",
+     "rawValue": "4.27",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q3",
+     "frame": "CY2026Q1",
+     "start": "2026-01-01",
+     "end": "2026-03-31",
+     "accession": "0001193125-26-191507"
+    }
+   },
+   {
+    "id": "MSFT-revenue-quarter-2025-12-31",
+    "metric": "revenue",
+    "value": "81273000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-10-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001193125-26-027207",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "C_0641e570-0e18-4add-8c73-cc64b54d1f88",
+     "rawValue": "81273",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2025Q4",
+     "start": "2025-10-01",
+     "end": "2025-12-31",
+     "accession": "0001193125-26-027207"
+    }
+   },
+   {
+    "id": "MSFT-operatingIncome-quarter-2025-12-31",
+    "metric": "operatingIncome",
+    "value": "38275000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-10-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001193125-26-027207",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_0641e570-0e18-4add-8c73-cc64b54d1f88",
+     "rawValue": "38275",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2025Q4",
+     "start": "2025-10-01",
+     "end": "2025-12-31",
+     "accession": "0001193125-26-027207"
+    }
+   },
+   {
+    "id": "MSFT-netIncome-quarter-2025-12-31",
+    "metric": "netIncome",
+    "value": "38458000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-10-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001193125-26-027207",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_0641e570-0e18-4add-8c73-cc64b54d1f88",
+     "rawValue": "38458",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2025Q4",
+     "start": "2025-10-01",
+     "end": "2025-12-31",
+     "accession": "0001193125-26-027207"
+    }
+   },
+   {
+    "id": "MSFT-dilutedEps-quarter-2025-12-31",
+    "metric": "dilutedEps",
+    "value": "5.16",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 2,
+     "basis": "quarter",
+     "start": "2025-10-01",
+     "end": "2025-12-31"
+    },
+    "sourceId": "sec-0001193125-26-027207",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "C_0641e570-0e18-4add-8c73-cc64b54d1f88",
+     "rawValue": "5.16",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q2",
+     "frame": "CY2025Q4",
+     "start": "2025-10-01",
+     "end": "2025-12-31",
+     "accession": "0001193125-26-027207"
+    }
+   },
+   {
+    "id": "MSFT-revenue-quarter-2025-09-30",
+    "metric": "revenue",
+    "value": "77673000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001193125-25-256321",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "unit": "USD",
+     "contextRef": "C_77513f4d-d996-497e-8795-6472b2325bfb",
+     "rawValue": "77673",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001193125-25-256321"
+    }
+   },
+   {
+    "id": "MSFT-operatingIncome-quarter-2025-09-30",
+    "metric": "operatingIncome",
+    "value": "37961000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001193125-25-256321",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:OperatingIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_77513f4d-d996-497e-8795-6472b2325bfb",
+     "rawValue": "37961",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001193125-25-256321"
+    }
+   },
+   {
+    "id": "MSFT-netIncome-quarter-2025-09-30",
+    "metric": "netIncome",
+    "value": "27747000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001193125-25-256321",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:NetIncomeLoss",
+     "unit": "USD",
+     "contextRef": "C_77513f4d-d996-497e-8795-6472b2325bfb",
+     "rawValue": "27747",
+     "scale": 6,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001193125-25-256321"
+    }
+   },
+   {
+    "id": "MSFT-dilutedEps-quarter-2025-09-30",
+    "metric": "dilutedEps",
+    "value": "3.72",
+    "unit": "USD/share",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": 1,
+     "basis": "quarter",
+     "start": "2025-07-01",
+     "end": "2025-09-30"
+    },
+    "sourceId": "sec-0001193125-25-256321",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "reported"
+    },
+    "evidence": {
+     "concept": "us-gaap:EarningsPerShareDiluted",
+     "unit": "USD/shares",
+     "contextRef": "C_77513f4d-d996-497e-8795-6472b2325bfb",
+     "rawValue": "3.72",
+     "scale": 0,
+     "reportFiscalYear": 2026,
+     "reportFiscalPeriod": "Q1",
+     "frame": null,
+     "start": "2025-07-01",
+     "end": "2025-09-30",
+     "accession": "0001193125-25-256321"
+    }
+   },
+   {
+    "id": "MSFT-freeCashFlow-annual-2024-06-30",
+    "metric": "freeCashFlow",
+    "value": "74071000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2024,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2023-07-01",
+     "end": "2024-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "MSFT-operatingCashFlow-annual-2024-06-30",
+      "MSFT-capitalExpenditure-annual-2024-06-30"
+     ]
+    }
+   },
+   {
+    "id": "MSFT-freeCashFlow-annual-2025-06-30",
+    "metric": "freeCashFlow",
+    "value": "71611000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2025,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2024-07-01",
+     "end": "2025-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "MSFT-operatingCashFlow-annual-2025-06-30",
+      "MSFT-capitalExpenditure-annual-2025-06-30"
+     ]
+    }
+   },
+   {
+    "id": "MSFT-freeCashFlow-annual-2026-06-30",
+    "metric": "freeCashFlow",
+    "value": "66987000000",
+    "unit": "USD",
+    "currency": "USD",
+    "period": {
+     "fiscalYear": 2026,
+     "quarter": null,
+     "basis": "annual",
+     "start": "2025-07-01",
+     "end": "2026-06-30"
+    },
+    "sourceId": "sec-0001193125-26-323660",
+    "status": "verified",
+    "missingReason": null,
+    "supersedes": null,
+    "origin": {
+     "kind": "calculated",
+     "formula": "operatingCashFlow - capitalExpenditure",
+     "inputIds": [
+      "MSFT-operatingCashFlow-annual-2026-06-30",
+      "MSFT-capitalExpenditure-annual-2026-06-30"
+     ]
+    }
+   }
+  ]
+ }
+]

@@ -1,5 +1,27 @@
 # G1-C2 금융 migration 배포 안전성 — NO-GO
 
+## G1-C2D 추가 검증 — 2026-11-02
+
+`scripts/finance_migration_atomic.py`는 CLI 일반 배포와 다른 별도 도구다. 기본 실행은 파일 검증만 하며 DB에 연결하지 않는다. 004~007과 Foundation~003의 SHA-256, 파일 집합, CLI 2.122.0이 격리 DB에 기록한 `scripts/finance-migration-cli-statements.json`의 SHA-256을 고정한다. 고정된 파일과 CLI 문장 배열의 처음·마지막에 있는 정확한 transaction 경계만 제외해 실행하며, 원본 파일은 수정하지 않는다. 일반 SQL 문자열 치환이나 임의 migration을 지원하지 않는다. history에는 원본의 `begin`/`commit`을 포함한 CLI 문장 배열을 그대로 기록한다. 004~007의 version·name·statements는 격리 DB에서 실제 CLI 이력과 비교했다.
+
+도구는 단일 트랜잭션에서 advisory lock과 migration history 배타 잠금을 획득하고, 정확한 Foundation·001~003 이력과 카탈로그 수·RLS, 기존 수기/배당 객체 부재를 점검한다. 004~007과 이력 INSERT를 차례로 수행하고 금융 테이블 권한·RLS, RPC 실행 권한, paper RPC와 현금·배당 원장 불변식을 확인한 뒤 커밋한다. 같은 도구의 동시 실행은 advisory lock으로 직렬화하며, history 잠금 동안 다른 history 조회는 대기할 수 있다. CLI나 다른 관리 작업이 **잠금 획득 전 이미 시작된 경우까지** 자동으로 배제하지 못하므로 실제 적용 전 다른 배포자를 중지해야 한다. 카탈로그 수 비교는 전체 정의의 동등성 검증이 아니다.
+
+기본 점검과 격리 시험:
+
+```sh
+python3 scripts/finance_migration_atomic.py
+python3 tests/test_finance_atomic_guard.py
+python3 scripts/rehearse-cli-history.py /absolute/path/to/supabase
+```
+
+마지막 시험은 공식 CLI 2.122.0 Linux amd64 바이너리와 로컬 `postgres:17` 이미지가 필요하며 `--network none` 격리 컨테이너만 사용한다. 컴파일된 실제 도구 SQL과 psql 실행기를 대상으로 004·005·007 이전 실패, 007 history INSERT 실패, 중복 실행, 004·006 중간 RPC 비가시성, advisory lock, 최종 권한·RLS·원장, paper 보존을 확인했다. 커밋 전 연결 단절은 롤백됐고 커밋 후 확인 응답 전 단절은 적용된 상태에서도 실패/결과 불명으로 처리됐다. 어느 경우에도 자동 재시도하지 않았다. 기존 주문·수수료·배당·세금의 더 넓은 회귀는 G1-C1 결과를 재사용한다.
+
+명시적 운영 승인 후에만 `--execute-production --project-ref vveljtqmujdzkzmoncjx` 옵션을 사용할 수 있으며, 대화형 터미널에 지정 문구를 입력해야 한다. 도구는 DB URL을 받지 않고 `db.vveljtqmujdzkzmoncjx.supabase.co:5432/postgres`와 `postgres` 역할, TLS `verify-full`을 강제한다. libpq 접속 환경 재정의는 제거하고 암호·인증서 위치만 전달하며 이를 로그에 쓰지 않는다. 직접 연결 및 TLS 검증은 운영에서 NOT VERIFIED이고, IPv6·DB 자격증명·CA가 준비되지 않으면 연결할 수 없다. 실제 운영 CLI list/dry-run, PostgreSQL/Supabase의 모든 운영 설정·service_role 권한 및 실제 사용자 환경도 NOT VERIFIED다.
+
+오류·시간 초과·연결 손실 또는 커밋 응답 미수신은 **결과 불명**이다. 자동 재시도나 repair를 하지 말고 대상 DB의 migration history와 실제 스키마·권한·원장을 읽기 전용으로 대조한 후 복구 방안을 별도로 검토한다. 커밋 응답이 확인돼도 운영 상태의 독립 검증은 필요하다. 이 실험 도구는 아직 운영 대상 연결과 전체 서비스 경로에서 검증되지 않았으므로 **G1-C3 운영 적용 NO-GO**를 유지한다.
+
+---
+
 대상 프로젝트: `vveljtqmujdzkzmoncjx`. 004~007 운영 적용, DDL/DML, repair, 사용자 생성, Cron 등록 및 Pages 배포는 실행하지 않았다. 이 문서는 운영 실행 승인이 아니며, 검증된 운영 배포 도구도 아직 없다.
 
 ## 배포 접근법

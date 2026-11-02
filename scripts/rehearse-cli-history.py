@@ -4,7 +4,7 @@ Usage: python3 scripts/rehearse-cli-history.py /absolute/path/to/supabase
 The CLI binary must be v2.122.0. No external DB URL or production credentials
 are accepted. Injected SQL is confined to a temporary copy of the migrations.
 """
-import hashlib, pathlib, re, select, subprocess, sys, tempfile, time, uuid
+import concurrent.futures, hashlib, importlib.util, json, pathlib, re, select, subprocess, sys, tempfile, time, uuid
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MIGRATIONS = ROOT / 'supabase/migrations'
@@ -240,6 +240,176 @@ try:
         cli(db, 'db', 'push', '--skip-vault', '--yes')
         assert len(state(db).split('|')[0].split(',')) == 8
         print('PASS experimental single transaction: separate session cannot see 004/006 RPC/history before commit; paper readable; final ACL/ledger and duplicate CLI push verified')
+
+        # Exercise the actual experimental compiler against the CLI baseline.
+        spec = importlib.util.spec_from_file_location('finance_atomic', ROOT / 'scripts/finance_migration_atomic.py')
+        module = importlib.util.module_from_spec(spec)
+        assert spec.loader is not None
+        spec.loader.exec_module(module)
+        try:
+            module.production_command('wrong-project', '/usr/bin/psql')
+            raise AssertionError('wrong project accepted')
+        except ValueError:
+            pass
+        cmd = module.production_command(module.PROJECT, '/usr/bin/psql')
+        assert 'db.' + module.PROJECT + '.supabase.co' in cmd
+        env = module.production_environment({'PGHOST': 'evil', 'PGHOSTADDR': '127.0.0.1',
+                                             'PGOPTIONS': 'unsafe', 'PGSSLMODE': 'disable',
+                                             'PGPASSWORD': 'fixture', 'PATH': '/usr/bin'})
+        assert 'PGHOST' not in env and 'PGHOSTADDR' not in env and 'PGOPTIONS' not in env
+        assert env['PGSSLMODE'] == 'verify-full' and env['PGPASSWORD'] == 'fixture'
+        compiled = module.compile_sql()
+        db = 'targetguard'
+        setup(db)
+        baseline = state(db)
+        command = ['docker', 'exec', '-i', NAME, 'psql', '-U', 'postgres', '-d', db,
+                   '-v', 'ON_ERROR_STOP=1', '-Atq']
+        assert not module.run_psql(command, module.compile_sql(production=True))
+        assert state(db) == baseline  # Local DB is not the TLS-protected production target.
+        for stage in (4, 5, 7):
+            db = 'compilefail' + str(stage)
+            setup(db)
+            baseline = state(db)
+            first = module.validated_migrations()[stage - 4][2][1] + ';\n'
+            assert compiled.count(first) == 1
+            bad = compiled.replace(first, "do $$begin raise exception 'compiled_injected'; end$$;\n" + first, 1)
+            failed = sql(db, bad, check=False)
+            assert failed.returncode != 0 and 'compiled_injected' in failed.stderr
+            assert state(db) == baseline
+            paper_ok(db)
+        db = 'compilehistoryfail'
+        setup(db)
+        baseline = state(db)
+        sql(db, """create function supabase_migrations.reject_compiler() returns trigger language plpgsql as $$
+            begin if new.version='202610270007' then raise exception 'compiled_history_failure'; end if;
+            return new; end $$; create trigger reject_compiler before insert on supabase_migrations.schema_migrations
+            for each row execute function supabase_migrations.reject_compiler();""")
+        failed = sql(db, compiled, check=False)
+        assert failed.returncode != 0 and 'compiled_history_failure' in failed.stderr
+        assert state(db) == baseline
+        paper_ok(db)
+        print('PASS experimental compiler: 004/005/007 and history INSERT failure roll back all schema and history')
+        db = 'compiledexperiment'
+        setup(db)
+        original = state(db)
+        command = ['docker', 'exec', '-i', NAME, 'psql', '-U', 'postgres', '-d', db,
+                   '-v', 'ON_ERROR_STOP=1', '-Atq']
+        assert module.run_psql(command, compiled)
+        paper_ok(db)
+        manual_ok(db, create=True)
+        final_acl(db)
+        query = "select json_object_agg(version,json_build_object('name',name,'statements',statements)) from supabase_migrations.schema_migrations where version between '202610270004' and '202610270007';"
+        assert json.loads(sql(db, query).stdout) == json.loads(sql('case4', query).stdout)
+        assert not module.run_psql(command, compiled)
+        repeated = sql(db, compiled, check=False)
+        assert repeated.returncode != 0 and 'unexpected_migration_history' in repeated.stderr
+        print('PASS experimental compiler: final state and statement arrays match official CLI, duplicate blocked')
+
+        db = 'compiledvisibility'
+        setup(db)
+        p = subprocess.Popen(['docker', 'exec', '-i', NAME, 'psql', '-U', 'postgres', '-d', db,
+                              '-v', 'ON_ERROR_STOP=1', '-Atq'], stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            markers = [module.validated_migrations()[i][2][1] + ';\n' for i in (1, 3)]
+            assert all(compiled.count(x) == 1 for x in markers)
+            first, rest = compiled.split(markers[0], 1)
+            middle, last = rest.split(markers[1], 1)
+            def await_marker(label):
+                if not select.select([p.stdout], [], [], 30)[0]:
+                    raise RuntimeError('compiled stage timed out: ' + label)
+                assert p.stdout.readline().strip() == label
+            for text_part, label in ((first, 'COMPILED_AFTER_004'),
+                                     (markers[0] + middle, 'COMPILED_AFTER_006')):
+                p.stdin.write(text_part + '\n\\echo ' + label + '\n')
+                p.stdin.flush()
+                await_marker(label)
+                assert sql(db, "select to_regprocedure('public.manual_snapshot()') is null;").stdout.strip() == 't'
+                assert sql(db, 'select pg_try_advisory_xact_lock(724102607004);').stdout.strip() == 'f'
+                paper_ok(db)
+            p.stdin.write(markers[1] + last)
+            p.stdin.close()
+            output = p.stdout.read()
+            errors = p.stderr.read()
+            assert p.wait(timeout=60) == 0 and output.strip().splitlines()[-1:] == ['g1c2d_commit_confirmed'], errors[-1000:]
+            final_acl(db)
+            paper_ok(db)
+        finally:
+            if p.poll() is None:
+                p.kill()
+                p.wait()
+        print('PASS tool SQL: RPC invisible after 004 and 006, concurrent advisory lock blocked, paper readable')
+
+        db = 'compiledabort'
+        setup(db)
+        baseline = state(db)
+        p = subprocess.Popen(['docker', 'exec', '-i', NAME, 'psql', '-U', 'postgres', '-d', db,
+                              '-v', 'ON_ERROR_STOP=1', '-Atq'], stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            body, boundary, tail = compiled.rpartition('COMMIT;\n')
+            assert boundary and "g1c2d_commit_confirmed" in tail
+            body = body.replace('BEGIN;\n', "BEGIN;\nSET LOCAL application_name='g1c2d_abort_test';\n", 1)
+            p.stdin.write(body + '\n\\echo G1C2D_BEFORE_COMMIT\n')
+            p.stdin.flush()
+            assert select.select([p.stdout], [], [], 30)[0]
+            assert p.stdout.readline().strip() == 'G1C2D_BEFORE_COMMIT'
+            assert sql(db, "select to_regprocedure('public.manual_snapshot()') is null;").stdout.strip() == 't'
+            locked = sql(db, "set statement_timeout='1s'; select count(*) from supabase_migrations.schema_migrations;", check=False)
+            assert locked.returncode != 0 and 'statement timeout' in locked.stderr
+            paper_ok(db)
+            result = sql('postgres', "select pg_terminate_backend(pid) from pg_stat_activity where application_name='g1c2d_abort_test';")
+            assert result.stdout.strip() == 't'
+            # psql can exit 0 on EOF without noticing an idle server disconnect.
+            # Force a DB round trip before treating its exit status as evidence.
+            try:
+                p.stdin.write('select 1;\n')
+                p.stdin.flush()
+            except BrokenPipeError:
+                pass
+            p.stdin.close()
+            assert p.wait(timeout=30) != 0
+            assert state(db) == baseline
+            paper_ok(db)
+        finally:
+            if p.poll() is None:
+                p.kill()
+                p.wait()
+        print('PASS experimental compiler: killed connection before commit rolls back; independent observation required')
+
+        # Exercise the same psql runner used by the tool with connections
+        # severed on both sides of COMMIT. No retry is performed by run_psql.
+        for after_commit in (False, True):
+            db = 'runnerafter' if after_commit else 'runnerbefore'
+            setup(db)
+            baseline = state(db)
+            label = 'g1c2d_runner_after' if after_commit else 'g1c2d_runner_before'
+            program = compiled.replace('BEGIN;\n', f"BEGIN;\nSET application_name='{label}';\n", 1)
+            marker = "SELECT 'g1c2d_commit_confirmed';" if after_commit else 'COMMIT;\n'
+            assert program.count(marker) == 1
+            program = program.replace(marker, 'SELECT pg_sleep(60);\n' + marker, 1)
+            command = ['docker', 'exec', '-i', NAME, 'psql', '-U', 'postgres', '-d', db,
+                       '-v', 'ON_ERROR_STOP=1', '-Atq']
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                future = pool.submit(module.run_psql, command, program)
+                found = False
+                for _ in range(120):
+                    current = sql('postgres', f"select count(*) from pg_stat_activity where application_name='{label}' and wait_event='PgSleep';")
+                    if current.stdout.strip() == '1':
+                        found = True
+                        break
+                    time.sleep(.25)
+                assert found, 'runner did not reach the injected wait'
+                killed = sql('postgres', f"select pg_terminate_backend(pid) from pg_stat_activity where application_name='{label}';")
+                assert killed.stdout.strip() == 't'
+                assert future.result(timeout=30) is False
+            observed = state(db)
+            if after_commit:
+                assert len(observed.split('|')[0].split(',')) == 8
+            else:
+                assert observed == baseline
+            paper_ok(db)
+        print('PASS runner: disconnect before commit rolled back; disconnect after commit remains unknown and did not retry')
 finally:
     if started:
         docker('rm', '-f', NAME, check=False)

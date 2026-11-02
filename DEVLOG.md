@@ -238,3 +238,9 @@
 - 004 본문 commit 후 이력 INSERT 실패를 주입하자 스키마·인증 RPC 권한은 남고 이력은 빠졌으며 일반 CLI 재실행은 중복 객체로 실패했다. paper 및 수기 합성 원장 불변식, 정상 최종 9개 금융 RPC 권한·public 금융 테이블 RLS를 확인했다. 운영 이력 조회는 read-only, 운영 CLI list/dry-run은 NOT VERIFIED.
 - 재현 코드 `scripts/rehearse-cli-history.py`, 결과·대안·중단 원칙 `docs/g1-c2-rehearsal.md`. 모든 경로의 중간 노출 차단과 운영 실패 복구는 미해결이며 검증되지 않은 배포 스크립트는 만들지 않았다. 운영 004~007 적용·DDL/DML·repair·사용자 생성·Cron·Pages는 실행하지 않았다.
 - 추가 격리 실험: 004~007의 메모리 사본에서 각 최상위 BEGIN/COMMIT을 제거하고 수기 모의 history와 단일 트랜잭션으로 시험했다. 004/006 단계의 다른 세션에서는 수기 RPC·history가 보이지 않고 paper 잔액을 읽을 수 있었다. 004·005·007 이전 및 007 history INSERT 오류에서 스키마와 모의 history가 함께 롤백됐다. 이는 공식 CLI 배포 동등성이나 수기 이력 운영 변경의 승인이 아니다. 절차·제약·NO-GO는 `docs/finance/G1_C2_DEPLOYMENT_GATE.md`에 기록했다.
+
+## 2026-11-02 · G1-C2D 원자적 금융 migration 도구
+- 공식 CLI 2.122.0 소스와 격리 실행 결과를 기준으로 원본 SQL 고정 해시와 CLI가 기록한 전체 문장 배열을 검증한다. 도구는 004~007의 첫/끝 transaction 경계만 제외하고 본문과 원본 문장 배열의 version/name/history를 하나의 PostgreSQL 트랜잭션에서 처리한다. 기존 SQL 변경 없음. 별도 승인·정확한 프로젝트 ID·대화형 승인·직접 DB 호스트·TLS verify-full이 없으면 운영 실행하지 않으며 기본은 오프라인 검증이다.
+- 네트워크 없는 격리 시험에서 실제 도구 SQL의 004/005/007 직전 실패·최종 history INSERT 실패 전체 롤백, CLI history version/name/statements 일치, 중복 차단, 004/006 다른 세션 비노출, advisory lock, 최종 금융 권한/RLS·원장 및 paper 검사를 수행했다. 실행기는 커밋 전 연결 손실과 커밋 후 응답 손실을 모두 결과 불명으로 반환하며 자동 재시도하지 않는다. EOF만으로 psql 종료 코드가 0일 수 있음을 재현해 커밋 후 서버 응답을 요구했다. history 배타 잠금은 이력 조회도 대기시킨다.
+- 운영 연결 CLI·도구 직접 연결/TLS와 서비스 전체 경로는 NOT VERIFIED. 카탈로그 수 검사는 전체 정의 동등성이 아니고 다른 배포자가 이미 시작된 경우 advisory lock만으로 차단하지 못한다. 운영 G1-C3 NO-GO, 실행·복구 주의사항은 `docs/finance/G1_C2_DEPLOYMENT_GATE.md` 참고. 운영 변경·Cron·Pages 미실행.
+- 실제 검증: 격리 DB 도구·CLI 실패/연결 단절 리허설 PASS, 오프라인 가드 7/7 PASS, 활성화 빌드 PASS, 기존 앱 전체 PC·모바일 회귀 190/190 PASS. 기존 금융 SQL 전체 회귀는 G1-C1 결과를 재사용했다. GitHub CI의 별도 격리 Cron 등록은 이번 Cron 활성화 금지에 따라 실행하지 않는다.

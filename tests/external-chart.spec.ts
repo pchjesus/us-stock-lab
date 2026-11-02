@@ -1,5 +1,18 @@
 import {test,expect} from '@playwright/test';
 
+test('detail keeps the chart and order side by side on desktop and stacked on smaller screens',async({page})=>{
+ for(const width of [1440,768,390,320]){
+  await page.setViewportSize({width,height:950});
+  await page.goto('/#stock/AAPL');
+  const chart=await page.getByLabel('외부 차트 패널').boundingBox();
+  const order=await page.locator('#detail-order').boundingBox();
+  expect(chart).not.toBeNull();expect(order).not.toBeNull();
+  if(width===1440)expect(order!.x).toBeGreaterThan(chart!.x+chart!.width-2);
+  else expect(order!.y).toBeGreaterThan(chart!.y+chart!.height-2);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ }
+});
+
 test('external chart starts empty, creates one widget and cleans up on close and symbol change',async({page})=>{
  await page.route('https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js',route=>route.fulfill({contentType:'application/javascript',body:"(()=>{const f=document.createElement('iframe');f.title='mock TradingView';document.currentScript.parentElement.appendChild(f);})()"}));
  await page.goto('/#stock/AAPL');

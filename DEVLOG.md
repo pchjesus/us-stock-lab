@@ -232,3 +232,9 @@
 - Foundation 파일명만 운영 이력의 version/name `20261026135037`/`202610260001_foundation`에 맞춤. SQL 본문 바이트 동일(SHA256 2035aa696c49e4357a1cf321cbdbc8c689dea3806c948387a5430f4772a39572), 버전 중복 없음. 운영 이력의 Foundation 원문 MD5와 길이도 일치. README 경로 갱신.
 - 공식 CLI 2.122.0과 네트워크 없는 모사 DB에서 최초·001~003 이력 일치, 004~007만 미적용 표시 확인. 운영 연결 CLI 비교는 NOT VERIFIED; 운영 이력은 읽기 전용 조회. G1-B0의 001~003 카탈로그 비교를 재사용하며 운영 RPC 실동작은 미검증.
 - 네트워크 없는 PostgreSQL 격리 금융·RLS·동시성·007 실패 주입 및 재실행 PASS. 인증 mock 회귀 38/38, 활성화 빌드 및 전체 UI 회귀 190/190 PASS. 기본 빌드 전체 회귀는 환율 연동 비활성화로 188 PASS/2 FAIL; CI 활성화 설정으로 재실행했다. 운영 migration·DDL/DML·repair·Cron·Pages 미실행. G1-C2는 중간 수기 RPC 노출 방지와 CLI 스키마 커밋 후 이력 기록 실패 복구 검증 전 NO-GO.
+
+## 2026-11-02 · G1-C2 CLI 실패 리허설, 운영 NO-GO
+- 공식 CLI 2.122.0을 네트워크 없는 임시 PostgreSQL 안에서 실행. 모사 `--dry-run --skip-vault`는 004~007만 표시하고 시험 상태 불변. 004·005·007 본문 실패, 반복 실행, 오류 제거 후 재실행 및 완료 후 중복 CLI push를 재현했다. 005/007 실패 시 인증 사용자가 `manual_snapshot()`으로 계좌를 만들 수 있음도 재현.
+- 004 본문 commit 후 이력 INSERT 실패를 주입하자 스키마·인증 RPC 권한은 남고 이력은 빠졌으며 일반 CLI 재실행은 중복 객체로 실패했다. paper 및 수기 합성 원장 불변식, 정상 최종 9개 금융 RPC 권한·public 금융 테이블 RLS를 확인했다. 운영 이력 조회는 read-only, 운영 CLI list/dry-run은 NOT VERIFIED.
+- 재현 코드 `scripts/rehearse-cli-history.py`, 결과·대안·중단 원칙 `docs/g1-c2-rehearsal.md`. 모든 경로의 중간 노출 차단과 운영 실패 복구는 미해결이며 검증되지 않은 배포 스크립트는 만들지 않았다. 운영 004~007 적용·DDL/DML·repair·사용자 생성·Cron·Pages는 실행하지 않았다.
+- 추가 격리 실험: 004~007의 메모리 사본에서 각 최상위 BEGIN/COMMIT을 제거하고 수기 모의 history와 단일 트랜잭션으로 시험했다. 004/006 단계의 다른 세션에서는 수기 RPC·history가 보이지 않고 paper 잔액을 읽을 수 있었다. 004·005·007 이전 및 007 history INSERT 오류에서 스키마와 모의 history가 함께 롤백됐다. 이는 공식 CLI 배포 동등성이나 수기 이력 운영 변경의 승인이 아니다. 절차·제약·NO-GO는 `docs/finance/G1_C2_DEPLOYMENT_GATE.md`에 기록했다.

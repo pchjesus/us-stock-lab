@@ -19,3 +19,7 @@ header{display:grid;grid-template-columns:140px minmax(0,1fr) auto;min-height:14
 .company-detail details { margin-block: .65rem; }
 .company-detail summary { cursor: pointer; padding-block: .45rem; }
 .company-detail svg { display: block; overflow: visible; }
+/* Instrument detail: external chart and order first, evidence below. */
+.detail-layout{grid-template-columns:minmax(0,3fr) minmax(300px,2fr);align-items:start;gap:20px}
+.detail-layout>*{min-width:0}.detail-summary{max-width:70ch}.detail-learning p{margin-bottom:0}
+@media(max-width:1050px){.detail-layout{grid-template-columns:minmax(0,1fr)}}

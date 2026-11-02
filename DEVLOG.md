@@ -227,3 +227,8 @@
 - 실제 PASS: 활성화 npm run build, 영향44/44, 최종 npm test190/190, npm run test:auth38/38, dev fixture2/2, 원문200보고/19계산, 신규 파일 포함 diff 검사. 초기 전체189 PASS/1 FAIL은 외부 재무부 오류+계좌 손상 alert 선택자 충돌; 계좌 알림을 구체적으로 지정하고 전체190개 재실행 PASS. 기존 기능/검증을 삭제하거나 오류 알림을 숨기지 않았다.
 - 1440/768/390/320폭에서5기업·3ETF의 합성/인증 mock 수기 화면, 연간·분기/실제 표시값·출처·계산근거·외부시세1개·학습실 링크/가로폭/런타임오류 검사 PASS. 수기 USD직접입력 가격 불변, 신규 주문0/합성 원장 미생성 검사. GOOGL 그래프4폭 캡처 시각 확인. 운영 Auth·물리 기기/외부 사이트 가용성은 미검증.
 - 감사 보고: docs/company-data/B3_C_INTEGRATION_AUDIT_20261101.md. 원격main35d37cd는 개발 HEAD의 조상, Pages는 manual dispatch. 최종 CI 성공 조건으로 코드·재무 통합 PASS/main 병합 준비 GO(실행은 안 함). 운영 배포는 v0.6-F004~007/Advisor·백업·allowlist/Cron·두 초대 계정/실기기 smoke·별도 승인 미완료로 NO-GO 유지. main/Pages·운영 DB/Cron 미변경. finance-safe 기존 SQL/Cron은 푸시 후 신규 CI의 실제 결과를 최종 보고에서 구분한다.
+
+## 2026-11-02 · G1-C1 최초 migration 버전 정합화
+- Foundation 파일명만 운영 이력의 version/name `20261026135037`/`202610260001_foundation`에 맞춤. SQL 본문 바이트 동일(SHA256 2035aa696c49e4357a1cf321cbdbc8c689dea3806c948387a5430f4772a39572), 버전 중복 없음. 운영 이력의 Foundation 원문 MD5와 길이도 일치. README 경로 갱신.
+- 공식 CLI 2.122.0과 네트워크 없는 모사 DB에서 최초·001~003 이력 일치, 004~007만 미적용 표시 확인. 운영 연결 CLI 비교는 NOT VERIFIED; 운영 이력은 읽기 전용 조회. G1-B0의 001~003 카탈로그 비교를 재사용하며 운영 RPC 실동작은 미검증.
+- 네트워크 없는 PostgreSQL 격리 금융·RLS·동시성·007 실패 주입 및 재실행 PASS. 인증 mock 회귀 38/38, 활성화 빌드 및 전체 UI 회귀 190/190 PASS. 기본 빌드 전체 회귀는 환율 연동 비활성화로 188 PASS/2 FAIL; CI 활성화 설정으로 재실행했다. 운영 migration·DDL/DML·repair·Cron·Pages 미실행. G1-C2는 중간 수기 RPC 노출 방지와 CLI 스키마 커밋 후 이력 기록 실패 복구 검증 전 NO-GO.

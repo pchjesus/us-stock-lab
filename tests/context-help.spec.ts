@@ -1,0 +1,24 @@
+import {test,expect} from '@playwright/test';
+import {mkdirSync} from 'node:fs';
+const routes=[['home','home'],['market','market'],['indices','indices'],['stock/AAPL','stock'],['stock/VOO','stock'],['portfolio','portfolio'],['learn','learn'],['learn/AAPL','lab'],['calendar','calendar'],['news','calendar'],['settings','settings']];
+test('help follows route, changes topic, restores focus and preserves account state',async({page})=>{
+ const requests:string[]=[];page.on('request',r=>{if(r.url().includes('/rest/v1/rpc/'))requests.push(r.url());});
+ for(const [route,topic]of routes){await page.goto('/#'+route);const before=await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'));const button=page.getByRole('button',{name:'현재 화면 도움말'});await button.click();const dialog=page.getByRole('dialog',{name:'도움말',exact:true});await expect(dialog.getByLabel('도움말 주제')).toHaveValue(topic);await dialog.getByLabel('도움말 주제').selectOption('indices');await expect(dialog.getByRole('heading',{name:'주요 지표·환율',exact:true})).toBeVisible();await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);await expect(button).toBeFocused();expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(before);}
+ expect(requests).toEqual([]);
+});
+test('help hands off to actual seven-step Tour without nested modals and restores origin',async({page})=>{
+ await page.goto('/#portfolio');await page.evaluate(()=>scrollTo(0,240));const trigger=page.getByRole('button',{name:'현재 화면 도움말'});await trigger.focus();const y=await page.evaluate(()=>scrollY);await trigger.press('Enter');await page.getByRole('button',{name:'직접 따라 해보기'}).click();await expect(page.getByRole('dialog',{name:'도움말',exact:true})).toHaveCount(0);await expect(page.getByRole('dialog',{name:'사용 방법 1/7'})).toBeVisible();await expect(page.locator('dialog[open]')).toHaveCount(1);await expect(page.locator('.spotlight')).toBeVisible();
+ for(let i=1;i<7;i++){await page.getByRole('button',{name:'다음',exact:true}).click();await expect(page.getByRole('dialog',{name:`사용 방법 ${i+1}/7`})).toBeVisible();}
+ await page.getByRole('button',{name:'종료',exact:true}).click();await expect(page).toHaveURL(/#portfolio$/);await expect(trigger).toBeFocused();await expect.poll(()=>page.evaluate(()=>scrollY)).toBe(y);expect(await page.evaluate(()=>document.body.style.overflow)).not.toBe('hidden');
+ await trigger.click();await page.getByRole('button',{name:'직접 따라 해보기'}).click();await expect(page.getByRole('dialog',{name:'사용 방법 1/7'})).toBeVisible();await page.keyboard.press('Escape');await expect(page).toHaveURL(/#portfolio$/);await expect(trigger).toBeFocused();
+});
+test('header and help fit all target widths',async({page},testInfo)=>{
+ mkdirSync('work/ux1-a',{recursive:true});for(const width of [1440,1200,768,390,320]){await page.setViewportSize({width,height:950});await page.goto('/#home');await expect(page.locator('.header-page-title')).toHaveText('홈');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ const boxes=await page.locator('header > .header-identity,header > .header-ticker,header > .clock,header > .header-actions').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom};}));for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++){const a=boxes[i],b=boxes[j];expect(a.right<=b.left+1||b.right<=a.left+1||a.bottom<=b.top+1||b.bottom<=a.top+1).toBe(true);}
+ await expect(page.getByRole('button',{name:'알림함'})).toBeVisible();await expect(page.getByRole('link',{name:'계정 설정',exact:true})).toBeVisible();await expect(page.locator('option[value="manual"]')).toHaveJSProperty('disabled',true);await page.screenshot({path:`work/ux1-a/${testInfo.project.name}-${width}-header.png`});await page.getByRole('button',{name:'현재 화면 도움말'}).click();await expect(page.getByRole('dialog',{name:'도움말',exact:true})).toBeVisible();await page.screenshot({path:`work/ux1-a/${testInfo.project.name}-${width}-help.png`});await page.keyboard.press('Escape');}
+ await page.emulateMedia({reducedMotion:'reduce'});await expect(page.getByRole('button',{name:'현재 화면 도움말'})).toHaveCSS('transition-duration','0s');
+});
+
+test('help pauses the background ticker and closing resumes one timer',async({page})=>{
+ await page.clock.install({time:new Date('2026-11-03T00:00:00Z')});await page.clock.pauseAt(new Date('2026-11-03T00:00:00Z'));await page.goto('/#home');const current=page.getByTestId('ticker-current');await expect(current).toContainText('S&P 500');await page.getByRole('button',{name:'현재 화면 도움말'}).click();await page.clock.runFor(10000);await expect(current).toContainText('S&P 500');await page.keyboard.press('Escape');await page.clock.runFor(5000);await expect(current).toContainText('NASDAQ');
+});

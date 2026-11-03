@@ -35,3 +35,39 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 @media(max-width:640px){header{grid-template-columns:minmax(0,1fr);min-height:0}.header-ticker{grid-column:1;grid-row:1;max-width:none;height:78px}.ticker-window{height:60px}.clock{grid-column:1;grid-row:2}.header-actions{grid-column:1;grid-row:3}.ticker-overview{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.ticker-enter,.ticker-exit{animation:none}.ticker-exit{display:none}}
 .ticker-slide small{font-size:10px}.clock small{word-break:keep-all}
+/* UX1-A: scoped common foundation; screen-specific content/logic is preserved. */
+.app.ui-foundation{--bg:#f4f6f9;--surface:#fff;--line:#d8e0eb;--accent:#315bd3;--text:#172437;--muted:#526079;background:var(--bg);color:var(--text)}
+.ui-foundation :is(button,select,input){font:inherit;min-height:44px;border-radius:10px;color:var(--text)}
+.ui-foundation button{padding:10px 14px;transition:background-color 200ms ease,border-color 200ms ease}
+.ui-foundation button:not(:disabled):hover{background:#eef2fc;border-color:#9badd4}
+.ui-foundation button:disabled{background:#edf0f5;color:#626e80;border-color:#d5dce6;opacity:1;cursor:not-allowed}
+.ui-foundation :is(button,a,select,input,summary):focus-visible{outline:3px solid #254dc7;outline-offset:3px}
+.ui-foundation :is(.ui-primary,button[aria-pressed=true]){background:var(--accent);color:#fff;border-color:var(--accent)}
+.ui-foundation .ui-danger{color:#a12833;border-color:#b9666d;background:#fff5f5}
+.ui-foundation :is(.periods,.learning-filters){gap:6px}
+.ui-foundation :is(.periods,.learning-filters) button{min-height:44px;border-radius:9px}
+.ui-foundation select{padding:10px 12px;background:var(--surface);border:1px solid var(--line);max-width:100%}
+.ui-foundation :is(.source-links,.company-detail,.external-chart) a{color:#274fc0;text-decoration:underline;text-underline-offset:3px}
+.ui-foundation :is(.panel,.indices section){background:var(--surface);border-color:var(--line)}
+.ui-foundation p{line-height:1.7}.ui-foundation :is(small,.source,.card-time,.session-detail){font-size:12px;line-height:1.6}
+.ui-foundation .financial-metrics-grid :is(p,strong){font-size:14px}
+.ui-foundation summary{min-height:44px;padding-block:10px}
+.ui-foundation header{grid-template-columns:minmax(240px,280px) minmax(220px,1fr) auto;gap:12px 20px;min-height:0;padding:16px 24px;background:var(--surface)}
+.ui-foundation .header-identity{grid-column:1/-1;display:flex;align-items:center;gap:16px;min-width:0;flex-wrap:wrap}
+.ui-foundation .header-brand{display:inline;font-size:15px;font-weight:750;color:var(--text)}
+.ui-foundation .header-page-title{font-size:13px;color:var(--muted);border-left:1px solid var(--line);padding-left:16px}
+.ui-foundation .header-ticker{grid-column:1;grid-row:2;height:104px;max-width:300px;padding:10px 12px;background:#f7f9fe}
+.ui-foundation .ticker-window{height:82px}.ui-foundation .ticker-slide small{font-size:12px;white-space:normal}
+.ui-foundation .ticker-numbers{align-items:baseline}.ui-foundation .ticker-numbers strong{font-size:16px}
+.ui-foundation .clock{grid-column:2;grid-row:2;text-align:center;align-items:center}
+.ui-foundation .clock .live-times{font-size:14px;flex-wrap:wrap;justify-content:center}
+.ui-foundation .clock small{font-size:12px;color:var(--muted)}
+.ui-foundation .header-actions{grid-column:3;grid-row:2;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:230px}
+.ui-foundation .header-actions :is(button,a){min-height:44px;height:auto;padding:9px 11px;font-size:12px;flex:none}
+.ui-foundation .help-button{font-weight:750;min-width:44px;border-radius:50%}
+.ui-foundation .tutorial-shortcut{font-size:12px}
+.ui-foundation .help-topic-select{display:flex;flex-direction:column;gap:8px;font-size:14px;margin:16px 0 24px}
+.ui-foundation .help-topic-select select{width:100%}.ui-foundation .ui-modal p{font-size:14px}
+@media(max-width:1150px){.ui-foundation header{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.ui-foundation .header-ticker{grid-column:1;grid-row:2 / 4;justify-self:center}.ui-foundation .clock{grid-column:2;grid-row:2}.ui-foundation .header-actions{grid-column:2;grid-row:3;max-width:none;justify-content:center}}
+@media(max-width:640px){.ui-foundation header{grid-template-columns:minmax(0,1fr);padding:16px;gap:12px}.ui-foundation .header-identity{grid-row:1;gap:8px}.ui-foundation .header-page-title{padding-left:8px;font-size:12px}.ui-foundation .header-ticker{grid-column:1;grid-row:2;max-width:none;height:102px}.ui-foundation .clock{grid-column:1;grid-row:3}.ui-foundation .header-actions{grid-column:1;grid-row:4;justify-content:space-between}.ui-foundation .header-actions :is(button,a){padding-inline:10px}.ui-foundation aside nav a{min-height:56px;font-size:12px}.ui-foundation .collapsed aside nav a{font-size:12px}.ui-foundation main{padding-bottom:110px}.ui-foundation :is(.source,.card-time,.section-title span,.calendar-day small,.ticker-slide small,footer){font-size:12px}.ui-foundation :is(.panel p,.account-summary dd,.trade-form label){font-size:14px}.ui-foundation .calendar-day{min-height:76px}.ui-foundation .ticker-overview{grid-template-columns:1fr}.ui-foundation .ui-modal dl{grid-template-columns:1fr;gap:8px}.ui-foundation .ui-modal dd{margin-bottom:12px}}
+@media(prefers-reduced-motion:reduce){.ui-foundation :is(button,a,select){transition:none}}

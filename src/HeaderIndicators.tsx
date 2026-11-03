@@ -17,11 +17,11 @@ export function headerIndicators(items:Indicator[],mode:MarketSnapshot['mode']):
 function IndicatorText({item}:{item:Indicator}){
  return <><span className="ticker-name">{item.name}</span><span className="ticker-numbers"><strong>{item.value===null?'미제공':item.value.toLocaleString('ko-KR',{minimumFractionDigits:2,maximumFractionDigits:2})+' '+item.unit}</strong><span className={item.changePct===null?'':item.changePct>0?'up':item.changePct<0?'down':''}>{item.changePct===null?'등락률 미제공':(item.changePct>0?'+':'')+item.changePct.toFixed(2)+'%'}</span></span><small>{item.status==='synthetic'?'합성 예시 · 자체 생성':item.status==='pending'?'연동 준비 중':'공식 · 출처명 미제공'} · {item.asOf?kstTime(item.asOf):'기준시각 미제공'}</small></>;
 }
-export function HeaderIndicators({indicators,mode}:{indicators:Indicator[];mode:MarketSnapshot['mode']}){
+export function HeaderIndicators({indicators,mode,externalPaused=false}:{indicators:Indicator[];mode:MarketSnapshot['mode'];externalPaused?:boolean}){
  const items=headerIndicators(indicators,mode);
  const [slide,setSlide]=useState({index:0,previous:null as number|null,serial:0});
  const [hover,setHover]=useState(false),[focus,setFocus]=useState(false),[open,setOpen]=useState(false);
- const paused=hover||focus||open;
+ const paused=hover||focus||open||externalPaused;
  useEffect(()=>{if(paused)return;const timer=window.setInterval(()=>setSlide(s=>({index:(s.index+1)%6,previous:s.index,serial:s.serial+1})),5000);return()=>window.clearInterval(timer);},[paused]);
  useEffect(()=>{if(slide.previous===null)return;const timer=window.setTimeout(()=>setSlide(s=>({...s,previous:null})),400);return()=>window.clearTimeout(timer);},[slide.serial]);
  return <><button type="button" className="header-ticker" aria-label="주요 시장 지표 열기" aria-describedby="header-ticker-current" aria-haspopup="dialog" aria-expanded={open}

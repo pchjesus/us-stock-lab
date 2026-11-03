@@ -291,3 +291,11 @@
 - 변경 전 build·영향36/36, 변경 후 영향34/34, 모의 인증/수기/배당/세금40/40 PASS. false 게이트1/1 PASS: 복원 로그인·저장 수기 선호 보존·수기/배당/세금 RPC0. 5해상도 전체 화면5/5 PASS. 최종 build PASS, 전체 앱 UI 232/232 PASS (최종 전체 실행 1회; 앞선 실패 원인 수정 후 재실행), diff PASS. PC1440·모바일390 대표6캡처와 docs/ui/UX1_B1.md 보존.
 - 첫 전체 회귀는 226 PASS/6 FAIL. 외부 환율/재무부 실패로 생긴 복수 alert에 대한 테스트 선택자, popup 첫 요청을 놓치는 page.route, 라이브 환율 의존의 3원인을 확인했다. 관심종목 alert 범위 지정·popup context mock·고정 시각 환율 fixture로 기존 검증을 보강했으며 기능/테스트 삭제 없음. 실패 파일 재검증20/20 PASS 후 전체 재실행. 최종 미해결 FAIL 0건. 기존 Vite import/chunk 경고 유지.
 - 금융 PostgreSQL/SQL은 변경 영향 없어 UX1-A/G1 근거 재사용. 운영 인증·실기기·스크린리더/WCAG 전체는 NOT VERIFIED. B1 개발 검토 Ready (개발 브랜치 결과 검토 및 UX1-B2 진행), UX1-B2 진행 가능(운영 배포 승인 아님). 대규모 리팩터링 보류: 상태 계약 유지와 표시 국소 개선으로 충분하며 반복 결함 근거 없음. 계좌 소유권 변경/같은 경계 반복 회귀 때 재검토.
+
+## 2026-11-03 · v0.8-UX1-B2 자료 카드·버튼·링크
+- GitHub B1 HEAD 5a09ddf 일치 확인 후 기존 checkout에서 codex/ui-v0.8-ux1-b2 생성. Pages 수동/finance·market 전용 브랜치 push 필터 확인, B2 CI/Cron 트리거 없음. 개발 브랜치만 커밋·push, main/Pages/운영 DB/Auth/Cron 변경 없음.
+- 환율/재무부 카드의 제목·상태·기준일/재조회·수치/단위·조회시각·설명·제공자/출처 정렬. 재조회 중 원래 날짜의 이전 자료 유지와 disabled 사유, 실패 시 기존 수치 제거/오류/재시도, 오래된 환율 미제공 표시 추가. 기존 endpoints/parsers/timeout/cleanup 보존, 카드별 로컬 중복 클릭 잠금만 추가.
+- 지표 추이/일정 상세 버튼, 뉴스·SEC·공식 출처 링크의 밑줄/새 탭 안내/44px, 외부 차트 제공자·별도 창·기존 대체 링크 정렬. 금융 계산/원장/가격/8종목/인증/수기 게이트/시장 시계/헤더 슬라이더/도움말/Tour·SQL/RPC/RLS·기업 재무 원본 불변. 기업/ETF 정보 구조와 홈 개편 보류.
+- 변경 전 영향8/8, 통합 영향50/50, 신규16/16, 비활성 설정 smoke2/2, 인증/수기/배당/세금40/40, production 수기 게이트1/1 PASS. 최종 build PASS·전체 앱 UI 248/248 PASS(각1회), diff PASS. 5개 폭의 카드/조작 겹침·넘침/JS 오류0, 날짜/단위·요청1회·중복 클릭·지연 역순 응답·로딩/실패/회복·원문/새 탭·키보드/터치·reduced-motion 검사. 최종 fixture 대표8캡처와 docs/ui/UX1_B2.md 보존.
+- 초기 개발 StrictMode의 기존 Modal 초점 복귀 실패2건은 모달 불변을 유지하고 production React 및 최종 Vite 산출물에서 분리 검증. 닫힌 details 링크는 보이는 링크의 접근성 이름을 검사하고 입력 원문 새 탭 안내 보강. 최종 production 미해결 FAIL 0건, 개발 StrictMode 기존 제한 잔존. 기존 Vite import/chunk 경고 유지.
+- 금융 SQL은 원본 불변으로 B1/G1 근거 재사용. 실제 모바일/스크린리더/WCAG 전체·운영 인증·최신 운영 외부 자료 응답은 NOT VERIFIED. 캡처 수치·시각은 고정 fixture이며 최신값이 아님. 대규모 리팩터링 불필요, 공유 요청/상태 변경이나 반복 결함 시 재검토. UX2 개발 진행 Ready (개발 결과 검토 및 UX2 진행 가능), 운영 배포 승인 아님.

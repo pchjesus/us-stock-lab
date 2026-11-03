@@ -1,4 +1,9 @@
 # 개발 기록
+## 2026-11-03 · v0.8-R2-S Pages 버전·캐시 검증
+- main/Pages 실행 41562090798/아티팩트 metadata SHA 51474c29 일치. 일반·no-cache·query HTML 200 및 동일 해시, 신규 JS/CSS는 R1 검증 dist와 일치. 아티팩트 원문 로컬 비교는 스토리지 다운로드 403으로 NOT VERIFIED.
+- 실제 Pages Chromium PC1440/모바일390 검사 10/10 PASS, 8종목/재무/지표 팝업/수기 비활성·RPC 0/넘침 없음. 외부 TradingView iframe SecurityError 각2건을 앱 예외와 구분. 실제 주문·로그인·계정 생성 없음. 전체 회귀·빌드는 변경 없어 재사용.
+- 보관된 구버전 HTML/JS 격리 재현: hash 이동 시 v0.4-B 유지, 새 탭 최신, 같은 탭 정상 reload 후 v0.8. 사용자 실제 탭은 연결 도구 없어 원인 확정 NOT VERIFIED. 코드 수정·재배포·main/운영 변경 없음. docs/release/V0_8_R2_S.md에 근거·F5/강력 새로고침 절차 기록. A4 진행 가능, A4/A5 미완료·G1-C3 NO-GO 유지.
+
 ## 2026-11-03 · v0.8-R1 UI 릴리스 후보
 - 기준 d536d041 개발 브랜치 clean 및 main ac8358ae 확인. 수기 모드 저장 선호가 미배포 RPC를 호출할 수 있어 기본 off 표시 게이트와 Pages false 설정을 추가했다. 기존 선호·paper 계좌·금융 계산/SQL·원자 배포 도구·기업 재무 원본은 보존했다. UI 후보 버전은 0.8.0-rc.1로 정리했다.
 - Pages 환경 TypeScript/Vite build PASS, 일반 PC·모바일 212/212, 모의 인증·paper/수기·배당/세금 38/38, 신규 release 6/6 PASS. 복원된 로그인+이전 수기 모드에서도 수기 RPC 0회·paper 경로 유지 확인. 최초 disabled option matcher 1건은 native DOM 속성 검사로 수정 후 전부 통과. diff 검사 PASS.

@@ -41,7 +41,8 @@ test('provider selection uses explicit links and popup blocking gives a fallback
 
 test('opens the selected symbol in a separate browser page and handles widget errors',async({page})=>{
  await page.route('https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js',route=>route.abort());
- await page.route('https://www.tradingview.com/symbols/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<title>fixture</title>'}));
+ // The popup's initial navigation belongs to the context, not the opener page.
+ await page.context().route('https://www.tradingview.com/symbols/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<title>fixture</title>'}));
  await page.goto('/#stock/MSFT');
  const panel=page.getByLabel('외부 차트 패널');
  await panel.getByRole('button',{name:'TradingView 공식 표시용 차트 열기'}).click();

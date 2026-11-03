@@ -283,3 +283,11 @@
 - 현재 경로 기반 9개 도움말 주제·사용자 전환·데이터 구분 설명 추가. 기존 Modal을 닫고 실제 Tour 시작, 중첩 방지와 hash/scroll/focus 복원 검증. 도움말/알림/Tour 동안 지표 타이머 일시 정지 추가. 금융 계산·인증·저장 계약 변경 없음.
 - 영향36/36, 모의 인증/금융38/38 PASS. 최종 활성화 build PASS, 전체 PC/mobile224/224 PASS(전체 실행1회), diff 검사 PASS. 새 도움말8검증 포함 5해상도 헤더/모달 무겹침·넘침없음·native 수기 disabled·reduced-motion·ESC/포커스·7단계 전체/ESC 복원·계좌 불변/운영RPC0 확인. 대표7캡처와 docs/ui/UX1_A.md 보존.
 - 금융 PostgreSQL/SQL 전체 검사는 원본 불변으로 이전 결과 재사용. 운영 인증·실기기·스크린리더·WCAG 전체 감사는 NOT VERIFIED. 기존 Actions 브랜치 필터 확인, 새 브랜치 Cron 트리거 없음·Pages 수동. main/Pages/운영 DB/Auth/Cron 변경 없음. UX1-B 시작 가능; 화면별 버튼·계좌 모드 정리와 UX2/3는 후속. 국소 표시·모달 경계만 변경하고 대규모 리팩터링은 보류.
+
+## 2026-11-03 · v0.8-UX1-B1 핵심 조작 UI
+- GitHub 기준 브랜치 최신 HEAD 3e5fad8 일치 확인. 기존 checkout에서 codex/ui-v0.8-ux1-b1 생성. Pages 수동 실행/finance·market 과거 전용 브랜치 push 필터 확인, B1 push 트리거·schedule/Cron 없음. workflow/운영 DB/Auth/Cron·main/Pages 변경 없음.
+- 전역 계좌 선택을 포트폴리오·설정으로 이동, 주문 영역의 현재 계좌/소유 범위와 변경 링크 추가. 기존 Workspace 상태·사용자별 manual.mode 키·로그인 소유권·수기 false 게이트/저장 선호·수기 기능 유지. 금융 계산·가격·원장·서버 저장 복원·8종목·기업 재무 원본·SQL/RPC/RLS 변경 없음.
+- 학습 native select에 이름·심볼/정렬/크기 적용. 기간·난이도·모양·이동평균·RSI를 라벨 있는 그룹으로 묶고 후보선 입력 정렬. 중립 선택·관심종목/파란 주요 주문/위험 초기화/회색 disabled와 핵심 이동 링크 구분. 키보드·focus-visible·reduced-motion·기존 학습/슬라이더/도움말/알림/Tour 유지.
+- 변경 전 build·영향36/36, 변경 후 영향34/34, 모의 인증/수기/배당/세금40/40 PASS. false 게이트1/1 PASS: 복원 로그인·저장 수기 선호 보존·수기/배당/세금 RPC0. 5해상도 전체 화면5/5 PASS. 최종 build PASS, 전체 앱 UI 232/232 PASS (최종 전체 실행 1회; 앞선 실패 원인 수정 후 재실행), diff PASS. PC1440·모바일390 대표6캡처와 docs/ui/UX1_B1.md 보존.
+- 첫 전체 회귀는 226 PASS/6 FAIL. 외부 환율/재무부 실패로 생긴 복수 alert에 대한 테스트 선택자, popup 첫 요청을 놓치는 page.route, 라이브 환율 의존의 3원인을 확인했다. 관심종목 alert 범위 지정·popup context mock·고정 시각 환율 fixture로 기존 검증을 보강했으며 기능/테스트 삭제 없음. 실패 파일 재검증20/20 PASS 후 전체 재실행. 최종 미해결 FAIL 0건. 기존 Vite import/chunk 경고 유지.
+- 금융 PostgreSQL/SQL은 변경 영향 없어 UX1-A/G1 근거 재사용. 운영 인증·실기기·스크린리더/WCAG 전체는 NOT VERIFIED. B1 개발 검토 Ready (개발 브랜치 결과 검토 및 UX1-B2 진행), UX1-B2 진행 가능(운영 배포 승인 아님). 대규모 리팩터링 보류: 상태 계약 유지와 표시 국소 개선으로 충분하며 반복 결함 근거 없음. 계좌 소유권 변경/같은 경계 반복 회귀 때 재검토.

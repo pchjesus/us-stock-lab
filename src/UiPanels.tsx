@@ -8,6 +8,24 @@ import {monthCells,indicatorSeries,metadata,percentages} from './uiData';
 import {kstDate,kstTime,eventPhase,importantEvent,type EconomicEvent,type Indicator,type MarketSnapshot} from './marketInfo';
 import type {Account} from './trading';
 import {instruments} from './data';
+
+function accountModeLabel(manual:boolean,uid:string|null|undefined){
+ return manual?'별도 수기 계좌':uid===undefined?'계좌 확인 중':uid?'기존 합성 계좌 · 사용자 서버':'기존 합성 계좌 · 브라우저 로컬';
+}
+export function AccountModeControl({manual,uid,enabled,onChange}:{manual:boolean;uid:string|null|undefined;enabled:boolean;onChange:(mode:string)=>void}){
+ return <section className="panel account-mode" aria-label="계좌 유형 선택">
+  <div><h2>계좌 유형</h2><p className="account-current">현재 계좌 <strong>{accountModeLabel(manual,uid)}</strong></p></div>
+  <div className="account-mode-field"><label className="ui-field">계좌 화면 모드
+   <select aria-label="계좌 화면 모드" aria-describedby="account-mode-note" value={manual?'manual':'synthetic'} onChange={e=>onChange(e.target.value)}>
+    <option value="synthetic">기존 합성 계좌</option>
+    <option value="manual" disabled={!enabled||!uid}>{!enabled?'수기 계좌 · 공개 준비 중':uid?'별도 수기 계좌':'별도 수기 계좌 (로그인 필요)'}</option>
+   </select>
+  </label><p id="account-mode-note" className="ui-control-note">{!enabled?'수기 계좌는 공개 준비 중이므로 선택할 수 없습니다.':!uid?'수기 계좌는 로그인 후 선택할 수 있습니다.':'계좌 선택은 로그인한 사용자별로 이 브라우저에 보관됩니다.'}{manual&&' 수기 계좌: 운영 DB 미적용 시 조회가 제한됩니다. 합성 가격과 원장을 섞지 않습니다.'}</p></div>
+ </section>;
+}
+export function OrderAccountContext({manual,uid}:{manual:boolean;uid:string|null|undefined}){
+ return <section className="panel order-account" aria-label="현재 주문 계좌"><h2>현재 주문 계좌</h2><p className="account-current"><strong>{accountModeLabel(manual,uid)}</strong></p><p className="ui-control-note">{manual?'직접 확인한 가격으로 기록하는 별도 모의계좌입니다.':'학습용 합성 가격을 사용하는 모의계좌입니다.'}</p><div className="ui-actions"><a className="ui-link" href="#portfolio">포트폴리오에서 변경 →</a><a className="ui-link" href="#settings">계좌 설정 →</a></div></section>;
+}
 export function Modal({title,close,children,spotlightDialog=false}:{title:string;close:()=>void;children:ReactNode;spotlightDialog?:boolean}){const ref=useRef<HTMLDialogElement>(null);useEffect(()=>{const prior=document.activeElement as HTMLElement;const overflow=document.body.style.overflow;document.body.style.overflow='hidden';ref.current?.showModal();return()=>{document.body.style.overflow=overflow;prior?.focus();};},[]);return <dialog ref={ref} className={"ui-modal "+(spotlightDialog?"spotlight-dialog":"")} aria-label={title} onCancel={e=>{e.preventDefault();close();}}><div className="section-title"><h2>{title}</h2><button onClick={close} aria-label="닫기">✕</button></div>{children}</dialog>;}
 export function IndexGraph({item,close}:{item:Indicator;close:()=>void}){const [range,setRange]=useState(30);const values=item.value===null?[]:indicatorSeries(item.value,365).slice(-range);const lo=Math.min(...values),hi=Math.max(...values);return <Modal title={item.name+' 추이'} close={close}><p>자체 생성 합성 시계열 · 실제 지수 아님 · 기준 {item.asOf?kstTime(item.asOf):'미제공'}</p><div className="periods">{[7,30,90,365].map(n=><button key={n} aria-pressed={range===n} onClick={()=>setRange(n)}>{n}일</button>)}</div>{values.length?<><h3>{values.at(-1)?.toFixed(2)} · 기간 {((values.at(-1)!/values[0]-1)*100).toFixed(2)}%</h3><svg role="img" aria-label="합성 지표 추이" viewBox="0 0 600 180"><polyline fill="none" stroke="#3169d9" strokeWidth="3" points={values.map((v,i)=>`${i/(values.length-1)*600},${165-(v-lo)/(hi-lo||1)*150}`).join(' ')}/></svg></>:<p>이 기간 데이터가 없습니다.</p>}</Modal>;}
 export function EventDetail({event:e}:{event:EconomicEvent}){return <><p>{e.region} · {kstTime(e.scheduledAt)} · 중요도 {e.importance} · {eventPhase(e)}</p><p className="badge">{e.status==='synthetic'?'합성 일정·수치 (실제 발표 아님)':e.status}</p><dl><dt>실제</dt><dd>{Date.parse(e.scheduledAt)<=Date.now()?e.actual??'결과 확인 중':'미발표'}</dd><dt>예상</dt><dd>{e.forecast??'미제공'}</dd><dt>이전</dt><dd>{e.previous??'미제공'}</dd></dl><p>{e.interpretation??'확인된 결과와 해설이 없습니다. 발표 시각 경과만으로 결과를 생성하지 않습니다.'}</p><a href={e.url} target="_blank" rel="noreferrer">{e.source} · 공식 참고 ↗</a></>;}

@@ -15,5 +15,5 @@ test('navigation, search, chart, persistence and lessons',async({page})=>{
 test('invalid storage and failed writes are safe',async({page})=>{
  await page.goto('/');await page.evaluate(()=>localStorage.setItem('us-stock-lab.watchlist.v1','bad json'));await page.reload();await expect(page.getByText('아직 담은 종목이 없어요.')).toBeVisible();
  await page.evaluate(()=>localStorage.setItem('us-stock-lab.watchlist.v1',JSON.stringify(['AAPL','AAPL','INVALID',3])));await page.reload();await expect(page.locator('.stock')).toHaveCount(1);
- await page.evaluate(()=>{Storage.prototype.setItem=()=>{throw new Error('quota');};});await page.getByRole('button',{name:'AAPL 관심종목',exact:true}).click();await expect(page.getByRole('alert')).toContainText('저장하지 못했습니다');await expect(page.getByRole('button',{name:'AAPL 관심종목',exact:true})).toHaveAttribute('aria-pressed','true');
+ await page.evaluate(()=>{Storage.prototype.setItem=()=>{throw new Error('quota');};});await page.getByRole('button',{name:'AAPL 관심종목',exact:true}).click();await expect(page.getByRole('alert').filter({hasText:'관심종목을 저장하지 못했습니다'})).toContainText('저장하지 못했습니다');await expect(page.getByRole('button',{name:'AAPL 관심종목',exact:true})).toHaveAttribute('aria-pressed','true');
 });

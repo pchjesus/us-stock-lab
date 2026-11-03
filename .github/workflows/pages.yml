@@ -1,6 +1,6 @@
 name: Deploy Pages
 # The production DB is not yet migrated for v0.6 (004-007).
-# Publish only after separately approved finance deployment gates.
+# The UI release keeps manual trading disabled. Publish only after UI release approval.
 on:
   workflow_dispatch:
 permissions:
@@ -27,6 +27,7 @@ jobs:
         env:
           VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_IGTsGZshQZAE92bE0_xpYg__bOTs3GU
+          VITE_ENABLE_MANUAL_TRADING: 'false'
           VITE_ENABLE_MARKET_FX: 'true'
           VITE_ENABLE_TREASURY_STATS: 'true'
       - uses: actions/configure-pages@v5

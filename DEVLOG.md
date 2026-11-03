@@ -1,4 +1,11 @@
 # 개발 기록
+## 2026-11-03 · v0.8-R1 UI 릴리스 후보
+- 기준 d536d041 개발 브랜치 clean 및 main ac8358ae 확인. 수기 모드 저장 선호가 미배포 RPC를 호출할 수 있어 기본 off 표시 게이트와 Pages false 설정을 추가했다. 기존 선호·paper 계좌·금융 계산/SQL·원자 배포 도구·기업 재무 원본은 보존했다. UI 후보 버전은 0.8.0-rc.1로 정리했다.
+- Pages 환경 TypeScript/Vite build PASS, 일반 PC·모바일 212/212, 모의 인증·paper/수기·배당/세금 38/38, 신규 release 6/6 PASS. 복원된 로그인+이전 수기 모드에서도 수기 RPC 0회·paper 경로 유지 확인. 최초 disabled option matcher 1건은 native DOM 속성 검사로 수정 후 전부 통과. diff 검사 PASS.
+- 5해상도×13화면과 팝업 70캡처, 가로 넘침/JS 오류 0. 실제 AAPL TradingView 렌더링·재무카드·기존 Pages 추가 캡처, 대표 11장 저장. 실제 Windows Chrome/모바일 기기·운영 로그인 및 새 버전 배포 후 검증은 NOT VERIFIED. 번들 비밀키 패턴 검사·가짜 서버 키 빌드 거절 PASS.
+- Supabase 읽기 전용: Foundation/001~003, 004~007 없음, 사용자/paper계좌/주문 0·수기 테이블 없음. 금융 격리 PostgreSQL·원자 배포 결과는 변경 없어 기존 G1-C1/C2D 재사용, 무거운 재실행 없음. Cron 등록을 포함하는 GitHub CI도 실행하지 않는다.
+- UI Pages는 수기 false 유지 및 별도 공개 승인 조건으로 GO, 금융 G1-C3는 기존 NO-GO 유지. main·Pages·운영 DB/Auth/Cron 변경 없음. A4/A5 카탈로그/거래허용 분리 미완료. 상세 근거·재현 명령·화면·공개/복구 범위는 docs/release/V0_8_R1.md.
+
 ## 2026-10-26 · Week 1
 - README만 있던 초기 커밋에서 React/TS/Vite 및 Lightweight Charts 구성.
 - 6개 기본 화면과 상세, 검색·관심종목 저장/해제·합성 캔들 구현. 가상계좌는 빈 상태로 명시.

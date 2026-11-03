@@ -1,4 +1,11 @@
 # 개발 기록
+## 2026-11-03 · v0.8-R1 UI 릴리스 후보
+- 기준 d536d041 개발 브랜치 clean 및 main ac8358ae 확인. 수기 모드 저장 선호가 미배포 RPC를 호출할 수 있어 기본 off 표시 게이트와 Pages false 설정을 추가했다. 기존 선호·paper 계좌·금융 계산/SQL·원자 배포 도구·기업 재무 원본은 보존했다. UI 후보 버전은 0.8.0-rc.1로 정리했다.
+- Pages 환경 TypeScript/Vite build PASS, 일반 PC·모바일 212/212, 모의 인증·paper/수기·배당/세금 38/38, 신규 release 6/6 PASS. 복원된 로그인+이전 수기 모드에서도 수기 RPC 0회·paper 경로 유지 확인. 최초 disabled option matcher 1건은 native DOM 속성 검사로 수정 후 전부 통과. diff 검사 PASS.
+- 5해상도×13화면과 팝업 70캡처, 가로 넘침/JS 오류 0. 실제 AAPL TradingView 렌더링·재무카드·기존 Pages 추가 캡처, 대표 11장 저장. 실제 Windows Chrome/모바일 기기·운영 로그인 및 새 버전 배포 후 검증은 NOT VERIFIED. 번들 비밀키 패턴 검사·가짜 서버 키 빌드 거절 PASS.
+- Supabase 읽기 전용: Foundation/001~003, 004~007 없음, 사용자/paper계좌/주문 0·수기 테이블 없음. 금융 격리 PostgreSQL·원자 배포 결과는 변경 없어 기존 G1-C1/C2D 재사용, 무거운 재실행 없음. Cron 등록을 포함하는 GitHub CI도 실행하지 않는다.
+- UI Pages는 수기 false 유지 및 별도 공개 승인 조건으로 GO, 금융 G1-C3는 기존 NO-GO 유지. main·Pages·운영 DB/Auth/Cron 변경 없음. A4/A5 카탈로그/거래허용 분리 미완료. 상세 근거·재현 명령·화면·공개/복구 범위는 docs/release/V0_8_R1.md.
+
 ## 2026-10-26 · Week 1
 - README만 있던 초기 커밋에서 React/TS/Vite 및 Lightweight Charts 구성.
 - 6개 기본 화면과 상세, 검색·관심종목 저장/해제·합성 캔들 구현. 가상계좌는 빈 상태로 명시.
@@ -227,3 +234,34 @@
 - 실제 PASS: 활성화 npm run build, 영향44/44, 최종 npm test190/190, npm run test:auth38/38, dev fixture2/2, 원문200보고/19계산, 신규 파일 포함 diff 검사. 초기 전체189 PASS/1 FAIL은 외부 재무부 오류+계좌 손상 alert 선택자 충돌; 계좌 알림을 구체적으로 지정하고 전체190개 재실행 PASS. 기존 기능/검증을 삭제하거나 오류 알림을 숨기지 않았다.
 - 1440/768/390/320폭에서5기업·3ETF의 합성/인증 mock 수기 화면, 연간·분기/실제 표시값·출처·계산근거·외부시세1개·학습실 링크/가로폭/런타임오류 검사 PASS. 수기 USD직접입력 가격 불변, 신규 주문0/합성 원장 미생성 검사. GOOGL 그래프4폭 캡처 시각 확인. 운영 Auth·물리 기기/외부 사이트 가용성은 미검증.
 - 감사 보고: docs/company-data/B3_C_INTEGRATION_AUDIT_20261101.md. 원격main35d37cd는 개발 HEAD의 조상, Pages는 manual dispatch. 최종 CI 성공 조건으로 코드·재무 통합 PASS/main 병합 준비 GO(실행은 안 함). 운영 배포는 v0.6-F004~007/Advisor·백업·allowlist/Cron·두 초대 계정/실기기 smoke·별도 승인 미완료로 NO-GO 유지. main/Pages·운영 DB/Cron 미변경. finance-safe 기존 SQL/Cron은 푸시 후 신규 CI의 실제 결과를 최종 보고에서 구분한다.
+
+## 2026-11-02 · G1-C1 최초 migration 버전 정합화
+- Foundation 파일명만 운영 이력의 version/name `20261026135037`/`202610260001_foundation`에 맞춤. SQL 본문 바이트 동일(SHA256 2035aa696c49e4357a1cf321cbdbc8c689dea3806c948387a5430f4772a39572), 버전 중복 없음. 운영 이력의 Foundation 원문 MD5와 길이도 일치. README 경로 갱신.
+- 공식 CLI 2.122.0과 네트워크 없는 모사 DB에서 최초·001~003 이력 일치, 004~007만 미적용 표시 확인. 운영 연결 CLI 비교는 NOT VERIFIED; 운영 이력은 읽기 전용 조회. G1-B0의 001~003 카탈로그 비교를 재사용하며 운영 RPC 실동작은 미검증.
+- 네트워크 없는 PostgreSQL 격리 금융·RLS·동시성·007 실패 주입 및 재실행 PASS. 인증 mock 회귀 38/38, 활성화 빌드 및 전체 UI 회귀 190/190 PASS. 기본 빌드 전체 회귀는 환율 연동 비활성화로 188 PASS/2 FAIL; CI 활성화 설정으로 재실행했다. 운영 migration·DDL/DML·repair·Cron·Pages 미실행. G1-C2는 중간 수기 RPC 노출 방지와 CLI 스키마 커밋 후 이력 기록 실패 복구 검증 전 NO-GO.
+
+## 2026-11-02 · G1-C2 CLI 실패 리허설, 운영 NO-GO
+- 공식 CLI 2.122.0을 네트워크 없는 임시 PostgreSQL 안에서 실행. 모사 `--dry-run --skip-vault`는 004~007만 표시하고 시험 상태 불변. 004·005·007 본문 실패, 반복 실행, 오류 제거 후 재실행 및 완료 후 중복 CLI push를 재현했다. 005/007 실패 시 인증 사용자가 `manual_snapshot()`으로 계좌를 만들 수 있음도 재현.
+- 004 본문 commit 후 이력 INSERT 실패를 주입하자 스키마·인증 RPC 권한은 남고 이력은 빠졌으며 일반 CLI 재실행은 중복 객체로 실패했다. paper 및 수기 합성 원장 불변식, 정상 최종 9개 금융 RPC 권한·public 금융 테이블 RLS를 확인했다. 운영 이력 조회는 read-only, 운영 CLI list/dry-run은 NOT VERIFIED.
+- 재현 코드 `scripts/rehearse-cli-history.py`, 결과·대안·중단 원칙 `docs/g1-c2-rehearsal.md`. 모든 경로의 중간 노출 차단과 운영 실패 복구는 미해결이며 검증되지 않은 배포 스크립트는 만들지 않았다. 운영 004~007 적용·DDL/DML·repair·사용자 생성·Cron·Pages는 실행하지 않았다.
+- 추가 격리 실험: 004~007의 메모리 사본에서 각 최상위 BEGIN/COMMIT을 제거하고 수기 모의 history와 단일 트랜잭션으로 시험했다. 004/006 단계의 다른 세션에서는 수기 RPC·history가 보이지 않고 paper 잔액을 읽을 수 있었다. 004·005·007 이전 및 007 history INSERT 오류에서 스키마와 모의 history가 함께 롤백됐다. 이는 공식 CLI 배포 동등성이나 수기 이력 운영 변경의 승인이 아니다. 절차·제약·NO-GO는 `docs/finance/G1_C2_DEPLOYMENT_GATE.md`에 기록했다.
+
+## 2026-11-02 · G1-C2D 원자적 금융 migration 도구
+- 공식 CLI 2.122.0 소스와 격리 실행 결과를 기준으로 원본 SQL 고정 해시와 CLI가 기록한 전체 문장 배열을 검증한다. 도구는 004~007의 첫/끝 transaction 경계만 제외하고 본문과 원본 문장 배열의 version/name/history를 하나의 PostgreSQL 트랜잭션에서 처리한다. 기존 SQL 변경 없음. 별도 승인·정확한 프로젝트 ID·대화형 승인·직접 DB 호스트·TLS verify-full이 없으면 운영 실행하지 않으며 기본은 오프라인 검증이다.
+- 네트워크 없는 격리 시험에서 실제 도구 SQL의 004/005/007 직전 실패·최종 history INSERT 실패 전체 롤백, CLI history version/name/statements 일치, 중복 차단, 004/006 다른 세션 비노출, advisory lock, 최종 금융 권한/RLS·원장 및 paper 검사를 수행했다. 실행기는 커밋 전 연결 손실과 커밋 후 응답 손실을 모두 결과 불명으로 반환하며 자동 재시도하지 않는다. EOF만으로 psql 종료 코드가 0일 수 있음을 재현해 커밋 후 서버 응답을 요구했다. history 배타 잠금은 이력 조회도 대기시킨다.
+- 운영 연결 CLI·도구 직접 연결/TLS와 서비스 전체 경로는 NOT VERIFIED. 카탈로그 수 검사는 전체 정의 동등성이 아니고 다른 배포자가 이미 시작된 경우 advisory lock만으로 차단하지 못한다. 운영 G1-C3 NO-GO, 실행·복구 주의사항은 `docs/finance/G1_C2_DEPLOYMENT_GATE.md` 참고. 운영 변경·Cron·Pages 미실행.
+- 실제 검증: 격리 DB 도구·CLI 실패/연결 단절 리허설 PASS, 오프라인 가드 7/7 PASS, 활성화 빌드 PASS, 기존 앱 전체 PC·모바일 회귀 190/190 PASS. 기존 금융 SQL 전체 회귀는 G1-C1 결과를 재사용했다. GitHub CI의 별도 격리 Cron 등록은 이번 Cron 활성화 금지에 따라 실행하지 않는다.
+
+## 2026-11-02 · v0.8-A1~A3 종목 상세
+- 종목 상세를 상단 기업 요약, PC 차트/주문 60:40, 하단 기업정보로 배치하고 1050px 이하 세로 전환. 수기 화면에 중복되던 외부 시세 영역을 단일 차트 패널로 이동했으며 사용자 입력·원장 계약은 변경하지 않았다.
+- TradingView 위젯은 클릭 시에만 생성하고 닫기·종목 변경에 정리한다. TradingView/네이버/토스의 기존 8종목별 경로만 사용하며 별도 창·팝업 차단·스크립트 오류 대체 링크를 지원한다. 실제 Chromium AAPL 위젯 렌더링 및 440px 표시 확인. 나머지 종목의 실제 위젯 렌더링과 실제 기기는 미검증. 제공자 링크는 HTTP 200 응답만 확인했고 콘텐츠의 완전성은 보장하지 않는다.
+- 기업 요약·사업·위험·핵심 지표·연간/분기·건전성·배당을 차트 아래에서 탐색 가능하게 하고 지표를 카드로 표시했다. 검증된 219관측/200근거/19계산 자료와 ETF 계약은 변경하지 않았다. 격리 회사 테스트 40/40, 차트·레이아웃 18/18, 인증 mock 38/38 통과. 실제 사용자 인증 및 운영 DB는 미검증.
+- A4/A5 미완료: Nasdaq Trader Symbol Directory 공식 자료는 2026-11-02 생성본을 확인했으나 Nasdaq 사이트의 복제·재배포 제한에 대한 허가를 확인하지 못했다. SEC ticker/exchange 매핑 10,423행은 공식 후보이나 증권 유형·현재 상장 상태가 완전하지 않아 전체 상장증권이라고 취급하지 않았다. 신규 데이터 등록·종목 거래 허용 확장은 하지 않았다. 운영 DB/Cron/Pages 및 금융 migration 변경 없음.
+- 최종 활성화 빌드 PASS, 전체 PC·모바일 회귀 198/198 PASS, 모의 인증·수기 금융 38/38 PASS. 실제 위젯 스크린 확인에서 높이 축소를 발견해 상위 컨테이너 440px로 수정 후 재확인했다. 기본 금융 8종목·SQL/원장·기업 재무 원본은 변경하지 않았다.
+
+## 2026-11-03 · v0.8-A3.1 헤더 지표판
+- 기존 MarketSnapshot 지표 6개를 HeaderTools에 전달해 독립 5초 타이머/400ms CSS transform 슬라이드를 추가했다. hover/focus/Modal 중 전환 정지, reduced-motion은 애니메이션 제거. 기존 Modal의 ESC·포커스 복귀·스크롤 관리를 재사용하고 #indices로 연결한다.
+- 새 시세 API와 실제 참고환율 중복 요청 없이 표시 전용으로 구현. 합성 예시·자체 생성·기준시각을 표시하고 공식 대기 모드에서 잔여 합성 수치를 숨긴다. 값과 변동률이 없으면 미제공이며 임의 계산하지 않는다. 별도 실제 일별 참고환율은 지표 화면에서 출처와 함께 확인한다.
+- 영향 테스트 14/14 PASS: 6개 순환/시계 독립성/전환 방향/정지 및 타이머 정리/팝업과 ESC/포커스·스크롤/대기 상태/reduced-motion. 1440·1200·768·390·320px 무겹침·가로 넘침 검사 및 실제 Chromium 헤더·팝업 캡처 확인. 초기 시계 경계 테스트의 실행 시간 오차는 페이지 시계를 정지시킨 뒤 검사하도록 수정했다.
+- A4/A5 미완료 유지. 기존 금융 로직·migration·기업 재무자료는 변경하지 않았고 A1~A3 상세 기능을 보존한다. 운영 Supabase/Auth/Cron·main·Pages 변경 없음.
+- 최종 활성화 TypeScript/Vite 빌드 PASS, 전체 PC·모바일 회귀 212/212 PASS, 모의 인증·수기 주문·배당·세금 회귀 38/38 PASS, diff 검사 PASS. 실제 모바일 기기와 운영 사용자 인증은 NOT VERIFIED. GitHub CI의 별도 격리 Cron 등록을 피하기 위해 CI는 실행하지 않는다.

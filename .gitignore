@@ -7,3 +7,6 @@ playwright-report/
 .env.*
 !.env.example
 test-results-auth/
+
+work/
+test-results-release/

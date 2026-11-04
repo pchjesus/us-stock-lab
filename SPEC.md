@@ -264,3 +264,7 @@
 - 제안 EOD 관측치는 identity mapping·원문 decimal·두 실제 거래세션·raw/조정 버전·nullable 실제 관측시각/별도 수집시각·feed/확정/최신성·LicenseRecord를 갖는 독립 읽기 전용 계약이다. 잘못된/권리 없는 데이터·fallback에서 합성값을 실제 종가로 대체하지 않으며 키/가격/개인자료를 공개 번들에 넣지 않는다.
 - A2는 별도 요청 시 가상 fixture 기반 pure 계약/어댑터·decimal/달력/권리/mock cache·예산 검증부터 제안한다. 실제 수집·운영 표시·캐시/서버 배포는 범위별 권리·8종목/피드 실검증·운영 승인 전 NO-GO다. 기존8종목 합성 가격/주문·paper_prices/order/snapshot·계좌/원장/Auth격리·수기false·금융004~007/운영DB/RLS/RPC/Cron·UX/A4/A5 불변.
 - 공식 근거(APA7)·현재 코드 감사·JSON·권한/오류/휴장/분할 테스트 매트릭스·A2/A3 게이트는 docs/market-data/V0_9_A1_EOD_PROVIDER_AND_CONTRACT.md. A1에서는 코드/테스트/운영 변경·빌드/회귀 재실행 없음. v0.8의383건/hosted81체크는 선행 기록으로만 참조한다.
+
+### v0.9-A2-A 오프라인 EOD 코어
+
+EOD 관측 코어는 검증된 외부 매핑과 주입된 세션 달력을 사용하는 독립 읽기 전용 경계이며, 현재 가상 fixture만 오프라인에서 허용한다. 실제 공급자 자료는 권한 확인 전 차단한다. 합성 주문·계좌와 연결하지 않는다. 상세: `docs/market-data/V0_9_A2_A_CORE.md`.

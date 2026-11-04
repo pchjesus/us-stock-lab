@@ -35,3 +35,262 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 @media(max-width:640px){header{grid-template-columns:minmax(0,1fr);min-height:0}.header-ticker{grid-column:1;grid-row:1;max-width:none;height:78px}.ticker-window{height:60px}.clock{grid-column:1;grid-row:2}.header-actions{grid-column:1;grid-row:3}.ticker-overview{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.ticker-enter,.ticker-exit{animation:none}.ticker-exit{display:none}}
 .ticker-slide small{font-size:10px}.clock small{word-break:keep-all}
+/* UX1-A: scoped common foundation; screen-specific content/logic is preserved. */
+.app.ui-foundation{--bg:#f4f6f9;--surface:#fff;--line:#d8e0eb;--accent:#315bd3;--text:#172437;--muted:#526079;background:var(--bg);color:var(--text)}
+.ui-foundation :is(button,select,input){font:inherit;min-height:44px;border-radius:10px;color:var(--text)}
+.ui-foundation button{padding:10px 14px;transition:background-color 200ms ease,border-color 200ms ease}
+.ui-foundation button:not(:disabled):hover{background:#eef2fc;border-color:#9badd4}
+.ui-foundation button:disabled{background:#edf0f5;color:#626e80;border-color:#d5dce6;opacity:1;cursor:not-allowed}
+.ui-foundation :is(button,a,select,input,summary):focus-visible{outline:3px solid #254dc7;outline-offset:3px}
+.ui-foundation button[aria-pressed=true]{background:#e4e9f1;color:var(--text);border-color:#9aa9bf;font-weight:750}
+.ui-foundation button[aria-pressed=true]:not(:disabled):hover{background:#d7dfeb;border-color:#899bb6}
+.ui-foundation .ui-primary:not(:disabled){background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+.ui-foundation .ui-primary:not(:disabled):hover{background:#254bb8;border-color:#254bb8}
+.ui-foundation .ui-danger{color:#a12833;border-color:#b9666d;background:#fff5f5}
+.ui-foundation .ui-danger:not(:disabled):hover{background:#ffe5e7;border-color:#a12833}
+.ui-foundation :is(.periods,.learning-filters){gap:6px}
+.ui-foundation :is(.periods,.learning-filters) button{min-height:44px;border-radius:9px}
+.ui-foundation select{padding:10px 12px;background:var(--surface);border:1px solid var(--line);max-width:100%}
+.ui-foundation :is(.source-links,.company-detail,.external-chart) a{color:#274fc0;text-decoration:underline;text-underline-offset:3px}
+.ui-foundation :is(.panel,.indices section){background:var(--surface);border-color:var(--line)}
+.ui-foundation p{line-height:1.7}.ui-foundation :is(small,.source,.card-time,.session-detail){font-size:12px;line-height:1.6}
+.ui-foundation .financial-metrics-grid :is(p,strong){font-size:14px}
+.ui-foundation summary{min-height:44px;padding-block:10px}
+.ui-foundation header{grid-template-columns:minmax(240px,280px) minmax(220px,1fr) auto;gap:12px 20px;min-height:0;padding:16px 24px;background:var(--surface)}
+.ui-foundation .header-identity{grid-column:1/-1;display:flex;align-items:center;gap:16px;min-width:0;flex-wrap:wrap}
+.ui-foundation .header-brand{display:inline;font-size:15px;font-weight:750;color:var(--text)}
+.ui-foundation .header-page-title{font-size:13px;color:var(--muted);border-left:1px solid var(--line);padding-left:16px}
+.ui-foundation .header-ticker{grid-column:1;grid-row:2;height:104px;max-width:300px;padding:10px 12px;background:#f7f9fe}
+.ui-foundation .ticker-window{height:82px}.ui-foundation .ticker-slide small{font-size:12px;white-space:normal}
+.ui-foundation .ticker-numbers{align-items:baseline}.ui-foundation .ticker-numbers strong{font-size:16px}
+.ui-foundation .clock{grid-column:2;grid-row:2;text-align:center;align-items:center}
+.ui-foundation .clock .live-times{font-size:14px;flex-wrap:wrap;justify-content:center}
+.ui-foundation .clock small{font-size:12px;color:var(--muted)}
+.ui-foundation .header-actions{grid-column:3;grid-row:2;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:230px}
+.ui-foundation .header-actions :is(button,a){min-height:44px;height:auto;padding:9px 11px;font-size:12px;flex:none}
+.ui-foundation .help-button{font-weight:750;min-width:44px;border-radius:50%}
+.ui-foundation .tutorial-shortcut{font-size:12px}
+.ui-foundation .help-topic-select{display:flex;flex-direction:column;gap:8px;font-size:14px;margin:16px 0 24px}
+.ui-foundation .help-topic-select select{width:100%}.ui-foundation .ui-modal p{font-size:14px}
+@media(max-width:1150px){.ui-foundation header{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.ui-foundation .header-ticker{grid-column:1;grid-row:2 / 4;justify-self:center}.ui-foundation .clock{grid-column:2;grid-row:2}.ui-foundation .header-actions{grid-column:2;grid-row:3;max-width:none;justify-content:center}}
+@media(max-width:640px){.ui-foundation header{grid-template-columns:minmax(0,1fr);padding:16px;gap:12px}.ui-foundation .header-identity{grid-row:1;gap:8px}.ui-foundation .header-page-title{padding-left:8px;font-size:12px}.ui-foundation .header-ticker{grid-column:1;grid-row:2;max-width:none;height:102px}.ui-foundation .clock{grid-column:1;grid-row:3}.ui-foundation .header-actions{grid-column:1;grid-row:4;justify-content:space-between}.ui-foundation .header-actions :is(button,a){padding-inline:10px}.ui-foundation aside nav a{min-height:56px;font-size:12px}.ui-foundation .collapsed aside nav a{font-size:12px}.ui-foundation main{padding-bottom:110px}.ui-foundation :is(.source,.card-time,.section-title span,.calendar-day small,.ticker-slide small,footer){font-size:12px}.ui-foundation :is(.panel p,.account-summary dd,.trade-form label){font-size:14px}.ui-foundation .calendar-day{min-height:76px}.ui-foundation .ticker-overview{grid-template-columns:1fr}.ui-foundation .ui-modal dl{grid-template-columns:1fr;gap:8px}.ui-foundation .ui-modal dd{margin-bottom:12px}}
+@media(prefers-reduced-motion:reduce){.ui-foundation :is(button,a,select){transition:none}}
+
+/* UX1-B1: account context and related controls, with existing state owners. */
+.ui-foundation .ui-field{display:flex;flex-direction:column;gap:8px;min-width:0;font-size:14px;font-weight:650}
+.ui-foundation .ui-field select{width:100%;min-width:0;font-weight:400}
+.ui-foundation .ui-field input:not([type=range]){width:100%;min-width:0;font-weight:400;padding:10px 12px;border:1px solid var(--line);background:var(--surface)}
+.ui-foundation .account-mode{display:flex;align-items:start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.ui-foundation .account-mode h2{margin-top:0}
+.ui-foundation .account-mode-field{flex:1 1 280px;max-width:460px;min-width:0}
+.ui-foundation .account-current{display:flex;flex-wrap:wrap;gap:6px 12px;color:var(--muted);margin:8px 0}
+.ui-foundation .account-current strong{color:var(--text)}
+.ui-foundation .ui-control-note{font-size:13px;color:var(--muted);margin:8px 0 0}
+.ui-foundation .ui-link{display:inline-flex;align-items:center;min-height:44px;max-width:100%;color:#274fc0;text-decoration:underline;text-underline-offset:4px;line-height:1.6;overflow-wrap:anywhere}
+.ui-foundation .ui-link:hover{color:#19388d}
+.ui-foundation .ui-actions{display:flex;align-items:center;flex-wrap:wrap;gap:4px 18px;margin-top:8px}
+.ui-foundation .order-account{background:#f7f9fc}
+.ui-foundation .order-account h2{font-size:15px}
+.ui-foundation .detail-jump{margin-bottom:16px}
+.ui-foundation .chart-lab-header{display:flex;justify-content:space-between;align-items:start;gap:16px 24px;flex-wrap:wrap;margin-bottom:24px}
+.ui-foundation .chart-lab-header>div{flex:1 1 280px;min-width:0}
+.ui-foundation .chart-lab-header h2{margin-top:0}
+.ui-foundation .chart-lab-header p{margin-bottom:0}
+.ui-foundation .chart-symbol{flex:0 1 320px;width:100%}
+.ui-foundation .ui-control-grid{display:flex;flex-wrap:wrap;gap:18px 28px;padding:18px;background:#f7f9fc;border:1px solid var(--line);border-radius:12px;margin-bottom:20px}
+.ui-foundation .ui-control-group{min-width:0}
+.ui-foundation .period-control{flex-basis:100%}
+.ui-foundation .ui-control-label{display:block;font-size:13px;font-weight:650;color:var(--muted);margin-bottom:8px}
+.ui-foundation .ui-control-group :is(.periods,.learning-filters){display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.ui-foundation .chart-lab>.ui-control-group{margin-top:20px;margin-bottom:16px}
+.ui-foundation .chart-levels{display:flex;flex-wrap:wrap;gap:12px;max-width:560px;margin-top:18px}
+.ui-foundation .chart-levels .ui-field{flex:1 1 200px}
+.ui-foundation .chart-bar-picker{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:14px;margin-top:12px}
+.ui-foundation .star{min-width:44px;flex-shrink:0}
+.ui-foundation .confirmation{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.ui-foundation .confirmation>:is(h3,p,input){flex-basis:100%;min-width:0}
+.ui-foundation .confirmation button{margin-top:0;max-width:100%}
+@media(max-width:640px){.ui-foundation .account-mode-field{max-width:none}.ui-foundation .chart-symbol{flex-basis:100%}.ui-foundation .ui-control-grid{padding:12px;gap:18px}.ui-foundation .ui-control-group button{padding-inline:11px}.ui-foundation .order-account .ui-actions{gap:0 16px}}
+
+/* UX1-B2: reference information, local actions and source navigation. */
+.ui-foundation .reference-card{min-width:0;overflow-wrap:anywhere}
+.ui-foundation .reference-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin-bottom:20px}
+.ui-foundation .reference-header>div{flex:1 1 220px;min-width:0}
+.ui-foundation .reference-header h2{font-size:19px;line-height:1.5;margin:0 0 8px}
+.ui-foundation .reference-refresh{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:44px;min-height:44px;padding:9px 12px;font-size:13px;flex-shrink:0}
+.ui-foundation .reference-refresh>span:first-child{font-size:20px;line-height:1}
+.ui-foundation .reference-status{display:inline-block;font-size:12px;font-weight:700;line-height:1.5;padding:5px 9px;margin:0;border-radius:7px;background:#e9f2ed;color:#2c6543}
+.ui-foundation .reference-card[data-state=loading] .reference-status{background:#edf2fc;color:#36598c}
+.ui-foundation .reference-card[data-state=error] .reference-status{background:#fff0f0;color:#a12833}
+.ui-foundation .reference-card[data-state=unavailable] .reference-status{background:#edf0f5;color:var(--muted)}
+.ui-foundation .reference-asof{font-size:13px;line-height:1.6;margin:8px 0 0;color:var(--muted)}
+.ui-foundation .reference-card .reference-value{font-size:16px;color:var(--text);line-height:1.5;margin:8px 0 18px;font-variant-numeric:tabular-nums}
+.ui-foundation .reference-value strong{font-size:clamp(24px,3vw,34px);font-weight:750;letter-spacing:-.5px;overflow-wrap:anywhere}
+.ui-foundation .reference-metric-label{font-size:14px;margin:0;color:var(--muted)}
+.ui-foundation .reference-metadata{grid-template-columns:130px minmax(0,1fr);gap:8px 16px;margin:18px 0;font-size:13px;line-height:1.6;font-variant-numeric:tabular-nums}
+.ui-foundation .reference-metadata dd{min-width:0}
+.ui-foundation .reference-rates{border-top:1px solid var(--line);padding-top:18px;margin-top:20px}
+.ui-foundation .reference-rates h3{font-size:16px;margin:0 0 6px}
+.ui-foundation .reference-rates p{font-size:13px;margin:0}
+.ui-foundation .reference-rates dl{grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;font-size:14px;line-height:1.5}
+.ui-foundation .reference-rates dd{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.ui-foundation .reference-card .reference-request-note{font-size:12px;line-height:1.7;color:var(--muted);margin:14px 0}
+.ui-foundation .reference-card .reference-description{font-size:14px;color:var(--muted);margin:16px 0}
+.ui-foundation .reference-card .reference-empty{padding:16px;border:1px dashed var(--line);border-radius:10px;background:#f7f9fc;font-size:14px;line-height:1.7}
+.ui-foundation .reference-card[data-state=error] .reference-empty{border-color:#d4a1a7;background:#fff7f7;color:#a12833}
+.ui-foundation .reference-footer{display:flex;align-items:center;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px;margin-top:20px;font-size:13px;color:var(--muted)}
+.ui-foundation .source-link{min-width:44px;display:inline-flex;align-items:center;gap:6px;min-height:44px;max-width:100%;line-height:1.7;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:4px}
+.ui-foundation .market-indices .index-name{display:block;width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);background:#f7f9fc;border-radius:10px;font-size:13px;line-height:1.6}
+.ui-foundation .source-links{gap:8px 24px}
+.ui-foundation .event-choice{min-height:44px;border:1px solid var(--line);background:#f7f9fc;line-height:1.7;padding:12px 14px}
+.ui-foundation .external-chart-controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px}
+.ui-foundation .external-chart-controls>.ui-field{order:-1;flex:1 1 100%;max-width:320px}
+.ui-foundation .external-chart-controls button{font-size:13px;line-height:1.6;max-width:100%}
+.ui-foundation .external-chart .reference-footer{margin-top:4px}
+.ui-foundation .external-chart .reference-footer small{font-size:12px}
+.ui-foundation .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:640px){.ui-foundation .reference-header{gap:12px}.ui-foundation .reference-header>div{flex-basis:100%}.ui-foundation .reference-metadata{grid-template-columns:minmax(0,1fr);gap:4px}.ui-foundation .reference-metadata dd{margin-bottom:8px}.ui-foundation .reference-footer{align-items:flex-start;flex-direction:column;gap:4px}.ui-foundation .external-chart-controls>.ui-field{max-width:none}.ui-foundation .external-chart-controls button{flex:1 1 180px}.ui-foundation .reference-card .reference-description{font-size:14px}}
+
+.ui-foundation .market-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px}
+
+/* UX2-A: company and ETF information share navigation, not financial models. */
+.ui-foundation .stock-detail{min-width:0;scroll-margin-top:16px}
+.ui-foundation .detail-heading{margin:12px 0 8px;align-items:flex-start}
+.ui-foundation .detail-heading h1{margin:8px 0 12px}
+.ui-foundation .detail-heading .eyebrow{margin:0;color:var(--muted)}
+.ui-foundation .detail-shortcuts{display:flex;flex-wrap:wrap;gap:4px 24px;margin:8px 0 20px}
+.ui-foundation .detail-shortcuts .detail-jump{margin:0}
+.ui-foundation .detail-tabs{display:flex;gap:6px;padding:6px;background:#e9edf4;border:1px solid var(--line);border-radius:13px;margin-bottom:24px}
+.ui-foundation .detail-tabs [role=tab]{flex:1;min-width:0;min-height:44px;padding:10px 12px;background:transparent;border-color:transparent;font-size:15px;color:var(--muted)}
+.ui-foundation .detail-tabs [role=tab][aria-selected=true]{background:white;border-color:#b8c5da;color:var(--text);font-weight:750;box-shadow:0 1px 3px #1724370d}
+.ui-foundation .detail-panel{min-width:0;scroll-margin-top:16px}
+.ui-foundation .detail-panel[hidden]{display:none!important}
+.ui-foundation .detail-panel:focus-visible{outline:3px solid #254dc7;outline-offset:3px}
+.ui-foundation .company-intro-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px}
+.ui-foundation .company-intro-grid h3{font-size:17px;margin:14px 0 8px}
+.ui-foundation .company-intro-grid p{font-size:14px;margin:8px 0}
+.ui-foundation .company-intro-grid ul{padding-left:20px;margin:12px 0;color:var(--muted);font-size:14px;line-height:1.8}
+.ui-foundation .company-intro-grid li+li{margin-top:12px}
+.ui-foundation .company-periods{margin:0}
+.ui-foundation .company-detail .section-title{flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.ui-foundation .overview-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ui-foundation .financial-metric{display:flex;flex-direction:column;align-items:flex-start;overflow-wrap:anywhere}
+.ui-foundation .financial-metric .financial-value{font-size:16px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.ui-foundation .financial-metric .financial-period{font-size:13px;color:var(--muted);line-height:1.7}
+.ui-foundation .financial-metric>small{display:block;margin-top:8px}
+.ui-foundation .fact-evidence{padding:4px 0 12px;overflow-wrap:anywhere;font-size:13px;line-height:1.7}
+.ui-foundation .fact-evidence p{font-size:13px}
+.ui-foundation .evidence-input{border-left:3px solid var(--line);padding-left:12px;margin:12px 0}
+.ui-foundation .evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));font-size:13px}
+.ui-foundation .evidence-grid>div{min-width:0}
+.ui-foundation .evidence-grid dd{margin-top:4px;overflow-wrap:anywhere}
+.ui-foundation .company-evidence details{border:1px solid var(--line);border-radius:10px;padding:6px 12px}
+.ui-foundation .company-evidence summary{color:var(--text);line-height:1.7;overflow-wrap:anywhere}
+.ui-foundation .health-row{border-top:1px solid var(--line);padding:18px 0;min-width:0}
+.ui-foundation .health-row p{margin:8px 0;font-variant-numeric:tabular-nums}
+.ui-foundation .health-row small{display:block}
+.ui-foundation .synthetic-price{font-size:22px;color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+.ui-foundation .synthetic-price span{font-size:14px;margin-left:12px}
+.ui-foundation .etf-detail{min-width:0;overflow-wrap:anywhere}
+.ui-foundation .etf-detail dl{grid-template-columns:130px minmax(0,1fr);line-height:1.7}
+.ui-foundation .etf-product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+.ui-foundation .etf-missing{border:1px dashed #b4c0d1;border-radius:12px;padding:18px;background:#f7f9fc;min-width:0}
+.ui-foundation .etf-missing h3{font-size:16px;margin:0 0 12px}
+.ui-foundation .etf-missing strong{color:var(--muted)}
+@media(max-width:900px){.ui-foundation .company-intro-grid{grid-template-columns:minmax(0,1fr);gap:12px}.ui-foundation .overview-metrics{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.ui-foundation .detail-tabs{gap:2px;padding:4px}.ui-foundation .detail-tabs [role=tab]{font-size:13px;padding:10px 4px}.ui-foundation .detail-shortcuts{gap:4px 12px}.ui-foundation .etf-detail dl{grid-template-columns:minmax(0,1fr);gap:6px}.ui-foundation .etf-detail dd{margin-bottom:12px}.ui-foundation .etf-product-grid,.ui-foundation .evidence-grid{grid-template-columns:minmax(0,1fr)}.ui-foundation .price-boundary .synthetic-price{font-size:19px}}
+
+.ui-foundation .detail-heading h1:focus{outline:none}
+
+/* UX3-A: home reads existing account, market and watchlist state. */
+.ui-foundation .home-heading{margin-bottom:24px}
+.ui-foundation .home-heading h1{margin-bottom:0}
+.ui-foundation .home-section{margin:0 0 32px;min-width:0}
+.ui-foundation .home-section-title{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;margin-bottom:16px}
+.ui-foundation .home-section-title h2{margin:0;font-size:21px}
+.ui-foundation .home-section-title h2 span{font-size:14px;font-weight:500;color:var(--muted);margin-left:6px}
+.ui-foundation .home-section-title a{font-size:14px}
+.ui-foundation .home-account .account-summary{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 40px;margin:0;background:var(--surface);border-color:var(--line);padding:28px}
+.ui-foundation .home-account .account-summary>div{min-width:0}
+.ui-foundation .home-account .account-summary>div>span{font-size:14px;color:var(--muted)}
+.ui-foundation .home-account .account-summary [data-testid=total-assets]{font-size:36px;letter-spacing:-1px;color:var(--accent);line-height:1.3;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ui-foundation .home-account .account-summary dl{grid-template-columns:minmax(100px,1fr) minmax(0,1.3fr);gap:16px;margin:0;align-items:baseline}
+.ui-foundation .home-account .account-summary dd{text-align:right;font-weight:650;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ui-foundation .home-note{font-size:13px;color:var(--muted);line-height:1.7;margin:12px 0 0}
+.ui-foundation .home-market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ui-foundation .home-index{min-width:0;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:20px}
+.ui-foundation .home-index-title{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.ui-foundation .home-index-title h3{font-size:16px;margin:0}
+.ui-foundation .home-index-status{font-size:12px;color:var(--muted);background:#f0f3f8;padding:5px 8px;border-radius:6px}
+.ui-foundation .home-index-value{font-size:24px;font-weight:750;color:var(--text);line-height:1.4;margin:16px 0 6px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ui-foundation .home-index-value small{font-size:13px;font-weight:500}
+.ui-foundation .home-index-change{font-size:14px;margin:0;font-variant-numeric:tabular-nums}
+.ui-foundation .home-index-change.up{color:#d44851}
+.ui-foundation .home-index-change.down{color:#3677d8}
+.ui-foundation .home-index-time{font-size:12px;line-height:1.7;margin:12px 0 0;color:var(--muted);overflow-wrap:anywhere}
+.ui-foundation .home-watchlist .home-section-title{margin-bottom:0}
+.ui-foundation .home-watchlist .stock .identity{min-height:44px}
+.ui-foundation .home-watchlist .stock .identity strong{overflow-wrap:anywhere}
+.ui-foundation .home-watchlist .stock .star{min-width:44px;min-height:44px}
+.ui-foundation .home-empty{padding:28px 0 8px;line-height:1.7}
+.ui-foundation .home-empty p{margin:8px 0;font-size:14px}
+.ui-foundation .home-explore-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.ui-foundation .home-explore-link{display:flex;flex-direction:column;gap:12px;min-height:116px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;line-height:1.6;overflow-wrap:anywhere}
+.ui-foundation .home-explore-link strong{font-size:16px;color:var(--accent)}
+.ui-foundation .home-explore-link>span{font-size:13px;color:var(--muted)}
+.ui-foundation .home-important{margin-top:20px}
+.ui-foundation .home-important .event-banner{margin:0;padding:20px;background:#f0f4fc}
+.ui-foundation .home-important .event-banner h2{font-size:17px;line-height:1.6;margin:12px 0 8px}
+.ui-foundation .home-important .event-banner p{font-size:13px;margin:8px 0}
+
+/* UX3-B: distinct learning destinations, with existing chart controls intact. */
+.ui-foundation .learning-heading{margin-bottom:24px}
+.ui-foundation .learning-heading .eyebrow{margin-top:0}
+.ui-foundation .learning-heading h1:focus{outline:none}
+.ui-foundation .learning-heading p{max-width:65ch}
+.ui-foundation .learning-back{margin-bottom:16px;font-size:14px}
+.ui-foundation .learning-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.ui-foundation .learning-choice{display:flex;flex-direction:column;min-width:0;gap:14px;padding:28px;margin:0;line-height:1.7}
+.ui-foundation .learning-choice:hover{border-color:#9badd4;background:#f8faff}
+.ui-foundation .learning-choice>.eyebrow{margin:0;color:var(--muted)}
+.ui-foundation .learning-choice h2{margin:0;font-size:24px}
+.ui-foundation .learning-choice p{font-size:15px;color:var(--muted);margin:0}
+.ui-foundation .learning-choice small{font-size:13px;line-height:1.7}
+.ui-foundation .learning-choice strong{padding-top:18px;margin-top:auto;color:var(--accent);text-decoration:underline;text-underline-offset:4px;font-size:15px}
+.ui-foundation .learning-crosslinks{display:flex;justify-content:flex-end;flex-wrap:wrap;margin-bottom:16px;font-size:14px}
+.ui-foundation .learning-page :is(.periods,.ui-control-group) button{min-width:44px}
+.ui-foundation .lesson-filter-panel h2{font-size:18px}
+.ui-foundation .lesson-stage-filters{gap:8px;margin:16px 0}
+.ui-foundation .lesson-filter-panel [role=status]{font-size:14px;color:var(--muted);margin-bottom:0}
+.ui-foundation .lesson-card{scroll-margin-top:20px}
+.ui-foundation .lesson-card>.eyebrow{font-size:12px;margin-bottom:8px;color:var(--muted)}
+.ui-foundation .lesson-card .lesson{display:flex;gap:16px;align-items:center;min-height:48px;line-height:1.7;font-size:18px;border-radius:8px;padding:8px 0}
+.ui-foundation .lesson-card .lesson span{flex-shrink:0;min-width:24px;text-align:center;color:var(--accent)}
+.ui-foundation .lesson-card .lesson[aria-expanded=true]{font-weight:750;color:var(--accent)}
+.ui-foundation .lesson-body[hidden]{display:none!important}
+.ui-foundation .lesson-body{border-top:1px solid var(--line);margin-top:12px;padding-top:8px}
+.ui-foundation .lesson-body p{font-size:15px;color:var(--muted);line-height:1.9}
+.ui-foundation .learning-disclaimer{font-size:13px;color:var(--muted);line-height:1.8;margin-top:24px}
+@media(max-width:640px){.ui-foundation .learning-choices{grid-template-columns:minmax(0,1fr);gap:16px}.ui-foundation .learning-choice{padding:20px;gap:12px}.ui-foundation .learning-choice h2{font-size:21px}.ui-foundation .learning-choice strong{padding-top:8px}.ui-foundation .lesson-card .lesson{font-size:16px}.ui-foundation .learning-crosslinks{justify-content:flex-start}}
+@media(max-width:1150px){.ui-foundation .home-account .account-summary{grid-template-columns:minmax(0,1fr)}.ui-foundation .home-explore-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ui-foundation .home-market-grid{gap:10px}.ui-foundation .home-index{padding:16px}.ui-foundation .home-index-value{font-size:21px}}
+@media(max-width:760px){.ui-foundation .home-market-grid{grid-template-columns:minmax(0,1fr)}.ui-foundation .home-index{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px}.ui-foundation .home-index-title{grid-column:1/-1}.ui-foundation .home-index-value{margin:8px 0 0}.ui-foundation .home-index-change{align-self:center;text-align:right}.ui-foundation .home-index-time{grid-column:1/-1;margin-top:4px}}
+@media(max-width:640px){.ui-foundation .home-section{margin-bottom:28px}.ui-foundation .home-section-title h2{font-size:19px}.ui-foundation .home-account .account-summary{padding:20px;gap:24px}.ui-foundation .home-account .account-summary [data-testid=total-assets]{font-size:30px}.ui-foundation .home-account .account-summary dl{grid-template-columns:minmax(90px,1fr) minmax(0,1.25fr);gap:14px 12px}.ui-foundation .home-watchlist .stock{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:8px 12px}.ui-foundation .home-watchlist .identity{grid-column:1;grid-row:1}.ui-foundation .home-watchlist .price{grid-column:1;grid-row:2;display:flex;align-items:center;gap:12px;text-align:left;min-width:0;padding-left:41px}.ui-foundation .home-watchlist .price small{margin:0}.ui-foundation .home-watchlist .star{grid-column:2;grid-row:1/3}.ui-foundation .home-explore-grid{grid-template-columns:minmax(0,1fr);gap:10px}.ui-foundation .home-explore-link{min-height:88px;padding:16px;gap:6px}}
+.ui-foundation .overview-metrics .financial-value{font-size:22px;line-height:1.5}
+/* A5-A: local, read-only discovery has no trading controls. */
+.ui-foundation .market-discovery-modes{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+.ui-foundation .catalog-discovery{min-width:0}
+.ui-foundation .catalog-discovery input{padding:12px;border:1px solid var(--line);width:100%;min-width:0;background:white}
+.ui-foundation .catalog-discovery p{font-size:14px;overflow-wrap:anywhere}
+.ui-foundation .candidate-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.ui-foundation .candidate-results{display:grid;gap:10px;min-width:0}
+.ui-foundation .candidate-row{display:flex;flex-direction:column;gap:8px;text-align:left;min-height:88px;overflow-wrap:anywhere;min-width:0}
+.ui-foundation .candidate-row span{font-size:14px}
+.ui-foundation .candidate-detail{min-width:0;overflow-wrap:anywhere}
+.ui-foundation .candidate-detail h2{font-size:20px;line-height:1.6}
+.ui-foundation .candidate-detail dl{display:block}
+.ui-foundation .candidate-detail dl>div{margin:14px 0}
+.ui-foundation .candidate-detail dd{margin-top:6px}
+.ui-foundation .candidate-detail a{display:flex}
+@media(max-width:900px){.ui-foundation .candidate-layout{grid-template-columns:minmax(0,1fr)}}
+
+.ui-foundation .catalog-discovery input::file-selector-button{min-height:44px;border:1px solid var(--line);border-radius:8px;background:var(--surface-alt,#f5f7fa);color:var(--text);padding:8px 12px;margin-right:8px;cursor:pointer}

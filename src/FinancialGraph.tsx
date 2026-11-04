@@ -14,6 +14,6 @@ export function FinancialGraph({profile,series,basis}:{profile:CompanyProfile;se
  <rect x={x} y={value>=0?72-height:72} width="36" height={height} fill={value<0?'#b33939':'#3169d9'}/>{value===0&&<circle cx={x+18} cy="72" r="2" fill="#3169d9"/>}
  <text x={x+18} y="138" fontSize="11" textAnchor="middle">FY{f.period.fiscalYear}{f.period.quarter&&<tspan x={x+18} dy="13">{` Q${f.period.quarter}`}</tspan>}</text>
  </g>;})}</svg>
- {series.map(f=><p key={f.id}>FY{f.period.fiscalYear}{f.period.quarter?` Q${f.period.quarter}`:''} · {f.period.start}~{f.period.end} · {financialValueText(f)} <a href={profile.sources.find(s=>s.id===f.sourceId)!.url}>공식 출처</a></p>)}
+ {series.map(f=><p key={f.id}>FY{f.period.fiscalYear}{f.period.quarter?` Q${f.period.quarter}`:''} · {f.period.start}~{f.period.end} · {financialValueText(f)} <a className="ui-link source-link" target="_blank" rel="noreferrer" href={profile.sources.find(s=>s.id===f.sourceId)!.url}>공식 출처 ↗<span className="sr-only"> (새 탭)</span></a></p>)}
  </div>;
 }

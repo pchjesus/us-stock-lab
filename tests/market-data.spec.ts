@@ -25,6 +25,8 @@ test('FX request rejects upstream failure and never fabricates a rate',async()=>
 });
 
 test('FX live reference remains separate from six synthetic market indicators',async({page})=>{
+ await page.clock.setFixedTime(now);
+ await page.route('**/functions/v1/market-fx',route=>route.fulfill({json:valid}));
  await page.goto('/#indices');
  const live=page.getByTestId('fx-reference');
  await expect(live).toContainText('일별 참고환율');

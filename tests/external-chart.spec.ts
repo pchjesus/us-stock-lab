@@ -1,9 +1,10 @@
+import {openTrading} from './detail-navigation';
 import {test,expect} from '@playwright/test';
 
 test('detail keeps the chart and order side by side on desktop and stacked on smaller screens',async({page})=>{
  for(const width of [1440,768,390,320]){
   await page.setViewportSize({width,height:950});
-  await page.goto('/#stock/AAPL');
+  await page.goto('/#stock/AAPL');await openTrading(page);
   const chart=await page.getByLabel('외부 차트 패널').boundingBox();
   const order=await page.locator('#detail-order').boundingBox();
   expect(chart).not.toBeNull();expect(order).not.toBeNull();
@@ -15,7 +16,7 @@ test('detail keeps the chart and order side by side on desktop and stacked on sm
 
 test('external chart starts empty, creates one widget and cleans up on close and symbol change',async({page})=>{
  await page.route('https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js',route=>route.fulfill({contentType:'application/javascript',body:"(()=>{const f=document.createElement('iframe');f.title='mock TradingView';document.currentScript.parentElement.appendChild(f);})()"}));
- await page.goto('/#stock/AAPL');
+ await page.goto('/#stock/AAPL');await openTrading(page);
  const panel=page.getByLabel('외부 차트 패널');
  await expect(panel.locator('iframe')).toHaveCount(0);
  await page.getByRole('button',{name:'TradingView 공식 표시용 차트 열기'}).click();
@@ -24,12 +25,12 @@ test('external chart starts empty, creates one widget and cleans up on close and
  await expect(panel.locator('iframe')).toHaveCount(0);
  await page.getByRole('button',{name:'TradingView 공식 표시용 차트 열기'}).click();
  await expect(panel.locator('iframe')).toHaveCount(1);
- await page.goto('/#stock/MSFT');
+ await page.goto('/#stock/MSFT');await openTrading(page);
  await expect(page.getByLabel('외부 차트 패널').locator('iframe')).toHaveCount(0);
 });
 
 test('provider selection uses explicit links and popup blocking gives a fallback',async({page})=>{
- await page.goto('/#stock/AAPL');
+ await page.goto('/#stock/AAPL');await openTrading(page);
  const panel=page.getByLabel('외부 차트 패널');
  await page.getByLabel('외부 차트 제공자').selectOption('네이버');
  await expect(panel.getByRole('link',{name:/네이버 AAPL/})).toHaveAttribute('href','https://m.stock.naver.com/worldstock/stock/AAPL.O/total');
@@ -41,8 +42,9 @@ test('provider selection uses explicit links and popup blocking gives a fallback
 
 test('opens the selected symbol in a separate browser page and handles widget errors',async({page})=>{
  await page.route('https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js',route=>route.abort());
- await page.route('https://www.tradingview.com/symbols/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<title>fixture</title>'}));
- await page.goto('/#stock/MSFT');
+ // The popup's initial navigation belongs to the context, not the opener page.
+ await page.context().route('https://www.tradingview.com/symbols/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<title>fixture</title>'}));
+ await page.goto('/#stock/MSFT');await openTrading(page);
  const panel=page.getByLabel('외부 차트 패널');
  await panel.getByRole('button',{name:'TradingView 공식 표시용 차트 열기'}).click();
  await expect(panel.getByRole('status')).toContainText('불러오지 못했습니다');

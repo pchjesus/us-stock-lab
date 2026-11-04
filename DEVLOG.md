@@ -265,3 +265,91 @@
 - 영향 테스트 14/14 PASS: 6개 순환/시계 독립성/전환 방향/정지 및 타이머 정리/팝업과 ESC/포커스·스크롤/대기 상태/reduced-motion. 1440·1200·768·390·320px 무겹침·가로 넘침 검사 및 실제 Chromium 헤더·팝업 캡처 확인. 초기 시계 경계 테스트의 실행 시간 오차는 페이지 시계를 정지시킨 뒤 검사하도록 수정했다.
 - A4/A5 미완료 유지. 기존 금융 로직·migration·기업 재무자료는 변경하지 않았고 A1~A3 상세 기능을 보존한다. 운영 Supabase/Auth/Cron·main·Pages 변경 없음.
 - 최종 활성화 TypeScript/Vite 빌드 PASS, 전체 PC·모바일 회귀 212/212 PASS, 모의 인증·수기 주문·배당·세금 회귀 38/38 PASS, diff 검사 PASS. 실제 모바일 기기와 운영 사용자 인증은 NOT VERIFIED. GitHub CI의 별도 격리 Cron 등록을 피하기 위해 CI는 실행하지 않는다.
+
+## 2026-11-03 · v0.8-A4-C1 카탈로그 기초
+- main 51474c2에서 독립 브랜치 생성. SEC 매핑 스키마 기반 오프라인 정규화·제한 검색, 거래소+심볼 후보 ID, 중복 제거·충돌 보류 및 기존 8종목 참조 계약 추가. 모든 후보 유형 unknown/상장 unverified/거래 불가. 가격·캔들·금융 기능 변경 없음.
+- 합성 fixture 12행: 정상 7, 잘못된 형식 2 제외, 충돌 2 보류, 중복 1 제거. 동일 입력·명시적 시각으로 2회 출력 바이트 동일. PC/모바일 단위 4/4, TypeScript/Vite build PASS. 운영 실제 종목 추가 0, 실제 상장 검증 0. 전체 UI/금융 SQL 회귀는 변경 영향 없어 기존 결과 재사용.
+- SEC 개발 문서는 User-Agent 연락처 선언 및 전체 10요청/초 이내를 안내한다. 이번 SEC 파일 요청은 실제 연락처가 아닌 예시 User-Agent로 200 응답을 받았으므로 규정 준수 수집으로 인정하지 않고 파일을 폐기했다. Nasdaq 공식 심볼 정의는 갱신시각·테스트 종목/ETF 필드를 설명하나 재배포 권한은 미확인: 원본 복제 없음. C2에서 합법적 수집·라이선스·데이터 신선도/증권 식별자 보강 필요.
+- 이 단계는 데이터 계층 fixture 검증이며 완전한 상장종목 카탈로그/전체 검색 UI가 아니다. main/Pages/운영 DB/Auth/Cron 변경 없음. 새 브랜치는 기존 Cron CI push 대상이 아니고 Pages는 수동 실행이다.
+
+## 2026-11-03 · v0.8-UX0 Design Foundation
+- 기준 8fdc53d에서 codex/ui-v0.8-ux0 생성. 독립 HTML/React/CSS·전용 dev/build/test 구성으로 홈, 기업 4뷰·5기업 선택, ETF 전용 미제공 상태, 학습 2진입, 문맥 도움말·7단계 안내 미리보기 및 공통 컨트롤 구현. 운영 진입점·가격·금융 데이터/로직 변경 없음.
+- TypeScript/운영 Vite 및 독립 UX0 빌드 PASS. 운영 빌드는 기존과 동일 114모듈·파일 해시이며 UX0 미포함. 영향 프로토타입 테스트는 1440/768/390px 3/3 PASS, 화면 24장 생성. 도움말 ESC/포커스·상세 뷰/5기업·기존 학습 링크/reduced-motion/가로 넘침·페이지 예외·Supabase 요청0 검사. 처음에는 IPv6 바인딩으로 연결 실패, 127.0.0.1 명시 후 해결; select 접근성 이름 보강 후 재검증. 캡처는 전환 종료 후 생성.
+- 전체 기존 금융/UI 회귀는 영향 없어 기존 결과 재사용. 실제 Windows/모바일 기기·스크린리더·전체 WCAG 감사와 UX1~UX3 실제 통합은 NOT VERIFIED. Toss 자산/외부 실시간 데이터 미사용. 구조 리팩터링 보류: 별도 진입점으로 상태 소유권 변경 근거 없음.
+- docs/ui/UX0.md에 기능 이동·자료 가용성/추가 검증·동작/시각 토큰·후속 단계 기록. 디자인 승인 대기이며 main/Pages/운영 DB/Auth/Cron 변경 없음.
+
+## 2026-11-03 · v0.8-UX1-A 공통 UI·도움말
+- c35879c에서 codex/ui-v0.8-ux1-a 생성. ui-foundation 범위 색상·컨트롤·포커스·모바일 가독성과 헤더 브랜드/화면 제목 통합. 시계·6지표·알림·계정·기존 사용 방법 유지. 계좌 모드 위치와 화면별 콘텐츠는 변경하지 않음.
+- 현재 경로 기반 9개 도움말 주제·사용자 전환·데이터 구분 설명 추가. 기존 Modal을 닫고 실제 Tour 시작, 중첩 방지와 hash/scroll/focus 복원 검증. 도움말/알림/Tour 동안 지표 타이머 일시 정지 추가. 금융 계산·인증·저장 계약 변경 없음.
+- 영향36/36, 모의 인증/금융38/38 PASS. 최종 활성화 build PASS, 전체 PC/mobile224/224 PASS(전체 실행1회), diff 검사 PASS. 새 도움말8검증 포함 5해상도 헤더/모달 무겹침·넘침없음·native 수기 disabled·reduced-motion·ESC/포커스·7단계 전체/ESC 복원·계좌 불변/운영RPC0 확인. 대표7캡처와 docs/ui/UX1_A.md 보존.
+- 금융 PostgreSQL/SQL 전체 검사는 원본 불변으로 이전 결과 재사용. 운영 인증·실기기·스크린리더·WCAG 전체 감사는 NOT VERIFIED. 기존 Actions 브랜치 필터 확인, 새 브랜치 Cron 트리거 없음·Pages 수동. main/Pages/운영 DB/Auth/Cron 변경 없음. UX1-B 시작 가능; 화면별 버튼·계좌 모드 정리와 UX2/3는 후속. 국소 표시·모달 경계만 변경하고 대규모 리팩터링은 보류.
+
+## 2026-11-03 · v0.8-UX1-B1 핵심 조작 UI
+- GitHub 기준 브랜치 최신 HEAD 3e5fad8 일치 확인. 기존 checkout에서 codex/ui-v0.8-ux1-b1 생성. Pages 수동 실행/finance·market 과거 전용 브랜치 push 필터 확인, B1 push 트리거·schedule/Cron 없음. workflow/운영 DB/Auth/Cron·main/Pages 변경 없음.
+- 전역 계좌 선택을 포트폴리오·설정으로 이동, 주문 영역의 현재 계좌/소유 범위와 변경 링크 추가. 기존 Workspace 상태·사용자별 manual.mode 키·로그인 소유권·수기 false 게이트/저장 선호·수기 기능 유지. 금융 계산·가격·원장·서버 저장 복원·8종목·기업 재무 원본·SQL/RPC/RLS 변경 없음.
+- 학습 native select에 이름·심볼/정렬/크기 적용. 기간·난이도·모양·이동평균·RSI를 라벨 있는 그룹으로 묶고 후보선 입력 정렬. 중립 선택·관심종목/파란 주요 주문/위험 초기화/회색 disabled와 핵심 이동 링크 구분. 키보드·focus-visible·reduced-motion·기존 학습/슬라이더/도움말/알림/Tour 유지.
+- 변경 전 build·영향36/36, 변경 후 영향34/34, 모의 인증/수기/배당/세금40/40 PASS. false 게이트1/1 PASS: 복원 로그인·저장 수기 선호 보존·수기/배당/세금 RPC0. 5해상도 전체 화면5/5 PASS. 최종 build PASS, 전체 앱 UI 232/232 PASS (최종 전체 실행 1회; 앞선 실패 원인 수정 후 재실행), diff PASS. PC1440·모바일390 대표6캡처와 docs/ui/UX1_B1.md 보존.
+- 첫 전체 회귀는 226 PASS/6 FAIL. 외부 환율/재무부 실패로 생긴 복수 alert에 대한 테스트 선택자, popup 첫 요청을 놓치는 page.route, 라이브 환율 의존의 3원인을 확인했다. 관심종목 alert 범위 지정·popup context mock·고정 시각 환율 fixture로 기존 검증을 보강했으며 기능/테스트 삭제 없음. 실패 파일 재검증20/20 PASS 후 전체 재실행. 최종 미해결 FAIL 0건. 기존 Vite import/chunk 경고 유지.
+- 금융 PostgreSQL/SQL은 변경 영향 없어 UX1-A/G1 근거 재사용. 운영 인증·실기기·스크린리더/WCAG 전체는 NOT VERIFIED. B1 개발 검토 Ready (개발 브랜치 결과 검토 및 UX1-B2 진행), UX1-B2 진행 가능(운영 배포 승인 아님). 대규모 리팩터링 보류: 상태 계약 유지와 표시 국소 개선으로 충분하며 반복 결함 근거 없음. 계좌 소유권 변경/같은 경계 반복 회귀 때 재검토.
+
+## 2026-11-03 · v0.8-UX1-B2 자료 카드·버튼·링크
+- GitHub B1 HEAD 5a09ddf 일치 확인 후 기존 checkout에서 codex/ui-v0.8-ux1-b2 생성. Pages 수동/finance·market 전용 브랜치 push 필터 확인, B2 CI/Cron 트리거 없음. 개발 브랜치만 커밋·push, main/Pages/운영 DB/Auth/Cron 변경 없음.
+- 환율/재무부 카드의 제목·상태·기준일/재조회·수치/단위·조회시각·설명·제공자/출처 정렬. 재조회 중 원래 날짜의 이전 자료 유지와 disabled 사유, 실패 시 기존 수치 제거/오류/재시도, 오래된 환율 미제공 표시 추가. 기존 endpoints/parsers/timeout/cleanup 보존, 카드별 로컬 중복 클릭 잠금만 추가.
+- 지표 추이/일정 상세 버튼, 뉴스·SEC·공식 출처 링크의 밑줄/새 탭 안내/44px, 외부 차트 제공자·별도 창·기존 대체 링크 정렬. 금융 계산/원장/가격/8종목/인증/수기 게이트/시장 시계/헤더 슬라이더/도움말/Tour·SQL/RPC/RLS·기업 재무 원본 불변. 기업/ETF 정보 구조와 홈 개편 보류.
+- 변경 전 영향8/8, 통합 영향50/50, 신규16/16, 비활성 설정 smoke2/2, 인증/수기/배당/세금40/40, production 수기 게이트1/1 PASS. 최종 build PASS·전체 앱 UI 248/248 PASS(각1회), diff PASS. 5개 폭의 카드/조작 겹침·넘침/JS 오류0, 날짜/단위·요청1회·중복 클릭·지연 역순 응답·로딩/실패/회복·원문/새 탭·키보드/터치·reduced-motion 검사. 최종 fixture 대표8캡처와 docs/ui/UX1_B2.md 보존.
+- 초기 개발 StrictMode의 기존 Modal 초점 복귀 실패2건은 모달 불변을 유지하고 production React 및 최종 Vite 산출물에서 분리 검증. 닫힌 details 링크는 보이는 링크의 접근성 이름을 검사하고 입력 원문 새 탭 안내 보강. 최종 production 미해결 FAIL 0건, 개발 StrictMode 기존 제한 잔존. 기존 Vite import/chunk 경고 유지.
+- 금융 SQL은 원본 불변으로 B1/G1 근거 재사용. 실제 모바일/스크린리더/WCAG 전체·운영 인증·최신 운영 외부 자료 응답은 NOT VERIFIED. 캡처 수치·시각은 고정 fixture이며 최신값이 아님. 대규모 리팩터링 불필요, 공유 요청/상태 변경이나 반복 결함 시 재검토. UX2 개발 진행 Ready (개발 결과 검토 및 UX2 진행 가능), 운영 배포 승인 아님.
+
+## v0.8-UX2-A 기업·ETF 상세 통합
+- 원격 B2 HEAD ae1a5f2·main51474c2·clean 작업 트리 확인 후 기존 checkout에서 codex/ui-v0.8-ux2-a 생성. 기업5개 개요/차트·거래/재무/근거와 ETF3개 전용 개요/차트·거래/상품정보/출처를 실제 앱에 통합. 개요 최근 실적3개·공식 매출 그래프, 연간/직접 단독분기, 전체219관측/200원문/19계산의 값·기간·단위·URL·산식/입력과 원문 필드·정정 이력 접근 보존. ETF 미확인 구성/보수/분배금은 미제공, 허위 그래프/0값 없음.
+- StockDetail/EtfDetail 표시 컴포넌트 추가, CompanyDetail 섹션 분리와 기존 함수/그래프 재사용. 실제 접근성 탭·키보드·초점/선택 상태·44px·5해상도 적용. 거래 Workspace 첫 방문 후 유지로 입력/검토 보존, 외부 차트 탭 이탈 cleanup/제공자 유지/자동 재시작 방지. 주문 링크와7단계 Tour는 실제 거래 탭 활성화 후 대상 측정, 종료 시 원래 탭/경로/스크롤/초점 복원.
+- 금융/인증/계좌 소유권·서버 복원·원장·합성/체결 가격·수수료/배당/세금·8종목·공식 재무 원본·SQL/RPC/RLS·운영 설정 불변. 시장/환율/재무부·지표 슬라이더/학습/도움말 기능 보존. 기존 테스트는 실제 탭 클릭 경로로 수정하고 삭제/skip 없음.
+- 이번 변경 전 영향10/10, 변경 후 영향30/30·28/28·92/92, 신규 상세14/14(통합 검사에 포함), 마지막 시각/키보드/폭 검사6/6, 그래프0/음수/YTD fixture2/2, 인증/수기/배당/세금42/42 PASS. production 수기 false 게이트1/1 PASS: 저장 선호 보존·네 탭 왕복 후 수기/배당/세금 RPC0. 정상화 후 최종 build1회 PASS·실제 산출물 전체 UI1회262/262 PASS, diff PASS. PC1440/모바일390 대표12캡처·docs/ui/UX2_A.md 보존.
+- 첫 영향38PASS/6FAIL·첫 인증38PASS/4FAIL은 ETF region 의미와 새로고침 후 주문 탭 진입 경로를 보강해 해결. 최종 production 미해결 FAIL0. 기존 개발 StrictMode Modal 초점 복귀 제한 및 Vite import/chunk 경고는 잔존. 금융 SQL은 불변으로 B2/G1 근거 재사용(이번 미실행), 실제 기기/스크린리더/WCAG 전체·운영Auth·실시간 외부 위젯 가용성 NOT VERIFIED. 캡처는 기존 재무자료/합성 가격·고정 시각이며 새 자료 취득 아님.
+- Pages 수동·finance/market 과거 전용 push 필터 확인, UX2-A CI/Cron 대상 아님. 개발 브랜치만 [skip ci] 커밋·push, main/Pages/운영 DB/Auth/Cron 변경 없음. UX2-B 개발 후속 가능: 기존 dev StrictMode 모달 생명주기와 실기기/스크린리더 보완, 운영 배포 승인 아님. 국소 표시/생명주기 개선으로 충분해 대규모 금융 리팩터링은 수행하지 않음.
+
+## v0.8-UX3-A 홈 정보 위계·시장 요약
+- 원격 UX2-A HEAD e2ae827·부모ae1a5f2·main51474c2·clean 작업 트리/신규 브랜치 부재를 확인하고 기존 checkout에서 codex/ui-v0.8-ux3-a 생성. Pages 수동·finance/market 과거 전용 push 필터 유지, UX3-A는 CI/Cron 대상 아님. 개발 브랜치만 [skip ci] 커밋·push하며 main/Pages/운영 DB/Auth/Cron 변경 없음.
+- 실제 #home에 HomeDashboard를 연결해 계좌 현황→미국3지수→관심종목→학습/시장 자료·중요 일정 순서로 배치. AccountSummary/AccountView·Allocation·로컬/서버·로딩/오류/재조회·수기 Workspace를 그대로 사용하고 총자산/보조 수치와 #portfolio 접근을 정렬. 금융 계산/반올림/가격·상태 소유권·저장/복원·Auth/격리·SQL/RPC/RLS·8종목·수기 false 게이트 불변.
+- 기존 시장정보에서3지수의 값/단위·등락·상태·원래 기준시각만 투영. 합성/공식 대기/미제공 구분, 임의 수치/현재 날짜 대체 없음. 전체6지표/추이·실제 참고환율·재무부 카드/재조회는 #indices에 보존. 홈의 참고 API 자동 요청은 제거하고 요약 요청은 추가하지 않음. 헤더 시계/6지표 슬라이더·기업/ETF4탭·차트/학습·알림/도움말·7단계 Tour 소스 불변.
+- 기존 사용자별 관심종목 행/가격/등락/해제·#stock 경로와 #market8종목 검색/추가 연결, 빈 안내·학습/일정/뉴스/지표 탐색 카드 추가. ImportantBanner를 하단으로 옮기고 상태/결과/설명/닫기 유지. 5개 폭·44px·키보드/터치·focus-visible·reduced-motion·첫 계좌 Spotlight와7단계 복귀 검증.
+- 이번 변경 전 기준선12/12, 변경 후 영향102/102, 신규 홈16/16(영향/전체에 포함), 시장 로딩/오류/재조회·과거/미제공 fixture2/2, 최종 인증/수기/배당/세금48/48 PASS. production 수기 false 게이트1/1 PASS: 홈 서버 합성계좌·저장 수기 선호 보존·수기/배당/세금 RPC0. 정상화 후 최종 build1회 PASS·실제 산출물 전체 앱1회278/278 PASS, diff PASS. production PC1440/모바일390의6캡처와 docs/ui/UX3_A.md 저장. 고정 시각·합성 시장/로컬 거래 fixture임을 명시.
+- 첫 영향32PASS/2FAIL은 새 Tour 테스트의 복수 학습 필터 선택자, 개발 fixture2FAIL은 production React hook 동적 import interop 문제였다. 실제 대상/런타임 확인 후 테스트 진입만 수정해 재검증, 기존 기능/테스트 삭제·skip 없음. 최종 production 미해결 FAIL0. 기존 dev StrictMode Modal 초점 제한과 Vite import/chunk 경고 잔존. SQL은 금융 원본 불변으로 B2/G1 근거 재사용(이번 미실행), 실기기/스크린리더/WCAG 전체·운영Auth·실시간 운영 자료 NOT VERIFIED.
+- 개발 결과 검토 및 UX3-B 진행 Ready. 학습 랜딩 분리·전체 검색·실제 시세·운영 금융 전환은 후속 범위이며 배포 승인이 아님. 국소 표시 분리로 충분해 대규모 리팩터링 불필요, 공유 상태 변경·동일 경계 반복 결함 시 재검토. UI 커밋 revert로 복구 가능, 데이터 마이그레이션 없음.
+
+## v0.8-UX3-B 학습 랜딩·투자 수업·차트 실습실
+- 원격 UX3-A HEAD9b770c2·부모e2ae827·main51474c2·clean 작업 트리·브랜치 부재 확인 후 기존 checkout에서 codex/ui-v0.8-ux3-b 생성. Pages 수동/finance·market 과거 전용 push 필터 유지, UX3-B CI/Cron 대상 아님. 개발 브랜치에만 [skip ci] 커밋·push, main/Pages/운영 DB/Auth/Cron 변경 없음.
+- #learn은2개 선택 카드, #learn/lessons는 기존10개 수업/단계·필터·펼침/직접 해보기, #learn/lab은 기본AAPL 실습실로 분리. 기존8개 #learn/{symbol}·홈/사이드바/상세 링크와 lesson ID/DOM 식별자 유지. 기존 lesson 쿼리/필터 URL 구현은 없어 추가 어댑터 없음. 정확한 route/helper를 UI·도움말에서 공유하고 잘못된 경로는 AAPL로 대체하지 않음.
+- 10개 수업 ID/stage/title/body/practice 전체 내용 해시 cb7cdd8b24864e45ea8adbdb9d4c59ee5269b9ab99632a75c1efd0de895afa7d 보존. 학습 하위 화면의 단계/펼침은 기존 Learning 메모리에 유지, 새 저장 키 없음. ChartLab·chartIndicators·uiData/data 소스·수식/기간/합성 값 불변. 기존 종목 변경 초기화/선택 유지·기간 저장·chart.remove cleanup 재사용. 실제 크기 observer1/2개가 화면 이탈 후0개임을 확인.
+- PC2열/모바일1열 카드·단계/확장 상태·44px/키보드/focus-visible/reduced-motion 적용. 짧은 차트 기간 버튼 최소 너비만 학습 범위에서 보완. ContextHelp는 랜딩/수업=학습, 기본/종목 실습실=차트로 분류. Tour3단계 기존차트 유지·7단계 수업 단계 필터로 변경, 전체7개 대상 위치·종료/건너뛰기/ESC의 경로/초점/스크롤 복원 검사. 공통 Modal/금융·Tour 생명주기 리팩터링 없음.
+- 이번 변경 전 기준선10/10·기존 경로 영향56/56·cleanup/너비 보완4/4·최종 학습/계산/조작/도움말/Tour 통합50/50·신규 학습14/14(통합/전체에 포함) PASS. 인증 학습 이동2/2 PASS: 계좌/관심종목·로컬 원본 유지, 추가 금융 RPC0. 최종 인증/수기/배당/세금50/50 PASS. production 수기 false 게이트1/1 PASS: 새 학습 경로 전체·저장 선호 보존·수기/배당/세금 RPC0. 정상화 후 최종 build1회 PASS·실제 산출물 전체 앱1회292/292 PASS·diff PASS. docs/ui/UX3_B.md와 production PC1440/모바일390의6캡처 저장, 합성/시연 상태와 고정 시각 명시.
+- 첫 신규10PASS/4FAIL은 짧은 버튼의44px 미달과 내부 canvas observer 개수를 chart 수로 가정한 계측 문제였다. scoped CSS와 autoSize container observer 계측으로 해당 검사/통합/전체 재검증 완료, 기존 기능/검증 삭제·skip 없음. 최종 production 미해결 FAIL0. 기존 dev StrictMode Modal 초점 제한·Vite import/chunk 경고 유지. 금융·Auth·계좌/원장·배당/세금·RPC/RLS/SQL·시장정보·헤더·홈·기업/ETF 소스 불변. DB는 B2/G1 선행 근거 재사용(이번 SQL 미실행), 실기기/스크린리더/WCAG 전체·운영Auth/자료 NOT VERIFIED.
+- 개발 결과 검토 및 A4-C2 진행 Ready. 자료 취득/검증·전체 검색·실제 시세·운영 금융 전환은 별도 범위이며 배포 승인이 아님. 정확한 경로/표시 분리로 충분해 대규모 리팩터링 불필요, 공유 상태 변경이나 동일 경계 반복 결함 때 재검토. UI 커밋 revert로 복구 가능, 데이터 마이그레이션 없음.
+
+## v0.8-A4-C2 공식 종목 카탈로그 수집 기반
+- 원격 UX3-B HEAD0ce25f1·부모9b770c2·main51474c2·기존 checkout과 앞선 미커밋 inspect/test2파일을 확인해 보존하고 codex/catalog-a4-c2-official-ingest 작업을 이어갔다. Pages 수동/finance·market 과거 전용 push 필터 유지. 개발 브랜치만 [skip ci] 커밋·push, main/Pages/운영 DB/Auth/Cron 변경 없음.
+- Node24 `npm run catalog:collect`: 실제 담당자/조직·이메일을 SEC_USER_AGENT로 요구, 누락/명백한 예시/예약 도메인은 요청 전 거부, 값은 로그/파일에 기록하지 않음. 고정 SEC HTTPS URL·리다이렉트 전체 거부·15초 timeout·20MiB/JSON/UTF-8/schema/길이·입력과 유효 후보 각1,000개 최소 기준. 2초 간격·일반5xx 최대3회·403/429/Retry-After 5xx 즉시 중단. 수집 잠금과 요청 시각 기록, 자동 스케줄 없음. 이 제한은 단일 로컬 루트 기준이며 전체 공인 IP의 요청량 관리는 별도 책임.
+- 기존 normalizeSec/fixture의 정규화 후 전체 행 동등 중복·동일 ID 충돌 전체 보류·CIK 복수 클래스·거래소/심볼 구두점 유지. 잘못된 CIK/이름/심볼/거래소·행 형태의 제외 및 중복/충돌 사유·0기반 행 번호를 선택적으로 기록. 원본 기준일 null과 실제 수신 UTC 구분, 모든 후보 unknown/unverified/tradeEligible=false, 기존8개 종목과 자동 결합 없음.
+- Git 제외 work/catalog-snapshots에 원본/정규화/manifest를 별도 디렉터리로 저장하고 manifest를 마지막 commit marker로 작성. 기존 스냅샷 덮어쓰기 없음. SHA-256·원본 크기/출처/시각·입력/정규화/제외/중복/보류·상태 보존; Node 로더는 원본/결과 해시 및 재정규화 바이트를 검증. 해시는 출처 진위/재배포 권한의 서명이 아님. 크래시 잔여 lock은 활성 수집이 없음을 확인한 후 수동 정리.
+- Nasdaq 공식 정의의 장중 주기 갱신·상장시장/ETF·Test Issue·파일 생성시각 검토. NasdaqTrader 저작권 조건의 사전 서면 동의 제한과 별도 파일 권한 미확인으로 원본 데이터/어댑터를 수집·공개하지 않음. 실제 SEC 식별 정보가 제공되지 않아 실수집 NOT VERIFIED, 공식 건수/해시 없음. 가상 fixture만489바이트·입력12/정규화7/제외2/보류2/중복1; 원본 SHA b631e9429fe9bedf76478550513e435d92809fd996ad8b0fa257590c076abac8.
+- 초기 A4-C1/inspect 기준선6/6, 최신 수집/정규화 영향20/20 PASS: 고정 URL·신원/예약 도메인·403/429/503 Retry-After·5xx 상한/간격·redirect·timeout/중단/크기/schema·동시 잠금·손상/위조·이전 스냅샷 보존. 인증/수기/배당/세금50/50, production 수기 false 게이트1/1 PASS(수기/배당/세금 RPC0). 전체 앱308/308 PASS. 마지막 수집기 임계값 보강 후 최신 영향20/20, 최종 TypeScript/Vite 빌드 PASS; 별도 출력의 앱4파일 SHA가 전체 회귀 산출물과 모두 일치. 초기 보강 단계에서도 예비 빌드/전체 회귀를 수행했으며, 포트4173 중복으로 서버가 시작되지 않은 영향 검사1회는4178에서 재실행했다. diff PASS.
+- 금융/시세/8종목·Auth/격리·RPC/RLS/SQL·홈/학습·상세·운영 설정 불변. PostgreSQL/SQL은 변경 없어 선행 B2/G1 근거 재사용(이번 미실행), 실제 SEC·운영 Auth·실기기/스크린리더 NOT VERIFIED. 기존 Vite import/chunk 경고 유지. fixture 기반 A5 개발은 가능하나 실제 공개 데이터 검색은 SEC 실수집·권리/신원/상장 상태 검증 전 미준비; 운영 배포 승인이 아님. 국소 수집/무결성 계층으로 충분해 대규모 금융 리팩터링은 하지 않음.
+
+
+## 2026-11-04 · v0.8-A5-A 개인 로컬 카탈로그 후보 탐색
+- 기준 원격 e1adab478f6ad1506bce16dfd591949bc9b8c0f8·부모0ce25f1·main51474c2·clean checkout/브랜치 부재 확인 후 codex/catalog-a5-a-readonly-discovery 생성. Pages 수동/finance·market 과거 push 필터 유지, 이 브랜치 CI/Cron 대상 아님. 개발 브랜치에만 [skip ci] 커밋·push하며 main/Pages/운영 DB/Auth/Cron 변경 없음.
+- 기존 #market8종목 검색/관심/합성 가격/상세/주문을 그대로 두고 별도 후보 모드 추가. Node catalog:export가 기존 loadSecSnapshot을 재검증해 work/ 안 새 파일만 생성. 원본/기존 출력 불변, 결정론적 payload SHA-256·검증 상태/건수/출처/수집시각 포함. 실제 SEC 인증·상장/재배포 권한 증명과 구분.
+- 브라우저32MiB/50,000후보·메타데이터/해시·건수·재정규화/전체 필드·중복 ID 검사. tradeEligible=true/검증 승격/출처 주입 거부. 정확 심볼→부분 심볼→이름 검색·50개 페이지, 거래소/복수 클래스 독립. 읽기 전용 상세는 숫자 CIK의 SEC 링크·UTC/KST·unknown/unverified·거래 불가 안내만 표시. 기존 심볼 충돌도 가격/금융 상세/주문/관심 편입 없음.
+- 메모리에서만 사용, 업로드/자동 저장/SEC 요청/자동 재수집 없음. 앱 내 화면 이동은 유지하되 새로고침/사용자 변경/로그아웃/해제 시 자료 제거, 늦은 import 응답 무시. 금융/8종목/합성 가격·캔들/계좌·원장/관심/Auth/SQL/RPC/RLS/004~007/수기 false 소스 불변. 신규 API/정기 작업 없음.
+- 변경 전6/6, 최종 신규 영향10/10, 인증·수기·배당·세금52/52, production 수기 false1/1 PASS. 후보 탐색 금융 RPC/업로드/SEC 요청0, 기존 paper_snapshot 외 신규 RPC 없음. 정상화 후 최종 build1회 PASS·전체 production UI1회318/318 PASS·diff PASS. 앱 소스 변경 없이 누락 필드/검증 승격/버전·기준일 변조 assertion 추가2/2도 PASS. 1만 후보 시나리오 PC2.6초/mobile2.5초, 최대50행·5개 폭/44px/키보드/터치/focus-visible/reduced-motion/가로 넘침·JS 오류0 확인.
+- 첫 영향2FAIL은 같은 AAPL 첫 행 CIK 가정을 실제 후보 선택으로 교정. 동시 Vite 개발서버 중 신규 인증2FAIL은 단독 동일2건 및 전체52건으로 정상 확인(당시 환경 원인 미확정). 기존 테스트 삭제/skip 없음. Vite import/chunk 경고 잔존. PostgreSQL 신규 미실행·운영 Auth/실기기/스크린리더·실제 SEC 수집 NOT VERIFIED. 기존 DB 선행 근거는 A4-C2 참조.
+- 실제 SEC 자료가 아닌 가상 fixture12→7 후보로 export CLI/import·검색·상세를 확인하고 production 캡처4장을 docs/catalog/a5-a-captures에 저장. 화면에 fixture 명시, 원본/큰 자료/내보내기 파일은 Git 제외 work/에만 유지. 계약·무결성 해시·테스트·제한은 docs/catalog/A5_A.md.
+- A5-B/별도 승인된 v0.9 개발 진행 가능. 실제 전체 카탈로그 공개 통합은 SEC 수집/권리/최신성/식별자 검증이 선행돼야 하며, 개발 완료는 운영 배포나 신규 거래 허용 승인이 아니다. 금융 소유권 변경/대규모 리팩터링 없이 국소 표시·import 경계 추가로 완료. 개발 커밋 revert로 복구 가능, 데이터 마이그레이션 없음.
+
+
+## 2026-11-04 · v0.8 최종 통합 검증·배포 준비
+- 사용자 승인으로 개발 d8b8ba1·main51474c2 원격/부모/clean checkout·10커밋151파일 차이를 확인했다. 기존 finance/가격/원장/Auth/SQL/RPC/RLS·workflow 원본 불변. Supabase 읽기 전용 migration 조회는foundation/001~003만 존재,004~007 없음. 운영 쓰기/설정/정기작업은 실행하지 않는다.
+- 패키지/lock0.8.0 및 사이드바 후보 표기만 정리하고 README를 현재 홈/학습/기업·ETF/로컬 카탈로그 구조와 금융 게이트에 맞췄다. 새 기능·의존성 업그레이드·리팩터링 없음.
+- Pages 동일 공개 설정/수기false build PASS. 이번 신규 전체UI318/318·인증/금융fixture52/52·release6/6·시장/재무fixture4/4·UX0레퍼런스3/3, 총383건PASS. 과거PASS/반복 실행 합산 없음. financial/DB소스 불변으로 PostgreSQL 무거운 신규검증은NOT VERIFIED. 실제SEC·운영Auth/메일·실기기/스크린리더도미검증.
+- tracked/dist비밀 패턴0·개인원본/스냅샷포함0·연락처 모양22건 모두fixture/보안거부입력으로검토. TLS검증을 끄지 않고 관리환경CA준비와브라우저를동일실행환경에서사용해기존Pages200확인. Vite경고는기존대로남음. 상세근거/rollback41562090798·SHA51474c2는docs/release/V0_8_FINAL.md.
+- 이 준비 커밋 시점에는 main 병합/이번 Pages 배포는 아직 미실행이며, 원격 재확인→PR/main→Pages main ref 수동 실행→실제 사이트/자산 확인 후 결과와 인수인계를 갱신한다.

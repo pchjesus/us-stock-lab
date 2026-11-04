@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useRef,useState} from 'react';
 import {demoMarketService,pendingOfficialService,eventPhase,importantEvent,kstTime,officialSources,type MarketSnapshot} from './marketInfo';
 import {IndexGraph,CalendarGrid} from './UiPanels';
 import type {Indicator} from './marketInfo';
@@ -11,57 +11,92 @@ export function useMarketInfo(){
  return {data,error,mode,setMode,retry:()=>setRetry(n=>n+1)};
 }
 
-// v0.5-A read-only reference card, isolated from synthetic indicators and order prices.
+// Read-only reference cards keep the existing endpoints, parsers and effect cleanup.
+function ReferenceRefresh({label,loading,enabled,descriptionId,onClick}:{label:string;loading:boolean;enabled:boolean;descriptionId:string;onClick:()=>void}){
+ return <button className="reference-refresh" aria-label={label} aria-describedby={descriptionId} disabled={loading||!enabled} onClick={onClick}><span aria-hidden="true">↻</span><span>다시 조회</span></button>;
+}
 export function FxReferenceCard(){
  const endpoint=fxEndpointConfig(import.meta.env.VITE_ENABLE_MARKET_FX,import.meta.env.VITE_SUPABASE_URL);
  const [fx,setFx]=useState<FxReference|null>(null),[error,setError]=useState('');
- const [refresh,setRefresh]=useState(0);
+ const [refresh,setRefresh]=useState(0),[loading,setLoading]=useState(!!endpoint);const pending=useRef(false);
  useEffect(()=>{
   if(!endpoint)return;
-  let alive=true;setError('');
-  void fetchFxReference(endpoint).then(value=>{if(alive){setFx(value);setError('');}}).catch(()=>{if(alive){setFx(null);setError('환율을 확인하지 못했습니다.');}});
+  let alive=true;pending.current=true;setLoading(true);setError('');
+  void fetchFxReference(endpoint).then(value=>{if(alive){setFx(value);setError('');}}).catch(()=>{if(alive){setFx(null);setError('환율을 확인하지 못했습니다.');}}).finally(()=>{if(alive){pending.current=false;setLoading(false);}});
   return()=>{alive=false;};
  },[endpoint,refresh]);
- return <section className="panel fx-reference" data-testid="fx-reference">
-   <div className="section-title"><h2>USD/KRW · 실제 기준환율</h2><span>{fx?.status==='verified'?'일별 참고환율':endpoint?(error?'조회 불가':'조회 중'):'연동 준비 중'}</span></div>
-   {fx?.status==='verified'?<>
-    <h3>1 USD = {Number(fx.rateDecimal).toLocaleString('ko-KR',{maximumFractionDigits:4})} KRW</h3>
-    <small>Frankfurter 혼합 기준환율 · 기준일 {fx.observedOn} · 조회 {kstTime(fx.fetchedAtUtc)}</small>
-   </>:<p role={error?'alert':undefined}>{error||(endpoint?'기준환율 조회 중…':'확인된 실제 환율이 아직 없습니다.')}</p>}
-   <p>실시간 환전가격이 아니며, 현재 가상계좌의 KRW 표시·주문 체결·현금원장은 기존 합성 환율과 USD 기준을 유지합니다.</p>
-   <a href="https://frankfurter.dev/" target="_blank" rel="noreferrer">Frankfurter 출처 및 기준 확인 ↗</a>
-   {endpoint&&<button onClick={()=>setRefresh(n=>n+1)}>기준환율 다시 조회</button>}
+ function retry(){if(!endpoint||pending.current)return;pending.current=true;setLoading(true);setRefresh(n=>n+1);}
+ const verified=fx?.status==='verified';
+ const state=loading?'loading':error?'error':verified?'ready':'unavailable';
+ const status=loading?(verified?'이전 조회 자료 · 재조회 중':'조회 중'):error?'조회 실패':verified?'일별 참고환율':endpoint?'미제공':'연동 준비 중';
+ return <section className="panel reference-card fx-reference" data-testid="fx-reference" data-state={state} aria-labelledby="fx-title" aria-busy={loading}>
+  <div className="reference-header"><div><h2 id="fx-title">USD/KRW · 실제 기준환율</h2><p className="reference-status" role="status">{status}</p>{fx&&<p className="reference-asof">관측일 {fx.observedOn}</p>}</div><ReferenceRefresh label="기준환율 다시 조회" loading={loading} enabled={!!endpoint} descriptionId="fx-request-note" onClick={retry}/></div>
+  {verified?<>
+   <p className="reference-value">1 USD = <strong>{Number(fx.rateDecimal).toLocaleString('ko-KR',{maximumFractionDigits:4})}</strong> KRW</p>
+   <dl className="reference-metadata"><dt>관측일</dt><dd>{fx.observedOn}</dd><dt>조회시각 (KST)</dt><dd>{kstTime(fx.fetchedAtUtc)}</dd></dl>
+  </>:<p className="reference-empty" role={error?'alert':undefined}>{error||(loading?'기준환율 조회 중…':endpoint?'확인된 실제 환율이 미제공 상태입니다. 기준일이 오래된 자료는 현재 참고값으로 표시하지 않습니다.':'확인된 실제 환율이 아직 없습니다.')}</p>}
+  <p id="fx-request-note" className="reference-request-note">{loading?(verified?'표시된 값은 이전 조회 자료입니다. 재조회가 끝날 때까지 다시 조회할 수 없습니다.':'조회가 끝날 때까지 다시 조회할 수 없습니다.'):!endpoint?'자료 연결이 준비되면 다시 조회할 수 있습니다.':error?'이전 수치를 표시하지 않습니다. 다시 조회할 수 있습니다.':'기준일이 있는 일별 자료이며 실시간으로 갱신되지 않습니다.'}</p>
+  <p className="reference-description">실시간 환전가격이 아니며, 현재 가상계좌의 KRW 표시·주문 체결·현금원장은 기존 합성 환율과 USD 기준을 유지합니다.</p>
+  <div className="reference-footer"><span>Frankfurter 혼합 기준환율</span><a className="ui-link source-link" href="https://frankfurter.dev/" target="_blank" rel="noreferrer" aria-label="Frankfurter 출처 및 기준 확인 (새 탭)">Frankfurter 출처 및 기준 확인 <span aria-hidden="true">↗</span></a></div>
  </section>;
 }
-
 
 export function TreasuryStatsCard(){
  const enabled=import.meta.env.VITE_ENABLE_TREASURY_STATS==='true';
  const base=import.meta.env.VITE_SUPABASE_URL as string|undefined;
  const endpoint=enabled&&base&&/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(base)?base.replace(/\/$/,'')+'/functions/v1/treasury-stats':null;
  const [stats,setStats]=useState<TreasuryStats|null>(null),[error,setError]=useState('');
- const [refresh,setRefresh]=useState(0);
- useEffect(()=>{if(!endpoint)return;let active=true;void fetchTreasuryStats(endpoint).then(v=>{if(active){setStats(v);setError('');}}).catch(()=>{if(active){setStats(null);setError('미국 재무부 통계 조회 실패');}});return()=>{active=false;};},[endpoint,refresh]);
- return <section className="panel" data-testid="treasury-stats">
-  <div className="section-title"><h2>미국 재무부 공식 통계</h2><span>{stats?'공식 · 기준일별':'연동 상태 확인'}</span></div>
-  {stats?<><p>미국 연방 총부채 · {stats.asOfDebt}</p><h3>{(Number(stats.debtUsd)/1e12).toFixed(2)}조 달러</h3>
-   <p>미국 국채 평균 조달금리 · {stats.asOfRates} (월간)</p>
-   <dl>{stats.averageRates.map(r=><React.Fragment key={r.name}><dt>{r.name}</dt><dd>{Number(r.ratePct).toFixed(2)}%</dd></React.Fragment>)}</dl>
-   <small>조회 {kstTime(stats.fetchedAtUtc)}</small></>:<p role={error?'alert':undefined}>{error||(endpoint?'공식 자료 조회 중…':'연동 준비 중')}</p>}
-  <p>이 통계는 주식 시세나 미국 10년물 국채 시장수익률을 대체하지 않으며 가상 주문가격에 사용되지 않습니다.</p>
-  <a href="https://fiscaldata.treasury.gov/" target="_blank" rel="noreferrer">미국 재무부 원문 ↗</a>
-  {endpoint&&<button onClick={()=>setRefresh(n=>n+1)}>재조회</button>}
+ const [refresh,setRefresh]=useState(0),[loading,setLoading]=useState(!!endpoint);const pending=useRef(false);
+ useEffect(()=>{
+  if(!endpoint)return;
+  let active=true;pending.current=true;setLoading(true);setError('');
+  void fetchTreasuryStats(endpoint).then(v=>{if(active){setStats(v);setError('');}}).catch(()=>{if(active){setStats(null);setError('미국 재무부 통계 조회 실패');}}).finally(()=>{if(active){pending.current=false;setLoading(false);}});
+  return()=>{active=false;};
+ },[endpoint,refresh]);
+ function retry(){if(!endpoint||pending.current)return;pending.current=true;setLoading(true);setRefresh(n=>n+1);}
+ const state=loading?'loading':error?'error':stats?'ready':'unavailable';
+ const status=loading?(stats?'이전 조회 자료 · 재조회 중':'조회 중'):error?'조회 실패':stats?'공식 · 기준일별':'연동 준비 중';
+ return <section className="panel reference-card" data-testid="treasury-stats" data-state={state} aria-labelledby="treasury-title" aria-busy={loading}>
+  <div className="reference-header"><div><h2 id="treasury-title">미국 재무부 공식 통계</h2><p className="reference-status" role="status">{status}</p>{stats&&<p className="reference-asof">총부채 {stats.asOfDebt} · 조달금리 {stats.asOfRates}</p>}</div><ReferenceRefresh label="미국 재무부 통계 다시 조회" loading={loading} enabled={!!endpoint} descriptionId="treasury-request-note" onClick={retry}/></div>
+  {stats?<>
+   <p className="reference-metric-label">미국 연방 총부채</p><p className="reference-value"><strong>{(Number(stats.debtUsd)/1e12).toFixed(2)}</strong>조 달러</p>
+   <p className="reference-asof">총부채 기준일 {stats.asOfDebt}</p>
+   <div className="reference-rates"><h3>미국 국채 평균 조달금리</h3><p>기준일 {stats.asOfRates} (월간)</p><dl>{stats.averageRates.map(r=><React.Fragment key={r.name}><dt>{r.name}</dt><dd>{Number(r.ratePct).toFixed(2)}%</dd></React.Fragment>)}</dl></div>
+   <dl className="reference-metadata"><dt>조회시각 (KST)</dt><dd>{kstTime(stats.fetchedAtUtc)}</dd></dl>
+  </>:<p className="reference-empty" role={error?'alert':undefined}>{error||(loading?'공식 자료 조회 중…':'확인된 공식 통계가 아직 없습니다.')}</p>}
+  <p id="treasury-request-note" className="reference-request-note">{loading?(stats?'표시된 값은 이전 조회 자료입니다. 재조회가 끝날 때까지 다시 조회할 수 없습니다.':'조회가 끝날 때까지 다시 조회할 수 없습니다.'):!endpoint?'자료 연결이 준비되면 다시 조회할 수 있습니다.':error?'이전 수치를 표시하지 않습니다. 다시 조회할 수 있습니다.':'각 항목의 기준일과 조회시각을 구분해 확인하세요.'}</p>
+  <p className="reference-description">이 통계는 주식 시세나 미국 10년물 국채 시장수익률을 대체하지 않으며 가상 주문가격에 사용되지 않습니다.</p>
+  <div className="reference-footer"><span>US Treasury FiscalData</span><a className="ui-link source-link" href="https://fiscaldata.treasury.gov/" target="_blank" rel="noreferrer" aria-label="미국 재무부 원문 (새 탭)">미국 재무부 원문 <span aria-hidden="true">↗</span></a></div>
  </section>;
 }
 
 export type MarketView=ReturnType<typeof useMarketInfo>;
 export function MarketToolbar({view}:{view:MarketView}){return <div className="market-toolbar"><div className="market-links"><a href="#market" aria-current={location.hash==="#market"?"page":undefined}>종목</a><a href="#indices" aria-current={location.hash==="#indices"?"page":undefined}>지표</a><a href="#calendar" aria-current={location.hash==="#calendar"?"page":undefined}>경제 캘린더</a><a href="#news" aria-current={location.hash==="#news"?"page":undefined}>뉴스</a></div><label>정보 모드 <select aria-label="시장정보 모드" value={view.mode} onChange={e=>view.setMode(e.target.value as MarketView['mode'])}><option value="demo">합성 예시</option><option value="official-pending">공식 연동 대기</option></select></label></div>;}
 function LoadState({view}:{view:MarketView}){return view.error?<p role="alert">{view.error} <button onClick={view.retry}>다시 시도</button></p>:!view.data?<p role="status">시장정보 불러오는 중…</p>:null;}
-export function IndicatorCards({view}:{view:MarketView}){const [selected,setSelected]=useState<Indicator|null>(null);return <>{selected&&<IndexGraph item={selected} close={()=>setSelected(null)}/>}<FxReferenceCard/><TreasuryStatsCard/><LoadState view={view}/>{view.data&&(view.data.indicators.length?<div className="indices market-indices">{view.data.indicators.map(i=><section key={i.id}><button className="index-name" onClick={()=>setSelected(i)}>{i.name} 추이 →</button><small>{dataLabels[i.status]}</small><h3>{i.value===null?'—':i.value.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} <small>{i.unit}</small></h3><span className={i.changePct===null||i.changePct===0?'':i.changePct>0?'up':'down'}>{i.changePct===null?'변동 미제공':`${i.changePct>0?'상승':i.changePct<0?'하락':'보합'} ${i.changePct>0?'+':''}${i.changePct.toFixed(2)}%`}</span><small className="card-time">기준 {i.asOf?kstTime(i.asOf):'미제공'}</small></section>)}</div>:<p className="panel">공식 지표 연동예정 — 현재 수신된 지표가 없습니다. 합성 예시 모드에서 화면을 살펴볼 수 있습니다.</p>)}</>;}
+// A read-only home projection: preserve source dates and never promote mock values.
+export function homeMarketIndicators(items:Indicator[],mode:MarketView['mode']):Indicator[]{
+ return ([['sp500','S&P 500'],['nasdaq','NASDAQ'],['dow','Dow']] as const).map(([id,name])=>{
+  const source=items.find(item=>item.id===id);
+  const available=!!source&&source.status!=='pending'&&!(mode==='official-pending'&&source.status==='synthetic');
+  const asOf=available&&source.asOf&&Number.isFinite(Date.parse(source.asOf))?source.asOf:null;
+  const value=asOf&&source&&Number.isFinite(source.value)?source.value:null;
+  return {id,name,unit:source?.unit??'pt',value,changePct:value!==null&&source&&Number.isFinite(source.changePct)?source.changePct:null,asOf,status:available?source.status:'pending'};
+ });
+}
+export function HomeMarketSummary({view}:{view:MarketView}){
+ const items=homeMarketIndicators(view.data?.indicators??[],view.mode);
+ return <><LoadState view={view}/>{view.data&&!view.error&&<div className="home-market-grid">{items.map(i=><article key={i.id} className="home-index" data-indicator={i.id} data-status={i.status}>
+  <div className="home-index-title"><h3>{i.name}</h3><span className="home-index-status">{i.status==='pending'?'공식 연동 대기':dataLabels[i.status]}</span></div>
+  <p className="home-index-value">{i.value===null?'미제공':i.value.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}{i.value!==null&&<small> {i.unit}</small>}</p>
+  <p className={'home-index-change '+(i.changePct===null||i.changePct===0?'':i.changePct>0?'up':'down')}>{i.changePct===null?'변동 미제공':`${i.changePct>0?'상승':i.changePct<0?'하락':'보합'} ${i.changePct>0?'+':''}${i.changePct.toFixed(2)}%`}</p>
+  <p className="home-index-time">{i.status==='synthetic'?'생성 기준':'자료 기준'} {i.asOf?<time dateTime={i.asOf}>{kstTime(i.asOf)}</time>:'기준시각 미제공'}</p>
+ </article>)}</div>}<p className="home-note">{view.mode==='demo'?'합성 예시 · 실제 지수가 아닙니다.':'공식 연동 대기 · 확인된 자료만 표시합니다.'} 표시값은 해당 기준시각의 자료이며 실시간으로 갱신되지 않습니다.</p></>;
+}
+export function IndicatorCards({view}:{view:MarketView}){const [selected,setSelected]=useState<Indicator|null>(null);return <>{selected&&<IndexGraph item={selected} close={()=>setSelected(null)}/>}<FxReferenceCard/><TreasuryStatsCard/><LoadState view={view}/>{view.data&&(view.data.indicators.length?<div className="indices market-indices">{view.data.indicators.map(i=><section key={i.id}><button className="index-name" aria-haspopup="dialog" onClick={()=>setSelected(i)}>{i.name} 추이 →</button><small>{dataLabels[i.status]}</small><h3>{i.value===null?'—':i.value.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} <small>{i.unit}</small></h3><span className={i.changePct===null||i.changePct===0?'':i.changePct>0?'up':'down'}>{i.changePct===null?'변동 미제공':`${i.changePct>0?'상승':i.changePct<0?'하락':'보합'} ${i.changePct>0?'+':''}${i.changePct.toFixed(2)}%`}</span><small className="card-time">기준 {i.asOf?kstTime(i.asOf):'미제공'}</small></section>)}</div>:<p className="panel">공식 지표 연동예정 — 현재 수신된 지표가 없습니다. 합성 예시 모드에서 화면을 살펴볼 수 있습니다.</p>)}</>;}
 export function ImportantBanner({view}:{view:MarketView}){
  const [dismissed,setDismissed]=useState('');if(!view.data)return null;const important=importantEvent(view.data.events);
- if(!important)return <section className="event-banner"><strong>최중요 이벤트</strong><p>현재 표시할 전날·당일·다음날 이벤트가 없습니다.</p><a href="#calendar">경제 캘린더 보기 →</a></section>;
- const {event,label}=important;if(dismissed===event.id+label)return null;return <section className="event-banner"><button aria-label="이벤트 배너 닫기" style={{float:"right"}} onClick={()=>setDismissed(event.id+label)}>✕</button><span className="badge">최중요 이벤트 · {dataLabels[event.status]}</span><h2>{label} · {event.name}</h2><p>{kstTime(event.scheduledAt)} · {event.status==='synthetic'?'교육용 가상 일정입니다. 실제 발표일·결과가 아닙니다.':'공식 발표 원문을 확인하세요.'}</p>{event.actual&&Date.parse(event.scheduledAt)<=Date.now()&&<p>결과: {event.actual} · 예상: {event.forecast??'미제공'}<br/>해설: {event.interpretation??'공식 결과에 대한 해설이 아직 없습니다.'}</p>}<a href="#calendar">캘린더에서 자세히 →</a></section>;
+ if(!important)return <section className="event-banner"><strong>최중요 이벤트</strong><p>현재 표시할 전날·당일·다음날 이벤트가 없습니다.</p><a className="ui-link" href="#calendar">경제 캘린더 보기 →</a></section>;
+ const {event,label}=important;if(dismissed===event.id+label)return null;return <section className="event-banner"><button aria-label="이벤트 배너 닫기" style={{float:"right"}} onClick={()=>setDismissed(event.id+label)}>✕</button><span className="badge">최중요 이벤트 · {dataLabels[event.status]}</span><h2>{label} · {event.name}</h2><p>{kstTime(event.scheduledAt)} · {event.status==='synthetic'?'교육용 가상 일정입니다. 실제 발표일·결과가 아닙니다.':'공식 발표 원문을 확인하세요.'}</p>{event.actual&&Date.parse(event.scheduledAt)<=Date.now()&&<p>결과: {event.actual} · 예상: {event.forecast??'미제공'}<br/>해설: {event.interpretation??'공식 결과에 대한 해설이 아직 없습니다.'}</p>}<a className="ui-link" href="#calendar">캘린더에서 자세히 →</a></section>;
 }
-export function CalendarPanel({view}:{view:MarketView}){return <><h1>경제 캘린더</h1><MarketToolbar view={view}/><p>UTC 기준으로 저장하고 한국 시간(KST)으로 표시합니다.</p>{view.mode==='demo'&&<p className="demo-disclaimer">아래 일정·값은 모두 교육용 가상 예시입니다. 출처 링크는 공식 일정 참고용이며 예시를 검증하는 근거가 아닙니다.</p>}<LoadState view={view}/><CalendarGrid events={view.data?.events??[]}/>{view.data&&(view.data.events.length?<details><summary>전체 일정 목록</summary><div className="event-list">{view.data.events.map(e=><article className="panel" key={e.id}><span className="badge">{dataLabels[e.status]} · {eventPhase(e)} · 중요도 {e.importance==='high'?'높음':e.importance==='medium'?'보통':'낮음'}</span><h2>{e.name}</h2><p>{e.region} · {kstTime(e.scheduledAt)}</p><dl><dt>실제값</dt><dd>{Date.parse(e.scheduledAt)<=Date.now()?e.actual??'미발표 / 미수신':'미발표'}</dd><dt>예상값</dt><dd>{e.forecast??'미제공'}</dd><dt>이전값</dt><dd>{e.previous??'미제공'}</dd></dl>{e.interpretation&&Date.parse(e.scheduledAt)<=Date.now()&&<p>해석: {e.interpretation}</p>}<a href={e.url} target="_blank" rel="noreferrer">{e.source} · 공식 원문/일정 참고 ↗</a></article>)}</div></details>:<section className="panel">공식 경제 일정 연동예정 — 확인된 일정이 아직 없습니다.</section>)}</>;}
-export function NewsPanel({view}:{view:MarketView}){return <><h1>경제·금융 뉴스</h1><MarketToolbar view={view}/><p>확인된 제목·출처·발행시각·원문과 짧은 요약만 제공합니다.</p><LoadState view={view}/>{view.data&&(view.data.news.length?view.data.news.map(n=><article className="panel" key={n.id}><small>{n.source} · {kstTime(n.publishedAt)}</small><h2><a href={n.url} target="_blank" rel="noreferrer">{n.title} ↗</a></h2><p>{n.summary}</p></article>):<section className="panel"><h2>수신된 뉴스가 없습니다</h2><p>공식 피드 자동 수집은 연동예정입니다. 가상 뉴스를 만들거나 오래된 자료를 최신 뉴스로 표시하지 않습니다.</p></section>)}<section className="panel"><h2>공식 자료 바로가기</h2><p>아래는 뉴스 피드가 아닌 공식 자료 사이트 안내입니다.</p><div className="source-links">{officialSources.map(s=><a key={s.id} href={s.url} target="_blank" rel="noreferrer">{s.name} ↗</a>)}</div></section></>;}
+export function CalendarPanel({view}:{view:MarketView}){return <><h1>경제 캘린더</h1><MarketToolbar view={view}/><p>UTC 기준으로 저장하고 한국 시간(KST)으로 표시합니다.</p>{view.mode==='demo'&&<p className="demo-disclaimer">아래 일정·값은 모두 교육용 가상 예시입니다. 출처 링크는 공식 일정 참고용이며 예시를 검증하는 근거가 아닙니다.</p>}<LoadState view={view}/><CalendarGrid events={view.data?.events??[]}/>{view.data&&(view.data.events.length?<details><summary>전체 일정 목록</summary><div className="event-list">{view.data.events.map(e=><article className="panel" key={e.id}><span className="badge">{dataLabels[e.status]} · {eventPhase(e)} · 중요도 {e.importance==='high'?'높음':e.importance==='medium'?'보통':'낮음'}</span><h2>{e.name}</h2><p>{e.region} · {kstTime(e.scheduledAt)}</p><dl><dt>실제값</dt><dd>{Date.parse(e.scheduledAt)<=Date.now()?e.actual??'미발표 / 미수신':'미발표'}</dd><dt>예상값</dt><dd>{e.forecast??'미제공'}</dd><dt>이전값</dt><dd>{e.previous??'미제공'}</dd></dl>{e.interpretation&&Date.parse(e.scheduledAt)<=Date.now()&&<p>해석: {e.interpretation}</p>}<a className="ui-link source-link" href={e.url} target="_blank" rel="noreferrer" aria-label={e.source+" 공식 원문/일정 참고 (새 탭)"}>{e.source} · 공식 원문/일정 참고 ↗</a></article>)}</div></details>:<section className="panel">공식 경제 일정 연동예정 — 확인된 일정이 아직 없습니다.</section>)}</>;}
+export function NewsPanel({view}:{view:MarketView}){return <><h1>경제·금융 뉴스</h1><MarketToolbar view={view}/><p>확인된 제목·출처·발행시각·원문과 짧은 요약만 제공합니다.</p><LoadState view={view}/>{view.data&&(view.data.news.length?view.data.news.map(n=><article className="panel" key={n.id}><small>{n.source} · {kstTime(n.publishedAt)}</small><h2><a className="ui-link source-link" href={n.url} target="_blank" rel="noreferrer" aria-label={n.title+" (새 탭)"}>{n.title} ↗</a></h2><p>{n.summary}</p></article>):<section className="panel"><h2>수신된 뉴스가 없습니다</h2><p>공식 피드 자동 수집은 연동예정입니다. 가상 뉴스를 만들거나 오래된 자료를 최신 뉴스로 표시하지 않습니다.</p></section>)}<section className="panel"><h2>공식 자료 바로가기</h2><p>아래는 뉴스 피드가 아닌 공식 자료 사이트 안내입니다.</p><div className="source-links">{officialSources.map(s=><a className="ui-link source-link" aria-label={s.name+" (새 탭)"} key={s.id} href={s.url} target="_blank" rel="noreferrer">{s.name} ↗</a>)}</div></section></>;}

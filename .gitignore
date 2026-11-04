@@ -9,4 +9,7 @@ playwright-report/
 test-results-auth/
 
 work/
+catalog-snapshots/
 test-results-release/
+dist-ux0/
+test-results-ux0/

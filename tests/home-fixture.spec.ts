@@ -1,0 +1,12 @@
+import {test,expect} from '@playwright/test';
+
+test('home market summary renders loading, retryable failure and dated official/empty values without fabrication',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await page.evaluate(async()=>{
+  const reactPath='/node_modules/.vite/deps/react.js',domPath='/node_modules/.vite/deps/react-dom_client.js',viewPath='/src/MarketPanels.tsx';
+  const React=await import(/* @vite-ignore */ reactPath),dom=await import(/* @vite-ignore */ domPath),view=await import(/* @vite-ignore */ viewPath);
+  const root=document.createElement('div');root.id='fixture-home';root.className='home-dashboard';document.querySelector('main')!.appendChild(root);
+  const e=React.createElement??React.default.createElement;
+  function Fixture(){const [phase,setPhase]=(React.useState??React.default.useState)(0);const states=[{data:null,error:''},{data:null,error:'fixture · 시장정보 조회 실패'},{data:{mode:'official-pending',events:[],news:[],indicators:[{id:'sp500',name:'S&P 500',value:123.45,unit:'pt',changePct:-0.5,asOf:'2020-01-02T00:00:00Z',status:'official'},{id:'nasdaq',name:'NASDAQ',value:999,unit:'pt',changePct:4,asOf:null,status:'official'}]},error:''}];(window as any).advanceHomeFixture=()=>setPhase((n:number)=>n+1);return e(view.HomeMarketSummary,{view:{...states[phase],mode:'official-pending',setMode:()=>{},retry:()=>setPhase(2)}});}
+  (dom.createRoot??dom.default.createRoot)(root).render(e(Fixture));
+ });const root=page.locator('#fixture-home');await expect(root.getByRole('status')).toContainText('불러오는 중');await expect(root.locator('.home-index')).toHaveCount(0);await page.evaluate(()=>(window as any).advanceHomeFixture());await expect(root.getByRole('alert')).toContainText('조회 실패');await root.getByRole('button',{name:'다시 시도',exact:true}).click();await expect(root.locator('.home-index')).toHaveCount(3);const official=root.locator('[data-indicator=sp500]');await expect(official).toContainText('123.45');await expect(official).toContainText('하락 -0.50%');await expect(official.locator('time')).toHaveAttribute('datetime','2020-01-02T00:00:00Z');await expect(root).toContainText('실시간으로 갱신되지 않습니다');await expect(root.locator('[data-indicator=nasdaq] .home-index-value')).toHaveText('미제공');await expect(root).not.toContainText('999');await expect(root.locator('[data-indicator=dow]')).toContainText('공식 연동 대기');expect(errors).toEqual([]);
+});

@@ -1,3 +1,4 @@
+import {openTrading} from './detail-navigation';
 import {test,expect} from '@playwright/test';
 import {formatDisplay,preferenceKey} from '../src/preferences';
 test('currency display rounding and isolated namespaces',()=>{
@@ -10,7 +11,7 @@ test('polished navigation, header, currency persistence and USD order boundary',
  const heights=await page.locator('.header-actions > *').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().height));expect(new Set(heights).size).toBe(1);await expect(page.locator('.live-times')).toContainText('KST');await expect(page.locator('.live-times')).toContainText('ET');
  await page.goto('/#market');await expect(page.getByLabel('종목 검색')).toBeVisible();await expect(page.locator('.market-links a')).toHaveCount(4);await page.getByRole('link',{name:'지표',exact:true}).click();await expect(page).toHaveURL(/#indices$/);await page.reload();await expect(page.getByRole('button',{name:'S&P 500 추이 →',exact:true})).toBeVisible();
  await page.getByRole('link',{name:'경제 캘린더',exact:true}).click();await expect(page.locator('.calendar-grid')).toBeVisible();await page.getByRole('link',{name:'뉴스',exact:true}).click();await expect(page.getByRole('heading',{name:'경제·금융 뉴스'})).toBeVisible();
- await page.goto('/#stock/AAPL');await expect(page.getByRole('heading',{name:/₩/})).toBeVisible();await page.getByRole('button',{name:'주문 검토',exact:true}).click();await expect(page.getByRole('dialog',{name:'가상 주문 확인'})).toContainText('(USD)');await expect(page.getByRole('dialog',{name:'가상 주문 확인'})).not.toContainText('₩');await page.getByRole('button',{name:'주문 취소',exact:true}).click();
+ await page.goto('/#stock/AAPL');await openTrading(page);await expect(page.locator('.synthetic-price')).toContainText('₩');await page.getByRole('button',{name:'주문 검토',exact:true}).click();await expect(page.getByRole('dialog',{name:'가상 주문 확인'})).toContainText('(USD)');await expect(page.getByRole('dialog',{name:'가상 주문 확인'})).not.toContainText('₩');await page.getByRole('button',{name:'주문 취소',exact:true}).click();
  await page.goto('/#settings');await page.getByLabel('기본 표시 통화').selectOption('USD');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:`test-results/ui-c-${width}.png`,fullPage:true});
  }
 });

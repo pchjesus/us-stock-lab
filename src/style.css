@@ -322,3 +322,8 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .financial-graph-scroll:focus-visible{outline:3px solid #3169d9;outline-offset:3px}
 .ui-foundation .financial-table-scroll td details[open]{min-width:260px;max-width:340px;text-align:left}
 .ui-foundation .financial-table-scroll td summary{white-space:nowrap;color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+.ui-foundation .evidence-filters,.ui-foundation .evidence-jumps{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:18px 0}
+.ui-foundation .evidence-filters label{display:flex;flex-direction:column;gap:5px;font-size:14px}
+.ui-foundation .evidence-filters :is(input,select,button),.ui-foundation .evidence-jumps button{min-height:44px;font:inherit;max-width:100%}
+.ui-foundation .evidence-filters input[type=checkbox]{min-height:22px;width:22px}
+.ui-foundation .evidence-filters select,.ui-foundation .evidence-filters input:not([type=checkbox]){border:1px solid var(--line);border-radius:8px;padding:10px;background:white}

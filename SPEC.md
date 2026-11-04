@@ -262,3 +262,7 @@
 ### UX4-F1a financial presentation
 
 Company financials prioritize four period-aligned metrics, then the existing revenue graph and verified statement comparison tables. Display abbreviations retain original decimal facts in disclosures. Missing quarterly cash flow stays unavailable. Statement cells and summaries retain FinancialFact IDs for F1b evidence navigation; financial data and account behavior are unchanged.
+
+### UX4-F1b evidence navigation
+
+Evidence filters operate on existing observations without modifying them. Financial links open the corresponding fact in the same company's evidence tab; all facts are visible by default.

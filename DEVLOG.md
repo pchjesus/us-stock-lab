@@ -360,3 +360,7 @@
 ### UX4-F1a financial tab
 
 Replaced eight equal cards and repeated health rows with four key metrics and three statement comparisons. Kept exact evidence, source URLs and existing test IDs. Added keyboard-scrollable comparison tables and graph, plus 1440/390px visual captures. Existing evidence tests follow the new disclosure path without removing formula or source assertions. Validation and remaining limits are recorded in docs/ui/UX4_F1A_FINANCIAL.md.
+
+### UX4-F1b evidence navigation
+
+Added offline source/fact filters and exact observation navigation from financials. Evidence data and existing account state remain unchanged; see docs/ui/UX4_F1B_EVIDENCE.md.

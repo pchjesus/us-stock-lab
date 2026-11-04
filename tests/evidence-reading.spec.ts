@@ -1,0 +1,7 @@
+import {test,expect} from '@playwright/test';
+import {companyProfiles} from '../src/companyProfiles';
+test('evidence filters and financial navigation preserve facts',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ for(const p of companyProfiles){await page.goto('/#stock/'+p.symbol);await page.getByRole('tab',{name:'근거',exact:true}).click();await expect(page.locator('[data-fact-id]')).toHaveCount(p.financials.length);await page.getByLabel('공시 유형').selectOption({label:p.sources[0].form});await expect(page.locator('[data-source-id]')).not.toHaveCount(0);await page.getByRole('button',{name:'초기화',exact:true}).click();await expect(page.locator('[data-source-id]')).toHaveCount(p.sources.length);await page.getByLabel('항목명 또는 관측 ID 검색').fill('not-a-real-fact');await expect(page.getByText('일치하는 재무 관측값이 없습니다.')).toBeVisible();await page.getByRole('button',{name:'전체 초기화'}).click();await expect(page.locator('[data-fact-id]')).toHaveCount(p.financials.length)}
+ await page.goto('/#stock/AAPL');await page.getByRole('tab',{name:'재무',exact:true}).click();const id=await page.getByTestId('financial-revenue').getAttribute('data-observation-id');await page.getByRole('button',{name:'매출액 근거 확인'}).click();const fact=page.locator('[data-fact-id]').filter({has:page.locator('summary:focus')});await expect(fact).toHaveAttribute('data-fact-id',id!);await expect(fact).toHaveAttribute('open','');await expect(fact.getByTestId('evidence-exact-value')).toBeVisible();expect(errors).toEqual([]);
+});

@@ -363,3 +363,7 @@
 - 친구3~4인/공개Pages의 표시·재배포·실데이터보존 권한은 미확보로 NO-GO, 확정공급자 없음. 독립EOD 식별자/decimal/두세션·raw/adjusted·관측/조회시각/라이선스/권리게이트·오류/요청/캐시·폐기·A2/A3 테스트/승인 조건 설계. A2는별도요청시 오프라인fixture기반 권장, 실데이터/운영연결 승인 아님.
 - 신규 문서 docs/market-data/V0_9_A1_EOD_PROVIDER_AND_CONTRACT.md와SPEC/DEVLOG만 변경. 문서검증PASS: JSON2예시·필수20필드·가상100/99의half-even6자리1.010101%·출처/권리/계약일관성·diff검사·앱/테스트/package/lock/workflow/supabase불변. 빌드/앱회귀/실API/운영Auth/SQL은이번미실행 NOT VERIFIED. 과거383건/운영81체크를새PASS로합산하지않음.
 - 개발브랜치에만 [skip ci] 커밋·push·PR. main병합/Pages배포/운영DB/Auth/RLS/RPC/Cron·004~007·수기false·금융계산·기존8종목/A4/A5/UX 변경 없음. 기존테스트삭제/skip/기대값완화 없음.
+
+### v0.9-A2-A EOD 코어 복구
+
+미커밋 오프라인 코어와 테스트를 보존하고 식별자 신뢰 경계를 보강했다. BigInt 등락률, 거래 세션, 기업행위 보류와 기본 라이선스 차단을 구현한다. 실제 수집·UI·금융 연동은 범위 밖이다. 검증 결과는 PR 및 실행 기록을 참조한다.

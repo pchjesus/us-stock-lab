@@ -334,3 +334,14 @@
 - Nasdaq 공식 정의의 장중 주기 갱신·상장시장/ETF·Test Issue·파일 생성시각 검토. NasdaqTrader 저작권 조건의 사전 서면 동의 제한과 별도 파일 권한 미확인으로 원본 데이터/어댑터를 수집·공개하지 않음. 실제 SEC 식별 정보가 제공되지 않아 실수집 NOT VERIFIED, 공식 건수/해시 없음. 가상 fixture만489바이트·입력12/정규화7/제외2/보류2/중복1; 원본 SHA b631e9429fe9bedf76478550513e435d92809fd996ad8b0fa257590c076abac8.
 - 초기 A4-C1/inspect 기준선6/6, 최신 수집/정규화 영향20/20 PASS: 고정 URL·신원/예약 도메인·403/429/503 Retry-After·5xx 상한/간격·redirect·timeout/중단/크기/schema·동시 잠금·손상/위조·이전 스냅샷 보존. 인증/수기/배당/세금50/50, production 수기 false 게이트1/1 PASS(수기/배당/세금 RPC0). 전체 앱308/308 PASS. 마지막 수집기 임계값 보강 후 최신 영향20/20, 최종 TypeScript/Vite 빌드 PASS; 별도 출력의 앱4파일 SHA가 전체 회귀 산출물과 모두 일치. 초기 보강 단계에서도 예비 빌드/전체 회귀를 수행했으며, 포트4173 중복으로 서버가 시작되지 않은 영향 검사1회는4178에서 재실행했다. diff PASS.
 - 금융/시세/8종목·Auth/격리·RPC/RLS/SQL·홈/학습·상세·운영 설정 불변. PostgreSQL/SQL은 변경 없어 선행 B2/G1 근거 재사용(이번 미실행), 실제 SEC·운영 Auth·실기기/스크린리더 NOT VERIFIED. 기존 Vite import/chunk 경고 유지. fixture 기반 A5 개발은 가능하나 실제 공개 데이터 검색은 SEC 실수집·권리/신원/상장 상태 검증 전 미준비; 운영 배포 승인이 아님. 국소 수집/무결성 계층으로 충분해 대규모 금융 리팩터링은 하지 않음.
+
+
+## 2026-11-04 · v0.8-A5-A 개인 로컬 카탈로그 후보 탐색
+- 기준 원격 e1adab478f6ad1506bce16dfd591949bc9b8c0f8·부모0ce25f1·main51474c2·clean checkout/브랜치 부재 확인 후 codex/catalog-a5-a-readonly-discovery 생성. Pages 수동/finance·market 과거 push 필터 유지, 이 브랜치 CI/Cron 대상 아님. 개발 브랜치에만 [skip ci] 커밋·push하며 main/Pages/운영 DB/Auth/Cron 변경 없음.
+- 기존 #market8종목 검색/관심/합성 가격/상세/주문을 그대로 두고 별도 후보 모드 추가. Node catalog:export가 기존 loadSecSnapshot을 재검증해 work/ 안 새 파일만 생성. 원본/기존 출력 불변, 결정론적 payload SHA-256·검증 상태/건수/출처/수집시각 포함. 실제 SEC 인증·상장/재배포 권한 증명과 구분.
+- 브라우저32MiB/50,000후보·메타데이터/해시·건수·재정규화/전체 필드·중복 ID 검사. tradeEligible=true/검증 승격/출처 주입 거부. 정확 심볼→부분 심볼→이름 검색·50개 페이지, 거래소/복수 클래스 독립. 읽기 전용 상세는 숫자 CIK의 SEC 링크·UTC/KST·unknown/unverified·거래 불가 안내만 표시. 기존 심볼 충돌도 가격/금융 상세/주문/관심 편입 없음.
+- 메모리에서만 사용, 업로드/자동 저장/SEC 요청/자동 재수집 없음. 앱 내 화면 이동은 유지하되 새로고침/사용자 변경/로그아웃/해제 시 자료 제거, 늦은 import 응답 무시. 금융/8종목/합성 가격·캔들/계좌·원장/관심/Auth/SQL/RPC/RLS/004~007/수기 false 소스 불변. 신규 API/정기 작업 없음.
+- 변경 전6/6, 최종 신규 영향10/10, 인증·수기·배당·세금52/52, production 수기 false1/1 PASS. 후보 탐색 금융 RPC/업로드/SEC 요청0, 기존 paper_snapshot 외 신규 RPC 없음. 정상화 후 최종 build1회 PASS·전체 production UI1회318/318 PASS·diff PASS. 앱 소스 변경 없이 누락 필드/검증 승격/버전·기준일 변조 assertion 추가2/2도 PASS. 1만 후보 시나리오 PC2.6초/mobile2.5초, 최대50행·5개 폭/44px/키보드/터치/focus-visible/reduced-motion/가로 넘침·JS 오류0 확인.
+- 첫 영향2FAIL은 같은 AAPL 첫 행 CIK 가정을 실제 후보 선택으로 교정. 동시 Vite 개발서버 중 신규 인증2FAIL은 단독 동일2건 및 전체52건으로 정상 확인(당시 환경 원인 미확정). 기존 테스트 삭제/skip 없음. Vite import/chunk 경고 잔존. PostgreSQL 신규 미실행·운영 Auth/실기기/스크린리더·실제 SEC 수집 NOT VERIFIED. 기존 DB 선행 근거는 A4-C2 참조.
+- 실제 SEC 자료가 아닌 가상 fixture12→7 후보로 export CLI/import·검색·상세를 확인하고 production 캡처4장을 docs/catalog/a5-a-captures에 저장. 화면에 fixture 명시, 원본/큰 자료/내보내기 파일은 Git 제외 work/에만 유지. 계약·무결성 해시·테스트·제한은 docs/catalog/A5_A.md.
+- A5-B/별도 승인된 v0.9 개발 진행 가능. 실제 전체 카탈로그 공개 통합은 SEC 수집/권리/최신성/식별자 검증이 선행돼야 하며, 개발 완료는 운영 배포나 신규 거래 허용 승인이 아니다. 금융 소유권 변경/대규모 리팩터링 없이 국소 표시·import 경계 추가로 완료. 개발 커밋 revert로 복구 가능, 데이터 마이그레이션 없음.

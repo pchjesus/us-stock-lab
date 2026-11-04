@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+import {discoveryFixture} from './discovery-fixture';
 import {homeAuthFixture} from './home-auth-fixture';
 import {accountKey,decodeAccount,marketPrices} from '../src/accountStore';
 import {valuation} from '../src/trading';
@@ -51,4 +52,10 @@ test('expired magic link shows a clear failure without logging in',async({page})
  await page.goto('/#error=access_denied&error_code=otp_expired&error_description=expired');
  await expect(page.getByRole('alert').filter({hasText:'로그인 링크를 확인하지 못했습니다'})).toBeVisible();
  await expect(page.getByRole('button',{name:'로그아웃',exact:true})).toHaveCount(0);await expect(page.getByLabel('초대된 이메일')).toBeVisible();
+});
+
+
+test('local candidate import stays separate from authenticated accounts and clears on logout',async({page})=>{
+ const f=await homeAuthFixture(page);await page.goto('/#home');await expect(page.getByTestId('total-assets')).toBeVisible();const before=f.calls.filter(p=>p.includes('/rpc/'));await page.getByRole('link',{name:'↗ 시장',exact:true}).click();await page.getByRole('button',{name:'미국 종목 후보 탐색',exact:true}).click();await page.getByLabel('카탈로그 파일 가져오기').setInputFiles({name:'fixture.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(await discoveryFixture()))});await page.getByLabel('후보 이름·심볼 검색').fill('aapl');await page.getByRole('button',{name:/AAPL · Fixture conflicting Apple/}).click();await expect(page.getByRole('region',{name:'읽기 전용 후보 상세'})).toContainText('거래 불가');expect(f.calls.filter(p=>p.includes('/rpc/'))).toEqual(before);expect(f.watched).toEqual([['AAPL'],['SCHD']]);expect(await page.evaluate(k=>localStorage.getItem(k),accountKey)).toBe(f.local);
+ await page.getByRole('button',{name:'모의투자 지원 종목',exact:true}).click();await expect(page.getByRole('button',{name:'AAPL 관심종목',exact:true})).toHaveAttribute('aria-pressed','true');await expect(page.getByRole('button',{name:'VOO 관심종목',exact:true})).toHaveAttribute('aria-pressed','false');await page.getByRole('link',{name:'⚙ 설정',exact:true}).click();await page.getByRole('button',{name:'로그아웃',exact:true}).click();await page.getByRole('link',{name:'↗ 시장',exact:true}).click();await page.getByRole('button',{name:'미국 종목 후보 탐색',exact:true}).click();await expect(page.getByRole('status')).toContainText('가져온 자료가 없습니다');expect(f.calls.some(p=>/manual_|dividend_|tax_|paper_order/.test(p))).toBe(false);
 });

@@ -367,3 +367,7 @@
 ### v0.9-A2-A EOD 코어 복구
 
 미커밋 오프라인 코어와 테스트를 보존하고 식별자 신뢰 경계를 보강했다. BigInt 등락률, 거래 세션, 기업행위 보류와 기본 라이선스 차단을 구현한다. 실제 수집·UI·금융 연동은 범위 밖이다. 검증 결과는 PR 및 실행 기록을 참조한다.
+
+### v0.9-A2-B1-2 offline budget checkpoint
+
+Added process-local fixed-window request/credit reservation and explicit 8-symbol workload estimation. This is fixture-only accounting, not a shared or persistent production limiter; B2 retains retry, single-flight and cache work. See `docs/market-data/V0_9_A2_B_MOCK_PIPELINE.md` for limitations and validation scope.

@@ -20,3 +20,13 @@ test('injected calendar handles DST start, holiday, and early close without gues
  expect(normalizeEod(early,null,sessions,null,'offline_fixture','2026-11-27T19:00:00Z','2026-11-27',identity).status).toBe('available');
  expect(normalizeEod({...early,sessionDateET:'2026-11-26'},null,sessions,null,'offline_fixture','2026-11-27T19:00:00Z','2026-11-27',identity).status).toBe('quarantined');
 });
+
+test('trusted identity comparison is field based and license record matches',()=>{
+ const a=bar('2026-11-02','100');
+ const reordered={verified:true,mappingVersion:'v1',assetType:'equity' as const,currency:'USD' as const,exchange:'XNAS',providerSymbol:'DEMO',providerId:'fixture',instrumentId:'fixture-1'};
+ expect(normalizeEod(a,null,calendar,null,'offline_fixture',now,'2026-11-02',reordered).status).toBe('available');
+ for(const patch of [{instrumentId:'other'},{providerId:'other'},{providerSymbol:'other'},{exchange:'XNYS'},{currency:'EUR'},{mappingVersion:'v2'}]) expect(normalizeEod(a,null,calendar,null,'offline_fixture',now,'2026-11-02',{...identity,...patch} as typeof identity).status).toBe('quarantined');
+ const rec:LicenseRecord={id:'other',providerId:'fixture',state:'approved',validFromUtc:'2026-01-01T00:00:00Z',validUntilUtc:'2027-01-01T00:00:00Z',audiences:['personal'],query:true,display:true,storage:true};
+ expect(normalizeEod(a,null,calendar,rec,'offline_fixture',now,'2026-11-02',identity).reason).toBe('license_record_mismatch');
+ expect(normalizeEod({...a,dataKind:'provider'},null,calendar,rec,'personal',now,'2026-11-02',identity).status).toBe('license_blocked');
+});

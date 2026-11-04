@@ -268,3 +268,7 @@
 ### v0.9-A2-A 오프라인 EOD 코어
 
 EOD 관측 코어는 검증된 외부 매핑과 주입된 세션 달력을 사용하는 독립 읽기 전용 경계이며, 현재 가상 fixture만 오프라인에서 허용한다. 실제 공급자 자료는 권한 확인 전 차단한다. 합성 주문·계좌와 연결하지 않는다. 상세: `docs/market-data/V0_9_A2_A_CORE.md`.
+
+### Offline EOD budget boundary
+
+The EOD fixture budget is process-local and requires a shared instance per provider, plan and credential scope. Window origins and limits are explicit inputs; it grants no provider rights and does not provide a distributed production limiter.

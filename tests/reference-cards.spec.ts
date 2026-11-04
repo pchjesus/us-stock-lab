@@ -1,3 +1,4 @@
+import {openTrading,openEvidence} from './detail-navigation';
 import {test,expect,type Page,type Route} from '@playwright/test';
 import {mkdirSync} from 'node:fs';
 import {companyProfiles} from '../src/companyProfiles';
@@ -62,7 +63,7 @@ test('supporting actions stay buttons; calendar, SEC and official news sources s
  await setup(page);await page.goto('/#indices');const index=page.getByRole('button',{name:'S&P 500 추이 →',exact:true});await expect(index).toHaveAttribute('aria-haspopup','dialog');await index.focus();await index.press('Enter');await expect(page.getByRole('dialog',{name:'S&P 500 추이'})).toBeVisible();await page.keyboard.press('Escape');await expect(index).toBeFocused();
  await page.getByRole('link',{name:'경제 캘린더',exact:true}).click();await page.locator('.calendar-day').first().click();await expect(page.getByRole('dialog')).toBeVisible();await page.keyboard.press('Escape');
  await page.getByRole('link',{name:'뉴스',exact:true}).click();for(const link of await page.locator('.source-links a').all()){await expect(link).toHaveAttribute('href',/^https:\/\//);await expect(link).toHaveAttribute('target','_blank');await expect(link).toHaveAccessibleName(/새 탭/);}
- for(const profile of companyProfiles){await page.goto('/#stock/'+profile.symbol);const expected=profile.sources.find(s=>s.id===profile.profileSourceId)!;await expect(page.getByRole('link',{name:/공식 10-K 원문/})).toHaveAttribute('href',expected.url);for(const link of await page.locator('.company-detail a.source-link:visible').all()){await expect(link).toHaveAttribute('target','_blank');await expect(link).toHaveAccessibleName(/새 탭/);}}
+ for(const profile of companyProfiles){await page.goto('/#stock/'+profile.symbol);await openEvidence(page);const expected=profile.sources.find(s=>s.id===profile.profileSourceId)!;await expect(page.getByRole('link',{name:/공식 10-K 원문/})).toHaveAttribute('href',expected.url);for(const link of await page.locator('.company-detail a.source-link:visible').all()){await expect(link).toHaveAttribute('target','_blank');await expect(link).toHaveAccessibleName(/새 탭/);}}
 });
 
 test('a supplied news article keeps its original URL and opens as a source link',()=>{
@@ -86,7 +87,7 @@ test('reference cards and supporting controls fit five widths with keyboard, tou
    if([1440,390].includes(width)){await card.evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));await page.evaluate(()=>scrollBy(0,-16));await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));await card.screenshot({path:`work/ux1-b2/captures/${info.project.name}-${width}-${c.kind}.png`});}
   }
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-  await page.goto('/#stock/AAPL');const panel=page.getByLabel('외부 차트 패널');await panel.getByLabel('외부 차트 제공자').selectOption('네이버');await expect(panel.getByRole('link',{name:/네이버 AAPL/})).toHaveAttribute('href','https://m.stock.naver.com/worldstock/stock/AAPL.O/total');await expect(panel.getByRole('link')).toHaveAccessibleName(/새 탭/);
+  await page.goto('/#stock/AAPL');await openTrading(page);const panel=page.getByLabel('외부 차트 패널');await panel.getByLabel('외부 차트 제공자').selectOption('네이버');await expect(panel.getByRole('link',{name:/네이버 AAPL/})).toHaveAttribute('href','https://m.stock.naver.com/worldstock/stock/AAPL.O/total');await expect(panel.getByRole('link')).toHaveAccessibleName(/새 탭/);
   if(info.project.name==='mobile')await panel.getByRole('button',{name:'별도 창에서 열기'}).tap({trial:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  }
  await page.emulateMedia({reducedMotion:'reduce'});await expect(page.getByRole('button',{name:'별도 창에서 열기'})).toHaveCSS('transition-duration','0s');expect(errors).toEqual([]);

@@ -1,3 +1,4 @@
+import {openTrading} from './detail-navigation';
 import {test,expect,type Page} from '@playwright/test';
 import {mkdirSync} from 'node:fs';
 import {instruments} from '../src/data';
@@ -22,10 +23,10 @@ test('account controls live in portfolio/settings and order context links reach 
   await expect(section).toContainText('기존 합성 계좌 · 브라우저 로컬');await expect(section).toContainText('공개 준비 중이므로 선택할 수 없습니다');
   if(route==='portfolio')expect(await section.evaluate(e=>!!(e.compareDocumentPosition(document.querySelector('.account-summary')!)&Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
  }
- await page.goto('/#stock/AAPL');const context=page.getByRole('region',{name:'현재 주문 계좌'});
+ await page.goto('/#stock/AAPL');await openTrading(page);const context=page.getByRole('region',{name:'현재 주문 계좌'});
  await expect(page.getByLabel('계좌 화면 모드')).toHaveCount(0);await expect(context).toContainText('기존 합성 계좌 · 브라우저 로컬');
  await context.getByRole('link',{name:'포트폴리오에서 변경 →'}).click();await expect(page.getByLabel('계좌 화면 모드')).toBeVisible();
- await page.goBack();await context.getByRole('link',{name:'계좌 설정 →'}).click();await expect(page).toHaveURL(/#settings$/);await page.reload();await expect(page.getByLabel('계좌 화면 모드')).toHaveValue('synthetic');
+ await page.goBack();await openTrading(page);await context.getByRole('link',{name:'계좌 설정 →'}).click();await expect(page).toHaveURL(/#settings$/);await page.reload();await expect(page.getByLabel('계좌 화면 모드')).toHaveValue('synthetic');
 });
 
 test('native symbol select, keyboard groups, neutral selection and chart restoration',async({page})=>{
@@ -43,7 +44,7 @@ test('native symbol select, keyboard groups, neutral selection and chart restora
 
 test('watchlist toggle and links preserve saved choices; primary and danger actions differ',async({page})=>{
  await page.clock.setFixedTime(new Date('2026-10-27T14:00:00Z'));await page.goto('/#market');const star=page.getByRole('button',{name:'AAPL 관심종목',exact:true});
- await star.click();await expect(star).toHaveAttribute('aria-pressed','true');await page.reload();await expect(star).toHaveAttribute('aria-pressed','true');await page.goto('/#stock/AAPL');
+ await star.click();await expect(star).toHaveAttribute('aria-pressed','true');await page.reload();await expect(star).toHaveAttribute('aria-pressed','true');await page.goto('/#stock/AAPL');await openTrading(page);
  const toggle=page.getByRole('button',{name:'★ 관심종목 해제',exact:true});await expect(toggle).toHaveCSS('background-color','rgb(228, 233, 241)');await toggle.press('Enter');await expect(page.getByRole('button',{name:'☆ 관심종목 등록',exact:true})).toHaveAttribute('aria-pressed','false');
  const review=page.getByRole('button',{name:'주문 검토',exact:true});await expect(review).toBeEnabled();await expect(review).toHaveCSS('background-color','rgb(49, 91, 211)');await review.click();
  const cancel=page.getByRole('button',{name:'주문 취소',exact:true});await expect(cancel).toHaveCSS('background-color','rgb(255, 255, 255)');await cancel.click();
@@ -56,7 +57,7 @@ test('core controls fit 1440/1200/768/390/320px with desktop and touch input',as
  for(const width of [1440,1200,768,390,320]){
   await page.setViewportSize({width,height:950});
   for(const route of ['home','market','stock/AAPL','stock/VOO','portfolio','learn/AAPL','settings']){
-   await page.goto('/#'+route);await expect(page.getByTestId('ticker-current')).toBeVisible();
+   await page.goto('/#'+route);if(route.startsWith('stock/'))await openTrading(page);await expect(page.getByTestId('ticker-current')).toBeVisible();
    if(route==='learn/AAPL'){
     const advanced=page.getByRole('group',{name:'학습 난이도'}).getByRole('button',{name:'고급',exact:true});if(testInfo.project.name==='mobile')await advanced.tap();else await advanced.click();
     await page.getByRole('button',{name:'5봉 이동평균',exact:true}).click();await page.getByRole('button',{name:'RSI(14)',exact:true}).click();

@@ -294,3 +294,31 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 @media(max-width:900px){.ui-foundation .candidate-layout{grid-template-columns:minmax(0,1fr)}}
 
 .ui-foundation .catalog-discovery input::file-selector-button{min-height:44px;border:1px solid var(--line);border-radius:8px;background:var(--surface-alt,#f5f7fa);color:var(--text);padding:8px 12px;margin-right:8px;cursor:pointer}
+
+/* UX4-F1a: financial reading order and accessible comparison tables. */
+.ui-foundation .financial-summary{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:24px}
+.ui-foundation .financial-summary>.financial-metric{border:0;border-radius:0;padding:24px 16px;gap:4px}
+.ui-foundation .financial-summary .financial-value{font-size:23px;line-height:1.45;letter-spacing:-.5px}
+.ui-foundation .financial-summary details{width:100%}
+.ui-foundation .financial-statement{padding-top:28px;margin-top:24px;border-top:1px solid var(--line);min-width:0}
+.ui-foundation .financial-statement h3{font-size:20px;margin:0 0 8px}
+.ui-foundation .financial-statement>p{font-size:14px;max-width:75ch}
+.ui-foundation .financial-table-scroll{max-width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:20px 0;overscroll-behavior-x:contain}
+.ui-foundation .financial-table-scroll:focus-visible{outline:3px solid #3169d9;outline-offset:3px}
+.ui-foundation .financial-table-scroll table{width:100%;min-width:620px;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.ui-foundation .financial-table-scroll caption{text-align:left;padding:14px;font-weight:600;color:var(--text)}
+.ui-foundation .financial-table-scroll :is(th,td){padding:16px;text-align:right;border-top:1px solid var(--line);vertical-align:top;line-height:1.7}
+.ui-foundation .financial-table-scroll th:first-child{text-align:left;min-width:130px}
+.ui-foundation .financial-table-scroll th span,.ui-foundation .financial-table-scroll small{display:block;font-size:12px;font-weight:400;color:var(--muted)}
+.ui-foundation .financial-detail-list details{border-top:1px solid var(--line);padding:4px 0;overflow-wrap:anywhere}
+.ui-foundation .financial-detail-list summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:52px;cursor:pointer;font-size:14px}
+.ui-foundation .financial-detail-list summary span{font-variant-numeric:tabular-nums;text-align:right}
+.ui-foundation .company-detail :is(summary,.source-link){min-height:44px}
+.ui-foundation .company-detail .source-link{display:inline-flex;align-items:center}
+.ui-foundation .company-detail summary{padding-block:10px;cursor:pointer}
+@media(max-width:1200px){.ui-foundation .financial-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.ui-foundation .financial-summary{grid-template-columns:minmax(0,1fr)}.ui-foundation .financial-summary>.financial-metric{padding:20px 0;border-bottom:1px solid var(--line)}.ui-foundation .financial-summary .financial-value{font-size:26px}.ui-foundation .financial-detail-list summary{flex-wrap:wrap}.ui-foundation .financial-detail-list summary span{text-align:left}}
+.ui-foundation .financial-graph-scroll{max-width:100%;overflow-x:auto;margin:20px 0}
+.ui-foundation .financial-graph-scroll:focus-visible{outline:3px solid #3169d9;outline-offset:3px}
+.ui-foundation .financial-table-scroll td details[open]{min-width:260px;max-width:340px;text-align:left}
+.ui-foundation .financial-table-scroll td summary{white-space:nowrap;color:var(--accent);text-decoration:underline;text-underline-offset:4px}

@@ -258,3 +258,7 @@
 - UX0~UX3·A4-C1/C2·A5-A와 기존 금융/학습/시장정보를 보존하여 승인된 main/Pages 반영을 준비한다. 패키지/lock은0.8.0, 앱의 후보 표기는 모의투자로 정리한다. README의 현재 화면/후보 탐색/운영 제한을 갱신하며 과거 검증 문서는 유지한다.
 - Pages는 기존 수동 workflow, Node24, 수기 false, FX/Treasury true와 공개 Supabase 설정을 그대로 사용한다. 금융004~007·DB/RLS/RPC·Auth/SMTP·Cron·신규 거래 허용은 승인 범위 밖이다. 개인 후보/SEC fixture를 실제 전체 카탈로그로 배포하지 않는다.
 - 이번 통합의 신규 검증·main/배포 실적·롤백 대상·미검증 범위는 docs/release/V0_8_FINAL.md에 실제 결과대로 기록한다. 로컬 회귀 PASS와 CI/Pages 성공을 구분한다.
+
+### UX4-F1a financial presentation
+
+Company financials prioritize four period-aligned metrics, then the existing revenue graph and verified statement comparison tables. Display abbreviations retain original decimal facts in disclosures. Missing quarterly cash flow stays unavailable. Statement cells and summaries retain FinancialFact IDs for F1b evidence navigation; financial data and account behavior are unchanged.

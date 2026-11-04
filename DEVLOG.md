@@ -356,3 +356,7 @@
 
 - 실제 실행 결과: 준비59e1367을 PR#3으로 정상 merge, 앱 main4a1e9f7c74254ea58b6fb61d6f90f1277f4791fa 확인(개발대비파일0/behind0). Deploy Pages workflow396830197/run41807180809를 main ref로 수동실행해 npm ci/build/Deploy 모두success. 사이트200·HTML/JS2/CSS1 SHA-256 전부로컬산출물일치. 실제5폭81체크PASS·7단계Tour·수기disabled·가로넘침/JS오류/금융·Auth쓰기요청0. 실제메일/운영로그인·공식참고API실응답은미검증. 이번성과는로컬383건과구분한다.
 - 배포후문서/실제캡처4장/인수인계만후속커밋으로정리한다. 앱/금융/배포설정추가수정없음. 문서후속main과Pages앱기준SHA를구분하고원격diff로앱동일성을확인한다. docs/handoff/US_STOCK_LAB_V08_TO_V09.md에실제배포·미검증·금융NO-GO·v0.9기준/붙여넣기프롬프트기록. 중대한운영문제는발견되지않았으며기존번들경고/개발모달제한·실기기/스크린리더·운영Auth·SEC·신규PostgreSQL검증은남아있다.
+
+### UX4-F1a financial tab
+
+Replaced eight equal cards and repeated health rows with four key metrics and three statement comparisons. Kept exact evidence, source URLs and existing test IDs. Added keyboard-scrollable comparison tables and graph, plus 1440/390px visual captures. Existing evidence tests follow the new disclosure path without removing formula or source assertions. Validation and remaining limits are recorded in docs/ui/UX4_F1A_FINANCIAL.md.

@@ -238,3 +238,9 @@
 - ChartLab·기간 변환·SMA/Wilder RSI·합성 가격/거래량 계산은 변경하지 않는다. 종목 변경의 봉/후보선 초기화·나머지 선택 유지, chart.period 저장/복원, 실습실 이탈 시 기존 chart.remove cleanup을 유지한다. 수업 단계/펼침은 학습 하위 화면 사이 메모리에 유지하며 새 저장 키는 추가하지 않는다.
 - 랜딩/수업은 학습 도움말, 기본/종목 실습실은 차트 도움말로 연결한다. Tour3단계는 #learn/AAPL의 실제 차트,7단계는 #learn/lessons의 실제 수업 단계 필터를 대상으로 한다. 기존7단계의 스크롤/측정/초점·원래 경로 복원과 공통 Modal은 유지한다. 학습 화면 종류 변경은 새 제목 초점, 같은 실습실 종목 변경은 select 초점을 유지한다.
 - PC2열/모바일1열 진입 카드·명확한 단계/확장 상태·44px·키보드/focus-visible/reduced-motion 적용. 금융·원장·Auth/사용자 격리·RPC/RLS/SQL·운영 수기 false 게이트·기존8종목·시장정보/기업·ETF/헤더 계약 불변. 상세 검증/production6캡처는 docs/ui/UX3_B.md. A4-C2 자료 취득/검증·전체 검색·실제 시세·운영 금융 전환은 후속 범위다.
+
+## v0.8-A4-C2 공식 카탈로그 수집 기반
+- Node24 개발 명령 `npm run catalog:collect`는 연락 가능한 실제 담당자/조직·이메일을 `SEC_USER_AGENT` 환경변수로 명시한 경우에만 고정 SEC company_tickers_exchange HTTPS 주소를 요청한다. 신원 값은 로그/파일에 기록하지 않는다. 2초 간격·15초 timeout·20MiB 한도·5xx 최대3회, 403/429·Retry-After가 있는 5xx와 모든 redirect 즉시 중단, JSON/UTF-8/schema/길이와 보수적 입력·유효 후보 각각 최소1,000행을 확인한다. 다른 호스트·정기 수집·브라우저 SEC 요청은 추가하지 않는다.
+- 기존 normalizeSec 계약·C1 fixture와 거래소+심볼 후보 ID·구두점·동일 CIK 복수 클래스를 유지한다. 정규화된 전체 행이 같은 경우만 중복, 같은 ID의 다른 내용은 전체 보류한다. 손상 행·중복·보류의 0기반 행 번호/사유를 기록한다. 증권 유형 unknown·상장 unverified·tradeEligible=false, 기존8종목 금융 계약과 자동 병합 없음. 원본 기준일은 SEC 자료에 없으므로 null, checkedAt은 실제 수신 완료 UTC다.
+- 기본 Git 제외 work/catalog-snapshots에 원본/결과/manifest를 별도 디렉터리로 기록한다. SHA-256·원본 크기·수집시각·원본 기준일·건수·검증 상태를 보존하고 manifest를 마지막에 쓴다. 기존 스냅샷을 덮어쓰지 않으며 Node 로더는 원본/결과 해시와 재정규화 결과를 대조한다. SHA는 파일 일치성이지 출처 진위/재배포 권한을 보증하지 않는다. 브라우저 번들/A5 UI에는 연결하지 않는다.
+- Nasdaq 정의의 ETF/Test Issue/거래소/생성시각을 검토했으나 별도 데이터 라이선스·재배포 권한은 미확인이며 보조 원본을 수집/공개하지 않는다. 실제 SEC 연락처가 제공되지 않아 실수집은 NOT VERIFIED다. fixture·테스트·보존/복구·A5의 남은 전제는 docs/catalog/A4_C2.md. 금융/DB·8종목·Auth·운영 설정은 불변이다.

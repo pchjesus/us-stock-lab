@@ -258,3 +258,9 @@
 - UX0~UX3·A4-C1/C2·A5-A와 기존 금융/학습/시장정보를 보존하여 승인된 main/Pages 반영을 준비한다. 패키지/lock은0.8.0, 앱의 후보 표기는 모의투자로 정리한다. README의 현재 화면/후보 탐색/운영 제한을 갱신하며 과거 검증 문서는 유지한다.
 - Pages는 기존 수동 workflow, Node24, 수기 false, FX/Treasury true와 공개 Supabase 설정을 그대로 사용한다. 금융004~007·DB/RLS/RPC·Auth/SMTP·Cron·신규 거래 허용은 승인 범위 밖이다. 개인 후보/SEC fixture를 실제 전체 카탈로그로 배포하지 않는다.
 - 이번 통합의 신규 검증·main/배포 실적·롤백 대상·미검증 범위는 docs/release/V0_8_FINAL.md에 실제 결과대로 기록한다. 로컬 회귀 PASS와 CI/Pages 성공을 구분한다.
+
+## v0.9-A1 EOD 공급자·기술 계약 설계
+- 문서 전용 기준 main a49915ada0624b22234b0c5c84e64352c9e9d047. Massive/Alpha Vantage/Twelve Data/Finnhub의 공식 API·가격·약관을2026-11-04 재검증하며 무료 접근과 개인/친구/공개 표시·저장·재배포 권한을 분리한다. 현재 친구/공개 실제 EOD 표시는 NO-GO, 공급자 확정/권리 확보 아님.
+- 제안 EOD 관측치는 identity mapping·원문 decimal·두 실제 거래세션·raw/조정 버전·nullable 실제 관측시각/별도 수집시각·feed/확정/최신성·LicenseRecord를 갖는 독립 읽기 전용 계약이다. 잘못된/권리 없는 데이터·fallback에서 합성값을 실제 종가로 대체하지 않으며 키/가격/개인자료를 공개 번들에 넣지 않는다.
+- A2는 별도 요청 시 가상 fixture 기반 pure 계약/어댑터·decimal/달력/권리/mock cache·예산 검증부터 제안한다. 실제 수집·운영 표시·캐시/서버 배포는 범위별 권리·8종목/피드 실검증·운영 승인 전 NO-GO다. 기존8종목 합성 가격/주문·paper_prices/order/snapshot·계좌/원장/Auth격리·수기false·금융004~007/운영DB/RLS/RPC/Cron·UX/A4/A5 불변.
+- 공식 근거(APA7)·현재 코드 감사·JSON·권한/오류/휴장/분할 테스트 매트릭스·A2/A3 게이트는 docs/market-data/V0_9_A1_EOD_PROVIDER_AND_CONTRACT.md. A1에서는 코드/테스트/운영 변경·빌드/회귀 재실행 없음. v0.8의383건/hosted81체크는 선행 기록으로만 참조한다.

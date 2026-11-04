@@ -73,6 +73,25 @@ export function TreasuryStatsCard(){
 export type MarketView=ReturnType<typeof useMarketInfo>;
 export function MarketToolbar({view}:{view:MarketView}){return <div className="market-toolbar"><div className="market-links"><a href="#market" aria-current={location.hash==="#market"?"page":undefined}>종목</a><a href="#indices" aria-current={location.hash==="#indices"?"page":undefined}>지표</a><a href="#calendar" aria-current={location.hash==="#calendar"?"page":undefined}>경제 캘린더</a><a href="#news" aria-current={location.hash==="#news"?"page":undefined}>뉴스</a></div><label>정보 모드 <select aria-label="시장정보 모드" value={view.mode} onChange={e=>view.setMode(e.target.value as MarketView['mode'])}><option value="demo">합성 예시</option><option value="official-pending">공식 연동 대기</option></select></label></div>;}
 function LoadState({view}:{view:MarketView}){return view.error?<p role="alert">{view.error} <button onClick={view.retry}>다시 시도</button></p>:!view.data?<p role="status">시장정보 불러오는 중…</p>:null;}
+// A read-only home projection: preserve source dates and never promote mock values.
+export function homeMarketIndicators(items:Indicator[],mode:MarketView['mode']):Indicator[]{
+ return ([['sp500','S&P 500'],['nasdaq','NASDAQ'],['dow','Dow']] as const).map(([id,name])=>{
+  const source=items.find(item=>item.id===id);
+  const available=!!source&&source.status!=='pending'&&!(mode==='official-pending'&&source.status==='synthetic');
+  const asOf=available&&source.asOf&&Number.isFinite(Date.parse(source.asOf))?source.asOf:null;
+  const value=asOf&&source&&Number.isFinite(source.value)?source.value:null;
+  return {id,name,unit:source?.unit??'pt',value,changePct:value!==null&&source&&Number.isFinite(source.changePct)?source.changePct:null,asOf,status:available?source.status:'pending'};
+ });
+}
+export function HomeMarketSummary({view}:{view:MarketView}){
+ const items=homeMarketIndicators(view.data?.indicators??[],view.mode);
+ return <><LoadState view={view}/>{view.data&&!view.error&&<div className="home-market-grid">{items.map(i=><article key={i.id} className="home-index" data-indicator={i.id} data-status={i.status}>
+  <div className="home-index-title"><h3>{i.name}</h3><span className="home-index-status">{i.status==='pending'?'공식 연동 대기':dataLabels[i.status]}</span></div>
+  <p className="home-index-value">{i.value===null?'미제공':i.value.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}{i.value!==null&&<small> {i.unit}</small>}</p>
+  <p className={'home-index-change '+(i.changePct===null||i.changePct===0?'':i.changePct>0?'up':'down')}>{i.changePct===null?'변동 미제공':`${i.changePct>0?'상승':i.changePct<0?'하락':'보합'} ${i.changePct>0?'+':''}${i.changePct.toFixed(2)}%`}</p>
+  <p className="home-index-time">{i.status==='synthetic'?'생성 기준':'자료 기준'} {i.asOf?<time dateTime={i.asOf}>{kstTime(i.asOf)}</time>:'기준시각 미제공'}</p>
+ </article>)}</div>}<p className="home-note">{view.mode==='demo'?'합성 예시 · 실제 지수가 아닙니다.':'공식 연동 대기 · 확인된 자료만 표시합니다.'} 표시값은 해당 기준시각의 자료이며 실시간으로 갱신되지 않습니다.</p></>;
+}
 export function IndicatorCards({view}:{view:MarketView}){const [selected,setSelected]=useState<Indicator|null>(null);return <>{selected&&<IndexGraph item={selected} close={()=>setSelected(null)}/>}<FxReferenceCard/><TreasuryStatsCard/><LoadState view={view}/>{view.data&&(view.data.indicators.length?<div className="indices market-indices">{view.data.indicators.map(i=><section key={i.id}><button className="index-name" aria-haspopup="dialog" onClick={()=>setSelected(i)}>{i.name} 추이 →</button><small>{dataLabels[i.status]}</small><h3>{i.value===null?'—':i.value.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} <small>{i.unit}</small></h3><span className={i.changePct===null||i.changePct===0?'':i.changePct>0?'up':'down'}>{i.changePct===null?'변동 미제공':`${i.changePct>0?'상승':i.changePct<0?'하락':'보합'} ${i.changePct>0?'+':''}${i.changePct.toFixed(2)}%`}</span><small className="card-time">기준 {i.asOf?kstTime(i.asOf):'미제공'}</small></section>)}</div>:<p className="panel">공식 지표 연동예정 — 현재 수신된 지표가 없습니다. 합성 예시 모드에서 화면을 살펴볼 수 있습니다.</p>)}</>;}
 export function ImportantBanner({view}:{view:MarketView}){
  const [dismissed,setDismissed]=useState('');if(!view.data)return null;const important=importantEvent(view.data.events);

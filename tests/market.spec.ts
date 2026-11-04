@@ -24,7 +24,7 @@ test('authentication configuration rejects absent or server keys',()=>{
  expect(authConfig('https://example.supabase.co',jwt('anon'))).not.toBeNull();
 });
 test('market cards, calendar, empty news and beginner lessons render responsively',async({page})=>{
- const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await expect(page.locator('.market-indices section')).toHaveCount(6);
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await expect(page.locator('.home-index')).toHaveCount(3);await page.getByRole('link',{name:'전체 지표·참고환율·재무부 →'}).click();await expect(page.locator('.market-indices section')).toHaveCount(6);
  for(const card of await page.locator('.market-indices section').all()){await expect(card).toContainText('합성 예시');await expect(card).toContainText('기준');}
  await expect(page.getByText('보합 0.00%',{exact:true})).toBeVisible();
  await page.goto('/#calendar');await expect(page.locator('.event-list article')).toHaveCount(8);await expect(page.getByText(/아래 일정·값은 모두 교육용 가상/)).toBeVisible();

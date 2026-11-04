@@ -353,3 +353,6 @@
 - Pages 동일 공개 설정/수기false build PASS. 이번 신규 전체UI318/318·인증/금융fixture52/52·release6/6·시장/재무fixture4/4·UX0레퍼런스3/3, 총383건PASS. 과거PASS/반복 실행 합산 없음. financial/DB소스 불변으로 PostgreSQL 무거운 신규검증은NOT VERIFIED. 실제SEC·운영Auth/메일·실기기/스크린리더도미검증.
 - tracked/dist비밀 패턴0·개인원본/스냅샷포함0·연락처 모양22건 모두fixture/보안거부입력으로검토. TLS검증을 끄지 않고 관리환경CA준비와브라우저를동일실행환경에서사용해기존Pages200확인. Vite경고는기존대로남음. 상세근거/rollback41562090798·SHA51474c2는docs/release/V0_8_FINAL.md.
 - 이 준비 커밋 시점에는 main 병합/이번 Pages 배포는 아직 미실행이며, 원격 재확인→PR/main→Pages main ref 수동 실행→실제 사이트/자산 확인 후 결과와 인수인계를 갱신한다.
+
+- 실제 실행 결과: 준비59e1367을 PR#3으로 정상 merge, 앱 main4a1e9f7c74254ea58b6fb61d6f90f1277f4791fa 확인(개발대비파일0/behind0). Deploy Pages workflow396830197/run41807180809를 main ref로 수동실행해 npm ci/build/Deploy 모두success. 사이트200·HTML/JS2/CSS1 SHA-256 전부로컬산출물일치. 실제5폭81체크PASS·7단계Tour·수기disabled·가로넘침/JS오류/금융·Auth쓰기요청0. 실제메일/운영로그인·공식참고API실응답은미검증. 이번성과는로컬383건과구분한다.
+- 배포후문서/실제캡처4장/인수인계만후속커밋으로정리한다. 앱/금융/배포설정추가수정없음. 문서후속main과Pages앱기준SHA를구분하고원격diff로앱동일성을확인한다. docs/handoff/US_STOCK_LAB_V08_TO_V09.md에실제배포·미검증·금융NO-GO·v0.9기준/붙여넣기프롬프트기록. 중대한운영문제는발견되지않았으며기존번들경고/개발모달제한·실기기/스크린리더·운영Auth·SEC·신규PostgreSQL검증은남아있다.

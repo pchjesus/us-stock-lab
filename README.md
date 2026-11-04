@@ -4,7 +4,7 @@
 
 사이트: https://pchjesus.github.io/us-stock-lab/
 
-이번 통합의 검증·main 반영·실제 배포 상태는 [v0.8 최종 기록](docs/release/V0_8_FINAL.md)을 확인하세요. 과거 [R1 검증](docs/release/V0_8_R1.md)과 UX/A4/A5 문서는 각 개발 시점의 기록입니다.
+v0.8 앱 통합 main `4a1e9f7`의 Pages 배포와 실제 사이트 smoke를 확인했습니다. 이번 통합의 검증·main 반영·실제 배포 상태는 [v0.8 최종 기록](docs/release/V0_8_FINAL.md)을 확인하세요. 과거 [R1 검증](docs/release/V0_8_R1.md)과 UX/A4/A5 문서는 각 개발 시점의 기록입니다.
 
 실제 증권계좌 연결·실거래·자금이동 기능은 없습니다. 주문 가격·학습 차트·예시 지수는 **합성 데이터이며 실제 시세가 아닙니다.** 공식 재무자료·일별 참고환율·재무부 통계·외부 참고 시세는 각각 출처/기준일/상태를 표시하고 모의 주문 가격과 분리합니다.
 
@@ -74,4 +74,4 @@ npm run catalog:export -- work/catalog-snapshots/SNAPSHOT_DIRECTORY work/catalog
 
 GitHub Pages Source는 GitHub Actions이며 기존 **Deploy Pages**(`.github/workflows/pages.yml`)를 검증된 **main ref**에서 수동 실행합니다. workflow는 Node24·수기 false·기존 시장 참고자료 설정으로 프론트엔드만 빌드/배포합니다. 금융 검증/Cron workflow를 대신 실행하지 않습니다. 성공 workflow와 실제 사이트의 자산/동작 확인 전에는 배포 성공으로 기록하지 않습니다.
 
-중대한 회귀가 발견되면 운영 DB를 임의 변경하지 않습니다. 이전 성공 Pages run의 대상 SHA와 산출물을 확인하고 승인된 복구 절차로만 재배포합니다. 이번 릴리스의 실제 이전 성공 run·롤백 기준·배포 결과는 [최종 기록](docs/release/V0_8_FINAL.md), 다음 작업 기준은 배포 확인 후 작성하는 v0.9 인수인계에 기록합니다.
+중대한 회귀가 발견되면 운영 DB를 임의 변경하지 않습니다. 이전 성공 Pages run의 대상 SHA와 산출물을 확인하고 승인된 복구 절차로만 재배포합니다. 이번 릴리스의 실제 이전 성공 run·롤백 기준·배포 결과는 [최종 기록](docs/release/V0_8_FINAL.md), 다음 작업 기준은 [v0.9 인수인계](docs/handoff/US_STOCK_LAB_V08_TO_V09.md)에 기록합니다.

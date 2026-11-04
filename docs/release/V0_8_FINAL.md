@@ -55,7 +55,30 @@ git diff --check
 
 ## main 반영·Pages 배포 상태
 
-**이 문서의 최초 커밋 시점: 로컬 통합 검증 PASS, main 반영/이번 Pages 배포는 아직 미실행.** 성공을 미리 기록하지 않는다. 승인된 순서는 개발 브랜치 커밋/push → 원격 HEAD 재확인 → PR/main 병합 → main 포함 확인 → 기존 Deploy Pages를 main ref로 수동 실행 → 완료/실제 사이트/정적 자산 확인이다. 실행 후 실제 SHA·PR·run ID/URL·결과를 이 절에 추가한다. 로컬 PASS는 GitHub CI PASS로 표시하지 않는다.
+최초 준비 커밋에는 병합/배포를 미실행으로 기록했고, 아래는 실제 실행 후 확인한 결과다.
+
+- 개발 통합 커밋: `59e1367c5cdf8047d4577622587439a07802a7ef`(기존d8b8ba1 + 최종 메타데이터/문서). 개발 브랜치에 커밋/push 후 원격 HEAD를 재확인했다.
+- [PR #3](https://github.com/pchjesus/us-stock-lab/pull/3)을 정상 merge했다. 앱 통합 main: **`4a1e9f7c74254ea58b6fb61d6f90f1277f4791fa`**. 부모는 기존main51474c2와 검증개발59e1367이며, GitHub compare에서 검증개발 대비 변경파일0/behind0을 확인했다. force push/hard reset/이력 삭제 없음.
+- 기존 **Deploy Pages** workflow ID **396830197** / `.github/workflows/pages.yml`, main ref의 위 통합 SHA를 `workflow_dispatch`로 실행했다. 연결 도구에는 dispatch 기능이 없어 인증된 GitHub CLI로 기존 workflow만 실행했다.
+- run **[41807180809](https://github.com/pchjesus/us-stock-lab/actions/runs/41807180809)**, 2026-11-04T09:24:07Z 시작/09:24:39Z 완료, **success**. job126497011834에서 npm ci·npm run build·Pages artifact·Deploy 단계가 모두 success다. DB/Auth/Cron 단계는 없다. 자동 CI가 로컬383건을 실행한 것으로 표시하지 않는다.
+- 배포 URL: **https://pchjesus.github.io/us-stock-lab/**. Pages 설정은 workflow/HTTPS enforced이며 실제 URL200을 확인했다. 아래4개 파일은 운영 응답200 및 로컬 검증 산출물과 SHA-256/바이트 일치를 확인했다.
+
+| 실제 배포 파일 | SHA-256 |
+| --- | --- |
+| index.html | `9b8e3992d82c3824776983c653a52ff8538c04c3a31aec68d718d07fab4da097` |
+| assets/index-CLeqFcvG.js | `91892090b6f4273594f4e2c489521cb83acbe178720ef457197348c24e9dfd46` |
+| assets/AuthPanel-DgB3x1rM.js | `54501df397a312eff9ee22f776608139c6487c3b6ceaf86f3b59784c111b208d` |
+| assets/index-xkRb6o46.css | `dfc17b7515ebb73bfa40ec42fcbeee0425cdd9bb587e67cabbf0d0a254912c0c` |
+
+### 실제 운영 smoke
+
+**81/81 체크 PASS** · 1440/1200/768/390/320px의 새 익명 브라우저 컨텍스트. 홈4영역/초기로컬계좌·3지수, 시장8종목/AAPL검색·후보미가져옴, AAPL기업/VOO ETF의4탭·키보드End/선택초점·학습링크, 학습랜딩/10수업/펼침·차트MSFT선택/새로고침, 포트폴리오/설정·로그인입력UI·수기선택disabled/사유를 확인했다. PC의 실제7단계Tour 종료 후 홈/초점 복귀도 확인했다. 매 단계 가로 넘침0, JS 오류0. 정상 UI 탐색에서 금융/인증 쓰기 요청0(안전 차단기에 걸린 요청도0)이며 실제 주문·로그인 링크 발송·운영 데이터 변경을 하지 않았다. 실제 Supabase Auth 로그인/메일·공식 환율/재무부 API의 실응답은 이 smoke의 검증 범위가 아니다. 외부 실패/대체 UI는 위 로컬 fixture 회귀로 검증했다.
+
+TLS 검증은 비활성화하지 않았다. 관리환경 프록시CA를 브라우저 NSS에 준비하고 브라우저와 같은 명령 환경에서 실행해 검증했다. 최초 CA 오류는 환경 준비 문제였으며 운영 소스/사이트 인증서 설정을 바꾸지 않았다.
+
+실제 사이트 캡처(합성 예시/빈 로컬 계좌, 실제 SEC 후보 없음): [1440 홈](v08-final-captures/1440-live-home.png) · [390 홈](v08-final-captures/390-live-home.png) · [1440 후보 없음](v08-final-captures/1440-live-catalog-empty.png) · [390 후보 없음](v08-final-captures/390-live-catalog-empty.png). 모바일은390px 폭의 전체 내용 캡처를 위해 세로 영역만 늘렸으며 실제5폭 smoke는1000px 높이에서 실행했다.
+
+배포 결과/캡처/인수인계 마감은 **문서 전용 후속 커밋**으로 main에 반영한다. 이 문서의 위 SHA는 실제 앱 통합/배포/검증 기준이다. 후속 문서 커밋의 main HEAD와 Pages SHA가 달라도 앱 소스·lock·workflow·dist가 같은지 별도 compare로 확인하며 불필요하게 재배포하지 않는다. 최신 원격 main은 다음 작업 시작 시 반드시 다시 조회한다. 인수인계는 [US_STOCK_LAB_V08_TO_V09.md](../handoff/US_STOCK_LAB_V08_TO_V09.md)를 참조한다.
 
 ## 롤백 기준
 

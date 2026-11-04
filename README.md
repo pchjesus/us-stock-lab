@@ -1,39 +1,77 @@
 # US Stock Lab
-미국주식 모의투자 및 투자 학습 웹앱 · v0.8 UI 릴리스 후보
 
-개발 브랜치 후보이며 현재 Pages에 아직 반영하지 않았습니다. 외부 차트·5기업 공식 재무정보·헤더 지표판의 [검증 결과와 화면](docs/release/V0_8_R1.md)을 확인하세요. 수기 거래는 기본 비활성(`VITE_ENABLE_MANUAL_TRADING=false`)이며 금융 migration·운영 활성화는 별도 승인 대상입니다. 전체 미국 상장종목 검색 A4/A5는 미완료입니다.
+미국 주식 모의투자·투자 학습 웹앱 · v0.8
 
-## 실행
-Node.js 22.12 이상 (현재 검증: 24.19), npm 11.
+사이트: https://pchjesus.github.io/us-stock-lab/
+
+이번 통합의 검증·main 반영·실제 배포 상태는 [v0.8 최종 기록](docs/release/V0_8_FINAL.md)을 확인하세요. 과거 [R1 검증](docs/release/V0_8_R1.md)과 UX/A4/A5 문서는 각 개발 시점의 기록입니다.
+
+실제 증권계좌 연결·실거래·자금이동 기능은 없습니다. 주문 가격·학습 차트·예시 지수는 **합성 데이터이며 실제 시세가 아닙니다.** 공식 재무자료·일별 참고환율·재무부 통계·외부 참고 시세는 각각 출처/기준일/상태를 표시하고 모의 주문 가격과 분리합니다.
+
+## 현재 화면
+
+| 경로 | 기능 |
+| --- | --- |
+| `#home` | 나의 모의투자 현황 → 미국3지수 요약 → 관심종목 → 학습·시장정보·중요 일정 |
+| `#market` | 모의투자 지원8종목 검색·관심종목 / 개인 로컬 카탈로그 후보 탐색 |
+| `#stock/{symbol}` | 기업5종의 개요·차트/거래·재무·근거, ETF3종의 개요·차트/거래·상품정보·출처 |
+| `#portfolio` | 계좌 유형·보유종목·손익·거래내역·현금원장·로컬 초기화 |
+| `#learn` | 기초 투자 수업 / 차트 실습실 선택 |
+| `#learn/lessons` | 기존10수업·5단계 필터·접기/펼치기·직접 해보기 |
+| `#learn/lab`, `#learn/{symbol}` | 합성 캔들/선·기간·난이도·SMA·Wilder RSI·지지/저항·봉 선택 |
+| `#indices`, `#calendar`, `#news` | 전체 지표/추이·실제 참고환율·재무부 통계·경제 일정·뉴스 출처 |
+| `#settings` | 표시 설정·계좌 모드 확인·초대 사용자 로그인/로그아웃·데이터 안내 |
+
+Hash 경로는 정적 호스팅의 직접 접근·새로고침을 지원합니다. 헤더 시장 시계·6개 지표 슬라이더·알림·문맥 도움말·7단계 Tour를 제공합니다. 외부 차트는 TradingView·네이버·토스증권 링크와 팝업 차단 대체 링크를 유지합니다. 외부 API/차트 실패 시 오류·미제공 상태와 재조회/대체 경로를 표시하며 데이터를 만들어내지 않습니다.
+
+AAPL·MSFT·NVDA·AMZN·GOOGL의 공식 재무219관측(200원문 근거·19계산값)을 기간·단위·원문·계산 입력과 함께 제공합니다. 검증되지 않은 분기/비율·ETF 구성비/총보수/분배금을 추정하지 않습니다.
+
+## 모의투자와 읽기 전용 후보의 경계
+
+모의투자 지원 종목은 **AAPL, MSFT, NVDA, AMZN, GOOGL, VOO, QQQ, SCHD**입니다. 기존 합성 가격·정수 주식 시장가 매수/매도·부분매도·가중평균 원가·실현/미실현손익·추가매수 분석을 유지합니다. 합성 계좌는 최초 가상자금 $100,000, 수수료·세금·배당·환전 비용0이며 환율손익을 포함하지 않습니다. USD가 주문/원장 기준이고 KRW는 표시용 환산입니다.
+
+로그인 전에는 브라우저 로컬 계좌, 로그인 후에는 사용자별 서버 계좌/관심종목을 사용합니다. 로컬 기록을 서버로 자동 이관하지 않습니다. 서버 주문·계좌 격리는 기존 제한된 paper RPC와 RLS가 담당합니다. 손상된 로컬 기록은 자동 삭제하지 않으며 초기화에는 확인 문구가 필요합니다. 서버 기록은 앱에서 초기화하지 않습니다. 안전한 로컬 주문에는 Web Locks와 HTTPS/localhost가 필요합니다.
+
+**A4-C1/C2와 A5-A는 구현됐지만 실제 SEC 전체 카탈로그는 아직 확보·검증되지 않았습니다.** A4는 정규화·개발용 공식 수집기·스냅샷 검증이고, A5-A는 사용자가 직접 만든 파일만 가져오는 개인 로컬 탐색입니다. 배포 번들에 전체 카탈로그를 포함하거나 브라우저에서 SEC를 자동 수집하지 않습니다.
+
+후보 파일은 구조/크기/건수/해시/정규화와 거래 불가 상태를 검사합니다(최대32MiB·50,000후보, 결과50개씩). 세션 메모리에서만 읽으며 업로드·자동 영구저장·자동 재수집은 없습니다. 새로고침·로그인 사용자 변경·로그아웃 시 다시 가져와야 합니다. 후보는 가격/수익률·주문·관심종목 편입을 제공하지 않으며, 기존8종목과 심볼이 같아도 자동 연결하지 않습니다. 해시는 무결성 확인일 뿐 SEC 인증·상장 유효성·재배포 권한 증명이 아닙니다. 가상 fixture는 실제 자료가 아니라고 표시합니다.
+
+자세한 계약: [A4-C1](docs/catalog/A4_C1.md) · [A4-C2](docs/catalog/A4_C2.md) · [A5-A](docs/catalog/A5_A.md).
+
+## 실행 및 검증
+
+Node.js24(검증 환경24.19), npm11을 사용합니다.
+
 ```sh
 npm ci
 npm run dev
 npm run build
 npm run preview
-npm test
+npm test -- --workers=2
+npm run test:auth -- --workers=2
+npx playwright test --config playwright.release.config.ts --workers=1
 ```
-테스트는 시스템 `/usr/bin/chromium`을 기본 사용합니다. 다른 위치는 `CHROMIUM_PATH`로 지정합니다. 브라우저가 없다면 `npx playwright install chromium` 후 설치된 실행 파일 경로를 지정하세요.
 
-홈·시장·종목 상세·포트폴리오·학습·설정. 합성 주식/ETF 8종, 캔들차트, 검색, 관심종목 로컬 저장. Hash 경로로 정적 호스팅의 새로고침을 지원합니다. 주문 가격·학습 차트·예시 지수는 합성이며 실제 시세가 아닙니다. 공식 재무정보·일별 참고환율·외부 차트는 각각 출처와 상태를 표시하고 주문 가격과 분리합니다. 가상자금 $100,000 로컬 계좌에서 정수 주식 시장가 매수/매도·부분매도와 가중평균 원가·실현/미실현손익을 제공합니다. 종목 상세의 추가매수 분석은 주문을 실행하지 않습니다. 수수료·세금·배당·환전 비용은 0이며 환율손익은 제외합니다. 거래 기록을 localStorage에 저장하고 재시작 시 재계산합니다. 계좌 초기화에는 확인 문구 입력이 필요합니다. 손상 데이터는 자동 삭제하지 않습니다. Web Locks 지원 브라우저와 보안 컨텍스트(HTTPS 또는 localhost)가 주문에 필요합니다. 이는 개인 데모이며 DB 트랜잭션·인증·사용자별 계좌를 대체하지 않습니다.
+테스트는 `/usr/bin/chromium`을 기본 사용하며 다른 경로는 `CHROMIUM_PATH`로 지정합니다. 인증/수기/배당/세금 테스트는 고정 fixture이며 운영 Auth/DB 검증을 대신하지 않습니다. 실제 실행한 최신 결과와 미검증 범위는 최종 기록에서 구분합니다.
 
-## 배포
-실제 사이트: https://pchjesus.github.io/us-stock-lab/ — PC·모바일 접속 및 로그인 링크 복귀 검증 완료.
-저장소는 Public입니다. GitHub Pages를 사용하려면 Settings → Pages → Build and deployment → Source를 GitHub Actions로 설정하고 Actions의 `Deploy Pages`를 수동 실행합니다. 성공한 배포 작업이 반환한 URL을 브라우저에서 검증해야 배포 완료입니다. Pages는 개발 브랜치에서도 수동 실행할 수 있으며, 실제 성공 URL과 검증 결과는 DEVLOG의 최신 기록을 확인합니다.
+개인 스냅샷의 브라우저 가져오기 파일 생성(Node24, 네트워크 요청 없음):
 
-롤백: Pages의 이전 성공 워크플로를 재실행합니다. 테스트 스크린샷은 `test-results/`에 생성됩니다.
+```sh
+npm run catalog:export -- work/catalog-snapshots/SNAPSHOT_DIRECTORY work/catalog-import.json
+```
 
-## v0.3 연결 준비
-- v0.2 검증 후 main을 `b5332a7`로 fast-forward 통합. v0.3 및 실제 인증 검증 후 사용자 승인으로 main에 반영. GitHub Pages 보호 규칙에 따라 main에서 배포한다.
-- 홈/시장: 미국 3지수·환율·KOSPI·KOSDAQ 합성 카드. 시장 하위 화면에 가상 경제 캘린더와 뉴스(미수집 빈 상태+공식 출처 링크). 일정/수치는 공식 발표가 아닌 교육용 예시. 학습은 10개 개념·5단계 필터. 데스크톱 종목 상세는 차트/정보와 주문/분석을 좌우 배치.
-- `.env.example`에는 현재 Supabase 프로젝트의 공개 URL과 publishable key가 들어 있다. 이 두 값은 브라우저 빌드에 포함되는 공개 설정이다. Pages workflow도 같은 공개 설정으로 빌드한다. `service_role`, `sb_secret`, 관리 토큰은 소스·프론트엔드·VITE 변수에 넣지 않는다. 다른 프로젝트를 쓸 때는 로컬 `.env.local`의 `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`를 바꾸고 재빌드한다.
-- 현재 연결 프로젝트: 조직 `meyqlbmzdshtfbulnotu`, ref `vveljtqmujdzkzmoncjx`, 리전 `ap-south-1`. 기존 프로젝트를 재사용하며 중복 프로젝트를 만들지 않는다.
-- `supabase/migrations/20261026135037_202610260001_foundation.sql`은 기존 스키마가 비어 있음을 확인한 뒤 원격 프로젝트에 적용했고, 9개 테이블 및 RLS를 확인했다. v0.4-A는 제한된 주문 RPC만 사용하며 직접 금융 테이블 쓰기는 계속 차단한다. 로그인만으로 서버 계좌 생성·주문·동기화가 가능해지는 것은 아니다.
-- Auth는 신규 가입 차단 완료. 앱은 초대 사용자에게 기본 로그인 링크를 요청(`shouldCreateUser:false`)하고 복귀 URL의 세션을 처리·제거한다. 프로젝트 무료 플랜/기본 메일 제공자는 템플릿 수정을 허용하지 않아 코드 표시는 강제하지 않는다. 코드가 포함된 메일은 코드 입력도 가능하다. SMTP 연동·유료 전환은 하지 않았다. 실제 메일 수신은 테스트 수신 주소가 정해진 뒤 별도 확인해야 한다. 기본 메일 제공자는 수신자/발송량 제한이 있으므로 친구 초대 전 확인 필요.
-- 로그인/로그아웃은 설정 탭. 비로그인 로컬 계좌는 같은 브라우저에서 공유되고 로그인 후에는 사용자 서버 계좌로 전환됨. 기존 로컬 계좌를 자동 업로드하거나 로그인 사용자의 소유로 표시하지 않음.
-- `npm test`: 무설정 fallback, KST 날짜/배너, 시장 빈 상태, 금융 및 PC/모바일 회귀. `npm run test:auth`: 가짜 인증 서버 응답을 사용한 설정 상태 로그인/로그아웃·실패 검증(실제 Supabase 검증과 다름).
-- SQL 로컬 재현: 격리된 `postgres:17` 임시 컨테이너에 `tests/sql/bootstrap.sql` → migration → `tests/sql/rls.sql` 순서로 `psql -v ON_ERROR_STOP=1` 실행. bootstrap은 테스트 전용이므로 실제 Supabase에 적용하지 말 것.
+가상 fixture 스냅샷에는 `--fixture`를 붙입니다. 기존 파일은 덮어쓰지 않습니다. 실제 수집 명령 `npm run catalog:collect`는 실제 연락 가능한 개발자 식별 정보를 `SEC_USER_AGENT`에 로컬로 설정하고 SEC Fair Access와 접근/이용 조건을 확인한 경우에만 사용합니다. 가짜/예시 연락처로 실제 요청하지 않습니다. 원본·대량 스냅샷·개인 import 파일은 Git 제외 `work/`에 보관합니다.
 
-## v0.4-A 서버 계좌
-로그인 전 로컬 데모, 로그인 후 사용자별 서버 계좌입니다. 기존 로컬 거래/관심종목은 자동 이관하지 않으며 로그아웃하면 복원합니다. 서버 거래는 영구 저장하고 초기화 기능은 제공하지 않습니다. 미확정 주문은 같은 ID로 확인/재시도하세요. 계좌 새로고침/탭 포커스 및 15초 조회로 서버 상태를 반영합니다.
+## 운영 금융 제한과 공개 설정
 
-추가 migration은 202610270001/002 순서로 적용합니다(기존 프로젝트 적용 완료). 격리 SQL 검증은 기존 bootstrap → foundation → server_trading → hardening → tests/sql/server.sql, 이어 tests/sql/concurrency.py 순서입니다. `scripts/verify-server.py`는 `US_STOCK_LIVE_TEST=1` 명시 후 실행하는 실제 프로젝트 smoke이며, 관리 토큰은 환경으로만 전달합니다. 메일 미발송 임시 사용자만 만들고 finally에서 삭제합니다. 실행 앱을 TEST_BASE로 지정할 수 있습니다.
+운영 프로젝트는 `vveljtqmujdzkzmoncjx`입니다. Foundation 및001~003 migration이 적용돼 있으며 금융004~007은 미적용입니다. 이번 프론트엔드 배포는 DB·RLS/RPC·Auth 제공자/SMTP·Cron을 변경하거나 migration을 실행하지 않습니다.
+
+**운영 Pages는 `VITE_ENABLE_MANUAL_TRADING=false`입니다.** 저장된 수기 선호를 지우지 않으면서 선택을 비활성화하고 미적용 수기/배당/세금 RPC를 호출하지 않습니다. 해당 기능의 코드는 허용된 개발 환경의 fixture 검증을 위해 보존하며 운영 활성화는 별도 승인·금융 검증 대상입니다.
+
+`.env.example`과 Pages workflow의 Supabase URL·publishable key는 브라우저용 공개 설정입니다. `service_role`, `sb_secret_`, 관리 토큰·실제 연락처·개인정보를 소스/프론트엔드/VITE 변수/공개 로그에 넣지 않습니다. Auth는 기존 초대 사용자 로그인 링크/선택적 코드 입력을 사용하며 로컬 기록과 사용자별 서버 기록을 구분합니다. 실제 운영 로그인·메일 수신은 별도 검증 범위입니다.
+
+## 배포와 복구
+
+GitHub Pages Source는 GitHub Actions이며 기존 **Deploy Pages**(`.github/workflows/pages.yml`)를 검증된 **main ref**에서 수동 실행합니다. workflow는 Node24·수기 false·기존 시장 참고자료 설정으로 프론트엔드만 빌드/배포합니다. 금융 검증/Cron workflow를 대신 실행하지 않습니다. 성공 workflow와 실제 사이트의 자산/동작 확인 전에는 배포 성공으로 기록하지 않습니다.
+
+중대한 회귀가 발견되면 운영 DB를 임의 변경하지 않습니다. 이전 성공 Pages run의 대상 SHA와 산출물을 확인하고 승인된 복구 절차로만 재배포합니다. 이번 릴리스의 실제 이전 성공 run·롤백 기준·배포 결과는 [최종 기록](docs/release/V0_8_FINAL.md), 다음 작업 기준은 배포 확인 후 작성하는 v0.9 인수인계에 기록합니다.

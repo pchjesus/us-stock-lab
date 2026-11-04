@@ -345,3 +345,11 @@
 - 첫 영향2FAIL은 같은 AAPL 첫 행 CIK 가정을 실제 후보 선택으로 교정. 동시 Vite 개발서버 중 신규 인증2FAIL은 단독 동일2건 및 전체52건으로 정상 확인(당시 환경 원인 미확정). 기존 테스트 삭제/skip 없음. Vite import/chunk 경고 잔존. PostgreSQL 신규 미실행·운영 Auth/실기기/스크린리더·실제 SEC 수집 NOT VERIFIED. 기존 DB 선행 근거는 A4-C2 참조.
 - 실제 SEC 자료가 아닌 가상 fixture12→7 후보로 export CLI/import·검색·상세를 확인하고 production 캡처4장을 docs/catalog/a5-a-captures에 저장. 화면에 fixture 명시, 원본/큰 자료/내보내기 파일은 Git 제외 work/에만 유지. 계약·무결성 해시·테스트·제한은 docs/catalog/A5_A.md.
 - A5-B/별도 승인된 v0.9 개발 진행 가능. 실제 전체 카탈로그 공개 통합은 SEC 수집/권리/최신성/식별자 검증이 선행돼야 하며, 개발 완료는 운영 배포나 신규 거래 허용 승인이 아니다. 금융 소유권 변경/대규모 리팩터링 없이 국소 표시·import 경계 추가로 완료. 개발 커밋 revert로 복구 가능, 데이터 마이그레이션 없음.
+
+
+## 2026-11-04 · v0.8 최종 통합 검증·배포 준비
+- 사용자 승인으로 개발 d8b8ba1·main51474c2 원격/부모/clean checkout·10커밋151파일 차이를 확인했다. 기존 finance/가격/원장/Auth/SQL/RPC/RLS·workflow 원본 불변. Supabase 읽기 전용 migration 조회는foundation/001~003만 존재,004~007 없음. 운영 쓰기/설정/정기작업은 실행하지 않는다.
+- 패키지/lock0.8.0 및 사이드바 후보 표기만 정리하고 README를 현재 홈/학습/기업·ETF/로컬 카탈로그 구조와 금융 게이트에 맞췄다. 새 기능·의존성 업그레이드·리팩터링 없음.
+- Pages 동일 공개 설정/수기false build PASS. 이번 신규 전체UI318/318·인증/금융fixture52/52·release6/6·시장/재무fixture4/4·UX0레퍼런스3/3, 총383건PASS. 과거PASS/반복 실행 합산 없음. financial/DB소스 불변으로 PostgreSQL 무거운 신규검증은NOT VERIFIED. 실제SEC·운영Auth/메일·실기기/스크린리더도미검증.
+- tracked/dist비밀 패턴0·개인원본/스냅샷포함0·연락처 모양22건 모두fixture/보안거부입력으로검토. TLS검증을 끄지 않고 관리환경CA준비와브라우저를동일실행환경에서사용해기존Pages200확인. Vite경고는기존대로남음. 상세근거/rollback41562090798·SHA51474c2는docs/release/V0_8_FINAL.md.
+- 이 준비 커밋 시점에는 main 병합/이번 Pages 배포는 아직 미실행이며, 원격 재확인→PR/main→Pages main ref 수동 실행→실제 사이트/자산 확인 후 결과와 인수인계를 갱신한다.

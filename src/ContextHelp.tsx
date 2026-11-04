@@ -1,3 +1,4 @@
+import {resolveLearningRoute} from './learningRoutes';
 export const helpTopics={
  home:{label:'홈',text:'내 자산과 관심종목을 먼저 확인하세요. 로그인 전 로컬 기록과 로그인 후 서버 계좌는 서로 다릅니다.'},
  market:{label:'시장·종목 검색',text:'이름이나 심볼로 기존 지원 종목을 찾아보세요. 별표로 관심종목을 관리할 수 있어요. 검색 가능 여부가 거래 허용을 뜻하지는 않습니다.'},
@@ -11,7 +12,7 @@ export const helpTopics={
 } as const;
 export type HelpTopic=keyof typeof helpTopics;
 export function helpTopicForRoute(route:string):HelpTopic {
- if(route.startsWith('learn/'))return 'lab';
+ if(route==='learn'||route.startsWith('learn/'))return resolveLearningRoute(route).kind==='lab'?'lab':'learn';
  if(route.startsWith('stock/'))return 'stock';
  if(route==='calendar'||route==='news')return 'calendar';
  return route in helpTopics?route as HelpTopic:'home';

@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 import {mkdirSync} from 'node:fs';
-const routes=[['home','home'],['market','market'],['indices','indices'],['stock/AAPL','stock'],['stock/VOO','stock'],['portfolio','portfolio'],['learn','learn'],['learn/AAPL','lab'],['calendar','calendar'],['news','calendar'],['settings','settings']];
+const routes=[['home','home'],['market','market'],['indices','indices'],['stock/AAPL','stock'],['stock/VOO','stock'],['portfolio','portfolio'],['learn','learn'],['learn/lessons','learn'],['learn/lab','lab'],['learn/AAPL','lab'],['calendar','calendar'],['news','calendar'],['settings','settings']];
 test('help follows route, changes topic, restores focus and preserves account state',async({page})=>{
  const requests:string[]=[];page.on('request',r=>{if(r.url().includes('/rest/v1/rpc/'))requests.push(r.url());});
  for(const [route,topic]of routes){await page.goto('/#'+route);const before=await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'));const button=page.getByRole('button',{name:'현재 화면 도움말'});await button.click();const dialog=page.getByRole('dialog',{name:'도움말',exact:true});await expect(dialog.getByLabel('도움말 주제')).toHaveValue(topic);await dialog.getByLabel('도움말 주제').selectOption('indices');await expect(dialog.getByRole('heading',{name:'주요 지표·환율',exact:true})).toBeVisible();await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);await expect(button).toBeFocused();expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(before);}

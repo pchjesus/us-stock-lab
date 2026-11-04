@@ -5,16 +5,16 @@ import {movingAverage,wilderRsi} from '../src/chartIndicators';
 import {syntheticVolume} from '../src/ChartLab';
 import {test,expect} from '@playwright/test';
 test('interactive chart lab preserves lessons and works at each stage',async({page})=>{
- const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/#learn');const lab=page.getByRole('region',{name:'차트 실습실'});await expect(lab.getByRole('img',{name:'학습용 가상 캔들 차트'})).toBeVisible();await expect(lab.locator('canvas').first()).toBeVisible();
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/#learn');await page.locator('.learning-choice[href="#learn/lab"]').click();const lab=page.getByRole('region',{name:'차트 실습실'});await expect(lab.getByRole('img',{name:'학습용 가상 캔들 차트'})).toBeVisible();await expect(lab.locator('canvas').first()).toBeVisible();
  for(const stage of ['초급','중급','고급']){await lab.getByRole('button',{name:stage,exact:true}).click();await expect(lab.getByRole('button',{name:stage,exact:true})).toHaveAttribute('aria-pressed','true');}
  await lab.getByRole('button',{name:'선 차트'}).click();await expect(lab.getByRole('img',{name:'학습용 가상 선 차트'})).toBeVisible();await lab.getByRole('button',{name:'캔들 차트'}).click();
  for(const n of [5,20,60]){const b=lab.getByRole('button',{name:`${n}봉 이동평균`});await b.click();await expect(b).toHaveAttribute('aria-pressed','true');await b.click();await expect(b).toHaveAttribute('aria-pressed','false');}
  await lab.getByRole('button',{name:'RSI(14)'}).click();await expect(lab.getByRole('img',{name:'학습용 가상 RSI 차트'})).toBeVisible();await lab.getByRole('button',{name:'RSI(14)'}).click();await expect(lab.getByRole('img',{name:'학습용 가상 RSI 차트'})).toHaveCount(0);
- await page.getByRole('button',{name:/주식이 뭐야/}).click();await expect(page.getByText(/개별 기업의 지분/)).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors).toEqual([]);
+ await page.getByRole('link',{name:'개념이 궁금하다면 투자 수업 →'}).click();await page.getByRole('button',{name:/주식이 뭐야/}).click();await expect(page.getByText(/개별 기업의 지분/)).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors).toEqual([]);
 });
 
 test('stages, selected values, missing indicators and candidate levels',async({page})=>{
- await page.goto('/#learn');const lab=page.getByRole('region',{name:'차트 실습실'}),slider=lab.getByLabel('봉 선택');const rows=chartRows(instruments[0],'일'),last=rows.length-1;
+ await page.goto('/#learn');await page.locator('.learning-choice[href="#learn/lab"]').click();const lab=page.getByRole('region',{name:'차트 실습실'}),slider=lab.getByLabel('봉 선택');const rows=chartRows(instruments[0],'일'),last=rows.length-1;
  await slider.focus();await page.keyboard.press('Home');await expect(lab.getByRole('button',{name:'5봉 이동평균'})).toHaveCount(0);await expect(lab.getByRole('button',{name:'RSI(14)'})).toHaveCount(0);
  for(const [label,value] of [['시가',rows[0].open],['고가',rows[0].high],['저가',rows[0].low],['종가',rows[0].close]] as const)await expect(lab.getByTestId('selected-bar')).toContainText(`${label} ${value.toFixed(2)}`);expect(syntheticVolume(0)).toBe(151415);await expect(lab.getByTestId('selected-bar')).toContainText(syntheticVolume(0).toLocaleString('ko-KR'));
  await lab.getByRole('button',{name:'중급',exact:true}).click();await lab.getByRole('button',{name:'5봉 이동평균'}).click();await expect(lab.getByTestId('sma-5')).toContainText('자료 부족');
@@ -23,7 +23,7 @@ test('stages, selected values, missing indicators and candidate levels',async({p
  await lab.getByRole('button',{name:'고급',exact:true}).click();await lab.getByRole('button',{name:'RSI(14)'}).click();await expect(lab.getByTestId('rsi-value')).toContainText(wilderRsi(rows.map(r=>r.close))[last]!.toFixed(2));
  await lab.getByRole('button',{name:'초급',exact:true}).click();await expect(lab.getByTestId('sma-5')).toHaveCount(0);await expect(lab.getByRole('img',{name:'학습용 가상 RSI 차트'})).toHaveCount(0);await lab.getByRole('button',{name:'고급',exact:true}).click();await expect(lab.getByTestId('rsi-value')).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
- await page.goto('/#settings');await page.goto('/#learn');await expect(lab.getByRole('img',{name:'학습용 가상 캔들 차트'})).toHaveCount(1);await page.reload();await expect(lab.getByRole('img',{name:'학습용 가상 캔들 차트'})).toHaveCount(1);
+ await page.goto('/#settings');await page.goto('/#learn');await page.locator('.learning-choice[href="#learn/lab"]').click();await expect(lab.getByRole('img',{name:'학습용 가상 캔들 차트'})).toHaveCount(1);await page.reload();await expect(lab.getByRole('img',{name:'학습용 가상 캔들 차트'})).toHaveCount(1);
 });
 
 test('all symbols and periods use the selected scenario without changing account data',async({page})=>{

@@ -1,5 +1,6 @@
 import {ChartLab} from './ChartLab';
-import {useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
+import {resolveLearningRoute} from './learningRoutes';
 interface Lesson {id:string;stage:string;title:string;body:string;practice:string}
 export const lessons:Lesson[]=[
  {id:'stock',stage:'왕초보',title:'주식이 뭐야?',body:'주식은 회사의 작은 지분입니다. 회사가 성장하면 가치가 오를 수 있지만, 손실을 볼 수도 있어요. 주식과 ETF를 비교할 때 주식은 개별 기업의 지분이라는 점을 기억하세요.',practice:'시장 화면에서 아는 회사 하나를 찾아보세요.'},
@@ -14,4 +15,20 @@ export const lessons:Lesson[]=[
  {id:'news',stage:'경제지표',title:'뉴스는 어떻게 읽어야 해?',body:'제목만 보지 말고 출처, 발행 시각, 사실과 해석을 구분하세요. 전망은 가능성이지 확정된 결과가 아니에요. 원문을 확인하고 다른 설명도 비교하세요.',practice:'뉴스 화면에서 공식 자료 링크를 찾아보세요.'}
 ];
 const stages=['전체','왕초보','기초','시장 이해','경제지표','투자 실습'];
-export function Learning({symbol}:{symbol?:string}){const [stage,setStage]=useState('전체');const [open,setOpen]=useState<string|null>(null);return <><ChartLab symbol={symbol}/><h1>한 걸음씩 배우는 투자</h1><p>왕초보 → 기초 → 시장 이해 → 경제지표 → 투자 실습</p><div className="learning-filters">{stages.map(s=><button key={s} aria-pressed={stage===s} onClick={()=>setStage(s)}>{s}</button>)}</div>{lessons.filter(l=>stage==='전체'||l.stage===stage).map((l,i)=><section className="panel" key={l.id} id={`lesson-${l.id}`}><p className="eyebrow">{l.stage} · LESSON {i+1}</p><button className="lesson" aria-expanded={open===l.id} onClick={()=>setOpen(open===l.id?null:l.id)}>{l.title}<span>{open===l.id?'−':'+'}</span></button>{open===l.id&&<><p>{l.body}</p><p className="practice">직접 해보기: {l.practice}</p></>}</section>)}<small>일반 학습 자료이며 특정 상품의 매수·매도 권유가 아닙니다.</small></>;}
+export function Learning({route='learn'}:{route?:string}){
+ const [stage,setStage]=useState('전체'),[open,setOpen]=useState<string|null>(null);const root=useRef<HTMLDivElement>(null);const page=resolveLearningRoute(route);
+ useEffect(()=>{if(document.querySelector('dialog[open]'))return;root.current?.scrollIntoView({block:'start',behavior:'instant'});root.current?.querySelector<HTMLElement>('h1')?.focus({preventScroll:true});},[page.kind]);
+ const titles={landing:'나에게 맞는 학습을 선택하세요',lessons:'한 걸음씩 배우는 투자',lab:'합성 차트로 연습하기',missing:'학습 화면을 찾을 수 없어요'};
+ const descriptions={landing:'개념을 읽거나, 차트를 직접 관찰하거나. 오늘 필요한 배움부터 시작하세요.',lessons:'왕초보 → 기초 → 시장 이해 → 경제지표 → 투자 실습',lab:'종목과 기간을 선택하고 가격·지표의 움직임을 관찰하세요.',missing:'아래에서 기초 투자 수업 또는 차트 실습실로 이동하세요.'};
+ return <div ref={root} className="learning-page" data-learning-view={page.kind}>
+  {page.kind!=='landing'&&<a className="ui-link learning-back" href="#learn">← 학습 선택으로</a>}
+  <div className="heading learning-heading"><div><p className="eyebrow">LEARN AT YOUR PACE</p><h1 id={'learning-title-'+page.kind} tabIndex={-1}>{titles[page.kind]}</h1><p>{descriptions[page.kind]}</p></div></div>
+  {page.kind==='landing'||page.kind==='missing'?<div className="learning-choices">{[
+   {href:'#learn/lessons',step:'01 · 이해하기',title:'기초 투자 수업',description:'주식·ETF부터 분산투자와 뉴스까지, 개념과 용어를 하나씩 익혀요.',detail:'10개 수업 · 단계별 개념과 직접 해보기',action:'투자 수업 시작하기 →'},
+   {href:'#learn/lab',step:'02 · 관찰하기',title:'차트 실습실',description:'합성 캔들·선 차트와 SMA·RSI, 지지·저항 후보를 직접 살펴보세요.',detail:'8개 종목 시나리오 · 초급부터 고급까지',action:'차트 실습 시작하기 →'}
+  ].map(item=><a className="panel learning-choice" key={item.href} href={item.href}><span className="eyebrow">{item.step}</span><h2>{item.title}</h2><p>{item.description}</p><small>{item.detail}</small><strong>{item.action}</strong></a>)}</div>:
+   page.kind==='lab'?<><div className="learning-crosslinks"><a className="ui-link" href="#learn/lessons">개념이 궁금하다면 투자 수업 →</a></div><ChartLab symbol={page.symbol}/></>:
+   <><div className="learning-crosslinks"><a className="ui-link" href="#learn/lab">차트에서 직접 관찰하기 →</a></div><section className="panel lesson-filter-panel" aria-labelledby="lesson-stage-title"><h2 id="lesson-stage-title">학습 단계</h2><div className="learning-filters lesson-stage-filters" role="group" aria-label="수업 단계">{stages.map((s,i)=><button key={s} id={'lesson-stage-'+i} aria-pressed={stage===s} onClick={()=>setStage(s)}>{s}</button>)}</div><p role="status" data-testid="lesson-filter-status">{stage} · {lessons.filter(l=>stage==='전체'||l.stage===stage).length}개 수업</p></section><div className="lesson-list">{lessons.filter(l=>stage==='전체'||l.stage===stage).map((l,i)=><section className="panel lesson-card" key={l.id} id={`lesson-${l.id}`}><p className="eyebrow">{l.stage} · LESSON {i+1}</p><button className="lesson" id={'lesson-toggle-'+l.id} aria-expanded={open===l.id} aria-controls={'lesson-body-'+l.id} onClick={()=>setOpen(open===l.id?null:l.id)}>{l.title}<span aria-hidden="true">{open===l.id?'−':'+'}</span></button><div className="lesson-body" id={'lesson-body-'+l.id} hidden={open!==l.id}><p>{l.body}</p><p className="practice">직접 해보기: {l.practice}</p></div></section>)}</div></>}
+  <p className="learning-disclaimer">일반 학습 자료이며 특정 상품의 매수·매도 권유가 아닙니다. 차트는 학습용 합성 예시이며 실제 시세나 주문 가격이 아닙니다.</p>
+ </div>;
+}

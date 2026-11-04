@@ -356,3 +356,10 @@
 
 - 실제 실행 결과: 준비59e1367을 PR#3으로 정상 merge, 앱 main4a1e9f7c74254ea58b6fb61d6f90f1277f4791fa 확인(개발대비파일0/behind0). Deploy Pages workflow396830197/run41807180809를 main ref로 수동실행해 npm ci/build/Deploy 모두success. 사이트200·HTML/JS2/CSS1 SHA-256 전부로컬산출물일치. 실제5폭81체크PASS·7단계Tour·수기disabled·가로넘침/JS오류/금융·Auth쓰기요청0. 실제메일/운영로그인·공식참고API실응답은미검증. 이번성과는로컬383건과구분한다.
 - 배포후문서/실제캡처4장/인수인계만후속커밋으로정리한다. 앱/금융/배포설정추가수정없음. 문서후속main과Pages앱기준SHA를구분하고원격diff로앱동일성을확인한다. docs/handoff/US_STOCK_LAB_V08_TO_V09.md에실제배포·미검증·금융NO-GO·v0.9기준/붙여넣기프롬프트기록. 중대한운영문제는발견되지않았으며기존번들경고/개발모달제한·실기기/스크린리더·운영Auth·SEC·신규PostgreSQL검증은남아있다.
+
+## 2026-11-04 · v0.9-A1 EOD 공급자 재검증·계약 설계
+- 원격 main a49915ada0624b22234b0c5c84e64352c9e9d047·부모/clean 기존checkout·신규브랜치 부재 확인 후 codex/v09-a1-eod-contract 생성. 실제 배포4a1e9f7과 문서 마감 main을 구분. 기존 문서4개와 직접 의존 소스/테스트·003 SQL의 가격 경계만 감사했다.
+- 공식 근거31개 재검증. Massive11/3 약관·Basic ET자정 가용/분할 조정, Alpha 무료25/일·compact100/유료full·adjusted, Twelve Basic non-display/별도external 표시·심볼별credit·다음거래일 EOD, Finnhub무료60/분과유료candle·개인/제3자공유금지 확인. Finnhub공식문서JS 렌더링은 시세/API·비문서요청을전송전차단하고열람했다. 실제키발급/결제/시세API 호출·공급자 문의 발송 없음.
+- 친구3~4인/공개Pages의 표시·재배포·실데이터보존 권한은 미확보로 NO-GO, 확정공급자 없음. 독립EOD 식별자/decimal/두세션·raw/adjusted·관측/조회시각/라이선스/권리게이트·오류/요청/캐시·폐기·A2/A3 테스트/승인 조건 설계. A2는별도요청시 오프라인fixture기반 권장, 실데이터/운영연결 승인 아님.
+- 신규 문서 docs/market-data/V0_9_A1_EOD_PROVIDER_AND_CONTRACT.md와SPEC/DEVLOG만 변경. 문서검증PASS: JSON2예시·필수20필드·가상100/99의half-even6자리1.010101%·출처/권리/계약일관성·diff검사·앱/테스트/package/lock/workflow/supabase불변. 빌드/앱회귀/실API/운영Auth/SQL은이번미실행 NOT VERIFIED. 과거383건/운영81체크를새PASS로합산하지않음.
+- 개발브랜치에만 [skip ci] 커밋·push·PR. main병합/Pages배포/운영DB/Auth/RLS/RPC/Cron·004~007·수기false·금융계산·기존8종목/A4/A5/UX 변경 없음. 기존테스트삭제/skip/기대값완화 없음.

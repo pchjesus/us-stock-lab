@@ -6,7 +6,7 @@ import {EtfDetail} from './EtfDetail';
 import {ExternalQuotes,ManualWorkspace} from './ManualUI';
 import {OrderPanel,type AccountView} from './TradingUI';
 import {OrderAccountContext} from './UiPanels';
-import {useCurrency} from './preferences';
+import {useCurrency,CurrencyToggle} from './preferences';
 import {metadata} from './uiData';
 export type DetailTab='overview'|'trade'|'financials'|'evidence';
 export const detailTabEvent='stock-detail-tab';
@@ -30,6 +30,7 @@ export function StockDetail({stock,account,manual,watched,toggleWatch}:{stock:In
  return <article ref={root} className="stock-detail" data-symbol={stock.symbol} data-kind={etf?'etf':'company'} aria-label={etf?'ETF 상세 화면':'기업 상세 화면'}>
   <a className="back ui-link" href="#market">← 시장</a>
   <div className="heading detail-heading"><div><p className="eyebrow">{stock.symbol} · {metadata[stock.symbol].exchange} · {stock.kind}</p><h1 tabIndex={-1}>{stock.name}</h1><p className="detail-summary">{profile?.tenSecondSummary??metadata[stock.symbol].description}</p></div><button aria-pressed={watched} onClick={toggleWatch}>{watched?'★ 관심종목 해제':'☆ 관심종목 등록'}</button></div>
+  <div className="detail-currency"><span>합성 가격 표시 통화</span><CurrencyToggle/></div>
   <div className="detail-shortcuts"><a className="ui-link detail-jump" href="#detail-order" onClick={e=>{e.preventDefault();jumpToOrder();}}>시세·주문으로 이동 ↓</a><a className="ui-link" href={`#learn/${stock.symbol}`}>차트 학습실에서 연습하기 →</a></div>
   <div role="tablist" aria-label={etf?'ETF 상세':'기업 상세'} className="detail-tabs">{tabs.map(([id,label],i)=><button key={id} ref={node=>{buttons.current[i]=node;}} role="tab" id={`stock-${stock.symbol}-tab-${id}`} aria-controls={`stock-${stock.symbol}-panel-${id}`} aria-selected={tab===id} tabIndex={tab===id?0:-1} data-detail-tab={id} onClick={()=>activate(id)} onKeyDown={e=>keydown(e,i)}>{label}</button>)}</div>
   {tabs.map(([id])=><section key={id} className="detail-panel" role="tabpanel" id={`stock-${stock.symbol}-panel-${id}`} aria-labelledby={`stock-${stock.symbol}-tab-${id}`} hidden={tab!==id} tabIndex={0}>

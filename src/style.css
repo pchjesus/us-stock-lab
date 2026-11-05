@@ -382,3 +382,16 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .peer-chart svg{display:block;max-width:100%;height:auto}
 .ui-foundation .peer-disclaimer{font-size:13px}
 @media(max-width:640px){.ui-foundation .peer-cards{grid-template-columns:minmax(0,1fr)}.ui-foundation .peer-entry{padding:18px}.ui-foundation .peer-metrics button{flex:1 1 40%}}
+/* UX4-F4 shared display currency selector */
+.ui-foundation .currency-switch{display:inline-flex;position:relative;isolation:isolate;min-width:192px;padding:3px;border:1px solid var(--line);border-radius:12px;background:#edf1f7}
+.ui-foundation .currency-switch-indicator{position:absolute;z-index:-1;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/2);background:white;border:1px solid #ccd7e7;border-radius:9px;box-shadow:0 1px 3px #17223518;transition:transform .2s ease}
+.ui-foundation .currency-switch[data-currency=KRW] .currency-switch-indicator{transform:translateX(100%)}
+.ui-foundation .currency-switch button{position:relative;flex:1;min-width:90px;min-height:44px;border:0;background:transparent;padding:8px 10px;color:var(--muted);white-space:nowrap}
+.ui-foundation .currency-switch button[aria-pressed=true]{background:transparent;color:#234fb9;font-weight:700}
+.ui-foundation .market-currency-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ui-foundation .detail-currency{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:12px}
+.ui-foundation .discovery-price{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ui-foundation .discovery-price strong,.ui-foundation .discovery-price small{display:block}
+.ui-foundation .discovery-price small{margin-top:5px}
+@media(max-width:640px){.ui-foundation .discovery-price{width:100%;text-align:left;padding-left:41px}.ui-foundation .detail-currency{justify-content:flex-start}}
+@media(prefers-reduced-motion:reduce){.ui-foundation .currency-switch-indicator{transition:none}}

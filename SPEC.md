@@ -288,3 +288,7 @@ SEC-sourced peer observations are separate from the supported trading universe a
 ### UX4-F3c peer reference presentation
 
 Only NVDA's financial tab offers the AMD peer reference. A period mismatch displays separate sourced cards and withholds relative bars and differences. An eligible shared-axis chart is governed by the F3b comparison result; fixture values are not production data.
+
+### UX4-F4 currency selection
+
+Market and instrument-detail currency buttons use the existing account-scoped display currency context. Supported instrument prices remain synthetic and use the same display conversion as home and portfolio. Order execution, ledgers, SEC financial data and external chart currency stay independent.

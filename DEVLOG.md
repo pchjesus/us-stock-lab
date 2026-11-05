@@ -388,3 +388,7 @@ Added isolated NVDA/AMD SEC observations, amendment context and fail-closed exac
 ### UX4-F3c peer reference UI
 
 Added an NVDA-only peer modal using the existing verified data and Modal. Different fiscal periods remain separate reference cards with no relative chart; eligible chart behavior is tested with synthetic fixtures. See docs/ui/UX4_F3C_PEER_UI.md.
+
+### UX4-F4 display currency selector
+
+Added shared currency controls and synthetic prices to the supported market list, using the existing display conversion and account-scoped preference. The FX rate remains a synthetic reference; see docs/ui/UX4_F4_CURRENCY_TOGGLE.md.

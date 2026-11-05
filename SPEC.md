@@ -280,3 +280,7 @@ Korean dollar abbreviations are display-only, with exact decimal strings retaine
 ### UX5-A1 learning foundation
 
 The original ten lesson records and learning routes remain intact. Separate structured stock and ETF units provide explanations, hypothetical examples, practice links and per-answer feedback. Quiz state is in-memory only and practice links do not submit orders.
+
+### UX4-F3b peer data
+
+SEC-sourced peer observations are separate from the supported trading universe and existing company financials. The curated comparison requires matching definitions and exact accounting periods; mismatches withhold differences and do not imply investment merit. Supplied registries are trust inputs, not source authentication.

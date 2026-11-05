@@ -365,3 +365,20 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .learning-question input{width:20px;height:20px;flex:none}
 .ui-foundation .learning-question [role=status]{border-left:3px solid var(--accent);padding-left:12px;color:var(--text)}
 @media(max-width:760px){.ui-foundation .learning-path ol{grid-template-columns:minmax(0,1fr)}}
+/* UX4-F3c peer reference dialog */
+.ui-foundation .peer-entry{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:20px}
+.ui-foundation .peer-entry h3{font-size:18px;margin:0}
+.ui-foundation .peer-entry p{font-size:14px}
+.ui-foundation .peer-entry button,.ui-foundation .peer-metrics button{min-height:44px}
+.ui-foundation .peer-dialog{min-width:0;overflow-wrap:anywhere}
+.ui-foundation .peer-dialog h3{font-size:19px;margin:20px 0 8px}
+.ui-foundation .peer-metrics{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.ui-foundation .peer-warning{border-left:3px solid #3169d9;padding:12px 14px;background:#f3f6fc;color:var(--text);line-height:1.7}
+.ui-foundation .peer-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ui-foundation .peer-fact{border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0;overflow-wrap:anywhere}
+.ui-foundation .peer-fact h4{margin:0;font-size:16px}
+.ui-foundation .peer-fact .peer-value{font-size:21px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.ui-foundation .peer-fact a,.ui-foundation .peer-fact summary{min-height:44px;display:flex;align-items:center}
+.ui-foundation .peer-chart svg{display:block;max-width:100%;height:auto}
+.ui-foundation .peer-disclaimer{font-size:13px}
+@media(max-width:640px){.ui-foundation .peer-cards{grid-template-columns:minmax(0,1fr)}.ui-foundation .peer-entry{padding:18px}.ui-foundation .peer-metrics button{flex:1 1 40%}}

@@ -284,3 +284,7 @@ The original ten lesson records and learning routes remain intact. Separate stru
 ### UX4-F3b peer data
 
 SEC-sourced peer observations are separate from the supported trading universe and existing company financials. The curated comparison requires matching definitions and exact accounting periods; mismatches withhold differences and do not imply investment merit. Supplied registries are trust inputs, not source authentication.
+
+### UX4-F3c peer reference presentation
+
+Only NVDA's financial tab offers the AMD peer reference. A period mismatch displays separate sourced cards and withholds relative bars and differences. An eligible shared-axis chart is governed by the F3b comparison result; fixture values are not production data.

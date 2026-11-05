@@ -347,3 +347,21 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .discovery-actions .star{min-width:44px;min-height:44px}
 @media(max-width:640px){.ui-foundation .discovery-stock{display:flex;flex-wrap:wrap;gap:4px 12px}.ui-foundation .discovery-stock .identity{flex:1 1 100%}.ui-foundation .discovery-actions{width:100%;justify-content:space-between;padding-left:41px}.ui-foundation .supported-discovery .toolbar input{flex:1 1 100%}}
 .ui-foundation .sector-source a{display:inline-flex;align-items:center;min-height:44px}
+/* UX5-A1 learning foundations */
+.ui-foundation .learning-path{grid-column:1/-1;margin-top:4px}
+.ui-foundation .learning-path h2{font-size:20px}
+.ui-foundation .learning-path ol{list-style:none;padding:0;margin:20px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 26px}
+.ui-foundation .learning-path li{border-top:1px solid var(--line);padding:16px 0;min-width:0}
+.ui-foundation .learning-path li p{margin:5px 0;font-size:14px}
+.ui-foundation .learning-path li small{line-height:1.7}
+.ui-foundation .learning-unit{border-top:1px solid var(--line);margin-top:20px;padding-top:8px}
+.ui-foundation .learning-unit section{padding:12px 0;border-bottom:1px solid var(--line)}
+.ui-foundation .learning-unit h3{font-size:16px;margin:12px 0}
+.ui-foundation .learning-unit p{max-width:76ch;line-height:1.9;overflow-wrap:anywhere}
+.ui-foundation .learning-unit a{display:inline-flex;align-items:center;min-height:44px}
+.ui-foundation .learning-question{border:1px solid var(--line);border-radius:10px;margin:20px 0;padding:16px;min-width:0}
+.ui-foundation .learning-question legend{font-weight:700;line-height:1.7;padding:0 5px}
+.ui-foundation .learning-question label{display:flex;align-items:center;gap:10px;min-height:44px;line-height:1.6;cursor:pointer}
+.ui-foundation .learning-question input{width:20px;height:20px;flex:none}
+.ui-foundation .learning-question [role=status]{border-left:3px solid var(--accent);padding-left:12px;color:var(--text)}
+@media(max-width:760px){.ui-foundation .learning-path ol{grid-template-columns:minmax(0,1fr)}}

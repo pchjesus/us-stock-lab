@@ -276,3 +276,7 @@ Market browsing applies a display-only fixed sector mapping to the eight existin
 ### UX4-F3a financial display
 
 Korean dollar abbreviations are display-only, with exact decimal strings retained in evidence. Unit selection and half-up rounding use integer arithmetic and never affect account or order calculations.
+
+### UX5-A1 learning foundation
+
+The original ten lesson records and learning routes remain intact. Separate structured stock and ETF units provide explanations, hypothetical examples, practice links and per-answer feedback. Quiz state is in-memory only and practice links do not submit orders.

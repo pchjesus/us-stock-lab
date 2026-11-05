@@ -24,3 +24,20 @@ export function financialValueText(f:FinancialFact){
  const millions=units/1000000000000n,decimals=(units%1000000000000n).toString().padStart(12,'0').replace(/0+$/,'');
  return `${value.startsWith('-')?'-':''}${millions.toLocaleString('en-US')}${decimals?'.'+decimals:''} 백만 USD · 정확값 ${value} USD`;
 }
+
+/** Display only: scale USD using exact decimal digits; round magnitude half up to one decimal. */
+export function koreanFinancialValue(value:string|null,unit:'USD'|'USD/share'):string {
+ if(value===null)return '미제공';
+ if(!/^-?\d+(?:\.\d+)?$/.test(value))return '미제공';
+ const negative=value.startsWith('-'),digits=negative?value.slice(1):value;
+ const [whole,fraction='']=digits.split('.');const n=BigInt(whole+fraction),scale=10n**BigInt(fraction.length);
+ const sign=negative&&n!==0n?'-':'';const comma=(s:string)=>s.replace(/\B(?=(\d{3})+(?!\d))/g,',');
+ if(unit==='USD/share')return `${sign}${comma(BigInt(whole).toString())}${fraction?'.'+fraction:''}달러/주`;
+ const units=[{n:1000000000000n,label:'조'},{n:100000000n,label:'억'},{n:10000n,label:'만'}];
+ let index=units.findIndex(u=>n>=u.n*scale);
+ if(index<0)return `${sign}${comma(BigInt(whole).toString())}${fraction?'.'+fraction:''}달러`;
+ const rounded=(u:bigint)=>(n*10n+u*scale/2n)/(u*scale);
+ let amount=rounded(units[index].n);
+ if(index>0&&amount>=100000n){index--;amount=rounded(units[index].n)}
+ return `${sign}${comma((amount/10n).toString())}.${amount%10n}${units[index].label} 달러`;
+}

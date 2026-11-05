@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react';
 import {FinancialGraph} from './FinancialGraph';
-import {currentFinancialFacts,financialSeries,latestFinancialFact,financialValueText} from './companyPresentation';
+import {currentFinancialFacts,financialSeries,latestFinancialFact,financialValueText,koreanFinancialValue} from './companyPresentation';
 import {findCompanyProfile} from './companyProfiles';
 import type {CompanyProfile,FinancialFact,Metric} from './companyData';
 const descriptions:Partial<Record<Metric,string>>={revenue:'상품과 서비스에서 발생한 매출입니다.',operatingIncome:'본업의 영업이익입니다. 영업이익률은 매출 대비 비율이며 업종과 회계 기준에 따라 비교에 주의하세요.',netIncome:'비용과 세금 등을 반영한 순이익입니다.',dilutedEps:'희석 가능 주식을 고려한 주당 순이익입니다.',assets:'기업이 보유한 자산입니다.',liabilities:'기업의 의무와 부채입니다.',equity:'자산에서 부채를 차감한 자기자본입니다.',cashAndEquivalents:'현금과 단기 현금성 자산입니다.',debt:'공시에 표시된 차입금입니다.',operatingCashFlow:'영업활동에서 발생한 현금흐름입니다.',capitalExpenditure:'설비 등에 사용한 자본적지출입니다.',freeCashFlow:'영업현금흐름에서 자본적지출을 차감한 계산값입니다.'};
@@ -34,24 +34,16 @@ function FactEvidence({profile,f}:{profile:CompanyProfile;f:FinancialFact}){
 function MetricCard({profile,metric,f,compact=false}:{profile:CompanyProfile;metric:Metric;f:FinancialFact|undefined;compact?:boolean}){
  const value=f?financialValueText(f):'공식 수치 미확인';
  return <div className="financial-metric" data-observation-id={f?.id} data-testid={(compact?'overview-':'financial-')+metric}><strong>{labels[metric]}</strong>
-  <p className="financial-value">{compact?value.split(' · 정확값 ')[0]:f?shortValue(f):value}</p>
-  {compact&&value.includes(' · 정확값 ')&&<details><summary>정확값 보기</summary><p>{value}</p></details>}
+  <p className="financial-value">{f?koreanFinancialValue(f.value,f.unit):value}</p>
+  {compact&&f&&<details><summary>원본·근거 보기</summary><p>{value}</p><FactEvidence profile={profile} f={f}/></details>}
   {f&&<p className="financial-period">{periodText(f)} · {f.origin.kind==='reported'?'공식 보고':'계산'}</p>}
   {f&&<SourceLink profile={profile} id={f.sourceId}/>}
   {!compact&&<><small>{descriptions[metric]}</small>{f&&<details><summary>정확값·원문·계산 근거</summary><p>{value}</p><FactEvidence profile={profile} f={f}/></details>}</>}
  </div>;
 }
-function shortValue(f:FinancialFact){
- if(f.value===null)return '미제공';
- if(f.unit!=='USD')return `${f.value} ${f.unit}`;
- const negative=f.value.startsWith('-'),whole=BigInt(f.value.replace('-','').split('.')[0]);
- const unit=whole>=1000000000n?1000000000n:whole>=1000000n?1000000n:1n;
- if(unit===1n)return `${f.value} USD`;
- return `${negative?'-':''}${(whole/unit).toLocaleString('en-US')}.${whole%unit*10n/unit} ${unit===1000000000n?'십억':'백만'} USD`;
-}
 function ComparisonFact({profile,f,onEvidence}:{profile:CompanyProfile;f:FinancialFact;onEvidence?:(id:string)=>void}){
  const [opened,setOpened]=useState(false);
- return <details data-observation-id={f.id} onToggle={event=>setOpened(event.currentTarget.open)}><summary>{shortValue(f)}</summary>{opened&&<><FactEvidence profile={profile} f={f}/><button onClick={()=>onEvidence?.(f.id)}>근거 확인</button></>}</details>;
+ return <details data-observation-id={f.id} onToggle={event=>setOpened(event.currentTarget.open)}><summary>{koreanFinancialValue(f.value,f.unit)}</summary>{opened&&<><FactEvidence profile={profile} f={f}/><button onClick={()=>onEvidence?.(f.id)}>근거 확인</button></>}</details>;
 }
 const statements:{title:string;description:string;metrics:Metric[];instant?:boolean}[]=[
  {title:'손익계산서',description:'얼마를 벌고, 비용을 뺀 뒤 얼마가 남았는지 확인합니다.',metrics:['revenue','operatingIncome','netIncome','dilutedEps']},
@@ -68,7 +60,7 @@ function FinancialStatements({profile,period,onEvidence}:{profile:CompanyProfile
  {!keys.length?<p>선택한 기간의 검증된 비교 자료 미제공</p>:<><p className="financial-table-hint">최근 확인된 최대 3개 기간 · {group.instant?'시점 잔액':period==='annual'?'연간':'단독 분기'} · 기간이 연속되지 않을 수 있습니다. 모바일에서는 표를 좌우로 이동하세요.</p>
  <div className="financial-table-scroll" tabIndex={0} role="region" aria-label={group.title+' 기간 비교'}><table style={{minWidth:keys.length>1?620:0}}><caption>{group.title} · 검증된 기간별 관측값</caption><thead><tr><th scope="col">항목</th>{keys.map(key=>{const f=selected.find(f=>`${f.period.start??''}|${f.period.end}|${f.period.fiscalYear}|${f.period.quarter??''}`===key)!;return <th scope="col" key={key}>FY{f.period.fiscalYear}{f.period.quarter?` Q${f.period.quarter}`:''}<span>{group.instant?f.period.end:`${f.period.start}~${f.period.end}`}</span></th>})}</tr></thead>
  <tbody>{group.metrics.map(metric=><tr key={metric}><th scope="row">{labels[metric]}</th>{keys.map(key=>{const f=selected.find(f=>f.metric===metric&&`${f.period.start??''}|${f.period.end}|${f.period.fiscalYear}|${f.period.quarter??''}`===key);return <td key={key}>{f?<><ComparisonFact profile={profile} f={f} onEvidence={onEvidence}/><small>{f.origin.kind==='reported'?'공식 보고값':'계산값'}</small></>:<span>미제공</span>}</td>})}</tr>)}</tbody></table></div></>}
- <details className="financial-definitions"><summary>항목 설명과 최근값 상세</summary><div className="financial-detail-list">{group.metrics.map(metric=>{const f=latestFinancialFact(profile,metric,period);return <details key={metric} data-testid={['revenue','operatingIncome','netIncome','operatingCashFlow'].includes(metric)?undefined:'financial-'+metric} data-observation-id={f?.id}><summary><strong>{labels[metric]}</strong><span>{f?shortValue(f):'공식 수치 미확인'}</span></summary><p>{descriptions[metric]}</p>{f?<><p>{periodText(f)}</p><FactEvidence profile={profile} f={f}/></>:<p>선택한 기간의 공식 수치 미확인 · 다른 기간으로 대체하지 않습니다.</p>}</details>})}</div></details>
+ <details className="financial-definitions"><summary>항목 설명과 최근값 상세</summary><div className="financial-detail-list">{group.metrics.map(metric=>{const f=latestFinancialFact(profile,metric,period);return <details key={metric} data-testid={['revenue','operatingIncome','netIncome','operatingCashFlow'].includes(metric)?undefined:'financial-'+metric} data-observation-id={f?.id}><summary><strong>{labels[metric]}</strong><span>{f?koreanFinancialValue(f.value,f.unit):'공식 수치 미확인'}</span></summary><p>{descriptions[metric]}</p>{f?<><p>{periodText(f)}</p><FactEvidence profile={profile} f={f}/></>:<p>선택한 기간의 공식 수치 미확인 · 다른 기간으로 대체하지 않습니다.</p>}</details>})}</div></details>
  </section>})}</section>;
 }
 export function CompanyDetail({profile,section='overview',period:controlledPeriod,onPeriodChange,evidenceId,onEvidence}:{profile:CompanyProfile;section?:CompanySection;period?:Period;onPeriodChange?:(p:Period)=>void;evidenceId?:string|null;onEvidence?:(id:string)=>void}){
@@ -96,7 +88,7 @@ export function CompanyDetail({profile,section='overview',period:controlledPerio
    <div className="company-intro-grid"><div><h3>핵심 사업</h3>{profile.business.map(v=><p key={v}>{v}</p>)}<h3>수익구조</h3><p>{profile.revenueModel}</p><details><summary>사업부 자세히</summary>{profile.segments.map(v=><p key={v}>{v}</p>)}<p>{profile.industry} · SEC SIC 분류</p></details></div>
    <div><h3>주요 위험요인</h3><ul>{profile.risks.map(v=><li key={v}>{v}</li>)}</ul></div></div>
   </section>}
-  <section id="company-metrics" className="panel"><div className="section-title"><h2>{section==='overview'?'최근 확인 실적':'핵심 투자지표'}</h2><PeriodControls period={period} onChange={change}/></div><p>{period==='annual'?'최근 확인 연간 실적':'최근 확인 단독 분기 실적'} · 기간 실적과 시점 잔액을 구분합니다.</p>
+  <section id="company-metrics" className="panel"><div className="section-title"><h2>{section==='overview'?'최근 확인 실적':'핵심 투자지표'}</h2><PeriodControls period={period} onChange={change}/></div><p>{period==='annual'?'최근 확인 연간 실적':'최근 확인 단독 분기 실적'} · 기간 실적과 시점 잔액을 구분합니다. 축약 금액은 반올림한 표시이며 원본은 상세에서 확인하세요.</p>
    {section==='financials'&&<details><summary>회계 기준·기업별 정의</summary><p>{profile.financialCoverage.reason}</p><p>{profile.symbol==='GOOGL'?'EPS: 공시 연결 열 · 클래스별 값과 다를 수 있음':profile.symbol==='AMZN'?'앱 FCF: 현금 설비취득 총액 차감 · 회사 발표 정의와 다름':profile.symbol==='NVDA'?'공시의 분할 반영 EPS · NVIDIA 회계연도 기준':'공식 연간·직접 보고 단독 분기 기준'}</p>{profile.financialAsOf&&<p>재무 자료 기준일 {profile.financialAsOf}</p>}</details>}
    <div className={'financial-metrics-grid '+(section==='overview'?'overview-metrics':'financial-summary')}>{(section==='overview'?['revenue','operatingIncome','netIncome']:['revenue','operatingIncome','netIncome','operatingCashFlow']).map(metric=><MetricCard key={metric} profile={profile} metric={metric as Metric} f={latest(metric as Metric)} compact={section==='overview'}/>)}</div>
    {section==='financials'&&<div className="evidence-jumps">{(['revenue','operatingIncome','netIncome','operatingCashFlow'] as Metric[]).map(m=>{const f=latest(m);return f&&<button key={m} onClick={()=>onEvidence?.(f.id)}>{labels[m]} 근거 확인</button>})}</div>}

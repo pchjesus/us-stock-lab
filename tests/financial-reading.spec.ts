@@ -5,7 +5,7 @@ test('financial summary, statements and mobile comparison preserve evidence path
  await page.goto('/#stock/AAPL');await openFinancials(page);
  const before=await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'));
  await expect(page.locator('.financial-summary > .financial-metric')).toHaveCount(4);
- await expect(page.getByTestId('financial-revenue')).toContainText('416.1 십억 USD');
+ await expect(page.getByTestId('financial-revenue')).toContainText('4,161.6억 달러');
  await page.getByTestId('financial-revenue').getByText('정확값·원문·계산 근거',{exact:true}).click();
  await expect(page.getByTestId('financial-revenue').getByTestId('evidence-exact-value')).toContainText('416161000000');
  for(const width of [1440,1200,768,390,320]){

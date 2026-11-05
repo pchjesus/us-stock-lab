@@ -272,3 +272,7 @@ Evidence observation summaries remain reachable in the native keyboard Tab order
 ### UX4-F2 supported instrument discovery
 
 Market browsing applies a display-only fixed sector mapping to the eight existing supported instruments. Sector, name/ticker search and watchlist filters combine; external quote links remain references and do not change trading prices. SEC catalog candidates stay separate and non-tradable.
+
+### UX4-F3a financial display
+
+Korean dollar abbreviations are display-only, with exact decimal strings retained in evidence. Unit selection and half-up rounding use integer arithmetic and never affect account or order calculations.

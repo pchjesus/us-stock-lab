@@ -372,3 +372,7 @@ Restored native Tab navigation for evidence summaries and verified Enter, Space,
 ### UX4-F2 sector discovery checkpoint
 
 Separated the market's supported-instrument list from home watchlist rows; added sector, search and watch filters with external quote links sharing the existing mapping. SEC candidate discovery and financial calculations are untouched. See docs/ui/UX4_F2_SECTOR_DISCOVERY.md.
+
+### UX4-F3a financial amount presentation
+
+Added exact-decimal Korean dollar formatting for company financial displays while retaining original audit evidence and recorded the unimplemented peer comparison requirements. See docs/ui/UX4_F3A_NUMBER_DISPLAY.md.

@@ -372,3 +372,7 @@ Restored native Tab navigation for evidence summaries and verified Enter, Space,
 ### UX4-F2 sector discovery checkpoint
 
 Separated the market's supported-instrument list from home watchlist rows; added sector, search and watch filters with external quote links sharing the existing mapping. SEC candidate discovery and financial calculations are untouched. See docs/ui/UX4_F2_SECTOR_DISCOVERY.md.
+
+### UX5-A1 beginner learning foundation
+
+Added an ordered six-stage learning guide and separate stock/ETF educational units with local quiz feedback. Preserved the original lessons and chart routes; content sources and follow-up audit are in docs/learning/UX5_A1_CURRICULUM.md.

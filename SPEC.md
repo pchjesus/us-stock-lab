@@ -268,3 +268,7 @@ Company financials prioritize four period-aligned metrics, then the existing rev
 Evidence filters operate on existing observations without modifying them. Financial links open the corresponding fact in the same company's evidence tab; all facts are visible by default.
 
 Evidence observation summaries remain reachable in the native keyboard Tab order and support Enter and Space, including after filtering and financial-to-evidence navigation.
+
+### UX4-F2 supported instrument discovery
+
+Market browsing applies a display-only fixed sector mapping to the eight existing supported instruments. Sector, name/ticker search and watchlist filters combine; external quote links remain references and do not change trading prices. SEC catalog candidates stay separate and non-tradable.

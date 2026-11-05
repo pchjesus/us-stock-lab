@@ -368,3 +368,7 @@ Added offline source/fact filters and exact observation navigation from financia
 ### UX4-F1c evidence keyboard access
 
 Restored native Tab navigation for evidence summaries and verified Enter, Space, focus-visible and financial-to-evidence focus. Final 326 app, 52 Auth fixture, 6 release and 3 UX0 tests passed; details in docs/ui/UX4_F1B_EVIDENCE.md.
+
+### UX4-F2 sector discovery checkpoint
+
+Separated the market's supported-instrument list from home watchlist rows; added sector, search and watch filters with external quote links sharing the existing mapping. SEC candidate discovery and financial calculations are untouched. See docs/ui/UX4_F2_SECTOR_DISCOVERY.md.

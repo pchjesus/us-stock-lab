@@ -380,3 +380,7 @@ Added exact-decimal Korean dollar formatting for company financial displays whil
 ### UX5-A1 beginner learning foundation
 
 Added an ordered six-stage learning guide and separate stock/ETF educational units with local quiz feedback. Preserved the original lessons and chart routes; content sources and follow-up audit are in docs/learning/UX5_A1_CURRICULUM.md.
+
+### UX4-F3b offline peer foundation
+
+Added isolated NVDA/AMD SEC observations, amendment context and fail-closed exact-period comparison. No peer UI or trading instruments were added. Source evidence and restrictions are in docs/ui/UX4_F3B_PEER_DATA.md.

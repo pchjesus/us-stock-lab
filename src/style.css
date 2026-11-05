@@ -346,3 +346,4 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .discovery-external{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:13px}
 .ui-foundation .discovery-actions .star{min-width:44px;min-height:44px}
 @media(max-width:640px){.ui-foundation .discovery-stock{display:flex;flex-wrap:wrap;gap:4px 12px}.ui-foundation .discovery-stock .identity{flex:1 1 100%}.ui-foundation .discovery-actions{width:100%;justify-content:space-between;padding-left:41px}.ui-foundation .supported-discovery .toolbar input{flex:1 1 100%}}
+.ui-foundation .sector-source a{display:inline-flex;align-items:center;min-height:44px}

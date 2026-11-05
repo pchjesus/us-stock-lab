@@ -36,3 +36,11 @@ U.S. Securities and Exchange Commission. (n.d.). *Exchange-traded funds (ETFs)*.
 U.S. Securities and Exchange Commission. (n.d.). *Asset allocation and diversification*. Investor.gov. Retrieved November 5, 2026, from https://www.investor.gov/introduction-investing/getting-started/asset-allocation
 
 위 세 공식 페이지를 직접 확인해 ETF의 비용과 NAV/거래가격 차이, 좁은 펀드의 분산 한계, 투자 손실 가능성을 반영했다. 금융 조언이나 투자 성과 보장이 아니다.
+
+## 검증
+
+- 공개 참고자료 true·수기 false production TypeScript/Vite build PASS.
+- 신규 단원·기존 학습 탐색·차트 영향 검사 24/24 PASS. 기존 수업 해시와 10개 원문·실습, 모든 레거시 경로와 Tour 검사 포함.
+- 전체 UI 334/334, Auth fixture 52/52, release 6/6, UX0 3/3 PASS. F2의 330에 신규 desktop/mobile 테스트 4개 실행이 추가됐다.
+- 1440/768/390/320px의 신규 단원 표시·키보드·가로 넘침을 검사했고, [1440px 진입 화면](ux5-a1-captures/1440-learning-path.png)과 [390px 주식 단원](ux5-a1-captures/390-learning-stock.png)을 Chromium에서 확인했다. 실기기와 스크린리더 실사용은 NOT VERIFIED.
+- UX0 검사 후 기존 미커밋 캡처의 내용을 복원했다. 실제 주문·운영 DB 변경은 수행하지 않았다.

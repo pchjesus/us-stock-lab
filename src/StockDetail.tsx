@@ -12,7 +12,7 @@ export type DetailTab='overview'|'trade'|'financials'|'evidence';
 export const detailTabEvent='stock-detail-tab';
 export function StockDetail({stock,account,manual,watched,toggleWatch}:{stock:Instrument;account:AccountView;manual:boolean;watched:boolean;toggleWatch:()=>void}){
  const [tab,setTab]=useState<DetailTab>('overview'),[tradeVisited,setTradeVisited]=useState(false),[period,setPeriod]=useState<'annual'|'quarter'>('annual');
- const root=useRef<HTMLElement>(null);const buttons=useRef<(HTMLButtonElement|null)[]>([]);const currency=useCurrency();
+ const [evidenceId,setEvidenceId]=useState<string|null>(null);const root=useRef<HTMLElement>(null);const buttons=useRef<(HTMLButtonElement|null)[]>([]);const currency=useCurrency();
  const profile=findCompanyProfile(stock.symbol),etf=stock.kind==='ETF';
  const tabs=[['overview','개요'],['trade','차트·거래'],['financials',etf?'상품정보':'재무'],['evidence',etf?'출처':'근거']] as const;
  function activate(next:DetailTab){if(next==='trade')setTradeVisited(true);setTab(next);}
@@ -37,7 +37,7 @@ export function StockDetail({stock,account,manual,watched,toggleWatch}:{stock:In
     <section className="panel price-boundary"><h2>{manual?'가격 종류를 구분하세요':'교육용 합성 가격 · 실제 시세 아님'}</h2><p className="synthetic-price">{manual&&'교육용 합성 가격 · 실제 시세 아님 · '}{currency.format(Math.round(quote(stock).price*100))} <span className={quote(stock).change>=0?'up':'down'}>{quote(stock).change.toFixed(2)}%</span></p><p>모의 주문·평가는 합성 계좌의 가격을 사용합니다. 외부 참고 시세는 주문에 자동 입력되지 않으며, 별도 수기 계좌는 사용자가 확인한 가격으로 기록합니다.</p></section>
     <div className="detail-layout"><div className="detail-chart"><ExternalQuotes key={stock.symbol} symbol={stock.symbol} active={tab==='trade'}/></div><div className="detail-order" id="detail-order" tabIndex={-1} aria-label="주문 영역"><OrderAccountContext manual={manual} uid={account.userId}/>{manual?<ManualWorkspace key={account.userId} uid={account.userId!} symbol={stock.symbol}/>:<OrderPanel key={stock.symbol+account.modeKey} stock={stock} view={account}/>}</div></div>
     <section className="panel detail-learning"><p>합성 시나리오는 학습용이며 실제 시세가 아닙니다.</p></section>
-   </>:tab===id&&id!=='trade'?(etf?<EtfDetail stock={stock} section={id==='financials'?'product':id==='evidence'?'sources':'overview'}/>:profile?<CompanyDetail profile={profile} section={id==='financials'?'financials':id==='evidence'?'evidence':'overview'} period={period} onPeriodChange={setPeriod}/>:<p>기업 자료 미제공</p>):null}
+   </>:tab===id&&id!=='trade'?(etf?<EtfDetail stock={stock} section={id==='financials'?'product':id==='evidence'?'sources':'overview'}/>:profile?<CompanyDetail profile={profile} section={id==='financials'?'financials':id==='evidence'?'evidence':'overview'} period={period} onPeriodChange={setPeriod} evidenceId={evidenceId} onEvidence={id=>{setEvidenceId(id);activate('evidence')}}/>:<p>기업 자료 미제공</p>):null}
   </section>)}
  </article>;
 }

@@ -376,3 +376,7 @@ Separated the market's supported-instrument list from home watchlist rows; added
 ### UX4-F3a financial amount presentation
 
 Added exact-decimal Korean dollar formatting for company financial displays while retaining original audit evidence and recorded the unimplemented peer comparison requirements. See docs/ui/UX4_F3A_NUMBER_DISPLAY.md.
+
+### UX5-A1 beginner learning foundation
+
+Added an ordered six-stage learning guide and separate stock/ETF educational units with local quiz feedback. Preserved the original lessons and chart routes; content sources and follow-up audit are in docs/learning/UX5_A1_CURRICULUM.md.

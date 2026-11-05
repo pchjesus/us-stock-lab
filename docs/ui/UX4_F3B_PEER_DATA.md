@@ -38,3 +38,10 @@ U.S. Securities and Exchange Commission. (n.d.). *Company facts: NVIDIA Corporat
 U.S. Securities and Exchange Commission. (n.d.). *Submissions: Advanced Micro Devices, Inc.* Retrieved November 5, 2026, from https://data.sec.gov/submissions/CIK0000002488.json
 
 U.S. Securities and Exchange Commission. (n.d.). *Submissions: NVIDIA Corporation*. Retrieved November 5, 2026, from https://data.sec.gov/submissions/CIK0001045810.json
+
+## 검증
+
+- 원격 기준 main `57254205f62b1c3166378822e185b5dcd1cf60f4`와 F3b 시작 HEAD가 일치함을 확인했다. GitHub 해당 커밋에 등록된 status/check run은 없어 원격 CI 통과로 판단하지 않았다. 독립 peer 모듈을 연결하지 않은 기존 main 앱 코드에 대해 이번 체크포인트에서 전체 회귀를 직접 실행했다.
+- production TypeScript/Vite build (공개 참고자료 true·수기 false), 신규·기존 영향 검사 46/46 PASS. 체크포인트 전체 UI 346/346, Auth fixture 52/52, release 6/6, UX0 3/3 PASS. 기존 main의 336개 테스트 실행에 peer 테스트 10개 실행이 추가됐다.
+- 전체 회귀 후 중첩 관계 메타데이터에 불변성을 추가했다. 최종 build와 peer 테스트 12/12, diff 검사를 다시 통과했다. 전체 UI/Auth/release/UX0는 이 불변성 보완 전 체크포인트에서 실행했고, 해당 모듈은 앱에 연결되어 있지 않다.
+- 기존 219개 재무 관측 및 8종목 검사를 통과했고, 기존 금융·운영 파일은 변경하지 않았다. UX0 검사 후 기존 미커밋 캡처는 원래 내용으로 복원했다. 실제 API 키·운영 DB·주문·배포를 사용하지 않았다.

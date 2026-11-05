@@ -327,3 +327,23 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .evidence-filters :is(input,select,button),.ui-foundation .evidence-jumps button{min-height:44px;font:inherit;max-width:100%}
 .ui-foundation .evidence-filters input[type=checkbox]{min-height:22px;width:22px}
 .ui-foundation .evidence-filters select,.ui-foundation .evidence-filters input:not([type=checkbox]){border:1px solid var(--line);border-radius:8px;padding:10px;background:white}
+/* UX4-F2 supported instrument discovery */
+.ui-foundation .supported-discovery{min-width:0}
+.ui-foundation .supported-discovery>p{font-size:14px;line-height:1.7}
+.ui-foundation .sector-rail{display:flex;gap:8px;overflow-x:auto;max-width:100%;padding:3px 3px 10px;scrollbar-width:thin}
+.ui-foundation .sector-rail button{white-space:nowrap;min-height:44px;flex:none}
+.ui-foundation .sector-rail:focus-visible{outline:3px solid #254dc7;outline-offset:2px}
+.ui-foundation .sector-source{font-size:12px;overflow-wrap:anywhere}
+.ui-foundation .sector-source a{color:var(--accent);text-decoration:underline}
+.ui-foundation .supported-discovery .toolbar{flex-wrap:wrap}
+.ui-foundation .supported-discovery .toolbar input{min-width:180px;min-height:44px}
+.ui-foundation .supported-discovery .toolbar button{min-height:44px}
+.ui-foundation .discovery-stock{gap:20px;align-items:center;min-width:0}
+.ui-foundation .discovery-stock .identity{min-height:60px;align-items:flex-start;padding:8px 0}
+.ui-foundation .discovery-stock .identity strong{font-size:16px;color:var(--text)}
+.ui-foundation .discovery-description{display:block;color:var(--muted);font-size:13px;line-height:1.7;margin-top:7px;overflow-wrap:anywhere}
+.ui-foundation .discovery-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.ui-foundation .discovery-external{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:13px}
+.ui-foundation .discovery-actions .star{min-width:44px;min-height:44px}
+@media(max-width:640px){.ui-foundation .discovery-stock{display:flex;flex-wrap:wrap;gap:4px 12px}.ui-foundation .discovery-stock .identity{flex:1 1 100%}.ui-foundation .discovery-actions{width:100%;justify-content:space-between;padding-left:41px}.ui-foundation .supported-discovery .toolbar input{flex:1 1 100%}}
+.ui-foundation .sector-source a{display:inline-flex;align-items:center;min-height:44px}

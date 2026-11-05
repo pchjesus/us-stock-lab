@@ -384,3 +384,7 @@ Added an ordered six-stage learning guide and separate stock/ETF educational uni
 ### UX4-F3b offline peer foundation
 
 Added isolated NVDA/AMD SEC observations, amendment context and fail-closed exact-period comparison. No peer UI or trading instruments were added. Source evidence and restrictions are in docs/ui/UX4_F3B_PEER_DATA.md.
+
+### UX4-F3c peer reference UI
+
+Added an NVDA-only peer modal using the existing verified data and Modal. Different fiscal periods remain separate reference cards with no relative chart; eligible chart behavior is tested with synthetic fixtures. See docs/ui/UX4_F3C_PEER_UI.md.

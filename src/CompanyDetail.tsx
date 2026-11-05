@@ -1,5 +1,6 @@
 import {useState,useEffect} from 'react';
 import {FinancialGraph} from './FinancialGraph';
+import {PeerComparison} from './peer/PeerComparison';
 import {currentFinancialFacts,financialSeries,latestFinancialFact,financialValueText,koreanFinancialValue} from './companyPresentation';
 import {findCompanyProfile} from './companyProfiles';
 import type {CompanyProfile,FinancialFact,Metric} from './companyData';
@@ -95,6 +96,7 @@ export function CompanyDetail({profile,section='overview',period:controlledPerio
    {section==='financials'&&<p>영업이익률: 미제공 · 산식과 원문 검증 후 제공</p>}
   </section>
   <section id="company-results" className="panel"><h2>공식 매출 추이 · {period==='annual'?'연간':'단독 분기'}</h2>{series.length?<FinancialGraph profile={profile} series={series} basis={period}/>:<p>공식 실적 자료가 아직 입력되지 않았습니다. 연초 누적값은 단독 분기와 섞지 않습니다.</p>}</section>
+  {section==='financials'&&profile.symbol==='NVDA'&&<PeerComparison/>}
   {section==='financials'&&<><FinancialStatements profile={profile} period={period} onEvidence={onEvidence}/>
    <section id="company-dividends" className="panel"><h2>배당 정보</h2>{profile.dividends.status==='not-reviewed'?<><p>공식 배당 자료 미확인 · 무배당을 의미하지 않습니다.</p><p>{profile.dividends.reason}</p></>:profile.dividends.entries.map(d=><p key={d.id}>주당 {d.amountPerShare} USD · 배당락 {d.exDate} · 기준일 {d.recordDate} · 지급일 {d.paymentDate} <SourceLink profile={profile} id={d.sourceId} label="공식 출처 ↗"/></p>)}<small>기업 공시와 수기 계좌 배당 원장은 별도 자료입니다.</small></section></>}
  </div>;

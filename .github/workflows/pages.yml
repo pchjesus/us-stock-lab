@@ -1,7 +1,10 @@
 name: Deploy Pages
 # The production DB is not yet migrated for v0.6 (004-007).
-# The UI release keeps manual trading disabled. Publish only after UI release approval.
+# The UI release keeps manual trading disabled. Deploy only when explicitly approved:
+# either workflow_dispatch or an authorized main commit tagged [deploy-pages].
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,6 +15,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy-pages]')
     runs-on: ubuntu-latest
     environment:
       name: github-pages

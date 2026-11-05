@@ -266,3 +266,5 @@ Company financials prioritize four period-aligned metrics, then the existing rev
 ### UX4-F1b evidence navigation
 
 Evidence filters operate on existing observations without modifying them. Financial links open the corresponding fact in the same company's evidence tab; all facts are visible by default.
+
+Evidence observation summaries remain reachable in the native keyboard Tab order and support Enter and Space, including after filtering and financial-to-evidence navigation.

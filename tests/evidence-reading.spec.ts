@@ -11,3 +11,16 @@ test('combined filters, calculated details and responsive layout',async({page})=
  for(const width of [1440,768,390,320]){await page.setViewportSize({width,height:1000});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.getByLabel('항목명 또는 관측 ID 검색').focus();await expect(page.getByLabel('항목명 또는 관측 ID 검색')).toBeFocused()}
  await page.getByLabel('항목명 또는 관측 ID 검색').fill('missing');await page.reload();await page.getByRole('tab',{name:'근거',exact:true}).click();await expect(page.locator('[data-fact-id]')).toHaveCount(45);await page.goto('/#stock/MSFT');await page.getByRole('tab',{name:'근거',exact:true}).click();await expect(page.getByLabel('항목명 또는 관측 ID 검색')).toHaveValue('');expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(before);expect(errors).toEqual([]);
 });
+test('keyboard reaches filtered observations and opens them with Enter and Space',async({page})=>{
+ await page.goto('/#stock/AAPL');await page.getByRole('tab',{name:'근거',exact:true}).click();
+ const id=companyProfiles.find(p=>p.symbol==='AAPL')!.financials[0].id;
+ await page.getByLabel('항목명 또는 관측 ID 검색').fill(id);
+ await expect(page.locator('[data-fact-id]')).toHaveCount(1);
+ await page.getByRole('button',{name:'전체 초기화'}).focus();await page.keyboard.press('Tab');
+ const summary=page.locator('[data-fact-id] > summary');await expect(summary).toBeFocused();
+ expect(await summary.evaluate(e=>getComputedStyle(e).outlineStyle)).not.toBe('none');
+ await page.keyboard.press('Enter');await expect(page.locator('[data-fact-id]')).toHaveAttribute('open','');
+ await page.keyboard.press('Space');await expect(page.locator('[data-fact-id]')).not.toHaveAttribute('open','');
+ await page.getByRole('tab',{name:'재무',exact:true}).click();const target=await page.getByTestId('financial-revenue').getAttribute('data-observation-id');await page.getByRole('button',{name:'매출액 근거 확인'}).click();
+ const focused=page.locator('[data-fact-id] > summary:focus');await expect(focused.locator('..')).toHaveAttribute('data-fact-id',target!);await expect(focused.locator('..')).toHaveAttribute('open','');
+});

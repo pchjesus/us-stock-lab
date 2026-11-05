@@ -364,3 +364,7 @@ Replaced eight equal cards and repeated health rows with four key metrics and th
 ### UX4-F1b evidence navigation
 
 Added offline source/fact filters and exact observation navigation from financials. Evidence data and existing account state remain unchanged; see docs/ui/UX4_F1B_EVIDENCE.md.
+
+### UX4-F1c evidence keyboard access
+
+Restored native Tab navigation for evidence summaries and verified Enter, Space, focus-visible and financial-to-evidence focus. Final 326 app, 52 Auth fixture, 6 release and 3 UX0 tests passed; details in docs/ui/UX4_F1B_EVIDENCE.md.

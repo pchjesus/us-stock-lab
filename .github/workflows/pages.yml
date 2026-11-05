@@ -15,6 +15,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
+    timeout-minutes: 40
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy-pages]')
     runs-on: ubuntu-latest
     environment:
@@ -34,6 +35,22 @@ jobs:
           VITE_ENABLE_MANUAL_TRADING: 'false'
           VITE_ENABLE_MARKET_FX: 'true'
           VITE_ENABLE_TREASURY_STATS: 'true'
+      - name: Install Chromium for release regression
+        run: npx playwright install --with-deps chromium
+      - name: Configure Chromium for browser tests
+        run: |
+          CHROME=$(find "$HOME/.cache/ms-playwright" -path '*/chrome-linux64/chrome' -type f | head -n 1)
+          test -n "$CHROME"
+          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+          sudo ln -sf "$CHROME" /usr/bin/chromium
+      - name: Full UI regression
+        run: npm test -- --workers=2
+      - name: Auth fixture regression
+        run: npm run test:auth -- --workers=2
+      - name: Release candidate regression
+        run: npx playwright test --config playwright.release.config.ts --workers=1
+      - name: UX0 regression
+        run: npm run test:ux0 -- --workers=2
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -24,4 +24,8 @@ U.S. Bureau of Labor Statistics. (n.d.). *The employment situation*. https://www
 
 ## 검증
 
-최종 검증 후 기록한다.
+Pages 설정(공개 참고자료 true, 수기 거래 false) production build 및 TypeScript PASS. A1·P1·P2 수업, 해시·경로·ChartLab을 포함한 영향 테스트 32건, 전체 UI 366건, Auth 54건, release 6건, UX0 3건 PASS. 1440·768·390·320px에서 키보드, 표 가로 이동, 금융 RPC 및 로컬 데이터 보존을 확인했고 `ux5-a2-p2-captures/`에 1440·390px 캡처를 보관한다. `git diff --check` PASS.
+
+UX0 최초 실행은 기존 4180 포트 충돌로 시작하지 못했다. 동일한 프로토타입 설정을 4186 포트로 바꿔 재실행하여 3건 통과했다. 기존 미커밋 UX0 캡처는 내용 그대로 복원했다. Auth 검사는 별도의 수기 활성 테스트 fixture를 사용한다. 실기기와 배포된 Pages는 검증하지 않았다.
+
+공통 단원 컴포넌트와 표·순서 목록을 재사용하고 원본 데이터 계약을 유지했다. 이번에는 반복 결함이나 상태 소유권 변경 근거가 없어 추가 리팩터링을 보류하며, 단원 추가 시 분기 수정의 반복이 문제가 되면 재검토한다.

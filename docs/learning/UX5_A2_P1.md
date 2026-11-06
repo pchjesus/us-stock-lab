@@ -14,7 +14,7 @@ U.S. Securities and Exchange Commission. (n.d.). *Ex-dividend dates: When are yo
 
 U.S. Securities and Exchange Commission. (n.d.). *International investing*. Investor.gov. https://www.investor.gov/introduction-investing/investing-basics/investment-products/international-investing
 
-U.S. Securities and Exchange Commission. (n.d.). *Stocks*. Investor.gov. https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks
+U.S. Securities and Exchange Commission. (n.d.). *Stocks - FAQs*. Investor.gov. https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks
 
 ## 검증
 

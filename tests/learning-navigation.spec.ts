@@ -1,6 +1,7 @@
 import {test,expect,type Page} from '@playwright/test';
 import {createHash} from 'node:crypto';
 import {lessons} from '../src/Learning';
+import {correctedLessonText} from '../src/learningA2';
 import {resolveLearningRoute} from '../src/learningRoutes';
 import {helpTopicForRoute} from '../src/ContextHelp';
 import {instruments} from '../src/data';
@@ -27,7 +28,7 @@ test('landing has two real choices; history, focus, return links and invalid pat
 });
 
 test('all lessons retain IDs, exact titles, bodies, practices and keyboard filter/expansion behavior',async({page})=>{
- await page.goto('/#learn/lessons');for(const l of lessons){const card=page.locator('#lesson-'+l.id),button=card.getByRole('button',{name:l.title,exact:true});await expect(button).toHaveAttribute('aria-expanded','false');await expect(card.locator('.lesson-body')).toBeHidden();await button.focus();await button.press('Enter');await expect(button).toHaveAttribute('aria-expanded','true');await expect(card.locator('.lesson-body>p').first()).toHaveText(l.body);await expect(card.locator('.practice')).toHaveText('직접 해보기: '+l.practice);await expect(card.locator('#'+await button.getAttribute('aria-controls'))).toBeVisible();await button.press('Space');await expect(card.locator('.lesson-body')).toBeHidden();}
+ await page.goto('/#learn/lessons');for(const l of lessons){const card=page.locator('#lesson-'+l.id),button=card.getByRole('button',{name:l.title,exact:true});await expect(button).toHaveAttribute('aria-expanded','false');await expect(card.locator('.lesson-body')).toBeHidden();await button.focus();await button.press('Enter');await expect(button).toHaveAttribute('aria-expanded','true');const displayed=l.id==='fx'||l.id==='dividend'?correctedLessonText[l.id]:l;await expect(card.locator('.lesson-body>p').first()).toHaveText(displayed.body);await expect(card.locator('.practice')).toHaveText('직접 해보기: '+displayed.practice);await expect(card.locator('#'+await button.getAttribute('aria-controls'))).toBeVisible();await button.press('Space');await expect(card.locator('.lesson-body')).toBeHidden();}
  for(const stage of ['왕초보','기초','시장 이해','경제지표','투자 실습','전체']){const button=page.getByRole('group',{name:'수업 단계'}).getByRole('button',{name:stage,exact:true});await button.focus();await button.press('Space');await expect(button).toHaveAttribute('aria-pressed','true');const filtered=lessons.filter(l=>stage==='전체'||l.stage===stage);expect(await page.locator('.lesson-list>.lesson-card').evaluateAll(es=>es.map(e=>e.id))).toEqual(filtered.map(l=>'lesson-'+l.id));await expect(page.getByTestId('lesson-filter-status')).toHaveText(stage+' · '+filtered.length+'개 수업');}
  await page.locator('#lesson-stock .lesson').click();await page.locator('#lesson-etf .lesson').click();await expect(page.locator('#lesson-stock .lesson-body')).toBeHidden();await expect(page.locator('#lesson-etf .lesson-body')).toBeVisible();
 });

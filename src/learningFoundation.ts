@@ -1,6 +1,6 @@
 /** Educational explanations are separate from the frozen ten-lesson source. */
 export interface LearningQuestion {question:string; options:{text:string;correct:boolean;feedback:string}[]}
-export interface LearningUnit {concept:string;importance:string;application:string;example:string;misunderstanding:string;practice:{text:string;href:string;label:string};questions:LearningQuestion[];sources:{label:string;url:string}[]}
+export interface LearningUnit {concept:string;importance:string;application:string;example:string;misunderstanding:string;practice:{text:string;href:string;label:string};table?:{caption:string;headers:string[];rows:string[][]};timeline?:{caption:string;steps:{title:string;text:string}[]};questions:LearningQuestion[];sources:{label:string;url:string}[]}
 export const learningPath=[
  {title:'주식과 ETF',goal:'무엇을 소유하는지 구분해요.',topics:'기업 지분 · 펀드 · 분산',feature:'시장과 ETF 상세'},
  {title:'시장과 거래',goal:'가격과 거래 과정의 의미를 알아요.',topics:'거래시간 · 주문 · 환율',feature:'시장과 모의 주문'},

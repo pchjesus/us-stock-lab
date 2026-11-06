@@ -18,7 +18,7 @@ U.S. Bureau of Labor Statistics. (n.d.). *Consumer price index: Frequently asked
 
 U.S. Bureau of Economic Analysis. (n.d.). *Personal consumption expenditures price index*. https://www.bea.gov/data/personal-consumption-expenditures-price-index
 
-U.S. Bureau of Economic Analysis. (n.d.). *How does the consumer price index differ from the PCE price index?* https://www.bea.gov/help/faq/555
+U.S. Bureau of Economic Analysis. (n.d.). *What accounts for the differences in the PCE price index and the consumer price index?* https://www.bea.gov/help/faq/555
 
 U.S. Bureau of Labor Statistics. (n.d.). *The employment situation*. https://www.bls.gov/news.release/empsit.nr0.htm
 

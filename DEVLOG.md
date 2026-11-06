@@ -1,4 +1,7 @@
 # 개발 기록
+
+## 2026-11-06 · UX5-A2-P1 환율·배당 교육
+- 기존 열 수업 원본 및 경로를 보존하고 합성 표시 환율·별도 참고환율과 계좌별 배당 기능 제한을 설명하는 환율·배당 상세 수업, 예시, 퀴즈와 감사 문서를 추가했다. 검증 결과는 docs/learning/UX5_A2_P1.md를 참고한다.
 ## 2026-11-03 · v0.8-R1 UI 릴리스 후보
 - 기준 d536d041 개발 브랜치 clean 및 main ac8358ae 확인. 수기 모드 저장 선호가 미배포 RPC를 호출할 수 있어 기본 off 표시 게이트와 Pages false 설정을 추가했다. 기존 선호·paper 계좌·금융 계산/SQL·원자 배포 도구·기업 재무 원본은 보존했다. UI 후보 버전은 0.8.0-rc.1로 정리했다.
 - Pages 환경 TypeScript/Vite build PASS, 일반 PC·모바일 212/212, 모의 인증·paper/수기·배당/세금 38/38, 신규 release 6/6 PASS. 복원된 로그인+이전 수기 모드에서도 수기 RPC 0회·paper 경로 유지 확인. 최초 disabled option matcher 1건은 native DOM 속성 검사로 수정 후 전부 통과. diff 검사 PASS.

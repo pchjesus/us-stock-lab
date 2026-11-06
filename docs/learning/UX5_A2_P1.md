@@ -18,4 +18,6 @@ U.S. Securities and Exchange Commission. (n.d.). *Stocks*. Investor.gov. https:/
 
 ## 검증
 
-검증 결과는 최종 실행 후 갱신한다.
+Pages 설정(공개 참고자료 true, 수기 거래 false)으로 TypeScript·production build PASS. 학습 영향 검사 22건, 전체 UI 362건, 인증/수기 fixture 54건, release 6건, UX0 3건 PASS. 보강한 신규 수업 검사 4건 PASS: 320px 표의 키보드 가로 이동 포함. 1440/390px 실제 Chromium 캡처는 `ux5-a2-p1-captures/`에 보존했다.
+
+전체 UI 및 인증 검사는 데스크톱·모바일 프로젝트로 실행했다. 인증 테스트는 별도의 수기 활성 테스트 fixture를 사용하며 공개 Pages 설정을 변경하지 않는다. 기존 UX0 미커밋 캡처 두 개는 실행 후 원본으로 복원했다.

@@ -1,0 +1,7 @@
+import {test,expect} from '@playwright/test';
+import {lessons} from '../src/Learning';
+test('all lessons remain readable and reachable above mobile navigation',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/#learn/lessons');await page.emulateMedia({reducedMotion:'reduce'});
+ for(const width of [320,390,768,1200,1440]){await page.setViewportSize({width,height:800});for(const lesson of lessons){const card=page.locator('#lesson-'+lesson.id),button=card.locator('.lesson');await button.click();await expect(button).toHaveAttribute('aria-expanded','true');await expect(page.locator('#'+await button.getAttribute('aria-controls'))).toBeVisible();for(const item of [card.locator('fieldset').last().getByRole('radio').last(),card.locator('.learning-unit section').last().getByRole('link').last()]){await item.focus();await expect(item).toBeFocused();const visible=await item.evaluate(el=>{const r=el.getBoundingClientRect();const x=Math.max(0,Math.min(innerWidth-1,r.left+r.width/2)),y=Math.max(0,Math.min(innerHeight-1,r.top+r.height/2));const top=document.elementFromPoint(x,y);return {visible:r.top>=0&&r.bottom<=innerHeight&&(top===el||!!el.contains(top)||!!top?.contains(el)),tag:el.outerHTML.slice(0,160),top:r.top,bottom:r.bottom,obstruction:top?.outerHTML.slice(0,160)}});expect(visible.visible,`${lesson.id} ${width} ${JSON.stringify(visible)}`).toBe(true)}expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await button.click()}}
+ expect(errors).toEqual([]);
+});

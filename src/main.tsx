@@ -6,6 +6,8 @@ import {useWatchlist} from './watchlist';
 import {useAccount,Portfolio,type AccountView} from './TradingUI';
 const AuthPanel=React.lazy(()=>import('./AuthPanel').then(module=>({default:module.AuthPanel})));
 import {Learning} from './Learning';
+import {ExperienceLab} from './ExperienceLab';
+import {PortfolioAnalysis} from './PortfolioAnalysis';
 import {StockDetail} from './StockDetail';
 import {CatalogDiscovery} from './CatalogDiscovery';
 import {MarketDiscovery} from './MarketDiscovery';
@@ -28,20 +30,22 @@ useEffect(()=>{if(!location.hash.includes('access_token=')&&!location.hash.start
 },[]);
 
 function toggle(symbol:string){void toggleWatch(symbol);}
-const selected=instruments.find(s=>route===`stock/${s.symbol}`);const current=selected||['indices','calendar','news'].includes(route)?'market':route.startsWith('learn/')?'learn':route;
+const selected=instruments.find(s=>route===`stock/${s.symbol}`);const current=selected||['indices','calendar','news'].includes(route)?'market':route.startsWith('learn/')?'learn':route==='portfolio/analysis'?'portfolio':route;
 const [marketMode,setMarketMode]=useState<'supported'|'catalog'>('supported');const [localCatalog,setLocalCatalog]=useState<LocalCatalog|null>(null);useEffect(()=>{setLocalCatalog(null);},[account.userId]);
 useEffect(()=>{if(route!=='market')setMarketMode('supported');},[route]);
 const accountControls=<AccountModeControl manual={manual} uid={account.userId} enabled={manualTradingEnabled} onChange={mode=>{setManualOwner(mode==='manual'?account.userId??'':'');try{if(account.userId)localStorage.setItem('manual.mode.'+account.userId,mode);}catch{setNotice('계좌 모드 보관 실패');}}}/>;
 function rows(list:readonly Instrument[]){return <div className="stocks">{list.map(s=>{const q=quote(s);return <div className="stock" key={s.symbol}><a href={`#stock/${s.symbol}`} className="identity"><span className="avatar">{s.symbol.slice(0,2)}</span><span><strong>{s.name}</strong><small>{s.symbol} · {s.kind}</small></span></a><div className="price"><strong>{money(q.price)}</strong><small className={q.change>=0?'up':'down'}>{q.change>=0?'+':''}{q.change.toFixed(2)}%</small></div><button className="star" aria-label={`${s.symbol} 관심종목`} aria-pressed={watch.includes(s.symbol)} onClick={()=>toggle(s.symbol)}>{watch.includes(s.symbol)?'★':'☆'}</button></div>})}</div>}
 return <div className={"app ui-foundation "+(collapsed?"collapsed":"")}><aside><button className="collapse-toggle" aria-label="사이드바 접기 펼치기" aria-expanded={!collapsed} onClick={()=>{setCollapsed(!collapsed);try{localStorage.setItem("sidebar.collapsed",String(!collapsed));}catch{setNotice("사이드바 상태 저장 실패");}}}>☰</button><a className="brand" href="#home"><span className="logo">U</span>US Stock Lab</a><p className="eyebrow">나의 투자 연습실</p><nav>{tabs.map(([id,label,icon])=><a key={id} href={`#${id}`} title={label} aria-label={icon+" "+label} aria-current={current===id?'page':undefined}><span>{icon}</span>{label}</a>)}</nav><div className="side-note">작게 배우고<br/>차근차근 투자하기<span>v0.8 · 모의투자</span></div></aside><div className="workspace"><header><HeaderTools route={route} view={account} uid={account.userId} events={info.data?.events??[]} indicators={info.data?.indicators??[]} marketMode={info.mode}/></header><main><div className="source">가격·지수는 학습용 합성 데이터 · 실제 시세 아님 · 생성 기준 {asOf}</div>{notice&&<p role="alert">{notice}</p>}{watchError&&<p role="alert">{watchError}</p>}{currency.error&&route!=="settings"&&<p role="alert">{currency.error}</p>}{currency.currency==="KRW"&&<div className="currency-note">KRW 표시 · 합성 환율 1 USD = {displayFxLabel()} · 참고용 환산이며 실제 환전·환율손익 아님 · 주문/체결/원장은 USD 기준</div>}
+{route==='experience'&&<ExperienceLab/>}
 {route==='home'&&<HomeDashboard account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))}/>}
 {['market','indices'].includes(route)&&<><div className="market-currency-header"><h1>시장</h1><CurrencyToggle/></div><p>궁금한 기업과 ETF를 찾아보세요.</p><MarketToolbar view={info}/>{route==='indices'?<IndicatorCards view={info}/>:<><div className="market-discovery-modes" role="group" aria-label="종목 탐색 모드"><button aria-pressed={marketMode==='supported'} onClick={()=>setMarketMode('supported')}>모의투자 지원 종목</button><button aria-pressed={marketMode==='catalog'} onClick={()=>setMarketMode('catalog')}>미국 종목 후보 탐색</button></div>{marketMode==='catalog'?<CatalogDiscovery key={account.userId??'local'} catalog={localCatalog} setCatalog={setLocalCatalog}/>:<MarketDiscovery watch={watch} toggle={toggle} search={search} setSearch={setSearch} onlyWatch={onlyWatch} setOnlyWatch={setOnlyWatch}/>}</>}</>}
 {selected&&<StockDetail key={selected.symbol} stock={selected} account={account} manual={manual} watched={watch.includes(selected.symbol)} toggleWatch={()=>toggle(selected.symbol)}/>}
 {route==='portfolio'&&<><h1>포트폴리오</h1>{accountControls}{manual?<ManualWorkspace key={account.userId} uid={account.userId!}/>:<Portfolio key={account.modeKey} view={account}/>}</>}
+{route==='portfolio/analysis'&&<PortfolioAnalysis key={account.modeKey} view={account}/>}
 {(route==='learn'||route.startsWith('learn/'))&&<Learning route={route}/>}
 {route==='calendar'&&<CalendarPanel view={info}/>}
 {route==='news'&&<NewsPanel view={info}/>}
 {route==='settings'&&<><h1>설정 및 서비스 안내</h1>{accountControls}<DisplaySettings collapsed={collapsed} setCollapsed={value=>{try{localStorage.setItem("sidebar.collapsed",String(value));setCollapsed(value);}catch{setNotice("사이드바 상태 저장 실패");}}}/><React.Suspense fallback={<p role="status">로그인 화면 불러오는 중…</p>}><AuthPanel/></React.Suspense><section className="panel"><h2>데이터 안내</h2><p>종목 가격·캔들·지수·환율은 모두 자체 생성한 합성 데모입니다. 실제 시세나 과거 시장 기록이 아닙니다.</p><p>생성 기준: {asOf} · 차트는 2026년 6~9월 합성 구간</p><h2>안전한 연습 공간</h2><p>실제 증권계좌 연결, 실거래, 자금이동 기능은 제공하지 않습니다. 개인정보와 실제 계좌 정보를 입력하지 마세요.</p><h2>브라우저 저장</h2><p>비로그인 로컬 데모는 이 브라우저에 저장됩니다. 로그인하면 사용자별 서버 계좌와 관심종목을 복원합니다. 사이트 데이터 삭제는 로컬 데모에 영향을 주며 서버 거래 기록은 유지됩니다.</p><h2>차트 라이브러리</h2><p><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView 공식 사이트 ↗</a> Lightweight Charts™ · Apache 2.0</p></section></>}
-{!selected&&!tabs.some(t=>t[0]===route)&&!['indices','calendar','news'].includes(route)&&!route.startsWith('learn/')&&<section className="panel"><h1>화면을 찾을 수 없어요</h1><a href="#home">홈으로 이동</a></section>}
+{!selected&&!tabs.some(t=>t[0]===route)&&!['indices','calendar','news','portfolio/analysis','experience'].includes(route)&&!route.startsWith('learn/')&&<section className="panel"><h1>화면을 찾을 수 없어요</h1><a href="#home">홈으로 이동</a></section>}
 <footer>US Stock Lab · 학습용 데모 · 실제 거래 불가</footer></main></div></div>}
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

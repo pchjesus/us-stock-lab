@@ -24,9 +24,10 @@ test('CSV UI preserves PA1 and account data; responsive charts and optional expl
  const rpc:string[]=[],errors:string[]=[];page.on('request',r=>{if(r.url().includes('/rest/v1/rpc/'))rpc.push(r.url())});page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/#portfolio/analysis');await expect(page.getByRole('heading',{name:'현재 계좌'})).toBeVisible();const before=await page.evaluate(()=>JSON.stringify(localStorage));
  await page.getByLabel('과거 평가액 CSV').setInputFiles({name:'example.csv',mimeType:'text/csv',buffer:Buffer.from(sample)});
- await expect(page.getByRole('status')).toContainText('합성 자료');await expect(page.getByRole('heading',{name:'TWR',exact:true})).toBeVisible();await expect(page.locator('.performance-panel')).toContainText('4.50%');
+ await expect(page.getByRole('status')).toContainText('합성 자료');await expect(page.getByRole('heading',{name:'현재 합성 계좌의 기간 성과'})).toBeVisible();await expect(page.getByRole('heading',{name:'사용자 CSV 수익·위험 분석'})).toBeVisible();await expect(page.getByRole('heading',{name:'TWR',exact:true})).toBeVisible();await expect(page.locator('.performance-panel')).toContainText('4.50%');
  for(const width of [1440,768,390,320]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)}
  await page.getByText('상세 성과·벤치마크·위험 지표',{exact:true}).click();await expect(page.locator('.performance-panel')).toContainText('Information Ratio');expect(await page.evaluate(()=>JSON.stringify(localStorage))).toBe(before);expect(rpc).toEqual([]);expect(errors).toEqual([]);
+ await page.getByLabel('과거 평가액 CSV').setInputFiles({name:'user.csv',mimeType:'text/csv',buffer:Buffer.from(sample.replaceAll('synthetic','user'))});await expect(page.getByRole('status')).toContainText('사용자 신고 자료');await expect(page.getByRole('heading',{name:'현재 합성 계좌의 기간 성과'})).toBeVisible();
  await page.getByLabel('과거 평가액 CSV').setInputFiles({name:'bad.csv',mimeType:'text/csv',buffer:Buffer.from('bad')});await expect(page.getByRole('alert')).toBeVisible();await expect(page.getByRole('heading',{name:'TWR',exact:true})).toHaveCount(0);
  await page.getByRole('button',{name:'가져온 자료 지우기'}).click();await expect(page.getByRole('alert')).toHaveCount(0);
 });

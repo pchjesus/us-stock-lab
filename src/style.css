@@ -395,3 +395,16 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .discovery-price small{margin-top:5px}
 @media(max-width:640px){.ui-foundation .discovery-price{width:100%;text-align:left;padding-left:41px}.ui-foundation .detail-currency{justify-content:flex-start}}
 @media(prefers-reduced-motion:reduce){.ui-foundation .currency-switch-indicator{transition:none}}
+/* UX5-A2: accessible educational examples */
+.ui-foundation .learning-table-scroll{max-width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:16px 0}
+.ui-foundation .learning-table-scroll:focus-visible{outline:3px solid #254dc7;outline-offset:3px}
+.ui-foundation .learning-table-scroll table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px;font-variant-numeric:tabular-nums}
+.ui-foundation .learning-table-scroll caption{text-align:left;padding:14px;font-weight:700}
+.ui-foundation .learning-table-scroll :is(th,td){padding:12px;text-align:left;border-top:1px solid var(--line);line-height:1.6}
+.ui-foundation .learning-timeline{padding-left:24px;line-height:1.8}
+.ui-foundation .learning-timeline li{padding:6px 0}
+
+/* Keep keyboard-focused learning controls above the fixed mobile navigation. */
+@media (max-width: 640px) {
+  html { scroll-padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
+}

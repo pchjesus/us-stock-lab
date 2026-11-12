@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {HistoryPanel} from './performance/HistoryPanel';
 import {allocationMetrics,buildAnalysis,initialBasisPoints,parseScenario,unavailableHistory,type AnalysisRow} from './portfolioAnalysis';
 import {useCurrency} from './preferences';
 import type {AccountView} from './TradingUI';
@@ -8,7 +9,8 @@ function Composition({rows,weights,title}:{rows:AnalysisRow[];weights:number[];t
 }
 function groups(rows:AnalysisRow[],weights:number[],key:'kind'|'sector'){const m=new Map<string,number>();rows.forEach((r,i)=>m.set(r[key],(m.get(r[key])??0)+weights[i]));return Array.from(m,([label,weight])=>({id:label,label,kind:'현금' as const,sector:label,value:0,profit:null,weight}));}
 function Metrics({largest,topThree,hhi}:{largest:number|null;topThree:number|null;hhi:number|null}){return <dl className="pa-metrics"><div><dt>가장 큰 종목 비중</dt><dd>{largest===null?'미제공':largest.toFixed(2)+'%'}</dd></div><div><dt>상위 3종목 비중</dt><dd>{topThree===null?'미제공':topThree.toFixed(2)+'%'}</dd></div><div><dt>종목 HHI</dt><dd>{hhi===null?'미제공':hhi.toFixed(0)}</dd></div></dl>}
-export function PortfolioAnalysis({view}:{view:AccountView}){
+export function PortfolioAnalysis({view}:{view:AccountView}){return <><CurrentAnalysis view={view}/><HistoryPanel key={view.modeKey}/></>}
+function CurrentAnalysis({view}:{view:AccountView}){
  const {format}=useCurrency();const account=view.loaded?.account;
  if(view.error)return <section className="panel" role="alert">계좌를 읽지 못했습니다. {view.error} <button onClick={()=>void view.refresh()}>다시 조회</button></section>;
  if(!account)return <section className="panel" role="status">가상계좌를 불러오는 중입니다.</section>;

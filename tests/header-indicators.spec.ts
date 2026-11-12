@@ -59,7 +59,7 @@ test('popup navigation uses the existing indices screen and pending mode removes
 });
 
 test('reduced motion disables sliding while content still changes',async({page})=>{
- await page.emulateMedia({reducedMotion:'reduce'});await page.clock.install({time:new Date('2026-11-03T00:00:00Z')});await page.clock.pauseAt(new Date('2026-11-03T00:00:00Z'));await page.goto('/#home');
+ await page.emulateMedia({reducedMotion:'reduce'});await page.clock.install({time:new Date('2026-11-02T23:59:00Z')});await page.clock.pauseAt(new Date('2026-11-03T00:00:00Z'));await page.goto('/#home');
  await page.clock.runFor(5000);await expect(page.getByTestId('ticker-current')).toContainText('NASDAQ');
  expect(await page.getByTestId('ticker-current').evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
 });

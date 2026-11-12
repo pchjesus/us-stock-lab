@@ -42,3 +42,7 @@ GitHub Actions: 기존 PR의 최종 체크 및 이 브랜치의 CI 결과는 별
 - 200 · Stocks - FAQs | Investor.gov — https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks
 - 200 · Internet and Social Media Fraud | Investor.gov — https://www.investor.gov/protect-your-investments/fraud/types-fraud/internet-and-social-media-fraud
 - 200 · Trading Information | Trading at NYSE — https://www.nyse.com/trade/trading-information
+
+## 2026-11-12 통합 릴리스 재평가
+
+사용자가 승인한 배포 기준에 따라 RC1의 BLOCKED 사유를 재평가한다. 실기기·스크린리더와 일부 출처 발행일·주장별 전체 대조는 미검증 잔여 위험으로 유지하며 통과로 표시하지 않는다. 중대한 사실 오류·접근 불가·원본 계약 파손·금융 회귀 또는 필수 검증 실패가 확인되면 배포를 중단한다. 최종 배포 및 운영 상태는 GitHub Actions와 실제 사이트에서 별도 확인한다.

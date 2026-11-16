@@ -36,7 +36,7 @@ test('cash-only account provides guidance instead of copying an unusable allocat
 });
 
 test('A/B comparison is withheld for different date ranges and reset after editing',async({page})=>{
- await page.goto('/#backtest');const a=page.getByRole('region',{name:'설정 A'),b=page.getByRole('region',{name:'설정 B');
+ await page.goto('/#backtest');const a=page.getByRole('region',{name:'설정 A'}),b=page.getByRole('region',{name:'설정 B'});
  await a.getByRole('button',{name:'설정 A 계산'}).click();await b.getByRole('button',{name:'설정 B 계산'}).click();
  const comparison=page.getByRole('region',{name:'A/B 수익률 비교'});
  await expect(comparison.getByRole('img',{name:/공통 축 비교/})).toBeVisible();

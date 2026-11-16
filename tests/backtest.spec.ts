@@ -19,7 +19,30 @@ test('invalid periods, allocations and integer boundaries are rejected determini
 test('two scenarios and account copy remain read-only at mobile and desktop widths',async({page})=>{
  const rpc:string[]=[],errors:string[]=[];page.on('request',r=>{if(r.url().includes('/rest/v1/rpc/'))rpc.push(r.url())});page.on('pageerror',e=>errors.push(e.message));
  const price=marketPrices().AAPL,doc=JSON.stringify({version:1,generation:'bt-protected',trades:[{id:'a',symbol:'AAPL',side:'buy',quantity:10,price,time:'2026-10-27T14:00:00Z'}]});await page.addInitScript(({accountKey,doc})=>localStorage.setItem(accountKey,doc),{accountKey,doc});
- await page.goto('/#portfolio/analysis');await page.getByRole('link',{name:'합성 포트폴리오 백테스트 →'}).click();const a=page.getByRole('region',{name:'설정 A'}),b=page.getByRole('region',{name:'설정 B'});await a.getByRole('button',{name:'현재 가상계좌 비중 복사'}).click();expect(Number(await a.getByLabel('A AAPL 비중').inputValue())).toBeGreaterThan(0);await a.getByRole('button',{name:'설정 A 계산'}).click();await expect(a.getByRole('heading',{name:'설정 A 결과'})).toBeVisible();await b.getByLabel('투자 방식').selectOption('monthly');await b.getByRole('button',{name:'설정 B 계산'}).click();await expect(b.getByRole('heading',{name:'설정 B 결과'})).toBeVisible();await expect(b.getByRole('img')).toBeVisible();
+ await page.goto('/#portfolio/analysis');await page.getByRole('link',{name:'합성 포트폴리오 백테스트 →'}).click();const a=page.getByRole('region',{name:'설정 A'}),b=page.getByRole('region',{name:'설정 B'});await a.getByRole('button',{name:'현재 가상계좌 비중 복사'}).click();expect(Number(await a.getByLabel('A AAPL 비중').inputValue())).toBeGreaterThan(0);await a.getByRole('button',{name:'설정 A 계산'}).click();await expect(a.getByRole('heading',{name:'설정 A 결과'})).toBeVisible();await b.getByLabel('투자 방식').selectOption('monthly');await b.getByRole('button',{name:'설정 B 계산'}).click();await expect(b.getByRole('heading',{name:'설정 B 결과'})).toBeVisible();await expect(b.getByRole('img')).toBeVisible();const comparison=page.getByRole('region',{name:'A/B 수익률 비교'});await expect(comparison.getByRole('img',{name:/공통 축 비교/})).toBeVisible();await expect(comparison).toContainText('같은 기간의 A/B 수익률 비교');
  for(const width of [1440,768,390,320]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);const boxes=await b.locator('.bt-weights label').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect(),i=e.querySelector('input')!.getBoundingClientRect();return {left:r.left,right:r.right,inputLeft:i.left,inputRight:i.right}}));for(const box of boxes){expect(box.inputLeft).toBeGreaterThanOrEqual(box.left-1);expect(box.inputRight).toBeLessThanOrEqual(box.right+1)}const button=b.getByRole('button',{name:'설정 B 계산'});await button.focus();await expect(button).toBeFocused()}
  expect(await page.evaluate(k=>localStorage.getItem(k),accountKey)).toBe(doc);expect(rpc).toEqual([]);expect(errors).toEqual([]);
+});
+
+test('cash-only account provides guidance instead of copying an unusable allocation',async({page})=>{
+ await page.addInitScript(()=>localStorage.removeItem('us-stock-lab.account.v1'));
+ await page.goto('/#portfolio');await expect(page.getByTestId('total-assets')).toBeVisible();
+ await page.goto('/#backtest');
+ const a=page.getByRole('region',{name:'설정 A'});
+ await expect(a.getByLabel('A AAPL 비중')).toHaveValue('100');
+ await a.getByRole('button',{name:'현재 가상계좌 비중 복사'}).click();
+ await expect(a.getByRole('alert')).toContainText('현금만 보유');
+ await expect(a.getByLabel('A AAPL 비중')).toHaveValue('100');
+});
+
+test('A/B comparison is withheld for different date ranges and reset after editing',async({page})=>{
+ await page.goto('/#backtest');const a=page.getByRole('region',{name:'설정 A'),b=page.getByRole('region',{name:'설정 B');
+ await a.getByRole('button',{name:'설정 A 계산'}).click();await b.getByRole('button',{name:'설정 B 계산'}).click();
+ const comparison=page.getByRole('region',{name:'A/B 수익률 비교'});
+ await expect(comparison.getByRole('img',{name:/공통 축 비교/})).toBeVisible();
+ await b.getByLabel('종료일').fill('2026-08-31');
+ await expect(comparison).toHaveCount(0);
+ await b.getByRole('button',{name:'설정 B 계산'}).click();
+ await expect(comparison).toContainText('같은 기간으로 설정해 다시 계산하세요.');
+ await expect(comparison.getByRole('img')).toHaveCount(0);
 });

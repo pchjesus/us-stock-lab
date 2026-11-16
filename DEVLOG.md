@@ -1,5 +1,8 @@
 # 개발 기록
 
+## 2026-11-16 · BT1 직접 QA
+- A/B 공통 축 TWR 비교·기간 불일치 제한과 현금 100% 계좌 안내를 보완했다. GitHub Actions 독립 브랜치 QA(https://github.com/pchjesus/us-stock-lab/actions/runs/43827110659): Pages 플래그 build, UI 408/408, Auth 54/54, Release 6/6, UX0 3/3 PASS. 기존 Tour 테스트의 좌표 수집을 안정화 확인 이후로 옮겨 검사 목적을 유지했다. QA 임시 workflow 제거 후 PR만 유지했으며 운영 main/Pages 미변경이다.
+
 ## 2026-11-16 · BT1 Lite 합성 백테스트
 - 기존 합성 이력, 계좌 비중 읽기와 두 가상 설정 비교를 추가했다. 일말 납입·정수 주·현금 잔여·TWR/MDD와 미반영 항목은 docs/backtest/BT1_LITE.md에 기록한다. 검증 결과는 최종 PR에 기록한다.
 

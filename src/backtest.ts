@@ -28,4 +28,4 @@ export function runBacktest(c:BacktestConfig):BacktestResult {
  }
  return {points,contributed,cash,value:previous,returnPct:index-1,mdd,first:dates[first],last:dates[last]};
 }
-export function copyAccountWeights(view:AccountView):number[]{if(view.error||!view.loaded)throw Error('가상계좌를 정상적으로 불러온 후 복사할 수 있습니다.');const rows=buildAnalysis(view.loaded.account,view.prices).rows;const values=[...symbols.map(s=>rows.find(r=>r.id===s)?.value??0),rows.find(r=>r.id==='cash')!.value];if(values.every(v=>v===0))throw Error('총자산이 0인 계좌의 비중은 복사할 수 없습니다.');return initialBasisPoints(values)}
+export function copyAccountWeights(view:AccountView):number[]{if(view.error||!view.loaded)throw Error('가상계좌를 정상적으로 불러온 후 복사할 수 있습니다.');const rows=buildAnalysis(view.loaded.account,view.prices).rows;const values=[...symbols.map(s=>rows.find(r=>r.id===s)?.value??0),rows.find(r=>r.id==='cash')!.value];if(values.every(v=>v===0))throw Error('총자산이 0인 계좌의 비중은 복사할 수 없습니다.');if(values.slice(0,-1).every(v=>v===0))throw Error('현재 계좌는 현금만 보유하고 있습니다. 백테스트할 종목 비중을 직접 입력하세요.');return initialBasisPoints(values)}

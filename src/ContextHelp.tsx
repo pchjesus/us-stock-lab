@@ -1,5 +1,6 @@
 import {resolveLearningRoute} from './learningRoutes';
 export const helpTopics={
+ backtest:{label:'합성 백테스트',text:'합성 가격 이력과 가상 납입으로 두 설정을 비교합니다. 실제 계좌에 주문하거나 기록하지 않습니다.'},
  experience:{label:'합성 데이터 체험실',text:'합성 예시로 매매, 포트폴리오 구성과 성과·위험을 체험하세요. 체험 내용은 화면 메모리에서만 관리되며 실제 계좌나 사용자 CSV에 반영되지 않습니다.'},
  home:{label:'홈',text:'내 자산과 관심종목을 먼저 확인하세요. 로그인 전 로컬 기록과 로그인 후 서버 계좌는 서로 다릅니다.'},
  market:{label:'시장·종목 검색',text:'이름이나 심볼로 기존 지원 종목을 찾아보세요. 별표로 관심종목을 관리할 수 있어요. 검색 가능 여부가 거래 허용을 뜻하지는 않습니다.'},

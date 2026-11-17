@@ -1,0 +1,31 @@
+name: AC1-A1 disposable PostgreSQL lifecycle QA
+on:
+  push:
+    branches: [feat/ac1-a1-account-lifecycle-contract]
+permissions:
+  contents: read
+jobs:
+  sql-lifecycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start disposable PostgreSQL
+        run: |
+          sudo systemctl start postgresql
+          sudo -u postgres createdb us_stock_ac1
+          sudo -u postgres createdb us_stock_legacy
+      - name: Bootstrap legacy PostgreSQL and original server regression
+        run: |
+          DB=us_stock_legacy
+          for F in tests/sql/bootstrap.sql supabase/migrations/20261026135037_202610260001_foundation.sql supabase/migrations/202610270001_server_trading.sql supabase/migrations/202610270002_order_hardening.sql supabase/migrations/202610270003_market_hours.sql tests/sql/server.sql; do
+            echo ">>> $DB $F"
+            sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB" -f "$F"
+          done
+      - name: Bootstrap AC1 PostgreSQL and lifecycle security regression
+        run: |
+          DB=us_stock_ac1
+          for F in tests/sql/bootstrap.sql supabase/migrations/20261026135037_202610260001_foundation.sql supabase/migrations/202610270001_server_trading.sql supabase/migrations/202610270002_order_hardening.sql supabase/migrations/202610270003_market_hours.sql supabase/migrations/202610270008_account_lifecycle.sql tests/sql/account-lifecycle.sql; do
+            echo ">>> $DB $F"
+            sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB" -f "$F"
+          done

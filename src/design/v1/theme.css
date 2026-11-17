@@ -255,6 +255,7 @@
  .ui-foundation.ui-v1 header{grid-template-columns:minmax(0,1fr) auto;padding:14px 17px;gap:9px;}
  .ui-foundation.ui-v1 header .header-identity{grid-column:1;grid-row:1;}
  .ui-foundation.ui-v1 header .header-actions{grid-column:2;grid-row:1;gap:4px;}
+ .ui-foundation.ui-v1 header .header-actions .tutorial-shortcut{display:none;} /* Tour remains accessible through '?' → 직접 따라 해보기. */
  .ui-foundation.ui-v1 header .header-actions :is(button,a){min-height:40px;padding:7px 8px;font-size:10px;}
  .ui-foundation.ui-v1 header .header-ticker{grid-column:1;grid-row:2;min-height:73px;height:73px;max-width:none;}
  .ui-foundation.ui-v1 header .clock{grid-column:2;grid-row:2;min-width:0;gap:3px;}

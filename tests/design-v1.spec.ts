@@ -21,7 +21,7 @@ test('UI v1 is strictly opt-in and original navigation is untouched by default',
  await expect(page.getByTestId('ticker-current')).toBeVisible();
 });
 
-test('new navigation connects existing routes and preserves the complete local account',async({page})=>{
+test('new navigation connects existing routes and preserves the complete local account',async({page},testInfo)=>{
  const errors:string[]=[],rpc:string[]=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('request',req=>{if(req.url().includes('/rest/v1/rpc/'))rpc.push(req.url());});
@@ -40,7 +40,12 @@ test('new navigation connects existing routes and preserves the complete local a
   ['#settings','.display-settings'],
   ['#home','.home-dashboard']
  ] as const){
-  await page.locator('.v1-sidebar a[href="'+href+'"]').first().click();
+  if(testInfo.project.name==='mobile'){
+   if(['#home','#market','#portfolio','#portfolio/analysis','#learn'].includes(href))
+    await page.locator('.v1-mobile-nav a[href="'+href+'"]').click();
+   else if(href==='#settings')await page.locator('.header-actions a[href="#settings"]').click();
+   else await page.goto('/?ui=v1'+href);
+  }else await page.locator('.v1-sidebar a[href="'+href+'"]').first().click();
   await expect.poll(()=>page.url().endsWith(href)).toBe(true);
   await expect(page.locator(selector).first()).toBeVisible();
  }

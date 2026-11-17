@@ -1,5 +1,11 @@
 # 개발 기록
 
+## 2026-11-16 · BT1 직접 QA
+- A/B 공통 축 TWR 비교·기간 불일치 제한과 현금 100% 계좌 안내를 보완했다. GitHub Actions 독립 브랜치 QA(https://github.com/pchjesus/us-stock-lab/actions/runs/43827110659): Pages 플래그 build, UI 408/408, Auth 54/54, Release 6/6, UX0 3/3 PASS. 기존 Tour 테스트의 좌표 수집을 안정화 확인 이후로 옮겨 검사 목적을 유지했다. QA 임시 workflow 제거 후 PR만 유지했으며 운영 main/Pages 미변경이다.
+
+## 2026-11-16 · BT1 Lite 합성 백테스트
+- 기존 합성 이력, 계좌 비중 읽기와 두 가상 설정 비교를 추가했다. 일말 납입·정수 주·현금 잔여·TWR/MDD와 미반영 항목은 docs/backtest/BT1_LITE.md에 기록한다. 검증 결과는 최종 PR에 기록한다.
+
 ## 2026-11-12 · PA·GUIDE 통합 RC
 - 체험실 전용 화면 제목·도움말을 연결하고, 기존 가상 시계의 설치 직후 동일 시각 정지 경쟁을 테스트 시작 여유 시간으로 제거했다. Pages 플래그 build·전체 UI 396건·Auth 54건·Release 6건·UX0 3건 PASS. 가상 시계 검사는 양 프로젝트 각 10회 반복해 20건 PASS. Chromium 1440/390/320px에서 체험 매매·비중 비교·성과를 조작했다. 실기기·스크린리더는 미검증이다.
 

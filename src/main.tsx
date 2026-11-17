@@ -8,7 +8,7 @@ const AuthPanel=React.lazy(()=>import('./AuthPanel').then(module=>({default:modu
 import {Learning} from './Learning';
 import {ExperienceLab} from './ExperienceLab';
 import {BacktestLab} from './BacktestLab';
-import {PortfolioAnalysis} from './PortfolioAnalysis';
+import {PortfolioAnalysis} from './PortfolioAnalysisUI';
 import {StockDetail} from './StockDetail';
 import {CatalogDiscovery} from './CatalogDiscovery';
 import {MarketDiscovery} from './MarketDiscovery';

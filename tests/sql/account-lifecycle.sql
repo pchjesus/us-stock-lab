@@ -87,12 +87,14 @@ begin
 end$$;
 
 -- Other signed-in users cannot see or close owner A's archived account.
+-- Store a known foreign account ID from a privileged fixture before changing the role.
+select pg_catalog.set_config('ac1.test.foreign_closed_id',(select id::text from public.paper_accounts where user_id='00000000-0000-0000-0000-000000000001' and status='closed' limit 1),false);
 set role authenticated;
 set request.jwt.claim.sub='00000000-0000-0000-0000-000000000002';
 do $$
 declare first_account uuid;overview jsonb;snapshot jsonb;
 begin
- select id into first_account from public.paper_accounts where user_id='00000000-0000-0000-0000-000000000001' and status='closed';
+ first_account:=current_setting('ac1.test.foreign_closed_id')::uuid;
  overview:=public.paper_accounts_overview();
  if jsonb_array_length(overview->'accounts')<>0 then raise exception 'other owner accounts leaked';end if;
  begin

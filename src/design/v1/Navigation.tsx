@@ -40,7 +40,7 @@ const tools:NavEntry[]=[
 function NavLink({entry,route,compact=false}:{entry:NavEntry;route:string;compact?:boolean}){
  const active=entry.matches(route);
  return <a className={'v1-nav-link'+(active?' is-active':'')+(compact?' is-compact':'')} href={entry.href} aria-current={active?'page':undefined} title={entry.label}>
-  <V1Icon name={entry.icon} size={compact?20:19}/><span>{entry.label}</span>
+  <V1Icon name={entry.icon} size={compact?20:19}/><span>{compact?({'시장 탐색':'시장','내 포트폴리오':'내 투자','분석실':'분석'} as Record<string,string>)[entry.label]??entry.label:entry.label}</span>
  </a>;
 }
 export function V1Navigation({route,collapsed,onToggle}:{route:string;collapsed:boolean;onToggle:()=>void}){

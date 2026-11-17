@@ -444,3 +444,33 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .learning-practice-return-actions{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
 .ui-foundation .learning-practice-return-actions a,.ui-foundation .learning-practice-return-actions button{display:inline-flex;min-height:44px;align-items:center}
 @media(max-width:640px){.ui-foundation .learning-practice-return{padding:16px}.ui-foundation .learning-practice-return-actions{width:100%}}
+
+/* UX5-C: local-browser learning progress; no financial or server state. */
+.ui-foundation .learning-progress-dashboard{grid-column:1/-1;min-width:0}
+.ui-foundation .learning-progress-header{display:flex;flex-wrap:wrap;align-items:start;justify-content:space-between;gap:10px 20px}
+.ui-foundation .learning-progress-header h2{margin:2px 0 6px;font-size:20px}
+.ui-foundation .learning-progress-header p{font-size:13px;margin:4px 0}
+.ui-foundation .learning-progress-header a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+.ui-foundation .learning-progress-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.ui-foundation .learning-progress-metrics>div{display:flex;flex-direction:column;gap:4px;min-width:0;border-top:1px solid var(--line);padding:12px 0}
+.ui-foundation .learning-progress-metrics span{color:#475569;font-size:13px}
+.ui-foundation .learning-progress-metrics strong{font-size:22px;font-variant-numeric:tabular-nums}
+.ui-foundation .learning-progress-dashboard progress{width:100%;height:12px;accent-color:#3169d9}
+.ui-foundation .learning-review-list{padding:12px 0}
+.ui-foundation .learning-review-list h3{font-size:16px}
+.ui-foundation .learning-review-list ul{margin:8px 0;padding-left:20px}
+.ui-foundation .learning-review-list li{margin:8px 0;line-height:1.6;overflow-wrap:anywhere}
+.ui-foundation .learning-review-list a{display:inline-flex;align-items:center;min-height:44px}
+.ui-foundation .learning-no-review{font-size:13px}
+.ui-foundation .learning-progress-footer{display:grid;gap:8px;margin-top:12px}
+.ui-foundation .learning-progress-footer button{min-height:44px}
+.ui-foundation .learning-progress-footer [role=group]{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ui-foundation .learning-progress-footer [role=group] p{flex:1 1 100%;margin:0}
+.ui-foundation .learning-progress-footer small{line-height:1.7}
+.ui-foundation .lesson-done{margin-left:12px;color:#235a3b;font-size:12px;font-weight:700}
+.ui-foundation .learning-question[data-review=incorrect]{border-color:#c89562}
+.ui-foundation .learning-completion{border-top:1px solid var(--line);padding-top:12px}
+.ui-foundation .learning-completion button{min-height:44px}
+.ui-foundation .learning-completion button[aria-pressed=true]{color:#235a3b;border-color:#9acbb1;background:#f0faf4}
+.ui-foundation .learning-completion p{font-size:13px}
+@media(max-width:760px){.ui-foundation .learning-progress-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}

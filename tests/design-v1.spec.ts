@@ -65,7 +65,12 @@ test('UI v1 shows usable pages and no horizontal overflow from 320 to 1440px',as
    await page.goto('/?ui=v1#'+route);
    await expect(page.locator('.app.ui-v1')).toBeVisible();
    await expect(page.locator('main')).toBeVisible();
-   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+   const spill=await page.evaluate(()=>{
+    const excess=document.documentElement.scrollWidth-window.innerWidth;
+    const offenders=Array.from(document.querySelectorAll<HTMLElement>('body *')).filter(el=>el.getBoundingClientRect().right>window.innerWidth+1&&getComputedStyle(el).position!=='fixed').slice(0,8).map(el=>({name:el.tagName,cls:el.className?.toString().slice(0,65),right:Math.round(el.getBoundingClientRect().right)}));
+    return {excess,offenders};
+   });
+   expect(spill.excess,'Overflow at '+width+'px '+route+': '+JSON.stringify(spill.offenders)).toBeLessThanOrEqual(0);
    if(width<=760){await expect(page.locator('.v1-mobile-nav')).toBeVisible();await expect(page.locator('.v1-sidebar')).toBeHidden();}
    else{await expect(page.locator('.v1-sidebar')).toBeVisible();await expect(page.locator('.v1-mobile-nav')).toBeHidden();}
   }

@@ -105,3 +105,66 @@ test('save opt-in v1 visual review screenshots across desktop and mobile routes'
   await page.screenshot({path:'work/ui-v1/captures/'+testInfo.project.name+'-'+width+'-'+route.replaceAll('/','-')+'.png',fullPage:true,animations:'disabled'});
  }
 });
+
+
+test('index and clock form one aligned market strip with explicit regular-session hours',async({page})=>{
+ for(const width of [320,390,768,1024,1440]){
+  await page.setViewportSize({width,height:850});
+  await page.goto('/?ui=v1#home');
+  const strip=page.locator('header .v1-market-info');
+  const ticker=strip.getByRole('button',{name:'주요 시장 지표 열기'});
+  const clock=strip.locator('.clock');
+  await expect(strip).toBeVisible();
+  await expect(ticker).toBeVisible();
+  await expect(clock).toBeVisible();
+  await expect(clock.locator('.live-times time')).toHaveCount(2);
+  await expect(clock.locator('.v1-market-hours')).toContainText('09:30–16:00 ET');
+  await expect(clock.locator('.v1-market-hours')).toContainText('조기마감');
+  const rect=await strip.boundingBox();
+  const ti=await ticker.boundingBox(),cl=await clock.boundingBox();
+  expect(rect).not.toBeNull();expect(ti).not.toBeNull();expect(cl).not.toBeNull();
+  expect(ti!.x).toBeGreaterThanOrEqual(rect!.x-1);
+  expect(cl!.x).toBeGreaterThanOrEqual(rect!.x-1);
+  expect(ti!.x+ti!.width).toBeLessThanOrEqual(rect!.x+rect!.width+1);
+  expect(cl!.x+cl!.width).toBeLessThanOrEqual(rect!.x+rect!.width+1);
+  await ticker.click();await expect(page.getByRole('dialog')).toBeVisible();
+  await page.getByRole('dialog').getByRole('button',{name:/닫기/}).click();
+ }
+ await page.goto('/#home');
+ await expect(page.locator('header .v1-market-hours')).toHaveCount(0);
+});
+
+test('market and detail v1 visually reorganize existing eight synthetic instruments',async({page})=>{
+ await page.goto('/?ui=v1#market');
+ const list=page.getByRole('region',{name:'모의투자 지원 종목'});
+ await expect(list.locator('.v1-discovery-intro')).toBeVisible();
+ await expect(list.locator('.discovery-stock')).toHaveCount(8);
+ await expect(list.locator('.v1-market-result-head')).toBeVisible();
+ await list.getByRole('button',{name:'ETF',exact:true}).click();
+ await expect(list.locator('.discovery-stock')).toHaveCount(3);
+ await list.getByRole('button',{name:'전체',exact:true}).click();
+ await list.locator('.discovery-stock[data-symbol="AAPL"] a.identity').click();
+ await expect(page).toHaveURL(/#stock\/AAPL$/);
+ const detail=page.getByRole('article',{name:'기업 상세 화면'});
+ await expect(detail.locator('.v1-detail-price')).toContainText('실제 시세 아님');
+ await expect(detail.getByRole('tab',{name:'개요'})).toHaveAttribute('aria-selected','true');
+ await detail.getByRole('tab',{name:'재무'}).click();
+ await expect(detail.getByRole('tab',{name:'재무'})).toHaveAttribute('aria-selected','true');
+ await detail.getByRole('tab',{name:'개요'}).click();
+ await expect(detail.getByRole('tab',{name:'개요'})).toHaveAttribute('aria-selected','true');
+});
+
+test('portfolio v1 groups unaltered account summary, holdings, trade history and analysis link',async({page})=>{
+ await page.addInitScript(doc=>localStorage.setItem('us-stock-lab.account.v1',doc),demo);
+ await page.goto('/?ui=v1#portfolio');
+ const before=await page.evaluate(key=>localStorage.getItem(key),accountKey);
+ const area=page.locator('.v1-portfolio-page');
+ await expect(area).toBeVisible();
+ await expect(area.locator('.account-summary')).toBeVisible();
+ await expect(area.locator('.v1-portfolio-holdings')).toBeVisible();
+ await expect(area.locator('.v1-portfolio-analysis-entry a[href="#portfolio/analysis"]')).toBeVisible();
+ await expect(area.locator('.v1-portfolio-history')).toBeVisible();
+ const original=decodeAccount(demo).account;
+ await expect(page.getByTestId('total-assets').first()).toHaveText(formatDisplay(valuation(original,marketPrices()).total,'USD'));
+ expect(await page.evaluate(key=>localStorage.getItem(key),accountKey)).toBe(before);
+});

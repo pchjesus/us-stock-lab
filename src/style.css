@@ -422,3 +422,25 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 
 /* BT1 A/B comparison: normalized returns on one shared vertical scale */
 .bt-comparison svg{width:100%;height:auto;max-height:300px}.bt-comparison-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin:16px 0}.bt-comparison-grid>div{display:grid;gap:6px;border-bottom:1px solid var(--line);padding:8px 0}.bt-comparison-grid strong{font-size:1.4rem}.bt-comparison-grid small,.bt-comparison-legend{color:#475569}.bt-comparison svg text{font-size:17px;fill:#475569}
+
+/* UX5-B: teach the existing lesson, then guide users into real read-only screens. */
+.ui-foundation .learning-practice-hub{grid-column:1/-1;min-width:0}
+.ui-foundation .learning-practice-hub h2{font-size:20px}
+.ui-foundation .learning-practice-shortcuts{display:flex;flex-wrap:wrap;gap:8px 20px;margin:16px 0}
+.ui-foundation .learning-practice-shortcuts a{display:inline-flex;align-items:center;min-height:44px}
+.ui-foundation .learning-unit section.learning-guided-practice{border:1px solid #cfdaed;border-radius:12px;background:#f5f8fd;padding:18px;margin:16px 0;min-width:0}
+.ui-foundation .learning-guided-practice .eyebrow{margin:0}
+.ui-foundation .learning-guided-practice h3{margin:6px 0 10px;font-size:17px}
+.ui-foundation .learning-guided-practice ol{margin:12px 0;padding-left:23px;line-height:1.8}
+.ui-foundation .learning-guided-practice li{margin-bottom:8px}
+.ui-foundation .learning-guided-practice .learning-mission-caution{font-size:13px;margin:12px 0}
+.ui-foundation .learning-guided-practice .learning-mission-link{display:inline-flex;min-height:44px;align-items:center;font-weight:700}
+.ui-foundation .learning-guided-practice small{display:block;color:#475569;line-height:1.7;margin-top:9px}
+.ui-foundation aside.learning-practice-return{position:static;width:100%;height:auto;min-height:0;flex-direction:row;padding:18px 20px;border-right:1px solid #cfdaed}
+.ui-foundation .learning-practice-return{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border:1px solid #cfdaed;background:#f5f8fd}
+.ui-foundation .learning-practice-return>div:first-child{flex:1 1 300px;min-width:0}
+.ui-foundation .learning-practice-return h2{font-size:17px;margin:6px 0}
+.ui-foundation .learning-practice-return p{font-size:13px;line-height:1.7;margin:4px 0;overflow-wrap:anywhere}
+.ui-foundation .learning-practice-return-actions{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.ui-foundation .learning-practice-return-actions a,.ui-foundation .learning-practice-return-actions button{display:inline-flex;min-height:44px;align-items:center}
+@media(max-width:640px){.ui-foundation .learning-practice-return{padding:16px}.ui-foundation .learning-practice-return-actions{width:100%}}

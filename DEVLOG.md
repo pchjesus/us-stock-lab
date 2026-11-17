@@ -1,7 +1,7 @@
 # 개발 기록
 
 ## 2026-11-17 · UX5-B 안내형 실습 동선 (개발 브랜치)
-- 기존 10개 학습 단원에 미션별 실제 기능 이동/복귀를 추가하고 학습 랜딩에 체험·분석·BT1 경로를 연결했다. 복귀 상태는 30분짜리 sessionStorage만 이용하며 금융·계좌·UX5-C 진도 기록은 변경하지 않는다. 수업 원본·퀴즈/근거 해시 불변. 독립 검증은 PR에서 기록한다.
+- 기존 10개 학습 단원에 미션별 실제 기능 이동/복귀를 추가하고 학습 랜딩에 체험·분석·BT1 경로를 연결했다. 복귀 상태는 30분짜리 sessionStorage만 이용하며 금융·계좌·UX5-C 진도 기록은 변경하지 않는다. 수업 원본·퀴즈/근거 해시 불변. GitHub Actions #44073527883에서 Pages build·학습 26/26·전체 UI 420/420·Auth 54/54·Release 6/6·UX0 3/3 PASS. 전역 aside 스타일 충돌 보완 후 재검증했고 임시 QA workflow를 제거했다. main/Pages 미변경.
 
 ## 2026-11-16 · BT1 직접 QA
 - A/B 공통 축 TWR 비교·기간 불일치 제한과 현금 100% 계좌 안내를 보완했다. GitHub Actions 독립 브랜치 QA(https://github.com/pchjesus/us-stock-lab/actions/runs/43827110659): Pages 플래그 build, UI 408/408, Auth 54/54, Release 6/6, UX0 3/3 PASS. 기존 Tour 테스트의 좌표 수집을 안정화 확인 이후로 옮겨 검사 목적을 유지했다. QA 임시 workflow 제거 후 PR만 유지했으며 운영 main/Pages 미변경이다.

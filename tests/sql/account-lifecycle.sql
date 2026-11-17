@@ -3,10 +3,16 @@ insert into auth.users(id) values
 ('00000000-0000-0000-0000-000000000001'),
 ('00000000-0000-0000-0000-000000000002');
 
+-- Force a market-open window ONLY in this disposable database to exercise paper_order.
+update paper_private.market_days
+set open_at=clock_timestamp()-interval '1 hour',
+    close_at=clock_timestamp()+interval '1 hour',
+    reason='AC1 isolated trade fixture',early=false,verified=true
+where date=(clock_timestamp() at time zone 'America/New_York')::date;
 set role authenticated;
 set request.jwt.claim.sub='00000000-0000-0000-0000-000000000001';
 do $$
-declare snapshot jsonb;first_account uuid;closed jsonb;overview jsonb;second_account uuid;old_order uuid:='10000000-0000-0000-0000-000000000011';order_row uuid;
+declare snapshot jsonb;first_account uuid;closed jsonb;overview jsonb;second_account uuid;old_order uuid:='10000000-0000-0000-0000-000000000011';
 begin
  overview:=public.paper_accounts_overview();
  if overview->'accounts'<>'[]'::jsonb or overview->>'activeId' is not null then raise exception 'overview created an account';end if;
@@ -16,12 +22,9 @@ begin
  if (select count(*) from public.paper_accounts where user_id=auth.uid())<>1 then raise exception 'first snapshot not unique';end if;
  if (select count(*) from public.paper_cash_ledger where account_id=first_account and kind='initial_funding')<>1 then raise exception 'missing initial ledger';end if;
  if (public.paper_snapshot()->>'id')::uuid<>first_account then raise exception 'snapshot recreated active account';end if;
- -- Seed a historical trade at a consistent invariant before closing the account.
- insert into public.paper_orders(account_id,client_request_id,symbol,side,quantity,status,price_cents,filled_at)
- values(first_account,old_order,'AAPL','buy',1,'filled',22374,clock_timestamp()) returning id into order_row;
- insert into public.paper_positions(account_id,symbol,quantity,cost_cents) values(first_account,'AAPL',1,22374);
- update public.paper_accounts set cash_cents=9977626 where id=first_account;
- insert into public.paper_cash_ledger(account_id,order_id,kind,delta_cents,balance_cents) values(first_account,order_row,'trade',-22374,9977626);
+ -- Execute an actual market-gated server order. This persists positions and ledger atomically.
+ snapshot:=public.paper_order(old_order,'AAPL','buy',1);
+ if (snapshot->>'cash')::bigint<>9977626 then raise exception 'test order cash mismatch';end if;
  snapshot:=public.paper_snapshot();
  if jsonb_array_length(snapshot->'trades')<>1 then raise exception 'trade not in current snapshot';end if;
  closed:=public.paper_close_account(first_account);

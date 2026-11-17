@@ -77,7 +77,7 @@ test('mobile primary navigation and desktop collapsed rail preserve routing',asy
  await page.goto('/?ui=v1#home');
  const mobile=page.getByRole('navigation',{name:'모바일 주요 메뉴'});
  await expect(mobile.locator('a')).toHaveCount(5);
- await mobile.getByRole('link',{name:'분석실'}).click();await expect.poll(()=>page.url().endsWith('#portfolio/analysis')).toBe(true);
+ await mobile.getByRole('link',{name:'분석'}).click();await expect.poll(()=>page.url().endsWith('#portfolio/analysis')).toBe(true);
  await mobile.getByRole('link',{name:'학습'}).click();await expect.poll(()=>page.url().endsWith('#learn')).toBe(true);
  await page.setViewportSize({width:1440,height:900});
  const rail=page.locator('.v1-sidebar');

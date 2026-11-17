@@ -1,0 +1,64 @@
+name: Publish isolated UI v1 preview next to unchanged production
+on:
+  push:
+    branches: [design/ui-v1-rebuild]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  preview:
+    if: contains(github.event.head_commit.message, '[publish-ui-preview]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}preview/ui-v1/?ui=v1#home
+    env:
+      VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
+      VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_IGTsGZshQZAE92bE0_xpYg__bOTs3GU
+      VITE_ENABLE_MANUAL_TRADING: 'false'
+      VITE_ENABLE_MARKET_FX: 'true'
+      VITE_ENABLE_TREASURY_STATS: 'true'
+    steps:
+      - name: Check out unchanged production main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: production
+      - name: Check out preview UI branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: preview-src
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build production from main with matching Pages flags
+        working-directory: production
+        run: npm ci && npm run build
+      - name: Build opt-in UI v1 from separate branch
+        working-directory: preview-src
+        run: npm ci && npm run build
+      - name: Package production main exactly at site root and preview under isolated subpath
+        run: |
+          mkdir -p _site/preview/ui-v1
+          cp -a production/dist/. _site/
+          cp -a preview-src/dist/. _site/preview/ui-v1/
+          cmp production/dist/index.html _site/index.html
+          test -f _site/preview/ui-v1/index.html
+          test -f _site/index.html
+          test -d _site/assets
+          test -d _site/preview/ui-v1/assets
+          ! grep -q 'ui-v1' _site/index.html
+          echo "Both documents packaged; root uses unmodified production main source."
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy preview alongside production
+        id: deployment
+        uses: actions/deploy-pages@v4

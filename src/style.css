@@ -436,6 +436,7 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .learning-guided-practice .learning-mission-caution{font-size:13px;margin:12px 0}
 .ui-foundation .learning-guided-practice .learning-mission-link{display:inline-flex;min-height:44px;align-items:center;font-weight:700}
 .ui-foundation .learning-guided-practice small{display:block;color:#475569;line-height:1.7;margin-top:9px}
+.ui-foundation aside.learning-practice-return{position:static;width:100%;height:auto;min-height:0;flex-direction:row;padding:18px 20px;border-right:1px solid #cfdaed}
 .ui-foundation .learning-practice-return{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border:1px solid #cfdaed;background:#f5f8fd}
 .ui-foundation .learning-practice-return>div:first-child{flex:1 1 300px;min-width:0}
 .ui-foundation .learning-practice-return h2{font-size:17px;margin:6px 0}

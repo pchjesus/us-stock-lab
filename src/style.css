@@ -473,4 +473,7 @@ header{grid-template-columns:120px minmax(260px,280px) minmax(240px,1fr) auto;ga
 .ui-foundation .learning-completion button{min-height:44px}
 .ui-foundation .learning-completion button[aria-pressed=true]{color:#235a3b;border-color:#9acbb1;background:#f0faf4}
 .ui-foundation .learning-completion p{font-size:13px}
+/* Ensure keyboard-focused lesson links sit fully inside fractional-pixel viewports. */
+.ui-foundation .learning-unit a{scroll-margin-block-end:32px}
+
 @media(max-width:760px){.ui-foundation .learning-progress-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}

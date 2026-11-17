@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+import {mkdirSync} from 'node:fs';
 import {decodeAccount,marketPrices,accountKey} from '../src/accountStore';
 import {valuation} from '../src/trading';
 import {formatDisplay} from '../src/preferences';
@@ -80,4 +81,16 @@ test('mobile primary navigation and desktop collapsed rail preserve routing',asy
  await rail.getByRole('button',{name:'메뉴 펼치기'}).click();
  await expect(page.locator('.app.ui-v1')).not.toHaveClass(/collapsed/);
  await expect(page.getByRole('navigation',{name:'주요 메뉴'}).getByRole('link',{name:'학습'})).toHaveAttribute('aria-current','page');
+});
+
+test('save opt-in v1 visual review screenshots across desktop and mobile routes',async({page},testInfo)=>{
+ mkdirSync('work/ui-v1/captures',{recursive:true});
+ const paths=['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn'];
+ const width=testInfo.project.name==='mobile'?390:1440;
+ await page.setViewportSize({width,height:960});
+ for(const route of paths){
+  await page.goto('/?ui=v1#'+route);
+  await expect(page.locator('main')).toBeVisible();
+  await page.screenshot({path:'work/ui-v1/captures/'+testInfo.project.name+'-'+width+'-'+route.replaceAll('/','-')+'.png',fullPage:true,animations:'disabled'});
+ }
 });

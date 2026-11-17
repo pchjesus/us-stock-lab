@@ -11,7 +11,7 @@ export function HomeDashboard({account,manual,market,watchCount,watchRows,design
    <h1 id="v1-home-title">투자를 배우는 가장 안전한 방법.</h1>
    <p>가상 계좌로 연습하고, 포트폴리오를 분석하고, 나만의 투자 판단을 길러보세요.</p>
    <div className="v1-home-actions"><a href="#market">종목 탐색하기 →</a><a href="#learn">기초부터 학습하기 →</a></div>
-  </section>
+  </section>}
   <section className="home-section home-account" aria-labelledby="home-account-title">
    <div className="home-section-title"><h2 id="home-account-title">나의 모의투자 현황</h2><a className="ui-link" href="#portfolio">포트폴리오 자세히 →</a></div>
    {manual?<ManualWorkspace key={account.userId} uid={account.userId!}/>:<AccountSummary view={account}/>}

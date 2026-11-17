@@ -84,7 +84,7 @@ begin
 end$$;
 
 -- Own-account history is read-only; no execution or implicit account creation.
-create function public.paper_archived_snapshot(p_account_id uuid) returns jsonb language plpgsql security definer set search_path='' as $
+create function public.paper_archived_snapshot(p_account_id uuid) returns jsonb language plpgsql security definer set search_path='' as $archive$
 declare uid uuid:=auth.uid();a public.paper_accounts%rowtype;
 begin
  if uid is null then raise exception 'authentication_required';end if;
@@ -99,7 +99,7 @@ begin
   'ledger',coalesce((select jsonb_agg(jsonb_build_object('kind',l.kind,'delta',l.delta_cents::text,'balance',l.balance_cents::text,'createdAt',l.created_at) order by l.created_at,l.id) from public.paper_cash_ledger l where l.account_id=a.id),'[]'::jsonb),
   'prices',(select jsonb_object_agg(symbol,price_cents::text) from public.paper_prices)
  );
-end$;
+end$archive$;
 
 -- Preserve all market-hours/idempotency/cash/ledger safeguards of migration 003.
 -- Only append protection against replaying a closed account's request ID.

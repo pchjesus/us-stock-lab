@@ -6,6 +6,7 @@ import {useWatchlist} from './watchlist';
 import {useAccount,Portfolio,type AccountView} from './TradingUI';
 const AuthPanel=React.lazy(()=>import('./AuthPanel').then(module=>({default:module.AuthPanel})));
 import {Learning} from './Learning';
+import {PracticeReturn} from './learningPractice';
 import {ExperienceLab} from './ExperienceLab';
 import {BacktestLab} from './BacktestLab';
 import {PortfolioAnalysis} from './PortfolioAnalysisUI';
@@ -37,6 +38,7 @@ useEffect(()=>{if(route!=='market')setMarketMode('supported');},[route]);
 const accountControls=<AccountModeControl manual={manual} uid={account.userId} enabled={manualTradingEnabled} onChange={mode=>{setManualOwner(mode==='manual'?account.userId??'':'');try{if(account.userId)localStorage.setItem('manual.mode.'+account.userId,mode);}catch{setNotice('계좌 모드 보관 실패');}}}/>;
 function rows(list:readonly Instrument[]){return <div className="stocks">{list.map(s=>{const q=quote(s);return <div className="stock" key={s.symbol}><a href={`#stock/${s.symbol}`} className="identity"><span className="avatar">{s.symbol.slice(0,2)}</span><span><strong>{s.name}</strong><small>{s.symbol} · {s.kind}</small></span></a><div className="price"><strong>{money(q.price)}</strong><small className={q.change>=0?'up':'down'}>{q.change>=0?'+':''}{q.change.toFixed(2)}%</small></div><button className="star" aria-label={`${s.symbol} 관심종목`} aria-pressed={watch.includes(s.symbol)} onClick={()=>toggle(s.symbol)}>{watch.includes(s.symbol)?'★':'☆'}</button></div>})}</div>}
 return <div className={"app ui-foundation "+(collapsed?"collapsed":"")}><aside><button className="collapse-toggle" aria-label="사이드바 접기 펼치기" aria-expanded={!collapsed} onClick={()=>{setCollapsed(!collapsed);try{localStorage.setItem("sidebar.collapsed",String(!collapsed));}catch{setNotice("사이드바 상태 저장 실패");}}}>☰</button><a className="brand" href="#home"><span className="logo">U</span>US Stock Lab</a><p className="eyebrow">나의 투자 연습실</p><nav>{tabs.map(([id,label,icon])=><a key={id} href={`#${id}`} title={label} aria-label={icon+" "+label} aria-current={current===id?'page':undefined}><span>{icon}</span>{label}</a>)}</nav><div className="side-note">작게 배우고<br/>차근차근 투자하기<span>v0.8 · 모의투자</span></div></aside><div className="workspace"><header><HeaderTools route={route} view={account} uid={account.userId} events={info.data?.events??[]} indicators={info.data?.indicators??[]} marketMode={info.mode}/></header><main><div className="source">가격·지수는 학습용 합성 데이터 · 실제 시세 아님 · 생성 기준 {asOf}</div>{notice&&<p role="alert">{notice}</p>}{watchError&&<p role="alert">{watchError}</p>}{currency.error&&route!=="settings"&&<p role="alert">{currency.error}</p>}{currency.currency==="KRW"&&<div className="currency-note">KRW 표시 · 합성 환율 1 USD = {displayFxLabel()} · 참고용 환산이며 실제 환전·환율손익 아님 · 주문/체결/원장은 USD 기준</div>}
+<PracticeReturn key={route} route={route}/>
 {route==='experience'&&<ExperienceLab/>}
 {route==='backtest'&&<BacktestLab key={account.modeKey} view={account}/>}
 {route==='home'&&<HomeDashboard account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))}/>}

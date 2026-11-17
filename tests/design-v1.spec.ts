@@ -139,7 +139,8 @@ test('market and detail v1 visually reorganize existing eight synthetic instrume
  const list=page.getByRole('region',{name:'모의투자 지원 종목'});
  await expect(list.locator('.v1-discovery-intro')).toBeVisible();
  await expect(list.locator('.discovery-stock')).toHaveCount(8);
- await expect(list.locator('.v1-market-result-head')).toBeVisible();
+ if((page.viewportSize()?.width??1440)>790)await expect(list.locator('.v1-market-result-head')).toBeVisible();
+ else await expect(list.locator('.v1-market-result-head')).toBeHidden();
  await list.getByRole('button',{name:'ETF',exact:true}).click();
  await expect(list.locator('.discovery-stock')).toHaveCount(3);
  await list.getByRole('button',{name:'전체',exact:true}).click();

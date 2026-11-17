@@ -219,7 +219,7 @@
  .ui-foundation.ui-v1 .home-market,.ui-foundation.ui-v1 .home-watchlist{grid-column:1;}
  .ui-foundation.ui-v1 .balance.account-summary{grid-template-columns:minmax(0,1fr);}
 }
-@media(max-width:760px){
+@media(max-width:900px){
  .ui-foundation.ui-v1 .workspace,.ui-foundation.ui-v1.collapsed .workspace{margin-left:0;}
  .ui-foundation.ui-v1 > .v1-sidebar{display:none;}
  .ui-foundation.ui-v1 .v1-mobile-nav{

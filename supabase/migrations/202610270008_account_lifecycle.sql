@@ -83,6 +83,24 @@ begin
  return jsonb_build_object('activeId',active_id,'accounts',items);
 end$$;
 
+-- Own-account history is read-only; no execution or implicit account creation.
+create function public.paper_archived_snapshot(p_account_id uuid) returns jsonb language plpgsql security definer set search_path='' as $
+declare uid uuid:=auth.uid();a public.paper_accounts%rowtype;
+begin
+ if uid is null then raise exception 'authentication_required';end if;
+ if p_account_id is null then raise exception 'invalid_account';end if;
+ select * into a from public.paper_accounts where id=p_account_id and user_id=uid and status='closed';
+ if not found then raise exception 'account_not_found';end if;
+ return jsonb_build_object(
+  'id',a.id,'status','closed','createdAt',a.created_at,'closedAt',a.closed_at,
+  'cash',a.cash_cents::text,'realized',a.realized_cents::text,
+  'positions',coalesce((select jsonb_agg(jsonb_build_object('symbol',p.symbol,'quantity',p.quantity::text,'cost',p.cost_cents::text)) from public.paper_positions p where p.account_id=a.id),'[]'::jsonb),
+  'trades',coalesce((select jsonb_agg(jsonb_build_object('id',o.client_request_id,'symbol',o.symbol,'side',o.side,'quantity',o.quantity::text,'price',o.price_cents::text,'time',o.filled_at) order by o.execution_seq) from public.paper_orders o where o.account_id=a.id and o.status='filled'),'[]'::jsonb),
+  'ledger',coalesce((select jsonb_agg(jsonb_build_object('kind',l.kind,'delta',l.delta_cents::text,'balance',l.balance_cents::text,'createdAt',l.created_at) order by l.created_at,l.id) from public.paper_cash_ledger l where l.account_id=a.id),'[]'::jsonb),
+  'prices',(select jsonb_object_agg(symbol,price_cents::text) from public.paper_prices)
+ );
+end$;
+
 -- Preserve all market-hours/idempotency/cash/ledger safeguards of migration 003.
 -- Only append protection against replaying a closed account's request ID.
 create or replace function public.paper_order(p_request_id uuid,p_symbol text,p_side text,p_quantity bigint) returns jsonb language plpgsql security definer set search_path='' as $$
@@ -136,8 +154,8 @@ begin
 end$$;
 
 revoke all on function public.paper_account_id() from public,anon,authenticated;
-revoke all on function public.paper_open_account(),public.paper_close_account(uuid),public.paper_accounts_overview() from public,anon;
-grant execute on function public.paper_open_account(),public.paper_close_account(uuid),public.paper_accounts_overview() to authenticated;
+revoke all on function public.paper_open_account(),public.paper_close_account(uuid),public.paper_accounts_overview(),public.paper_archived_snapshot(uuid) from public,anon;
+grant execute on function public.paper_open_account(),public.paper_close_account(uuid),public.paper_accounts_overview(),public.paper_archived_snapshot(uuid) to authenticated;
 revoke all on function public.paper_order(uuid,text,text,bigint) from public,anon;
 grant execute on function public.paper_order(uuid,text,text,bigint) to authenticated;
 commit;

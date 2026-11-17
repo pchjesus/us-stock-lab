@@ -1,5 +1,7 @@
 import {test,expect} from '@playwright/test';
 import {parseHistory,analyze} from '../src/performance/core';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import {dirname} from 'node:path';
 const header='date,currency,source,value,flow,benchmark_return,risk_free_return\n';
 const sample=header+'2023-01-01,USD,synthetic,1000,0,,\n2024-01-01,USD,synthetic,1100,0,0.08,0.03\n2024-12-31,USD,synthetic,1045,0,-0.02,0.03';
 test('independent two-period reference values and end-flow neutralization',()=>{
@@ -30,4 +32,16 @@ test('CSV UI preserves PA1 and account data; responsive charts and optional expl
  await page.getByLabel('과거 평가액 CSV').setInputFiles({name:'user.csv',mimeType:'text/csv',buffer:Buffer.from(sample.replaceAll('synthetic','user'))});await expect(page.getByRole('status')).toContainText('사용자 신고 자료');await expect(page.getByRole('heading',{name:'현재 합성 계좌의 기간 성과'})).toBeVisible();
  await page.getByLabel('과거 평가액 CSV').setInputFiles({name:'bad.csv',mimeType:'text/csv',buffer:Buffer.from('bad')});await expect(page.getByRole('alert')).toBeVisible();await expect(page.getByRole('heading',{name:'TWR',exact:true})).toHaveCount(0);
  await page.getByRole('button',{name:'가져온 자료 지우기'}).click();await expect(page.getByRole('alert')).toHaveCount(0);
+});
+test('XIRR stays available for histories longer than 35 years and the 10,000-row limit is exact',()=>{
+ for(const start of ['1990-01-01','1960-01-01']){const m=analyze(parseHistory(header+start+',USD,user,1000,0,,\n2026-01-01,USD,user,50000,0,,')).metrics;expect(m.XIRR.value).toBeCloseTo(m.CAGR.value!,8);}
+ const rows=(n:number)=>header+Array.from({length:n},(_,i)=>new Date(Date.UTC(1990,0,1+i)).toISOString().slice(0,10)+',USD,synthetic,1000,0,,').join('\n');
+ expect(parseHistory(rows(10000)).rows).toHaveLength(10000);expect(()=>parseHistory(rows(10001))).toThrow('관측값은 2~10,000개가 필요합니다.');
+});
+test('the same CSV file can be chosen again after fixing it or clearing the result',async({page},info)=>{
+ const file=info.outputPath('history.csv');mkdirSync(dirname(file),{recursive:true});await page.goto('/#portfolio/analysis');const input=page.getByLabel('과거 평가액 CSV'),panel=page.locator('.performance-panel');
+ writeFileSync(file,sample.replace('2024-01-01','2024-13-01'));await input.setInputFiles(file);await expect(panel.getByRole('alert')).toContainText('2024-13-01');
+ writeFileSync(file,sample);await input.setInputFiles(file);await expect(panel.getByRole('alert')).toHaveCount(0);await expect(panel).toContainText('4.50%');
+ await page.getByRole('button',{name:'가져온 자료 지우기'}).click();await expect(panel).not.toContainText('4.50%');
+ await input.setInputFiles(file);await expect(panel).toContainText('4.50%');
 });

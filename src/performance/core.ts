@@ -15,7 +15,7 @@ export function parseHistory(text:string):History {
  if(text.length>2_000_000)throw Error('CSV는 2MB 이하만 지원합니다.');
  const lines=text.replace(/^\uFEFF/,'').trim().split(/\r?\n/);
  if(lines[0]!=='date,currency,source,value,flow,benchmark_return,risk_free_return')throw Error('CSV 헤더가 안내된 계약과 다릅니다.');
- if(lines.length<3||lines.length>10002)throw Error('관측값은 2~10,000개가 필요합니다.');
+ if(lines.length<3||lines.length>10001)throw Error('관측값은 2~10,000개가 필요합니다.');
  let currency='',source='';const rows:Observation[]=lines.slice(1).map((line,i)=>{
  const parts=line.split(',').map(s=>s.trim());if(parts.length!==7)throw Error('행 '+(i+2)+': 7개 열이 필요합니다. 쉼표 없는 숫자를 사용하세요.');
  const [date,c,s,v,f,b,rf]=parts;const day=Date.parse(date+'T00:00:00Z')/DAY;
@@ -36,8 +36,11 @@ export function xirr(rows:Observation[]):Metric {
  const signs=cash.map(r=>Math.sign(r.c));const changes=signs.slice(1).reduce((n,s,i)=>n+(s!==signs[i]?1:0),0);
  if(changes!==1)return missing('현금흐름 부호가 여러 번 바뀌거나 회수액이 없어 XIRR의 유일성을 보장할 수 없습니다.');
  const scale=Math.max(...cash.map(r=>Math.abs(r.c)));const npv=(y:number)=>cash.reduce((s,r)=>s+(r.c/scale)*Math.exp(-y*r.t),0);
- let lo=-20,hi=20,a=npv(lo),b=npv(hi);if(!Number.isFinite(a)||!Number.isFinite(b)||a*b>0)return missing('지원 탐색 범위에서 XIRR 해를 찾지 못했습니다.');
- for(let i=0;i<200;i++){const mid=(lo+hi)/2,v=npv(mid);if(v*a>0){lo=mid;a=v}else hi=mid}
+ // Same sign as npv(y), used only for bracketing. For y<0 every term is scaled by exp(y*tmax)>0:
+ // exp(-y*t) alone overflows at y=-20 once the history passes ~35.5 years.
+ const tmax=Math.max(...cash.map(r=>r.t)),bracket=(y:number)=>cash.reduce((s,r)=>s+(r.c/scale)*Math.exp(y<0?y*(tmax-r.t):-y*r.t),0);
+ let lo=-20,hi=20,a=bracket(lo),b=bracket(hi);if(!Number.isFinite(a)||!Number.isFinite(b)||a*b>0)return missing('지원 탐색 범위에서 XIRR 해를 찾지 못했습니다.');
+ for(let i=0;i<200;i++){const mid=(lo+hi)/2,v=bracket(mid);if(v*a>0){lo=mid;a=v}else hi=mid}
  const y=(lo+hi)/2;if(Math.abs(npv(y))>1e-8)return missing('XIRR 수렴을 검증하지 못했습니다.');return metric(Math.expm1(y));
 }
 export interface Performance {metrics:Record<string,Metric>;returns:number[];wealth:number[];drawdown:number[];benchmarkWealth:number[]|null;contributions:number[];regular:boolean}

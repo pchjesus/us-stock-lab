@@ -7,7 +7,7 @@ import {useAccount,Portfolio,type AccountView} from './TradingUI';
 const AuthPanel=React.lazy(()=>import('./AuthPanel').then(module=>({default:module.AuthPanel})));
 import {Learning} from './Learning';
 import {ExperienceLab} from './ExperienceLab';
-import {PortfolioAnalysis} from './PortfolioAnalysis';
+import {PortfolioAnalysis} from './PortfolioAnalysisUI';
 import {StockDetail} from './StockDetail';
 import {CatalogDiscovery} from './CatalogDiscovery';
 import {MarketDiscovery} from './MarketDiscovery';

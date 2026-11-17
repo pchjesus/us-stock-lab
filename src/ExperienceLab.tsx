@@ -1,7 +1,7 @@
 import {useRef,useState,type KeyboardEvent} from 'react';
 import {applyTrade,emptyAccount,valuation,type Account,type Trade} from './trading';
 import {buildAnalysis} from './portfolioAnalysis';
-import {AnalysisContent} from './PortfolioAnalysis';
+import {AnalysisContent} from './PortfolioAnalysisUI';
 import {formatDisplay} from './preferences';
 import {HistoryPanel} from './performance/HistoryPanel';
 

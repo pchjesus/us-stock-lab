@@ -3,15 +3,9 @@ import {AccountSummary,type AccountView} from './TradingUI';
 import {ManualWorkspace} from './ManualUI';
 import {HomeMarketSummary,ImportantBanner,type MarketView} from './MarketPanels';
 
-export function HomeDashboard({account,manual,market,watchCount,watchRows,designV1=false}:{account:AccountView;manual:boolean;market:MarketView;watchCount:number;watchRows:ReactNode;designV1?:boolean}){
+export function HomeDashboard({account,manual,market,watchCount,watchRows}:{account:AccountView;manual:boolean;market:MarketView;watchCount:number;watchRows:ReactNode}){
  return <div className="home-dashboard">
   <div className="heading home-heading"><div><p className="eyebrow">MY INVESTMENT LAB</p><h1>오늘도 한 걸음, 투자 연습</h1></div></div>
-  {designV1&&<section className="v1-home-hero" aria-labelledby="v1-home-title">
-   <p className="eyebrow">LEARN · PRACTICE · ANALYZE</p>
-   <h1 id="v1-home-title">투자를 배우는 가장 안전한 방법.</h1>
-   <p>가상 계좌로 연습하고, 포트폴리오를 분석하고, 나만의 투자 판단을 길러보세요.</p>
-   <div className="v1-home-actions"><a href="#market">종목 탐색하기 →</a><a href="#learn">기초부터 학습하기 →</a></div>
-  </section>}
   <section className="home-section home-account" aria-labelledby="home-account-title">
    <div className="home-section-title"><h2 id="home-account-title">나의 모의투자 현황</h2><a className="ui-link" href="#portfolio">포트폴리오 자세히 →</a></div>
    {manual?<ManualWorkspace key={account.userId} uid={account.userId!}/>:<AccountSummary view={account}/>}

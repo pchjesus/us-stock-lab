@@ -16,7 +16,7 @@
 - 신규 `src/design/v1/Navigation.tsx`: 자체 SVG 아이콘, 계층형 데스크톱 사이드바, 모바일 하단 5개 메뉴, 거래 불가 표시, 화면별 위치 안내. UI 표현만 담당.
 - 신규 `src/design/v1/theme.css`: 색상 토큰, 텍스트 위계, 패널·폼·탭, 홈/시장/종목상세/포트폴리오/분석/백테스팅/학습 스타일. 기존 7만 자 `style.css`는 현재 이행 단계에서 보존하되 v1 스코프만 새 시각 규칙을 적용한다.
 - `src/main.tsx`의 실제 엔진·라우팅/각 화면 호출과 `HeaderTools`의 실시간 시계·알림·지표·도움말·튜토리얼은 그대로 재사용.
-- `src/HomeDashboard.tsx`는 신디자인에서만 새로운 에디토리얼 히어로 및 기존 기능의 빠른 이동 버튼을 추가한다. 원래 홈은 유지한다.
+- `src/HomeDashboard.tsx`의 대형 교육용 히어로 패널은 사용자 요청에 따라 제거했다. 홈에서는 기존 가상계좌 요약이 첫 주요 화면이며, 엔진과 기존 기능 동선은 유지한다.
 
 ### 디자인 언어
 
@@ -58,9 +58,9 @@
 
 ## 직접 확인 가능한 분리 미리보기 (2026-11-17)
 
-- 브랜치 한정 `.github/workflows/ui-v1-live-preview.yml`을 명시적 `[publish-ui-preview]` 커밋에만 실행한다.
+- 개발 브랜치 Pages 배포는 환경 제한으로 실패했으며, 이 제한은 변경하지 않았다. 운영 `main`의 **배포 워크플로만 추가한 PR #33**에서 `.github/workflows/ui-v1-preview-from-main.yml`을 `[publish-ui-preview]`로 실행한다.
 - 기존 **main 최신 코드를 그대로 빌드한 산출물**을 GitHub Pages 루트에 배치하고, **UI 브랜치 빌드**는 `/preview/ui-v1/` 하위에만 별도 배치한다. 두 빌드에서 생산용 feature flag는 동일하게 유지한다.
-- 새 UI 진입: `https://pchjesus.github.io/us-stock-lab/preview/ui-v1/?ui=v1#home`. *실제 배포 실행 성공 및 HTTP 응답 검증 이전에는 URL 접속 가능 여부를 보장하지 않는다.*
+- 새 UI 진입: `https://pchjesus.github.io/us-stock-lab/preview/ui-v1/?ui=v1#home`. [GitHub Pages 성공 실행 #44109949663](https://github.com/pchjesus/us-stock-lab/actions/runs/44109949663)에서 사이트 루트·새 UI 하위 디렉터리 빌드가 성공했고 GitHub Pages 배포도 성공했다. 외부 HTTP 직접 재조회는 이 환경에서 네트워크 제한으로 불가능했다.
 - 계좌 기록이 브라우저 origin(localStorage)에 속하므로, 같은 GitHub Pages origin의 루트와 미리보기는 로그인/로컬 상태를 공유할 수 있다. **미리보기에서도 거래를 누를 수 있으므로 실사용 데이터 조작을 피하고 데모 상태로만 검토해야 한다**. UI 자체가 read-only가 아니며, 서버 원장 기능을 새로 만들지 않았다는 뜻이다.
 - 운영 app 코드는 변경하지 않아도 Pages 배포 파일을 일시적으로 교체하므로, 차후 main의 공식 Pages 배포 시 미리보기 하위경로는 사라질 수 있다. 운영 main 커밋과 디자인 브랜치는 여전히 분리한다.
 

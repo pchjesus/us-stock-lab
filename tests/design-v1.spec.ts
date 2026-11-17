@@ -71,7 +71,7 @@ test('UI v1 shows usable pages and no horizontal overflow from 320 to 1440px',as
     return {excess,offenders};
    });
    expect(spill.excess,'Overflow at '+width+'px '+route+': '+JSON.stringify(spill.offenders)).toBeLessThanOrEqual(0);
-   if(width<=760){await expect(page.locator('.v1-mobile-nav')).toBeVisible();await expect(page.locator('.v1-sidebar')).toBeHidden();}
+   if(width<=900){await expect(page.locator('.v1-mobile-nav')).toBeVisible();await expect(page.locator('.v1-sidebar')).toBeHidden();}
    else{await expect(page.locator('.v1-sidebar')).toBeVisible();await expect(page.locator('.v1-mobile-nav')).toBeHidden();}
   }
  }

@@ -31,7 +31,7 @@ jobs:
           echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
           sudo ln -sf "$CHROME" /usr/bin/chromium
       - name: Learning progress and navigation regression
-        run: npx playwright test tests/learning-progress.spec.ts tests/learning-navigation.spec.ts tests/learning-a2.spec.ts tests/learning-a2-p2.spec.ts tests/learning-a2-p3.spec.ts tests/learning-practice.spec.ts --workers=2
+        run: npx playwright test tests/learning-release-readiness.spec.ts tests/learning-progress.spec.ts tests/learning-navigation.spec.ts tests/learning-a2.spec.ts tests/learning-a2-p2.spec.ts tests/learning-a2-p3.spec.ts tests/learning-practice.spec.ts --workers=2
       - name: Full UI regression
         run: npm test -- --workers=2
       - name: Auth regression

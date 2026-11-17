@@ -28,7 +28,9 @@ jobs:
       - name: Bootstrap AC1 PostgreSQL and lifecycle security regression
         run: |
           DB=us_stock_ac1
-          for F in tests/sql/bootstrap.sql supabase/migrations/20261026135037_202610260001_foundation.sql supabase/migrations/202610270001_server_trading.sql supabase/migrations/202610270002_order_hardening.sql supabase/migrations/202610270003_market_hours.sql supabase/migrations/202610270008_account_lifecycle.sql tests/sql/account-lifecycle.sql; do
+          # Cluster roles were created by the first test DB; schemas/functions are per-database.
+          sed '/^create role /d' tests/sql/bootstrap.sql | sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB"
+          for F in supabase/migrations/20261026135037_202610260001_foundation.sql supabase/migrations/202610270001_server_trading.sql supabase/migrations/202610270002_order_hardening.sql supabase/migrations/202610270003_market_hours.sql supabase/migrations/202610270008_account_lifecycle.sql tests/sql/account-lifecycle.sql; do
             echo ">>> $DB $F"
             sudo -u postgres psql -v ON_ERROR_STOP=1 -d "$DB" -f "$F"
           done

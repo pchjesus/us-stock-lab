@@ -1,0 +1,42 @@
+name: UX5-C branch-only QA
+on:
+  push:
+    branches: [feat/ux5-c-learning-progress]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Build using Pages feature flags
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_IGTsGZshQZAE92bE0_xpYg__bOTs3GU
+          VITE_ENABLE_MANUAL_TRADING: 'false'
+          VITE_ENABLE_MARKET_FX: 'true'
+          VITE_ENABLE_TREASURY_STATS: 'true'
+      - run: npx playwright install --with-deps chromium
+      - name: Configure Chromium
+        run: |
+          CHROME=$(find "$HOME/.cache/ms-playwright" -path '*/chrome-linux64/chrome' -type f | head -n 1)
+          test -n "$CHROME"
+          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+          sudo ln -sf "$CHROME" /usr/bin/chromium
+      - name: Learning progress and navigation regression
+        run: npx playwright test tests/learning-progress.spec.ts tests/learning-navigation.spec.ts tests/learning-a2.spec.ts tests/learning-a2-p2.spec.ts tests/learning-a2-p3.spec.ts tests/learning-practice.spec.ts --workers=2
+      - name: Full UI regression
+        run: npm test -- --workers=2
+      - name: Auth regression
+        run: npm run test:auth -- --workers=2
+      - name: Release regression
+        run: npx playwright test --config playwright.release.config.ts --workers=1
+      - name: UX0 regression
+        run: npm run test:ux0 -- --workers=2

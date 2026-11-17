@@ -17,7 +17,8 @@ test('UI v1 is strictly opt-in and original navigation is untouched by default',
  await page.goto('/?ui=v1#home');
  await expect(page.locator('.app.ui-v1')).toBeVisible();
  await expect(page.locator('.v1-sidebar')).toHaveCount(1);
- await expect(page.getByRole('heading',{name:'투자를 배우는 가장 안전한 방법.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'나의 모의투자 현황'})).toBeVisible();
+ await expect(page.getByText('투자를 배우는 가장 안전한 방법.')).toHaveCount(0);
  await expect(page.getByTestId('ticker-current')).toBeVisible();
 });
 

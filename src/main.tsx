@@ -46,7 +46,7 @@ return <div className={"app ui-foundation "+(collapsed?"collapsed ":"")+(preview
 <PracticeReturn key={route} route={route}/>
 {route==='experience'&&<ExperienceLab/>}
 {route==='backtest'&&<BacktestLab key={account.modeKey} view={account}/>}
-{route==='home'&&<HomeDashboard account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))} designV1={previewUiV1}/>}
+{route==='home'&&<HomeDashboard account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))}/>}
 {['market','indices'].includes(route)&&<><div className="market-currency-header"><h1>시장</h1><CurrencyToggle/></div><p>궁금한 기업과 ETF를 찾아보세요.</p><MarketToolbar view={info}/>{route==='indices'?<IndicatorCards view={info}/>:<><div className="market-discovery-modes" role="group" aria-label="종목 탐색 모드"><button aria-pressed={marketMode==='supported'} onClick={()=>setMarketMode('supported')}>모의투자 지원 종목</button><button aria-pressed={marketMode==='catalog'} onClick={()=>setMarketMode('catalog')}>미국 종목 후보 탐색</button></div>{marketMode==='catalog'?<CatalogDiscovery key={account.userId??'local'} catalog={localCatalog} setCatalog={setLocalCatalog}/>:<MarketDiscovery watch={watch} toggle={toggle} search={search} setSearch={setSearch} onlyWatch={onlyWatch} setOnlyWatch={setOnlyWatch}/>}</>}</>}
 {selected&&<StockDetail key={selected.symbol} stock={selected} account={account} manual={manual} watched={watch.includes(selected.symbol)} toggleWatch={()=>toggle(selected.symbol)}/>}
 {route==='portfolio'&&<><h1>포트폴리오</h1>{accountControls}{manual?<ManualWorkspace key={account.userId} uid={account.userId!}/>:<Portfolio key={account.modeKey} view={account}/>}</>}

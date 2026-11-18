@@ -54,3 +54,11 @@ Original GitHub Actions branch workflow builds the app with production feature f
 World Wide Web Consortium. (n.d.). *Tabs pattern*. WAI-ARIA Authoring Practices Guide. https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
 
 World Wide Web Consortium. (n.d.). *Accordion pattern*. WAI-ARIA Authoring Practices Guide. https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+
+
+### Chart Lab extension (same design task)
+
+- Atlas: `references/UI_DATA_VISUALIZATION_SEARCH_ATLAS_v0.1_20261113.md`, SRC-25 (time-series charts are for changes over time; accurate labels, scale and source status must remain) and SRC-26 (clear scope and controls).
+- Opt-in `src/ChartLab.tsx` UI class and `Learning.tsx` flag. Repositions the existing symbol picker, time range, difficulty and chart type controls *before* the existing full-width chart, then a focused OHLC/volume readout. Mid/high moving averages and RSI retain original code, values, datasets and crosshair behavior.
+- Mobile stacks the selectors and reserves the full available width for the price chart; labels and input targets remain visible. The actual chart/indicator engine and sample-data timestamps are unchanged.
+- QA: test all 320/390/768/1440px widths, check selected synthetic candle/line price chart independently of optional RSI, verify SMA/RSI behavior and no mutation of the local trading account.

@@ -166,5 +166,6 @@ test('390px discovery cards are compact while retaining synthetic quote and prev
  await expect(cards.first().locator('.market-lab-card-stats')).toBeVisible();
  await cards.first().getByRole('button',{name:/빠른 정보/}).click();
  await expect(page.getByRole('region',{name:'선택 종목 요약'})).toBeVisible();
+ await expect(page.getByRole('region',{name:'선택 종목 요약'})).toBeFocused();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);
 });

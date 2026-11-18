@@ -37,6 +37,7 @@ const tools:NavEntry[]=[
  {href:'#calendar',label:'경제 일정',icon:'calendar',matches:r=>r==='calendar'},
  {href:'#news',label:'뉴스·자료',icon:'news',matches:r=>r==='news'}
 ];
+const settingsEntry:NavEntry={href:'#settings',label:'설정',icon:'settings',matches:r=>r==='settings'};
 function NavLink({entry,route,compact=false}:{entry:NavEntry;route:string;compact?:boolean}){
  const active=entry.matches(route);
  return <a className={'v1-nav-link'+(active?' is-active':'')+(compact?' is-compact':'')} href={entry.href} aria-current={active?'page':undefined} title={entry.label}>
@@ -58,11 +59,13 @@ export function V1Navigation({route,collapsed,onToggle}:{route:string;collapsed:
     <nav aria-label="주요 메뉴" className="v1-desktop-primary">{navigation.map(e=><NavLink key={e.href} entry={e} route={route}/>)}</nav>
     <p className="v1-sidebar-label">연습과 자료</p>
     <nav aria-label="도구 및 자료" className="v1-desktop-tools">{tools.map(e=><NavLink key={e.href} entry={e} route={route}/>)}</nav>
+    <p className="v1-sidebar-label">계정과 환경</p>
+    <nav aria-label="계정 및 설정" className="v1-desktop-settings"><NavLink entry={settingsEntry} route={route}/></nav>
    </div>
    <div className="v1-sidebar-bottom">
     <span className="v1-demo-dot" aria-hidden="true"/>
     <div><strong>가상 투자 환경</strong><span>실제 거래·입출금 불가</span></div>
-    <a className="v1-sidebar-settings" href="#settings" aria-label="설정" aria-current={route==='settings'?'page':undefined} title="설정"><V1Icon name="settings" size={19}/></a>
+    <V1Icon name="layers" size={18}/>
    </div>
   </aside>
   <nav aria-label="모바일 주요 메뉴" className="v1-mobile-nav">{navigation.map(e=><NavLink key={e.href} entry={e} route={route} compact/>)}</nav>

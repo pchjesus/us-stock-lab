@@ -38,7 +38,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: home-v2-lab-and-v1-desktop-mobile-screens
-          path: |\n            work/ui-v1/captures/*.png\n            work/home-v2-lab/captures/*.png
+          path: |
+            work/ui-v1/captures/*.png
+            work/home-v2-lab/captures/*.png
           if-no-files-found: ignore
           retention-days: 14
       - name: Original entire UI regression

@@ -411,7 +411,7 @@ test('Chart learning lab uses the Atlas v1 instrument panel while preserving syn
   const lab=page.locator('.v1-chart-lab');
   await expect(lab).toBeVisible();
   await expect(lab.getByRole('heading',{name:'차트 실습실'})).toBeVisible();
-  await expect(lab.getByRole('img',{name:/학습용 가상/})).toBeVisible();
+  await expect(lab.getByRole('img',{name:/학습용 가상 (캔들|선) 차트/})).toBeVisible();
   await expect(lab.getByLabel('학습 종목')).toHaveValue('AAPL');
   await expect(lab).toContainText('실제 주가 아님');
   await lab.getByRole('button',{name:'중급'}).click();

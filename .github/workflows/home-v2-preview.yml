@@ -1,0 +1,75 @@
+name: Publish isolated UI v2 home lab with preserved main and v1
+on:
+  push:
+    branches: [design/home-v2-lab-20261118]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  preview:
+    if: contains(github.event.head_commit.message, '[publish-home-lab]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}preview/ui-v2-home/?ui=v1&homeLab=1#home
+    env:
+      VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
+      VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_IGTsGZshQZAE92bE0_xpYg__bOTs3GU
+      VITE_ENABLE_MANUAL_TRADING: 'false'
+      VITE_ENABLE_MARKET_FX: 'true'
+      VITE_ENABLE_TREASURY_STATS: 'true'
+    steps:
+      - name: Check out unchanged production main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: production
+      - name: Check out stable v1 preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: design/ui-v1-rebuild
+          path: preview-v1
+      - name: Check out separate home v2 laboratory branch
+        uses: actions/checkout@v4
+        with:
+          ref: design/home-v2-lab-20261118
+          path: preview-v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build production from main with matching Pages flags
+        working-directory: production
+        run: npm ci && npm run build
+      - name: Build stable UI v1 from separate branch
+        working-directory: preview-v1
+        run: npm ci && npm run build
+      - name: Build UI v2 home lab from isolated branch
+        working-directory: preview-v2
+        run: npm ci && npm run build
+      - name: Package production, v1 reference and v2 home lab under separate paths
+        run: |
+          mkdir -p _site/preview/ui-v1 _site/preview/ui-v2-home
+          cp -a production/dist/. _site/
+          cp -a preview-v1/dist/. _site/preview/ui-v1/
+          cp -a preview-v2/dist/. _site/preview/ui-v2-home/
+          cmp production/dist/index.html _site/index.html
+          test -f _site/index.html
+          test -f _site/preview/ui-v1/index.html
+          test -f _site/preview/ui-v2-home/index.html
+          test -d _site/assets
+          test -d _site/preview/ui-v1/assets
+          test -d _site/preview/ui-v2-home/assets
+          ! grep -q 'ui-v1' _site/index.html
+          echo "Production main rebuilt unchanged; v1 and home lab are isolated subpaths."
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy home lab and preserve previous UI preview alongside production
+        id: deployment
+        uses: actions/deploy-pages@v4

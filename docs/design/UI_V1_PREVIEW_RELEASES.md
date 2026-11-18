@@ -22,3 +22,13 @@ This file is an operations marker. It is not imported into the application and h
 - Main production app is rebuilt unmodified at site root, UI v1 preview under `/preview/ui-v1/`; no merge of the design app code into main.
 - Preview: https://pchjesus.github.io/us-stock-lab/preview/ui-v1/?ui=v1#stock/AAPL
 - The preview can share browser origin local account/auth state with production; do not submit real test actions on the preview account.
+
+## 2026-11-18 · Stage 4 learning, support and overview valuation preview
+- Verified design source SHA: `2bd996745f6694e9016db6bc0080b5e175a1d219`, branch `design/ui-v1-rebuild`.
+- Revised valuation position: PER/PBR/ROE and sector reference reside in the **company overview tab after business/verified results**, not beneath the synthetic quote and not in other tabs.
+- Visual-only renovation: learning selection/progress/lesson filters, sample-only experience lab, calendar, empty-news and official-resource cards, settings/account/auth sections.
+- Source: `src/design/v1/sections.css` scoped to `?ui=v1`; old app keeps original layout, all data and calculation engines unchanged.
+- GitHub Actions QA: https://github.com/pchjesus/us-stock-lab/actions/runs/44232992283 **SUCCESS** — build; new focused 28/28; full UI 460/460; auth 54/54; release 6/6; UX0 3/3.
+- Pages root remains built from production main, design branch is built separately under `/preview/ui-v1/`; only docs/ops metadata is updated on main. The design branch remains a Draft PR #32.
+- Preview: https://pchjesus.github.io/us-stock-lab/preview/ui-v1/?ui=v1#stock/AAPL
+- The preview is not a separate browser origin; local demo account and auth context can be shared. Do not test order/account reset actions against real user data.

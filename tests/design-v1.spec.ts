@@ -267,7 +267,7 @@ test('v1 experience layout, calendar/news and settings retain existing actions a
  const calendar=page.locator('.v1-calendar-page');
  await expect(calendar).toBeVisible();
  await expect(calendar).toContainText('교육용 가상 예시');
- await expect(calendar.locator('.calendar')).toBeVisible();
+ await expect(calendar.locator('.calendar-grid')).toBeVisible();
  await calendar.getByText('전체 일정 목록').click();
  await expect(calendar.locator('.event-list article')).toHaveCount(8);
  await page.goto('/?ui=v1#news');

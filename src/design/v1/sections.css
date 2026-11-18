@@ -92,8 +92,10 @@
 .ui-foundation.ui-v1 .v1-support-page .market-toolbar select{min-height:42px;padding:7px 11px;}
 .ui-foundation.ui-v1 .v1-support-page>p{margin:0;font-size:12px;max-width:850px;}
 .ui-foundation.ui-v1 .v1-support-page>.demo-disclaimer{padding:14px 16px;background:#fff6eb;border:1px solid #f0e1ca;border-radius:12px;color:#8b653a;font-size:12px;}
-.ui-foundation.ui-v1 .v1-calendar-page .calendar{min-width:0;max-width:100%;border:1px solid #e4e9f2;border-radius:17px;background:#fff;padding:17px;}
-.ui-foundation.ui-v1 .v1-calendar-page .calendar-grid{max-width:100%;min-width:0;}
+.ui-foundation.ui-v1 .v1-calendar-page>.section-title{display:flex;justify-content:center;align-items:center;gap:13px;margin:0;padding:13px 18px;border:1px solid #e4e9f2;border-bottom:0;border-radius:16px 16px 0 0;background:#fff;}
+.ui-foundation.ui-v1 .v1-calendar-page>.section-title h2{font-size:19px;margin:0 12px;}
+.ui-foundation.ui-v1 .v1-calendar-page>.section-title button{min-height:44px;}
+.ui-foundation.ui-v1 .v1-calendar-page>.calendar-grid{max-width:100%;min-width:0;margin:0;padding:13px;border:1px solid #e4e9f2;border-top:0;border-radius:0 0 16px 16px;background:#fff;}
 .ui-foundation.ui-v1 .v1-calendar-page>.event-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
 .ui-foundation.ui-v1 .v1-calendar-page>details{border:1px solid #e2e8f3;border-radius:15px;background:#fff;padding:17px 20px;}
 .ui-foundation.ui-v1 .v1-calendar-page>details>summary{min-height:44px;display:list-item;padding:11px 0;cursor:pointer;font-size:13px;font-weight:700;color:#3154a8;}

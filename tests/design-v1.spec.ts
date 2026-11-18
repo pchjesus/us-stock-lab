@@ -96,7 +96,7 @@ test('mobile primary navigation and desktop collapsed rail preserve routing',asy
 
 test('save opt-in v1 visual review screenshots across desktop and mobile routes',async({page},testInfo)=>{
  mkdirSync('work/ui-v1/captures',{recursive:true});
- const paths=['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn'];
+ const paths=['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn','learn/lessons','experience','calendar','news','settings'];
  const width=testInfo.project.name==='mobile'?390:1440;
  await page.setViewportSize({width,height:960});
  for(const route of paths){
@@ -202,4 +202,97 @@ test('backtest v1 separates scenario forms from results without changing calcula
  expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(before);
  await page.goto('/#backtest');
  await expect(page.locator('.v1-bt-lab')).toHaveCount(0);
+});
+
+
+test('PER PBR ROE are inside company overview and disappear from financial, trade and evidence tabs',async({page})=>{
+ await page.goto('/?ui=v1#stock/AAPL');
+ const root=page.getByRole('article',{name:'기업 상세 화면'});
+ const overview=root.getByRole('tabpanel',{name:'개요'});
+ const comparison=overview.locator('.v1-valuation');
+ await expect(comparison).toBeVisible();
+ await expect(comparison.getByTestId('valuation-per')).toBeVisible();
+ await expect(comparison.getByTestId('valuation-pbr')).toBeVisible();
+ await expect(comparison.getByTestId('valuation-roe')).toBeVisible();
+ await expect(root.locator('.v1-detail-price .v1-valuation')).toHaveCount(0);
+ expect(await comparison.evaluate(node=>node.closest('[role=tabpanel]')?.id)).toBe('stock-AAPL-panel-overview');
+ const business=root.locator('#company-overview');
+ const businessBox=await business.boundingBox(),comparisonBox=await comparison.boundingBox();
+ expect(businessBox).not.toBeNull();expect(comparisonBox).not.toBeNull();
+ expect(comparisonBox!.y).toBeGreaterThan(businessBox!.y);
+ await root.getByRole('tab',{name:'재무'}).click();
+ await expect(comparison).toBeHidden();
+ await root.getByRole('tab',{name:'근거'}).click();
+ await expect(comparison).toBeHidden();
+ await root.getByRole('tab',{name:'차트·거래'}).click();
+ await expect(comparison).toBeHidden();
+ await root.getByRole('tab',{name:'개요'}).click();
+ await expect(comparison).toBeVisible();
+ await page.goto('/#stock/AAPL');
+ await expect(page.locator('.v1-valuation')).toHaveCount(0);
+ await page.goto('/?ui=v1#stock/VOO');
+ await expect(page.locator('.v1-valuation')).toHaveCount(0);
+});
+test('v1 learning path, quiz progress and practice keep existing behavior across new layout',async({page})=>{
+ await page.goto('/?ui=v1#learn');
+ const root=page.locator('.v1-learning-page');
+ await expect(root).toBeVisible();
+ await expect(root.locator('.learning-choice')).toHaveCount(2);
+ await expect(root.locator('.learning-path')).toBeVisible();
+ await expect(root.getByRole('region',{name:'학습 현황'})).toBeVisible();
+ await root.locator('a[href="#learn/lessons"]').first().click();
+ await expect(page).toHaveURL(/#learn\/lessons$/);
+ await expect(page.locator('.v1-learning-page .lesson-card')).toHaveCount(10);
+ const first=page.locator('#lesson-stock');
+ await first.locator('.lesson').click();
+ await expect(first.locator('.learning-unit')).toBeVisible();
+ await first.getByRole('button',{name:'이 수업 학습 완료로 표시'}).click();
+ await page.goto('/?ui=v1#learn');
+ await expect(page.getByRole('region',{name:'학습 현황'})).toContainText('1/10');
+ await expect(page.locator('.v1-learning-page .learning-practice-hub')).toBeVisible();
+});
+test('v1 experience layout, calendar/news and settings retain existing actions and information boundaries',async({page})=>{
+ const existing=JSON.stringify({version:1,generation:'stage4-preserve',trades:[]});
+ await page.addInitScript(doc=>localStorage.setItem('us-stock-lab.account.v1',doc),existing);
+ await page.goto('/?ui=v1#experience');
+ const exp=page.locator('.v1-experience-lab');
+ await expect(exp.getByTestId('experience-cash')).toHaveText('$100,000.00');
+ await exp.getByRole('button',{name:'예시 매수'}).click();
+ await expect(exp.getByTestId('experience-cash')).toHaveText('$99,900.00');
+ await exp.getByRole('tab',{name:'2. 포트폴리오 분석'}).click();
+ await expect(exp.getByRole('tabpanel',{name:'2. 포트폴리오 분석'})).toBeVisible();
+ await exp.getByRole('tab',{name:'1. 가상 매매'}).click();
+ await expect(exp.getByTestId('experience-cash')).toHaveText('$99,900.00');
+ await page.goto('/?ui=v1#calendar');
+ const calendar=page.locator('.v1-calendar-page');
+ await expect(calendar).toBeVisible();
+ await expect(calendar).toContainText('교육용 가상 예시');
+ await expect(calendar.locator('.calendar')).toBeVisible();
+ await calendar.getByText('전체 일정 목록').click();
+ await expect(calendar.locator('.event-list article')).toHaveCount(8);
+ await page.goto('/?ui=v1#news');
+ const news=page.locator('.v1-news-page');
+ await expect(news).toBeVisible();
+ await expect(news).toContainText('수신된 뉴스가 없습니다');
+ await expect(news.locator('.source-links a')).toHaveCount(5);
+ await page.goto('/?ui=v1#settings');
+ const settings=page.locator('.v1-settings-page');
+ await expect(settings).toBeVisible();
+ await expect(settings.getByRole('heading',{name:'화면 설정'})).toBeVisible();
+ await expect(settings.getByLabel('기본 표시 통화')).toBeVisible();
+ await expect(settings.getByRole('heading',{name:'데이터 안내'})).toBeVisible();
+ expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(existing);
+});
+test('new learning, experience and support sections have no page overflow on mobile or desktop',async({page})=>{
+ const routes=['learn','learn/lessons','experience','calendar','news','settings'];
+ for(const width of [320,390,768,1024,1440]){
+  await page.setViewportSize({width,height:860});
+  for(const route of routes){
+   await page.goto('/?ui=v1#'+route);
+   await expect(page.locator('main')).toBeVisible();
+   const overflow=await page.evaluate(()=>({excess:document.documentElement.scrollWidth-innerWidth,body:document.body.scrollWidth-innerWidth}));
+   expect(overflow.excess,'root overflow at '+width+': '+route).toBeLessThanOrEqual(0);
+   expect(overflow.body,'body overflow at '+width+': '+route).toBeLessThanOrEqual(0);
+  }
+ }
 });

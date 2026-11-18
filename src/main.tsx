@@ -21,6 +21,7 @@ import {CurrencyProvider,DisplaySettings,useCurrency,displayFxLabel,CurrencyTogg
 import './style.css';
 import {V1Navigation,V1PageContext} from './design/v1/Navigation';
 import './design/v1/theme.css';
+import './design/v1/sections.css';
 const manualTradingEnabled=import.meta.env.VITE_ENABLE_MANUAL_TRADING==='true';
 // UI v1 is opt-in on this development branch. Financial logic and route contracts remain identical.
 const previewUiV1=new URLSearchParams(window.location.search).get('ui')==='v1';

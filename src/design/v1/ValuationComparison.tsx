@@ -6,10 +6,10 @@ export function ValuationComparison({symbol}:{symbol:CompanySymbol}){
  const snapshot=validatedValuationSnapshot(symbol);
  if(!snapshot)return <section className="panel v1-valuation" aria-label="PER PBR ROE 산업 참고 지표"><h2>기업 가치평가 · 업계 참고</h2><p>검증된 기업/산업 지표가 없어서 PER·PBR·ROE를 표시하지 않습니다. 합성 가격으로 계산하지 않아요.</p></section>;
  return <section className="panel v1-valuation" aria-labelledby="v1-valuation-title">
-  <header className="v1-valuation-heading">
+  <div className="v1-valuation-heading">
    <div><p className="eyebrow">FUNDAMENTALS · REFERENCE ONLY</p><h2 id="v1-valuation-title">기업 가치평가 · 업계 참고</h2><p>기업은 {snapshotMeta.companyDate} 기준 참고 자료, 산업군은 {snapshotMeta.industryDate} 자료입니다. <strong>시점·집계방법이 달라 직접적인 투자 판단에 사용하지 마세요.</strong></p></div>
    <span className="v1-valuation-status">실제 시장자료 스냅샷 · 주문 시세와 별개</span>
-  </header>
+  </div>
   <div className="v1-valuation-grid">
    {fields.map(metric=>{
     const info=valuationMetricDescriptions[metric];

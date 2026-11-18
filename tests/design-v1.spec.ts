@@ -96,7 +96,7 @@ test('mobile primary navigation and desktop collapsed rail preserve routing',asy
 
 test('save opt-in v1 visual review screenshots across desktop and mobile routes',async({page},testInfo)=>{
  mkdirSync('work/ui-v1/captures',{recursive:true});
- const paths=['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn','learn/lessons','experience','calendar','news','settings'];
+ const paths=['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn','learn/lessons','learn/lessons/etf','experience','calendar','news','settings'];
  const width=testInfo.project.name==='mobile'?390:1440;
  await page.setViewportSize({width,height:960});
  for(const route of paths){
@@ -242,11 +242,14 @@ test('v1 learning path, quiz progress and practice keep existing behavior across
  await expect(root.getByRole('region',{name:'학습 현황'})).toBeVisible();
  await root.locator('a[href="#learn/lessons"]').first().click();
  await expect(page).toHaveURL(/#learn\/lessons$/);
- await expect(page.locator('.v1-learning-page .lesson-card')).toHaveCount(10);
- const first=page.locator('#lesson-stock');
- await first.locator('.lesson').click();
- await expect(first.locator('.learning-unit')).toBeVisible();
- await first.getByRole('button',{name:'이 수업 학습 완료로 표시'}).click();
+ await expect(page.locator('.v1-learning-page .lesson-card')).toHaveCount(0);
+ await expect(page.locator('.v1-course-active')).toHaveCount(1);
+ await expect(page.getByRole('navigation',{name:'레슨 선택'}).getByRole('link')).toHaveCount(10);
+ const course=page.locator('.v1-course-reader');
+ await expect(course).toContainText('주식이 뭐야?');
+ await course.getByRole('tab',{name:/퀴즈/}).click();
+ await expect(course.locator('.v1-reader-question')).toHaveCount(2);
+ await course.getByRole('button',{name:'이 수업 학습 완료로 표시'}).click();
  await page.goto('/?ui=v1#learn');
  await expect(page.getByRole('region',{name:'학습 현황'})).toContainText('1/10');
  await expect(page.locator('.v1-learning-page .learning-practice-hub')).toBeVisible();
@@ -295,4 +298,105 @@ test('new learning, experience and support sections have no page overflow on mob
    expect(overflow.body,'body overflow at '+width+': '+route).toBeLessThanOrEqual(0);
   }
  }
+});
+
+
+test('Atlas v1 chapter reader displays one lesson and preserves source content across focused stage tabs',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/?ui=v1#learn/lessons');
+ const course=page.locator('.v1-course-workspace');
+ await expect(course).toBeVisible();
+ await expect(page.locator('.lesson-card')).toHaveCount(0);
+ await expect(course.locator('.v1-course-active')).toHaveCount(1);
+ await expect(course.locator('.v1-course-reader-heading')).toContainText('주식이 뭐야?');
+ const nav=course.getByRole('navigation',{name:'레슨 선택'});
+ await expect(nav.getByRole('link')).toHaveCount(10);
+ const unit=course.locator('.v1-unit-reader');
+ await expect(unit.getByRole('tab')).toHaveCount(4);
+ await expect(unit.getByRole('tab',{name:/개념/})).toHaveAttribute('aria-selected','true');
+ await expect(unit).toContainText('주식 한 주는 기업의 소유 지분');
+ await unit.getByRole('tab',{name:/사례/}).click();
+ await expect(unit).toContainText('한 주를 $100에 사서 $120에 판다면');
+ await expect(unit.locator('.v1-reader-questions')).toHaveCount(0);
+ await unit.getByRole('tab',{name:/실습/}).click();
+ await expect(unit.getByRole('region',{name:'학습 연계 실습 미션'})).toBeVisible();
+ await expect(unit.getByRole('link',{name:/애플 기업 정보 살펴보기/})).toHaveAttribute('href','#stock/AAPL');
+ await unit.getByRole('tab',{name:/퀴즈/}).click();
+ await expect(unit.locator('.v1-reader-question')).toHaveCount(2);
+ await unit.locator('.v1-reader-question').first().getByRole('radio').first().check();
+ await expect(unit.locator('.v1-reader-feedback').first()).toContainText('맞았어요.');
+ await unit.getByRole('button',{name:'이 수업 학습 완료로 표시'}).click();
+ await expect(unit.getByRole('button',{name:'완료 표시 취소'})).toHaveAttribute('aria-pressed','true');
+ await course.getByRole('link',{name:/다음 수업.*ETF가 뭐야/}).click();
+ await expect(page).toHaveURL(/#learn\/lessons\/etf$/);
+ await expect(course.locator('.v1-course-active')).toHaveCount(1);
+ await expect(course.locator('.v1-course-reader-heading')).toContainText('ETF가 뭐야?');
+ await expect(nav.locator('a[aria-current="page"]')).toHaveAttribute('href','#learn/lessons/etf');
+ await page.goto('/?ui=v1#learn/lessons/stock');
+ await unit.getByRole('tab',{name:/퀴즈/}).click();
+ await expect(unit.locator('.v1-reader-question').first().getByRole('radio').first()).toBeChecked();
+ await expect(unit.getByRole('button',{name:'완료 표시 취소'})).toHaveAttribute('aria-pressed','true');
+ expect(errors).toEqual([]);
+});
+
+test('Atlas course mobile chooses a lesson from one picker, not long expanding cards',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ for(const width of [320,390,768,1024,1440]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/?ui=v1#learn/lessons');
+  const course=page.locator('.v1-course-workspace');
+  await expect(course.locator('.v1-course-reader')).toBeVisible();
+  await expect(course.locator('.v1-course-active')).toHaveCount(1);
+  await expect(page.locator('.lesson-card')).toHaveCount(0);
+  if(width<=850){
+   const picker=course.getByLabel('읽을 수업 선택');
+   await expect(picker).toBeVisible();
+   await expect(course.getByRole('navigation',{name:'레슨 선택'})).toBeHidden();
+   await expect(picker.locator('option')).toHaveCount(10);
+   await picker.selectOption('diversification');
+   await expect(page).toHaveURL(/#learn\/lessons\/diversification$/);
+   await expect(course.locator('.v1-course-reader-heading')).toContainText('분산투자가 왜 필요해?');
+  }else{
+   await expect(course.getByRole('navigation',{name:'레슨 선택'}).getByRole('link')).toHaveCount(10);
+   await expect(course.getByLabel('읽을 수업 선택')).toBeHidden();
+  }
+  const tabs=course.locator('.v1-unit-reader').getByRole('tab');
+  await tabs.first().focus();await page.keyboard.press('ArrowRight');
+  await expect(tabs.nth(1)).toHaveAttribute('aria-selected','true');
+  await expect(tabs.nth(1)).toBeFocused();
+  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+  expect(overflow,'course overflow at '+width).toBeLessThanOrEqual(0);
+ }
+ expect(errors).toEqual([]);
+});
+test('Settings is an explicit sidebar navigation item and a visible header action on mobile',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
+ await page.goto('/?ui=v1#home');
+ const sidebar=page.locator('.v1-sidebar');
+ const settings=sidebar.getByRole('navigation',{name:'계정 및 설정'}).getByRole('link',{name:'설정'});
+ await expect(settings).toBeVisible();
+ await expect(settings).toHaveAttribute('href','#settings');
+ await settings.click();
+ await expect(page).toHaveURL(/#settings$/);
+ await expect(settings).toHaveAttribute('aria-current','page');
+ await page.getByRole('button',{name:'메뉴 접기'}).click();
+ await expect(sidebar.locator('.v1-desktop-settings a[href="#settings"]')).toBeVisible();
+ await page.setViewportSize({width:390,height:844});
+ await expect(sidebar).toBeHidden();
+ const mobileSettings=page.locator('header .header-actions').getByRole('link',{name:'설정'});
+ await expect(mobileSettings).toBeVisible();
+ await page.goto('/?ui=v1#home');await mobileSettings.click();
+ await expect(page).toHaveURL(/#settings$/);
+ await expect(page.getByRole('heading',{name:'화면 설정'})).toBeVisible();
+});
+test('course reduced-motion removes animation without hiding focused content',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/?ui=v1#learn/lessons/stock');
+ const active=page.locator('.v1-course-active');
+ await expect(active).toBeVisible();
+ expect(await active.evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
+ await page.locator('.v1-unit-reader').getByRole('tab',{name:/퀴즈/}).click();
+ const content=page.locator('.v1-reader-content');
+ expect(await content.evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
+ await expect(content.locator('.v1-reader-question')).toHaveCount(2);
 });

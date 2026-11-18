@@ -415,10 +415,12 @@ test('Chart learning lab uses the Atlas v1 instrument panel while preserving syn
   await expect(lab.getByLabel('학습 종목')).toHaveValue('AAPL');
   await expect(lab).toContainText('실제 주가 아님');
   await lab.getByRole('button',{name:'중급'}).click();
-  await lab.getByRole('button',{name:'5봉 이동평균'}).click();
+  const sma=lab.getByRole('button',{name:'5봉 이동평균'});
+  if(await sma.getAttribute('aria-pressed')!=='true')await sma.click();
   await expect(lab.getByTestId('sma-5')).toBeVisible();
   await lab.getByRole('button',{name:'고급'}).click();
-  await lab.getByRole('button',{name:'RSI(14)'}).click();
+  const rsi=lab.getByRole('button',{name:'RSI(14)'});
+  if(await rsi.getAttribute('aria-pressed')!=='true')await rsi.click();
   await expect(lab.getByTestId('rsi-value')).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);
  }

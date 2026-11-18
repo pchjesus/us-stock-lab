@@ -8,6 +8,7 @@ import {OrderPanel,type AccountView} from './TradingUI';
 import {OrderAccountContext} from './UiPanels';
 import {useCurrency,CurrencyToggle} from './preferences';
 import {metadata} from './uiData';
+import {ValuationComparison} from './design/v1/ValuationComparison';
 export type DetailTab='overview'|'trade'|'financials'|'evidence';
 export const detailTabEvent='stock-detail-tab';
 export function StockDetail({stock,account,manual,watched,toggleWatch,designV1=false}:{stock:Instrument;account:AccountView;manual:boolean;watched:boolean;toggleWatch:()=>void;designV1?:boolean}){
@@ -31,6 +32,7 @@ export function StockDetail({stock,account,manual,watched,toggleWatch,designV1=f
   <a className="back ui-link" href="#market">← 시장</a>
   <div className="heading detail-heading"><div><p className="eyebrow">{stock.symbol} · {metadata[stock.symbol].exchange} · {stock.kind}</p><h1 tabIndex={-1}>{stock.name}</h1><p className="detail-summary">{profile?.tenSecondSummary??metadata[stock.symbol].description}</p></div><button aria-pressed={watched} onClick={toggleWatch}>{watched?'★ 관심종목 해제':'☆ 관심종목 등록'}</button></div>
   {designV1&&<section className="v1-detail-price" aria-label="합성 가격 및 변동률"><div><span className="v1-detail-price-label">교육용 합성 가격 · 실제 시세 아님</span><div className="v1-detail-price-value"><strong>{currency.format(Math.round(quote(stock).price*100))}</strong><span className={quote(stock).change>=0?'up':'down'}>{quote(stock).change>=0?'+':''}{quote(stock).change.toFixed(2)}%</span></div></div><div className="v1-detail-price-aside"><span>차트와 실제 자료는 구분해서 확인해요.</span><a className="ui-link" href="#detail-order" onClick={e=>{e.preventDefault();jumpToOrder();}}>차트·가상 주문 보기 →</a></div></section>}
+  {designV1&&!etf&&profile&&<ValuationComparison symbol={profile.symbol}/>}
   <div className="detail-currency"><span>합성 가격 표시 통화</span><CurrencyToggle/></div>
   <div className="detail-shortcuts"><a className="ui-link detail-jump" href="#detail-order" onClick={e=>{e.preventDefault();jumpToOrder();}}>시세·주문으로 이동 ↓</a><a className="ui-link" href={`#learn/${stock.symbol}`}>차트 학습실에서 연습하기 →</a></div>
   <div role="tablist" aria-label={etf?'ETF 상세':'기업 상세'} className="detail-tabs">{tabs.map(([id,label],i)=><button key={id} ref={node=>{buttons.current[i]=node;}} role="tab" id={`stock-${stock.symbol}-tab-${id}`} aria-controls={`stock-${stock.symbol}-panel-${id}`} aria-selected={tab===id} tabIndex={tab===id?0:-1} data-detail-tab={id} onClick={()=>activate(id)} onKeyDown={e=>keydown(e,i)}>{label}</button>)}</div>

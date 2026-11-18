@@ -1,5 +1,9 @@
 # 개발 기록
 
+## 2026-11-17 · AC1-A1 계좌 생애주기 서버 계약 (스테이징)
+- 신규 migration 008에서 활성 계좌의 종료, 원장/거래 이력 보존, 신규 개설, 과거 주문 재실행 방지 및 읽기 전용 종료계좌 조회를 설계·구현했다. GitHub Actions #44091143613 격리 PostgreSQL에서 기존 주문 회귀 및 AC1 2사용자/RLS 테스트 PASS. 운영 DB·계좌 UI·Pages에는 미적용. docs/accounts/AC1_A1_LIFECYCLE_CONTRACT.md.
+
+
 ## 2026-11-17 · UX5-C 브라우저 학습 진도·오답 복습 (개발 브랜치)
 - 기존 10개 학습 단원과 퀴즈 문항을 보존하면서 브라우저 로컬 학습 프로필의 완료·현재 선택 정답률·오답 복습·이어서 학습 UI를 구현했다. 로그인/비로그인 기록 분리, 2단계 초기화, 유효한 문항만 복원, 금융 데이터 미변경 원칙을 적용했다. docs/learning/UX5_C_PROGRESS.md에 계약을 기록했다. GitHub Actions #44086822459에서 Pages build·학습 44/44·전체 UI 426/426·Auth 54/54·Release 6/6·UX0 3/3 PASS. 키보드 링크 하단 스크롤 여백 보완 후 검증했고 임시 QA workflow 제거. main/Pages 미변경.
 

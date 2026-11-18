@@ -169,3 +169,37 @@ test('portfolio v1 groups unaltered account summary, holdings, trade history and
  await expect(page.getByTestId('total-assets').first()).toHaveText(formatDisplay(valuation(original,marketPrices()).total,'USD'));
  expect(await page.evaluate(key=>localStorage.getItem(key),accountKey)).toBe(before);
 });
+
+
+test('analysis v1 preserves computed portfolio metrics while reorganizing summaries and charts',async({page})=>{
+ await page.addInitScript(doc=>localStorage.setItem('us-stock-lab.account.v1',doc),demo);
+ await page.goto('/?ui=v1#portfolio/analysis');
+ const app=page.locator('.v1-analysis-shell');
+ await expect(app).toBeVisible();
+ await expect(app.locator('.pa-summary>div')).toHaveCount(6);
+ await expect(app.locator('.pa-grid')).toBeVisible();
+ await expect(app.locator('.pa-metrics dt')).toContainText(['가장 큰 종목 비중','상위 3종목 비중','종목 HHI']);
+ await expect(app).toContainText('실제 시장 성과가 아닙니다');
+ const first=await app.locator('.pa-summary strong').first().textContent();
+ const original=decodeAccount(demo).account;
+ expect(first).toBe(formatDisplay(valuation(original,marketPrices()).total,'USD'));
+ await page.goto('/#portfolio/analysis');
+ await expect(page.locator('.v1-analysis-shell')).toHaveCount(0);
+});
+test('backtest v1 separates scenario forms from results without changing calculated TWR or account',async({page})=>{
+ const before='{"version":1,"generation":"bt-v1-demo","trades":[]}';
+ await page.addInitScript(doc=>localStorage.setItem('us-stock-lab.account.v1',doc),before);
+ await page.goto('/?ui=v1#backtest');
+ const app=page.locator('.v1-bt-lab');
+ await expect(app).toBeVisible();
+ await expect(app.locator('.bt-case')).toHaveCount(2);
+ await expect(app.locator('.bt-form')).toHaveCount(2);
+ await app.getByRole('button',{name:'설정 A 계산'}).click();
+ await expect(app).toContainText('기간 수익률 (TWR)');
+ await expect(app).toContainText('최대 낙폭 (MDD)');
+ await app.getByRole('button',{name:'설정 B 계산'}).click();
+ await expect(app.getByRole('region',{name:'A/B 수익률 비교'})).toBeVisible();
+ expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(before);
+ await page.goto('/#backtest');
+ await expect(page.locator('.v1-bt-lab')).toHaveCount(0);
+});

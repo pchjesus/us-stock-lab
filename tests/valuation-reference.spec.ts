@@ -41,6 +41,7 @@ test('company PER, PBR, ROE and industry context show as separately dated refere
   await expect(panel).toContainText('2026-01');
   await expect(panel).toContainText('실제 시장자료 스냅샷');
   await expect(panel).toContainText('시점·집계방법이 달라');
+  await panel.getByText('산업군 · 기준 · 출처 자세히 보기').click();
   await expect(panel).toContainText('교육용 유사 산업군');
   await expect(panel.getByRole('link',{name:/기업 PER·PBR·ROE 원본/})).toHaveAttribute('href',valuationSnapshots[symbol].company.source);
   await expect(panel.getByRole('link',{name:/업계 PER/})).toHaveAttribute('href',snapshotMeta.industryPERSource);

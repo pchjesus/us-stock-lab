@@ -45,6 +45,8 @@ export function Learning({route='learn',learnerId=null,designV1=false}:{route?:s
  },[focusedLesson,designV1]);
  const titles={landing:'나에게 맞는 학습을 선택하세요',lessons:'한 걸음씩 배우는 투자',lab:'합성 차트로 연습하기',missing:'학습 화면을 찾을 수 없어요'};
  const descriptions={landing:'개념을 읽거나, 차트를 직접 관찰하거나. 오늘 필요한 배움부터 시작하세요.',lessons:'왕초보 → 기초 → 시장 이해 → 경제지표 → 투자 실습',lab:'종목과 기간을 선택하고 가격·지표의 움직임을 관찰하세요.',missing:'아래에서 기초 투자 수업 또는 차트 실습실로 이동하세요.'};
+ const visibleLessons=lessons.filter(item=>stage==='전체'||item.stage===stage);
+ const activeLesson=visibleLessons.find(item=>item.id===(focusedLesson??open))??visibleLessons[0]??lessons[0];
  return <div ref={root} className={designV1?"learning-page v1-learning-page":"learning-page"} data-learning-view={page.kind}>
   {page.kind!=='landing'&&<a className="ui-link learning-back" href="#learn">← 학습 선택으로</a>}
   {progressError&&<p role="alert" className="learning-progress-error">{progressError}</p>}
@@ -65,10 +67,11 @@ export function Learning({route='learn',learnerId=null,designV1=false}:{route?:s
       <div className="v1-course-filters" role="group" aria-label="수업 단계 필터">
        {stages.map(item=><button key={item} type="button" aria-pressed={stage===item} onClick={()=>setStage(item)}>{item}</button>)}
       </div>
-      <p className="v1-course-filter-status" role="status">{stage} · {lessons.filter(item=>stage==='전체'||item.stage===stage).length}개 수업</p>
+      <p className="v1-course-filter-status" role="status">{stage} · {visibleLessons.length}개 수업</p>
+      <label className="v1-course-mobile-picker">읽을 수업 선택<select aria-label="읽을 수업 선택" value={activeLesson.id} onChange={e=>{location.hash='#learn/lessons/'+e.target.value;}}>{visibleLessons.map(item=><option key={item.id} value={item.id}>{String(lessons.findIndex(l=>l.id===item.id)+1).padStart(2,'0')} · {item.title}{progress.completed.includes(item.id)?' ✓':''}</option>)}</select></label>
       <nav aria-label="레슨 선택" className="v1-course-list">
        {lessons.filter(item=>stage==='전체'||item.stage===stage).map(item=>{
-        const selected=(focusedLesson??open)===item.id||(!focusedLesson&&!open&&item.id===lessons.filter(l=>stage==='전체'||l.stage===stage)[0]?.id);
+        const selected=activeLesson.id===item.id;
         const index=lessons.findIndex(l=>l.id===item.id);
         return <a key={item.id} data-v1-lesson={item.id} href={'#learn/lessons/'+item.id} className={'v1-course-link'+(selected?' is-active':'')} aria-current={selected?'page':undefined}>
          <span className="v1-course-link-number">{String(index+1).padStart(2,'0')}</span>
@@ -81,8 +84,7 @@ export function Learning({route='learn',learnerId=null,designV1=false}:{route?:s
      </aside>
      <section className="v1-course-reader" aria-label="선택한 수업 본문">
       {(()=>{
-       const available=lessons.filter(l=>stage==='전체'||l.stage===stage);
-       const active=available.find(l=>l.id===(focusedLesson??open))??available[0]??lessons[0];
+       const active=activeLesson;
        const index=lessons.findIndex(l=>l.id===active.id);
        const corrected=active.id==='fx'||active.id==='dividend'?correctedLessonText[active.id]:undefined;
        return <div key={active.id} className="v1-course-active">

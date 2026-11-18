@@ -43,3 +43,14 @@ This file is an operations marker. It is not imported into the application and h
 - Unchanged main application is built at GitHub Pages root; updated design source deployed only beneath `/preview/ui-v1/`. Draft PR #32 remains unmerged; this markdown change is purely an operations trigger.
 - Preview: https://pchjesus.github.io/us-stock-lab/preview/ui-v1/?ui=v1#learn/lessons
 - Shared-browser-origin warning: login and local demo account may share state. Review presentation only; avoid virtual orders/account resets unless using disposable test data.
+
+## 2026-11-18 · Stage 6 readability, collapsed sidebar fix, UI v1 finishing baseline
+- User's screenshot showed one-character vertical lesson title wrapping in the **nested** lesson index after collapsing the **application** sidebar. Root cause: unscoped legacy selectors `.collapsed aside`, `.collapsed aside nav a`, and `.collapsed aside nav a span` affected the lesson index as well as the app rail.
+- Fix: new opt-in `src/design/v1/polish.css` restores the lesson index width and grid link layout in both expanded and collapsed states. All six stage filter controls wrap within the panel instead of being horizontally clipped.
+- Readability: 16px main study explanations, 14px supplemental text, 16px quiz questions and choices, clearer line heights, stable heading/tap target hierarchy, 320–1440px responsive layout. Other app views get isolated readability/focus polish.
+- Baseline (kept separate from production): branch `baseline/ui-v1-stage6-20261118`, exact verified commit `eefe97d1457841b7cd0fe41bbf9a32a1e04d973a`.
+- All tests PASSED https://github.com/pchjesus/us-stock-lab/actions/runs/44261627416 : production build; new v1 suite **44/44**, full UI **476/476**, auth **54/54**, release **6/6**, UX0 **3/3**.
+- Desktop closed-rail screenshot and desktop/mobile screenshots are attached to the CI artifact.
+- Only separately compiled UI v1 is served at `/preview/ui-v1/`; stable production main app remains the site root unchanged. The source design PR #32 remains Draft/unmerged. Do not remove stable baseline during future UI experiments.
+- Live design preview: https://pchjesus.github.io/us-stock-lab/preview/ui-v1/?ui=v1#learn/lessons
+- Account/browser state may be shared across paths; avoid virtual orders or account resets when reviewing the design.

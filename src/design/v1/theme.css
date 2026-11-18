@@ -435,6 +435,8 @@
 .ui-foundation.ui-v1 .v1-valuation-card dl>div+div dd{font-size:clamp(16px,1.4vw,21px);color:#61718b;}
 .ui-foundation.ui-v1 .v1-valuation-card>p{margin:auto 0 0;border-top:1px solid #e8edf5;padding-top:12px;color:#687991;font-size:11px;line-height:1.75;}
 .ui-foundation.ui-v1 .v1-valuation-footnote{margin-top:17px;padding-top:14px;border-top:1px solid #e4eaf4;}
+.ui-foundation.ui-v1 .v1-valuation-footnote summary{display:list-item;min-height:44px;padding:12px 1px 8px;color:#31569d;font-size:12px;font-weight:740;cursor:pointer;}
+.ui-foundation.ui-v1 .v1-valuation-footnote[open] summary{margin-bottom:6px;}
 .ui-foundation.ui-v1 .v1-valuation-footnote p{margin:5px 0;font-size:11px;line-height:1.75;color:#64748d;}
 .ui-foundation.ui-v1 .v1-valuation-footnote strong{color:#3c4e69;}
 .ui-foundation.ui-v1 .v1-valuation-footnote a{color:#2e56ba;text-underline-offset:3px;}

@@ -96,7 +96,7 @@ test('mobile primary navigation and desktop collapsed rail preserve routing',asy
 
 test('save opt-in v1 visual review screenshots across desktop and mobile routes',async({page},testInfo)=>{
  mkdirSync('work/ui-v1/captures',{recursive:true});
- const paths=['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn','learn/lessons','learn/lessons/etf','experience','calendar','news','settings'];
+ const paths=['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn','learn/lessons','learn/lessons/etf','learn/lab','experience','calendar','news','settings'];
  const width=testInfo.project.name==='mobile'?390:1440;
  await page.setViewportSize({width,height:960});
  for(const route of paths){
@@ -399,4 +399,30 @@ test('course reduced-motion removes animation without hiding focused content',as
  const content=page.locator('.v1-reader-content');
  expect(await content.evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
  await expect(content.locator('.v1-reader-question')).toHaveCount(2);
+});
+
+
+test('Chart learning lab uses the Atlas v1 instrument panel while preserving synthetic indicators and local account',async({page})=>{
+ const original=JSON.stringify({version:1,generation:'atlas-chart-unchanged',trades:[]});
+ await page.addInitScript(doc=>localStorage.setItem('us-stock-lab.account.v1',doc),original);
+ for(const width of [320,390,768,1440]){
+  await page.setViewportSize({width,height:920});
+  await page.goto('/?ui=v1#learn/lab');
+  const lab=page.locator('.v1-chart-lab');
+  await expect(lab).toBeVisible();
+  await expect(lab.getByRole('heading',{name:'차트 실습실'})).toBeVisible();
+  await expect(lab.getByRole('img',{name:/학습용 가상/})).toBeVisible();
+  await expect(lab.getByLabel('학습 종목')).toHaveValue('AAPL');
+  await expect(lab).toContainText('실제 주가 아님');
+  await lab.getByRole('button',{name:'중급'}).click();
+  await lab.getByRole('button',{name:'5봉 이동평균'}).click();
+  await expect(lab.getByTestId('sma-5')).toBeVisible();
+  await lab.getByRole('button',{name:'고급'}).click();
+  await lab.getByRole('button',{name:'RSI(14)'}).click();
+  await expect(lab.getByTestId('rsi-value')).toBeVisible();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);
+ }
+ expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(original);
+ await page.goto('/#learn/lab');
+ await expect(page.locator('.v1-chart-lab')).toHaveCount(0);
 });

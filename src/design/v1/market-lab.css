@@ -230,3 +230,27 @@
  .ui-foundation.ui-v1 .market-lab :is(button,a,input,select,.market-lab-card,.market-lab-save){transition:none!important;}
  .ui-foundation.ui-v1 .market-lab :is(.market-lab-card,.market-lab-save,.market-lab-preview-link,.market-lab-variant-pills button,.market-lab-chips button):hover{transform:none!important;}
 }
+
+/* Screenshot review polish: keep the beginner card grid scannable on a 390px phone. */
+.ui-foundation.ui-v1 .market-lab-b .market-lab-card-description{font-size:13px;line-height:1.58;}
+.ui-foundation.ui-v1 .market-lab-table th{font-size:12px;}
+.ui-foundation.ui-v1 .market-lab-table td{font-size:13px;}
+.ui-foundation.ui-v1 .market-lab-table-name strong{font-size:15px;}
+.ui-foundation.ui-v1 .market-lab-table-name span{font-size:12px;}
+@media(max-width:710px){
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:0;
+  min-height:0;padding:13px 15px 9px;border-radius:15px;
+ }
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-header{align-items:center;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-avatar{width:39px;height:39px;border-radius:11px;font-size:11px;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-name{margin-top:5px;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-name a{font-size:16px;line-height:1.2;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-name p{margin:3px 0 0;font-size:11px;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-description{display:none;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-stats{margin-top:8px;padding:8px 0;gap:9px;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-stats strong{font-size:19px;line-height:1.2;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-footer{padding-top:2px;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-card-footer button{min-height:40px;}
+ .ui-foundation.ui-v1 .market-lab-b .market-lab-preview{padding:21px 18px;}
+}

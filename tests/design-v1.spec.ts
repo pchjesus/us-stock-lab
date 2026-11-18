@@ -439,6 +439,19 @@ test('collapsed main rail never compresses nested lesson navigation text, links 
   const index=root.locator('aside.v1-course-index');
   const links=index.getByRole('navigation',{name:'레슨 선택'}).getByRole('link');
   await expect(links).toHaveCount(10);
+  const filterBounds=await index.locator('.v1-course-filters').evaluate(el=>{
+   const parent=el.getBoundingClientRect();
+   const buttons=Array.from(el.querySelectorAll('button')).map(item=>{
+    const r=item.getBoundingClientRect();return {right:r.right,height:r.height};
+   });
+   return {parentRight:parent.right,parentOverflow:el.scrollWidth-el.clientWidth,buttons};
+  });
+  expect(filterBounds.buttons).toHaveLength(6);
+  for(const btn of filterBounds.buttons){
+   expect(btn.right,'All stage filters should fit the panel, not be clipped').toBeLessThanOrEqual(filterBounds.parentRight+2);
+   expect(btn.height).toBeGreaterThanOrEqual(44);
+  }
+  expect(filterBounds.parentOverflow).toBeLessThanOrEqual(1);
   const layout=async()=>{
    return index.evaluate(el=>{
     const nav=el.querySelector('nav.v1-course-list')!;

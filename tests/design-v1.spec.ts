@@ -428,3 +428,98 @@ test('Chart learning lab uses the Atlas v1 instrument panel while preserving syn
  await page.goto('/#learn/lab');
  await expect(page.locator('.v1-chart-lab')).toHaveCount(0);
 });
+
+
+test('collapsed main rail never compresses nested lesson navigation text, links or index width',async({page},testInfo)=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ for(const width of [1024,1160,1440]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/?ui=v1#learn/lessons');
+  const root=page.locator('.v1-course-workspace');
+  const index=root.locator('aside.v1-course-index');
+  const links=index.getByRole('navigation',{name:'레슨 선택'}).getByRole('link');
+  await expect(links).toHaveCount(10);
+  const layout=async()=>{
+   return index.evaluate(el=>{
+    const nav=el.querySelector('nav.v1-course-list')!;
+    const a=nav.querySelector('a.v1-course-link')!;
+    const title=a.querySelector<HTMLElement>('.v1-course-link-text')!;
+    const titleText=title.querySelector<HTMLElement>('strong')!;
+    const box=(node:Element)=>{const b=node.getBoundingClientRect();return {width:b.width,height:b.height,left:b.left,right:b.right,top:b.top,bottom:b.bottom};};
+    return {index:box(el),nav:box(nav),item:box(a),title:box(title),text:box(titleText),
+      titleFont:parseFloat(getComputedStyle(titleText).fontSize),display:getComputedStyle(a).display,
+      titleOverflow:getComputedStyle(titleText).overflowWrap,navScroll:nav.scrollWidth-nav.clientWidth,
+      hidden:getComputedStyle(nav).display==='none'};
+   });
+  };
+  for(const collapsed of [false,true,false]){
+   const railToggle=page.locator('.v1-sidebar .v1-collapse-button');
+   if(collapsed)await railToggle.click();
+   else if((await page.locator('.app').getAttribute('class'))?.includes('collapsed'))await railToggle.click();
+   await expect(page.locator('.app')).toHaveClass(collapsed?/collapsed/:/ui-v1/);
+   await expect(links.first()).toBeVisible();
+   const x=await layout();
+   expect(x.hidden,'Lesson chapter list must remain visible, even with app sidebar collapsed').toBe(false);
+   expect(x.index.width,'Learning index must not inherit app collapsed rail width at '+width).toBeGreaterThanOrEqual(190);
+   expect(x.item.width,'Chapter links must not be fixed to collapsed 48px width at '+width).toBeGreaterThan(160);
+   expect(x.item.height,'Chapter item should not become vertically towering at '+width).toBeLessThan(108);
+   expect(x.title.width,'Title needs at least readable two-line width at '+width).toBeGreaterThan(85);
+   expect(x.text.height,'Title cannot wrap into one character per row at '+width).toBeLessThan(67);
+   expect(x.titleFont,'Chapter titles should not be tiny').toBeGreaterThanOrEqual(14);
+   expect(x.navScroll,'Chapter list must not horizontally overflow').toBeLessThanOrEqual(1);
+   expect(x.display).toBe('grid');
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);
+   if(collapsed&&width===1440&&testInfo.project.name==='desktop'){
+    mkdirSync('work/ui-v1/captures',{recursive:true});
+    await page.screenshot({path:'work/ui-v1/captures/stage6-1440-collapsed-lesson-index.png',fullPage:true,animations:'disabled'});
+   }
+  }
+  await links.last().click();
+  await expect(page).toHaveURL(/#learn\/lessons\/news$/);
+  await expect(root.locator('.v1-course-active')).toHaveCount(1);
+  await expect(root.locator('.v1-course-reader-heading')).toContainText('뉴스는 어떻게 읽어야 해?');
+ }
+ expect(errors).toEqual([]);
+});
+
+test('learning reading type is 16px-class across concepts, examples, practice, quizzes and mobile',async({page})=>{
+ for(const width of [320,390,768,1024,1440]){
+  await page.setViewportSize({width,height:850});
+  await page.goto('/?ui=v1#learn/lessons/stock');
+  const reader=page.locator('.v1-course-reader');
+  const intro=reader.locator('.v1-course-summary');
+  await expect(intro).toBeVisible();
+  const font=async(sel:string)=>reader.locator(sel).first().evaluate(el=>({size:parseFloat(getComputedStyle(el).fontSize),height:parseFloat(getComputedStyle(el).lineHeight)}));
+  expect((await font('.v1-course-summary')).size,'summary font '+width).toBeGreaterThanOrEqual(16);
+  expect((await font('.v1-reader-intro p')).size,'concept paragraph '+width).toBeGreaterThanOrEqual(16);
+  expect((await font('.v1-reader-essentials p')).size,'why/how paragraphs '+width).toBeGreaterThanOrEqual(16);
+  expect((await font('.v1-reader-note p')).size,'misunderstanding paragraph '+width).toBeGreaterThanOrEqual(16);
+  await reader.getByRole('tab',{name:/사례/}).click();
+  expect((await font('.v1-reader-intro p')).size,'example paragraph '+width).toBeGreaterThanOrEqual(16);
+  await reader.getByRole('tab',{name:/실습/}).click();
+  expect((await font('.v1-reader-intro p')).size,'practice paragraph '+width).toBeGreaterThanOrEqual(16);
+  await reader.getByRole('tab',{name:/퀴즈/}).click();
+  expect((await font('.v1-reader-question legend')).size,'quiz question '+width).toBeGreaterThanOrEqual(16);
+  expect((await font('.v1-reader-options label')).size,'quiz answer '+width).toBeGreaterThanOrEqual(16);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),'horizontal scroll '+width).toBeLessThanOrEqual(0);
+ }
+});
+test('v1 global finishing maintains all core routes and their first meaningful content without new backend writes',async({page})=>{
+ const errors:string[]=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ const original=JSON.stringify({version:1,generation:'ui-v1-finish-safety',trades:[]});
+ await page.addInitScript(data=>localStorage.setItem('us-stock-lab.account.v1',data),original);
+ for(const width of [320,390,768,1024,1440]){
+  await page.setViewportSize({width,height:900});
+  for(const route of ['home','market','stock/AAPL','portfolio','portfolio/analysis','backtest','learn','learn/lessons','learn/lab','experience','calendar','news','settings']){
+   await page.goto('/?ui=v1#'+route);
+   await expect(page.locator('main')).toBeVisible();
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),
+     'horizontal document scroll at '+width+' '+route).toBeLessThanOrEqual(0);
+   if(route==='learn/lessons')await expect(page.locator('.v1-course-active')).toHaveCount(1);
+   if(route==='stock/AAPL')await expect(page.locator('.v1-valuation')).toHaveCount(1);
+  }
+ }
+ expect(await page.evaluate(()=>localStorage.getItem('us-stock-lab.account.v1'))).toBe(original);
+ expect(errors).toEqual([]);
+});

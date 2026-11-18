@@ -50,7 +50,7 @@ function Preview({item,watch,toggle,compact=false}:{item:Instrument;watch:readon
  const currency=useCurrency();
  const q=quote(item);
  const url=quoteLinks(item.symbol).TradingView;
- return <section className={'market-lab-preview'+(compact?' is-compact':'')} aria-label="선택 종목 요약" key={item.symbol}>
+ return <section className={'market-lab-preview'+(compact?' is-compact':'')} aria-label="선택 종목 요약" key={item.symbol} tabIndex={-1}>
   <div className="market-lab-preview-top"><span className="market-lab-note">{item.kind==='ETF'?'ETF 상품':'기업'} · 읽기 전용 미리보기</span>
    <Bookmark symbol={item.symbol} watched={watch.includes(item.symbol)} onToggle={()=>toggle(item.symbol)}/></div>
   <div className="market-lab-preview-icon" aria-hidden="true">{symbolVisual(item.symbol)}</div>
@@ -99,6 +99,18 @@ function Explorer({variant,watch,toggle,search,setSearch,onlyWatch,setOnlyWatch}
   else{setSort(next);setDirection(next==='name'?'asc':'desc');}
  }
  function reset(){setSearch('');setSector('전체');setOnlyWatch(false);setSort('name');setDirection('asc');}
+ function selectAndReveal(symbol:Instrument['symbol']){
+  setSelectedSymbol(symbol);
+  // On narrow screens the inspector follows the card/list. Keep the action visible,
+  // move keyboard focus to its result, and honor reduced-motion preferences.
+  if(variant==='b'&&window.matchMedia('(max-width:1330px)').matches){
+   window.requestAnimationFrame(()=>{
+    const panel=document.querySelector<HTMLElement>('.market-lab-b .market-lab-preview');
+    panel?.focus({preventScroll:true});
+    panel?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+   });
+  }
+ }
  return <section className={'market-lab-explorer market-lab-explorer-'+variant} aria-label="모의투자 지원 종목">
   <div className="market-lab-search-pane">
    <div className="market-lab-search-heading"><div><span className="market-lab-kicker">{variant==='b'?'EXPLORE / 01':'SCREEN / SCREENER'}</span><h2>{variant==='b'?'관심 가는 기업부터 발견해봐':'8종목, 같은 기준으로 비교하기'}</h2><p>{variant==='b'?'종목을 고르고 카드에서 핵심 정보를 살펴보세요.':'섹터·관심종목을 고른 뒤 원하는 수치 순으로 정렬하세요.'}</p></div><span className="market-lab-search-count">{filtered.length}<small> / 8 종목</small></span></div>
@@ -116,7 +128,7 @@ function Explorer({variant,watch,toggle,search,setSearch,onlyWatch,setOnlyWatch}
    </select></label></div>
   {filtered.length===0?<div className="market-lab-empty" role="status"><strong>조건에 맞는 종목이 없어</strong><p>검색어나 필터를 바꿔보면 돼.</p><button onClick={reset}>모든 종목 보기</button></div>:
    variant==='b'?<div className="market-lab-studio-body">
-    <div className="market-lab-card-grid" key={sector+'-'+onlyWatch+'-'+sort+'-'+direction}>{filtered.map((item,index)=><StudioCard key={item.symbol} item={item} watch={watch} toggle={toggle} index={index} selected={item.symbol===selected?.symbol} select={()=>setSelectedSymbol(item.symbol)}/>)}</div>
+    <div className="market-lab-card-grid" key={sector+'-'+onlyWatch+'-'+sort+'-'+direction}>{filtered.map((item,index)=><StudioCard key={item.symbol} item={item} watch={watch} toggle={toggle} index={index} selected={item.symbol===selected?.symbol} select={()=>selectAndReveal(item.symbol)}/>)}</div>
     {selected&&<Preview item={selected} watch={watch} toggle={toggle}/>}
    </div>:
    <div className="market-lab-terminal-body"><div className="market-lab-table-panel">

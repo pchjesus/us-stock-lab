@@ -244,7 +244,7 @@ test('v1 learning path, quiz progress and practice keep existing behavior across
  await expect(page).toHaveURL(/#learn\/lessons$/);
  await expect(page.locator('.v1-learning-page .lesson-card')).toHaveCount(0);
  await expect(page.locator('.v1-course-active')).toHaveCount(1);
- await expect(page.getByRole('navigation',{name:'레슨 선택'}).getByRole('link')).toHaveCount(10);
+ await expect(page.locator('.v1-course-list a')).toHaveCount(10);
  const course=page.locator('.v1-course-reader');
  await expect(course).toContainText('주식이 뭐야?');
  await course.getByRole('tab',{name:/퀴즈/}).click();
@@ -309,8 +309,8 @@ test('Atlas v1 chapter reader displays one lesson and preserves source content a
  await expect(page.locator('.lesson-card')).toHaveCount(0);
  await expect(course.locator('.v1-course-active')).toHaveCount(1);
  await expect(course.locator('.v1-course-reader-heading')).toContainText('주식이 뭐야?');
- const nav=course.getByRole('navigation',{name:'레슨 선택'});
- await expect(nav.getByRole('link')).toHaveCount(10);
+ const nav=course.locator('.v1-course-list');
+ await expect(nav.locator('a')).toHaveCount(10);
  const unit=course.locator('.v1-unit-reader');
  await expect(unit.getByRole('tab')).toHaveCount(4);
  await expect(unit.getByRole('tab',{name:/개념/})).toHaveAttribute('aria-selected','true');

@@ -1,6 +1,7 @@
 import {ChartLab} from './ChartLab';
 import {learningPath,learningUnits} from './learningFoundation';
 import {LearningUnit} from './LearningUnit';
+import {LearningUnitV1} from './design/v1/LearningUnitV1';
 import {a2Units,correctedLessonText} from './learningA2';
 import {p2Units} from './learningA2P2';
 import {p3Units} from './learningA2P3';
@@ -25,7 +26,7 @@ export const lessons:Lesson[]=[
 ];
 const units:Record<string,Unit>={...learningUnits,...a2Units,...p2Units,...p3Units};
 const stages=['전체','왕초보','기초','시장 이해','경제지표','투자 실습'];
-export function Learning({route='learn',learnerId=null}:{route?:string;learnerId?:string|null}){
+export function Learning({route='learn',learnerId=null,designV1=false}:{route?:string;learnerId?:string|null;designV1?:boolean}){
  const [stage,setStage]=useState('전체'),[open,setOpen]=useState<string|null>(null);const root=useRef<HTMLDivElement>(null);const page=resolveLearningRoute(route);
  const [progress,setProgress]=useState<LearningProgress>(()=>loadLearningProgress(learnerId));
  const [progressError,setProgressError]=useState('');
@@ -37,13 +38,16 @@ export function Learning({route='learn',learnerId=null}:{route?:string;learnerId
  const focusedLesson=page.kind==='lessons'?page.lessonId:undefined;
  useEffect(()=>{if(focusedLesson||document.querySelector('dialog[open]'))return;root.current?.scrollIntoView({block:'start',behavior:'instant'});root.current?.querySelector<HTMLElement>('h1')?.focus({preventScroll:true});},[page.kind,focusedLesson]);
  useEffect(()=>{if(!focusedLesson)return;setStage('전체');setOpen(focusedLesson);setProgress(old=>{const next=visitLesson(old,focusedLesson);saveLearningProgress(learnerId,next);return next;});
+  if(designV1)return;
   const frame=requestAnimationFrame(()=>{const button=document.getElementById('lesson-toggle-'+focusedLesson);
    button?.focus({preventScroll:true});document.getElementById('lesson-'+focusedLesson)?.scrollIntoView({block:'start',behavior:'instant'});
   });return()=>cancelAnimationFrame(frame);
- },[focusedLesson]);
+ },[focusedLesson,designV1]);
  const titles={landing:'나에게 맞는 학습을 선택하세요',lessons:'한 걸음씩 배우는 투자',lab:'합성 차트로 연습하기',missing:'학습 화면을 찾을 수 없어요'};
  const descriptions={landing:'개념을 읽거나, 차트를 직접 관찰하거나. 오늘 필요한 배움부터 시작하세요.',lessons:'왕초보 → 기초 → 시장 이해 → 경제지표 → 투자 실습',lab:'종목과 기간을 선택하고 가격·지표의 움직임을 관찰하세요.',missing:'아래에서 기초 투자 수업 또는 차트 실습실로 이동하세요.'};
- return <div ref={root} className="learning-page" data-learning-view={page.kind}>
+ const visibleLessons=lessons.filter(item=>stage==='전체'||item.stage===stage);
+ const activeLesson=visibleLessons.find(item=>item.id===(focusedLesson??open))??visibleLessons[0]??lessons[0];
+ return <div ref={root} className={designV1?"learning-page v1-learning-page":"learning-page"} data-learning-view={page.kind}>
   {page.kind!=='landing'&&<a className="ui-link learning-back" href="#learn">← 학습 선택으로</a>}
   {progressError&&<p role="alert" className="learning-progress-error">{progressError}</p>}
   <div className="heading learning-heading"><div><p className="eyebrow">LEARN AT YOUR PACE</p><h1 id={'learning-title-'+page.kind} tabIndex={-1}>{titles[page.kind]}</h1><p>{descriptions[page.kind]}</p></div></div>
@@ -51,7 +55,58 @@ export function Learning({route='learn',learnerId=null}:{route?:string;learnerId
    {href:'#learn/lessons',step:'01 · 이해하기',title:'기초 투자 수업',description:'주식·ETF부터 분산투자와 뉴스까지, 개념과 용어를 하나씩 익혀요.',detail:'10개 수업 · 단계별 개념과 직접 해보기',action:'투자 수업 시작하기 →'},
    {href:'#learn/lab',step:'02 · 관찰하기',title:'차트 실습실',description:'합성 캔들·선 차트와 SMA·RSI, 지지·저항 후보를 직접 살펴보세요.',detail:'8개 종목 시나리오 · 초급부터 고급까지',action:'차트 실습 시작하기 →'}
   ].map(item=><a className="panel learning-choice" key={item.href} href={item.href}><span className="eyebrow">{item.step}</span><h2>{item.title}</h2><p>{item.description}</p><small>{item.detail}</small><strong>{item.action}</strong></a>)}{page.kind==='landing'&&<section className="panel learning-path" aria-labelledby="learning-path-title"><h2 id="learning-path-title">처음이라면 · 추천 학습 순서</h2><p>순서는 안내입니다. 궁금한 단계부터 시작해도 괜찮아요.</p><ol>{learningPath.map((step,i)=><li key={step.title}><strong>{i+1}. {step.title}</strong><p>{step.goal}</p><small>{step.topics} · {step.feature}</small></li>)}</ol></section>}{page.kind==='landing'&&<LearningProgressDashboard progress={progress} lessonTitles={Object.fromEntries(lessons.map(l=>[l.id,l.title])) as Record<MissionId,string>} scope={learnerId?'signed-in':'guest'} onReset={clearProgress}/>}{page.kind==='landing'&&<section className="panel learning-practice-hub" aria-labelledby="learning-practice-hub-title"><p className="eyebrow">03 · 적용하기</p><h2 id="learning-practice-hub-title">배운 내용을 실제 화면에서 연습해 보세요</h2><p>수업마다 실습 미션이 있어요. 계좌를 변경하지 않고도 체험하고 비교할 수 있습니다.</p><div className="learning-practice-shortcuts"><a className="ui-link" href="#experience">합성 데이터 체험실 →</a><a className="ui-link" href="#portfolio/analysis">포트폴리오 구성 분석 →</a><a className="ui-link" href="#backtest">적립식·일시불 백테스트 →</a></div><small>모두 학습용 합성 시세 또는 사용자가 직접 제공한 자료를 사용합니다. 실제 투자 기록이 아닙니다.</small></section>}</div>:
-   page.kind==='lab'?<><div className="learning-crosslinks"><a className="ui-link" href="#learn/lessons">개념이 궁금하다면 투자 수업 →</a></div><ChartLab symbol={page.symbol}/></>:
+   page.kind==='lab'?<><div className="learning-crosslinks"><a className="ui-link" href="#learn/lessons">개념이 궁금하다면 투자 수업 →</a></div><ChartLab symbol={page.symbol} designV1={designV1}/></>:
+   designV1?<div className="v1-course-workspace" aria-label="투자 수업 학습 공간">
+    <div className="v1-course-topline">
+     <div><span className="eyebrow">COURSE · 10 LESSONS</span><h2>투자 기초 10단원</h2><p>왼쪽에서 한 수업을 선택하고, 오른쪽에서 개념·사례·실습·퀴즈를 차례대로 확인하세요.</p></div>
+     <span className="v1-course-global-progress">{progress.completed.length} / 10 <small>수업 완료 표시</small></span>
+    </div>
+    <div className="v1-course-layout">
+     <aside className="v1-course-index" aria-label="수업 목차">
+      <div className="v1-course-index-header"><h3>수업 목차</h3><span>총 10단원</span></div>
+      <div className="v1-course-filters" role="group" aria-label="수업 단계 필터">
+       {stages.map(item=><button key={item} type="button" aria-pressed={stage===item} onClick={()=>setStage(item)}>{item}</button>)}
+      </div>
+      <p className="v1-course-filter-status" role="status">{stage} · {visibleLessons.length}개 수업</p>
+      <label className="v1-course-mobile-picker">읽을 수업 선택<select aria-label="읽을 수업 선택" value={activeLesson.id} onChange={e=>{location.hash='#learn/lessons/'+e.target.value;}}>{visibleLessons.map(item=><option key={item.id} value={item.id}>{String(lessons.findIndex(l=>l.id===item.id)+1).padStart(2,'0')} · {item.title}{progress.completed.includes(item.id)?' ✓':''}</option>)}</select></label>
+      <nav aria-label="레슨 선택" className="v1-course-list">
+       {lessons.filter(item=>stage==='전체'||item.stage===stage).map(item=>{
+        const selected=activeLesson.id===item.id;
+        const index=lessons.findIndex(l=>l.id===item.id);
+        return <a key={item.id} data-v1-lesson={item.id} href={'#learn/lessons/'+item.id} className={'v1-course-link'+(selected?' is-active':'')} aria-current={selected?'page':undefined}>
+         <span className="v1-course-link-number">{String(index+1).padStart(2,'0')}</span>
+         <span className="v1-course-link-text"><strong>{item.title}</strong><small>{item.stage}</small></span>
+         {progress.completed.includes(item.id)&&<span className="v1-course-complete" aria-label="수업 완료 표시">✓</span>}
+        </a>;
+       })}
+      </nav>
+      <div className="v1-course-index-bottom"><a className="ui-link" href="#learn">학습 현황으로 돌아가기 →</a><a className="ui-link" href="#learn/lab">차트 실습실 →</a></div>
+     </aside>
+     <section className="v1-course-reader" aria-label="선택한 수업 본문">
+      {(()=>{
+       const active=activeLesson;
+       const index=lessons.findIndex(l=>l.id===active.id);
+       const corrected=active.id==='fx'||active.id==='dividend'?correctedLessonText[active.id]:undefined;
+       return <div key={active.id} className="v1-course-active">
+        <div className="v1-course-reader-heading">
+         <span className="v1-course-chapter">LESSON {String(index+1).padStart(2,'0')} / 10 <span>·</span> {active.stage}</span>
+         <h2 tabIndex={-1} id={'v1-course-title-'+active.id}>{active.title}</h2>
+         <p className="v1-course-summary">{corrected?.body??active.body}</p>
+         <div className="v1-course-quick-meta"><span>4단계 학습</span><span>{units[active.id].questions.length}개 확인 문제</span>{progress.completed.includes(active.id)&&<strong>완료 표시됨 ✓</strong>}</div>
+        </div>
+        <LearningUnitV1 key={active.id} unit={units[active.id]} lessonId={active.id}
+         savedAnswers={progress.answers[active.id]} completed={progress.completed.includes(active.id)}
+         onAnswer={updateAnswer} onCompletion={updateCompletion}/>
+        <div className="v1-course-lesson-pagination">
+         {index>0?<a href={'#learn/lessons/'+lessons[index-1].id}>← 이전 수업 <strong>{lessons[index-1].title}</strong></a>:<span>첫 번째 수업</span>}
+         {index<lessons.length-1?<a href={'#learn/lessons/'+lessons[index+1].id}>다음 수업 → <strong>{lessons[index+1].title}</strong></a>:<a href="#learn">학습 현황으로 돌아가기 →</a>}
+        </div>
+        <p className="v1-course-original-practice">기존 수업 과제: {corrected?.practice??active.practice}</p>
+       </div>;
+      })()}
+     </section>
+    </div>
+   </div>:
    <><div className="learning-crosslinks"><a className="ui-link" href="#learn/lab">차트에서 직접 관찰하기 →</a></div><section className="panel lesson-filter-panel" aria-labelledby="lesson-stage-title"><h2 id="lesson-stage-title">학습 단계</h2><div className="learning-filters lesson-stage-filters" role="group" aria-label="수업 단계">{stages.map((s,i)=><button key={s} id={'lesson-stage-'+i} aria-pressed={stage===s} onClick={()=>setStage(s)}>{s}</button>)}</div><p role="status" data-testid="lesson-filter-status">{stage} · {lessons.filter(l=>stage==='전체'||l.stage===stage).length}개 수업</p></section><div className="lesson-list">{lessons.filter(l=>stage==='전체'||l.stage===stage).map((l,i)=><section className="panel lesson-card" key={l.id} id={`lesson-${l.id}`}><p className="eyebrow">{l.stage} · LESSON {i+1}</p><button className="lesson" id={'lesson-toggle-'+l.id} aria-expanded={open===l.id} aria-controls={'lesson-body-'+l.id} onClick={()=>{setOpen(open===l.id?null:l.id);visit(l.id);}}>{l.title} {progress.completed.includes(l.id)&&<small className="lesson-done">완료</small>}<span aria-hidden="true">{open===l.id?'−':'+'}</span></button><div className="lesson-body" id={'lesson-body-'+l.id} hidden={open!==l.id}><p>{l.id==='fx'||l.id==='dividend'?correctedLessonText[l.id].body:l.body}</p><p className="practice">직접 해보기: {l.id==='fx'||l.id==='dividend'?correctedLessonText[l.id].practice:l.practice}</p>{units[l.id]&&<LearningUnit key={l.id} unit={units[l.id]} lessonId={l.id} savedAnswers={progress.answers[l.id]} completed={progress.completed.includes(l.id)} onAnswer={updateAnswer} onCompletion={updateCompletion}/>}</div></section>)}</div></>}
   <p className="learning-disclaimer">일반 학습 자료이며 특정 상품의 매수·매도 권유가 아닙니다. 차트는 학습용 합성 예시이며 실제 시세나 주문 가격이 아닙니다.</p>
  </div>;

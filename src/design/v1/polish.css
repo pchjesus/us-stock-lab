@@ -124,7 +124,8 @@
 .ui-foundation.ui-v1 .v1-course-index-header h3{font-size:17px;}
 .ui-foundation.ui-v1 .v1-course-index-header>span,
 .ui-foundation.ui-v1 .v1-course-filter-status{font-size:var(--v1-meta-type);}
-.ui-foundation.ui-v1 .v1-course-filters button{min-height:41px;font-size:var(--v1-meta-type);padding:8px 13px;}
+.ui-foundation.ui-v1 .v1-course-filters{display:flex;flex-wrap:wrap;overflow:visible;gap:6px;padding:6px 13px 12px;}
+.ui-foundation.ui-v1 .v1-course-filters button{flex:0 0 auto;min-height:44px;font-size:var(--v1-meta-type);padding:9px 12px;white-space:nowrap;}
 .ui-foundation.ui-v1 .v1-course-index-bottom{margin:0;gap:5px;}
 .ui-foundation.ui-v1 .v1-course-index-bottom a{min-height:44px;font-size:13px;}
 .ui-foundation.ui-v1 .v1-course-list:focus-within{scrollbar-color:#bdcae3 transparent;}

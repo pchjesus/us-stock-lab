@@ -25,7 +25,7 @@ export const lessons:Lesson[]=[
 ];
 const units:Record<string,Unit>={...learningUnits,...a2Units,...p2Units,...p3Units};
 const stages=['전체','왕초보','기초','시장 이해','경제지표','투자 실습'];
-export function Learning({route='learn',learnerId=null}:{route?:string;learnerId?:string|null}){
+export function Learning({route='learn',learnerId=null,designV1=false}:{route?:string;learnerId?:string|null;designV1?:boolean}){
  const [stage,setStage]=useState('전체'),[open,setOpen]=useState<string|null>(null);const root=useRef<HTMLDivElement>(null);const page=resolveLearningRoute(route);
  const [progress,setProgress]=useState<LearningProgress>(()=>loadLearningProgress(learnerId));
  const [progressError,setProgressError]=useState('');
@@ -43,7 +43,7 @@ export function Learning({route='learn',learnerId=null}:{route?:string;learnerId
  },[focusedLesson]);
  const titles={landing:'나에게 맞는 학습을 선택하세요',lessons:'한 걸음씩 배우는 투자',lab:'합성 차트로 연습하기',missing:'학습 화면을 찾을 수 없어요'};
  const descriptions={landing:'개념을 읽거나, 차트를 직접 관찰하거나. 오늘 필요한 배움부터 시작하세요.',lessons:'왕초보 → 기초 → 시장 이해 → 경제지표 → 투자 실습',lab:'종목과 기간을 선택하고 가격·지표의 움직임을 관찰하세요.',missing:'아래에서 기초 투자 수업 또는 차트 실습실로 이동하세요.'};
- return <div ref={root} className="learning-page" data-learning-view={page.kind}>
+ return <div ref={root} className={designV1?"learning-page v1-learning-page":"learning-page"} data-learning-view={page.kind}>
   {page.kind!=='landing'&&<a className="ui-link learning-back" href="#learn">← 학습 선택으로</a>}
   {progressError&&<p role="alert" className="learning-progress-error">{progressError}</p>}
   <div className="heading learning-heading"><div><p className="eyebrow">LEARN AT YOUR PACE</p><h1 id={'learning-title-'+page.kind} tabIndex={-1}>{titles[page.kind]}</h1><p>{descriptions[page.kind]}</p></div></div>

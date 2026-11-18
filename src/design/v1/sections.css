@@ -1,0 +1,151 @@
+/* UI v1 Stage 4. Only visual presentation — not imported by the original UI.
+   All existing routes, learning answers, sample trades, market info, auth and settings remain owned by the existing modules. */
+.ui-foundation.ui-v1 .v1-learning-page{min-width:0;display:grid;gap:16px;}
+.ui-foundation.ui-v1 .v1-learning-page>.learning-heading{margin:0;padding:9px 3px 2px;}
+.ui-foundation.ui-v1 .v1-learning-page>.learning-heading .eyebrow{margin:0 0 7px;font-size:11px;}
+.ui-foundation.ui-v1 .v1-learning-page>.learning-heading h1{margin:0 0 7px;font-size:clamp(27px,2.55vw,37px);}
+.ui-foundation.ui-v1 .v1-learning-page>.learning-heading p{max-width:750px;margin:0;font-size:13px;}
+.ui-foundation.ui-v1 .v1-learning-page>.learning-back{display:inline-flex;align-items:center;width:max-content;min-height:35px;font-size:12px;margin:0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;align-items:start;min-width:0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice{position:relative;display:flex;flex-direction:column;gap:11px;min-height:230px;margin:0;padding:24px 27px;border-radius:20px;background:#fff;border:1px solid #e1e8f3;text-decoration:none;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice:first-child{background:#eaf0fd;border-color:#d7e3f8;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice .eyebrow{margin:0 0 1px;font-size:11px;font-weight:750;color:#6380b1;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice h2{margin:0;color:#243957;font-size:clamp(20px,1.65vw,26px);}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice p{margin:0;font-size:13px;line-height:1.65;max-width:430px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice small{font-size:11px;line-height:1.6;color:#8090a5;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice strong{margin-top:auto;padding:13px 0 0;color:#284fb5;font-size:13px;text-decoration:none;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-choice:hover{background:#edf4ff;border-color:#a8bde8;box-shadow:0 10px 20px rgba(33,62,108,.06);}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path{grid-column:1;margin:0;padding:23px;min-width:0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path h2{font-size:19px;margin:0 0 7px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path>p{margin:0;font-size:12px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 15px;margin:15px 0 0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path li{padding:11px 0;min-width:0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path li strong{font-size:13px;color:#344765;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path li p{font-size:12px;line-height:1.6;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-path li small{font-size:11px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-dashboard{grid-column:2;margin:0;min-width:0;padding:23px;border-top:3px solid #4d70ce;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-header h2{font-size:19px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-header p{font-size:11px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-metrics>div{padding:13px;border:1px solid #e5ebf4;border-radius:12px;background:#f8faff;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-metrics span{font-size:11px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-metrics strong{font-size:clamp(18px,2vw,26px);color:#254882;font-variant-numeric:tabular-nums;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-progress-dashboard progress{height:9px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-practice-hub{grid-column:1/-1;margin:0;padding:24px 27px;border-radius:18px;background:#f7faff;border:1px solid #e1e8f3;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-practice-hub h2{font-size:20px;margin:5px 0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-practice-hub p{font-size:13px;margin:5px 0 10px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-practice-shortcuts{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-practice-shortcuts a{display:inline-flex;align-items:center;min-height:44px;padding:8px 13px;border:1px solid #d8e4f7;border-radius:11px;background:#fff;color:#325bb8;text-decoration:none;font-weight:700;font-size:12px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-disclaimer{font-size:11px;margin:10px 0 0;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-filter-panel{margin:0;padding:20px 24px;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-filter-panel h2{font-size:17px;margin:0;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-stage-filters{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-stage-filters button{min-height:41px;border:1px solid #dfe6f2;border-radius:999px;padding:8px 15px;background:#fff;font-size:12px;font-weight:650;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-stage-filters button[aria-pressed=true]{background:#e6edff;color:#2448ab;border-color:#aebee9;box-shadow:none;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-list{display:grid;gap:12px;min-width:0;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-card{margin:0;padding:16px 23px;border:1px solid #e2e8f3;border-radius:16px;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-card>.eyebrow{margin:0;color:#6d80a3;font-size:11px;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-card>.lesson{width:100%;display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:49px;margin:0;padding:7px 0;border:0;background:transparent;color:#263e64;font-size:17px;text-align:left;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-card>.lesson[aria-expanded=true]{color:#2852b8;}
+.ui-foundation.ui-v1 .v1-learning-page .lesson-body{margin-top:12px;padding-top:16px;border-top:1px solid #e7edf5;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-unit{display:grid;gap:10px;min-width:0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-unit>section{padding:17px 18px;border:1px solid #e5ebf4;border-radius:13px;background:#fbfcfe;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-unit>section h3{margin:0 0 9px;font-size:15px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-unit>section p{font-size:13px;margin:7px 0;line-height:1.8;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-question{border-radius:12px;margin:12px 0;padding:14px;background:#fff;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-question label{padding:7px 4px;border-bottom:1px solid #eef2f7;line-height:1.6;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-question label:last-of-type{border-bottom:0;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-question legend{font-size:13px;}
+.ui-foundation.ui-v1 .v1-learning-page .learning-guided-practice{background:#f2f6ff;border-color:#e2eaf9;}
+
+/* Isolated sample-trading lab, whose data remains component memory only. */
+.ui-foundation.ui-v1 .v1-experience-lab{display:grid;gap:15px;min-width:0;}
+.ui-foundation.ui-v1 .v1-experience-lab>h1{margin:6px 0 0;font-size:clamp(27px,2.5vw,37px);}
+.ui-foundation.ui-v1 .v1-experience-lab>p{max-width:780px;font-size:13px;line-height:1.75;margin:0 0 7px;}
+.ui-foundation.ui-v1 .v1-experience-lab>.detail-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:5px;margin:0 0 5px;max-width:880px;border:1px solid #e1e8f2;background:#edf2fa;border-radius:14px;}
+.ui-foundation.ui-v1 .v1-experience-lab>.detail-tabs>button{width:100%;min-width:0;min-height:47px;padding:9px 8px;font-size:13px;border:0;border-radius:11px;}
+.ui-foundation.ui-v1 .v1-experience-lab>.detail-tabs>button[aria-selected=true]{background:#fff;color:#2b53b7;box-shadow:0 2px 8px rgba(28,52,91,.09);}
+.ui-foundation.ui-v1 .v1-experience-lab>[role=tabpanel]{min-width:0;}
+.ui-foundation.ui-v1 .v1-experience-lab [role=tabpanel]>.panel{margin:0;padding:23px;}
+.ui-foundation.ui-v1 .v1-experience-lab [role=tabpanel]>.panel>h2{margin:0 0 8px;font-size:20px;}
+.ui-foundation.ui-v1 .v1-experience-lab [role=tabpanel]>.panel>p{font-size:13px;margin:6px 0;}
+.ui-foundation.ui-v1 .v1-experience-lab .pa-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0;}
+.ui-foundation.ui-v1 .v1-experience-lab .pa-summary>div{display:flex;flex-direction:column;gap:8px;padding:19px;border:1px solid #dfe8f7;border-radius:13px;background:#f2f6ff;font-size:12px;color:#5b7092;}
+.ui-foundation.ui-v1 .v1-experience-lab .pa-summary strong{font-size:clamp(19px,2vw,27px);color:#1e3d79;letter-spacing:-.035em;font-variant-numeric:tabular-nums;}
+.ui-foundation.ui-v1 .v1-experience-lab .experience-controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:9px;margin:14px 0;}
+.ui-foundation.ui-v1 .v1-experience-lab .experience-controls label{display:flex;flex-direction:column;gap:6px;min-width:155px;flex:1 1 160px;font-size:12px;color:#526783;}
+.ui-foundation.ui-v1 .v1-experience-lab .experience-controls :is(input,select){width:100%;min-height:45px;padding:9px 12px;}
+.ui-foundation.ui-v1 .v1-experience-lab .experience-controls>button{min-height:45px;font-size:12px;font-weight:710;}
+.ui-foundation.ui-v1 .v1-experience-lab .experience-controls>button[aria-pressed=true]{background:#e7eeff;}
+.ui-foundation.ui-v1 .v1-experience-lab .experience-controls>button:not([aria-pressed]):first-of-type{background:#355bd2;color:#fff;border-color:#355bd2;}
+.ui-foundation.ui-v1 .v1-experience-lab .pa-grid{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr));}
+.ui-foundation.ui-v1 .v1-experience-lab .pa-table-wrap{max-width:100%;overflow-x:auto;}
+
+/* Market support: show source status prominently, distinguish mock calendar from real news */
+.ui-foundation.ui-v1 .v1-support-page{display:grid;gap:13px;min-width:0;}
+.ui-foundation.ui-v1 .v1-support-page>h1{margin:4px 0 1px;font-size:clamp(27px,2.6vw,37px);}
+.ui-foundation.ui-v1 .v1-support-page>.market-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:11px 15px;border:1px solid #e1e8f3;border-radius:13px;background:#fff;margin:0;}
+.ui-foundation.ui-v1 .v1-support-page .market-links{display:flex;flex-wrap:wrap;gap:5px;}
+.ui-foundation.ui-v1 .v1-support-page .market-links a{padding:8px 13px;border-radius:9px;font-size:12px;font-weight:680;min-height:42px;text-decoration:none;}
+.ui-foundation.ui-v1 .v1-support-page .market-links a[aria-current=page]{background:#eaf0ff;color:#3156bb;}
+.ui-foundation.ui-v1 .v1-support-page .market-toolbar label{display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:12px;}
+.ui-foundation.ui-v1 .v1-support-page .market-toolbar select{min-height:42px;padding:7px 11px;}
+.ui-foundation.ui-v1 .v1-support-page>p{margin:0;font-size:12px;max-width:850px;}
+.ui-foundation.ui-v1 .v1-support-page>.demo-disclaimer{padding:14px 16px;background:#fff6eb;border:1px solid #f0e1ca;border-radius:12px;color:#8b653a;font-size:12px;}
+.ui-foundation.ui-v1 .v1-calendar-page .calendar{min-width:0;max-width:100%;border:1px solid #e4e9f2;border-radius:17px;background:#fff;padding:17px;}
+.ui-foundation.ui-v1 .v1-calendar-page .calendar-grid{max-width:100%;min-width:0;}
+.ui-foundation.ui-v1 .v1-calendar-page>.event-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.ui-foundation.ui-v1 .v1-calendar-page>details{border:1px solid #e2e8f3;border-radius:15px;background:#fff;padding:17px 20px;}
+.ui-foundation.ui-v1 .v1-calendar-page>details>summary{min-height:44px;display:list-item;padding:11px 0;cursor:pointer;font-size:13px;font-weight:700;color:#3154a8;}
+.ui-foundation.ui-v1 .v1-calendar-page .event-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.ui-foundation.ui-v1 .v1-calendar-page .event-list>article{margin:0;min-width:0;border:1px solid #e4eaf3;background:#fafcff;padding:18px;}
+.ui-foundation.ui-v1 .v1-calendar-page .event-list h2{font-size:17px;}
+.ui-foundation.ui-v1 .v1-calendar-page .event-list dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:8px 0;}
+.ui-foundation.ui-v1 .v1-calendar-page .event-list dt{color:#708099;font-size:11px;}
+.ui-foundation.ui-v1 .v1-calendar-page .event-list dd{margin:0;font-weight:700;font-size:12px;color:#253753;}
+.ui-foundation.ui-v1 .v1-news-page>article{margin:0;padding:23px 25px;border:1px solid #e3e9f2;border-radius:16px;}
+.ui-foundation.ui-v1 .v1-news-page>article small{font-size:11px;color:#7486a1;}
+.ui-foundation.ui-v1 .v1-news-page>article h2{font-size:18px;margin:9px 0;}
+.ui-foundation.ui-v1 .v1-news-page>article p{font-size:13px;max-width:850px;}
+.ui-foundation.ui-v1 .v1-news-page>.panel:last-child{background:#f9fbff;}
+.ui-foundation.ui-v1 .v1-news-page .source-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;margin-top:15px;}
+.ui-foundation.ui-v1 .v1-news-page .source-links a{display:flex;min-height:48px;align-items:center;padding:10px 14px;border:1px solid #e1e8f3;border-radius:11px;background:#fff;font-size:12px;font-weight:700;color:#3159b5;}
+.ui-foundation.ui-v1 .v1-news-page .source-links a:hover{border-color:#a2bce9;background:#f2f6fe;}
+
+/* Settings — preserve account controls, login, currency/shell selections and disclosures. */
+.ui-foundation.ui-v1 .v1-settings-page{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start;min-width:0;}
+.ui-foundation.ui-v1 .v1-settings-page>h1{grid-column:1/-1;margin:4px 0 2px;}
+.ui-foundation.ui-v1 .v1-settings-page>.panel{min-width:0;margin:0;}
+.ui-foundation.ui-v1 .v1-settings-page>.display-settings{grid-column:1;grid-row:auto;display:flex;flex-direction:column;gap:11px;padding:24px;}
+.ui-foundation.ui-v1 .v1-settings-page>.display-settings h2{font-size:19px;margin:0 0 3px;}
+.ui-foundation.ui-v1 .v1-settings-page>.display-settings label{display:flex;flex-direction:column;gap:8px;font-size:12px;color:#5b6e87;}
+.ui-foundation.ui-v1 .v1-settings-page>.display-settings select{min-height:44px;padding:8px 12px;max-width:100%;width:100%;font-size:13px;}
+.ui-foundation.ui-v1 .v1-settings-page>.display-settings p{font-size:12px;margin:0;}
+.ui-foundation.ui-v1 .v1-settings-page>.display-settings button{width:max-content;min-height:44px;font-size:12px;}
+.ui-foundation.ui-v1 .v1-settings-page>.panel:last-child{grid-column:1/-1;padding:24px;min-width:0;}
+.ui-foundation.ui-v1 .v1-settings-page>.panel:last-child h2{margin:20px 0 6px;font-size:16px;border-top:1px solid #e8ecf3;padding-top:14px;}
+.ui-foundation.ui-v1 .v1-settings-page>.panel:last-child h2:first-child{margin-top:0;border-top:0;padding-top:0;}
+.ui-foundation.ui-v1 .v1-settings-page>.panel:last-child p{font-size:12px;margin:5px 0 10px;line-height:1.8;}
+@media(max-width:1180px){
+ .ui-foundation.ui-v1 .v1-learning-page .learning-choices{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .v1-learning-page .learning-path,.ui-foundation.ui-v1 .v1-learning-page .learning-progress-dashboard{grid-column:1;}
+ .ui-foundation.ui-v1 .v1-experience-lab .pa-grid{grid-template-columns:minmax(0,1fr);}
+}
+@media(max-width:760px){
+ .ui-foundation.ui-v1 .v1-learning-page .learning-choices{gap:13px;}
+ .ui-foundation.ui-v1 .v1-learning-page .learning-choice{min-height:190px;padding:21px;}
+ .ui-foundation.ui-v1 .v1-learning-page .learning-path ol{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .v1-learning-page .learning-progress-metrics{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .ui-foundation.ui-v1 .v1-experience-lab .pa-summary{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .v1-experience-lab>.detail-tabs>button{font-size:11px;padding-inline:5px;}
+ .ui-foundation.ui-v1 .v1-calendar-page .event-list{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .v1-settings-page{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .v1-settings-page>h1,.ui-foundation.ui-v1 .v1-settings-page>.panel:last-child{grid-column:1;}
+}
+@media(max-width:400px){
+ .ui-foundation.ui-v1 .v1-learning-page .lesson-card{padding:15px;}
+ .ui-foundation.ui-v1 .v1-learning-page .learning-choice{padding:18px;}
+ .ui-foundation.ui-v1 .v1-experience-lab [role=tabpanel]>.panel{padding:18px;}
+ .ui-foundation.ui-v1 .v1-support-page>.market-toolbar{padding:10px;}
+ .ui-foundation.ui-v1 .v1-support-page .market-links a{padding:8px 9px;}
+}

@@ -160,7 +160,7 @@ export function MarketLab(props:Props){
   {props.marketMode==='catalog'?<div className="market-lab-catalog"><CatalogDiscovery key={props.accountKey} catalog={props.localCatalog} setCatalog={props.setLocalCatalog}/></div>:
    <div className="market-lab-stage" key={variant}>
     {variant==='a'?<MarketDiscovery watch={props.watch} toggle={props.toggle} search={props.search} setSearch={props.setSearch} onlyWatch={props.onlyWatch} setOnlyWatch={props.setOnlyWatch} designV1/>:
-     <Explorer variant={variant} watch={props.watch} toggle={props.toggle} search={props.search} setSearch={props.setSearch} onlyWatch={props.onlyWatch}/>}
+     <Explorer variant={variant} watch={props.watch} toggle={props.toggle} search={props.search} setSearch={props.setSearch} onlyWatch={props.onlyWatch} setOnlyWatch={props.setOnlyWatch}/>}
    </div>}
  </div>;
 }

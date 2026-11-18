@@ -15,6 +15,7 @@ import {CatalogDiscovery} from './CatalogDiscovery';
 import {MarketDiscovery} from './MarketDiscovery';
 import type {LocalCatalog} from './catalogImport';
 import {HomeDashboard} from './HomeDashboard';
+import {HomeLab} from './design/v1/HomeLab';
 import {useMarketInfo,IndicatorCards,MarketToolbar,CalendarPanel,NewsPanel} from './MarketPanels';
 import {AccountModeControl,HeaderTools} from './UiPanels';
 import {CurrencyProvider,DisplaySettings,useCurrency,displayFxLabel,CurrencyToggle} from './preferences';
@@ -23,6 +24,7 @@ import {V1Navigation,V1PageContext} from './design/v1/Navigation';
 import './design/v1/theme.css';
 import './design/v1/sections.css';
 import './design/v1/polish.css';
+import './design/v1/home-lab.css';
 const manualTradingEnabled=import.meta.env.VITE_ENABLE_MANUAL_TRADING==='true';
 // UI v1 is opt-in on this development branch. Financial logic and route contracts remain identical.
 const previewUiV1=new URLSearchParams(window.location.search).get('ui')==='v1';
@@ -48,7 +50,7 @@ return <div className={"app ui-foundation "+(collapsed?"collapsed ":"")+(preview
 <PracticeReturn key={route} route={route}/>
 {route==='experience'&&<ExperienceLab designV1={previewUiV1}/>}
 {route==='backtest'&&<BacktestLab key={account.modeKey} view={account} designV1={previewUiV1}/>}
-{route==='home'&&<HomeDashboard account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))}/>}
+{route==='home'&&(previewUiV1&&new URLSearchParams(window.location.search).get('homeLab')==='1'?<HomeLab account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))}/>:<HomeDashboard account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))}/>)}
 {['market','indices'].includes(route)&&<><div className="market-currency-header"><h1>{previewUiV1?"기업과 ETF 탐색":"시장"}</h1><CurrencyToggle/></div><p>궁금한 기업과 ETF를 찾아보세요.</p><MarketToolbar view={info}/>{route==='indices'?<IndicatorCards view={info}/>:<><div className="market-discovery-modes" role="group" aria-label="종목 탐색 모드"><button aria-pressed={marketMode==='supported'} onClick={()=>setMarketMode('supported')}>모의투자 지원 종목</button><button aria-pressed={marketMode==='catalog'} onClick={()=>setMarketMode('catalog')}>미국 종목 후보 탐색</button></div>{marketMode==='catalog'?<CatalogDiscovery key={account.userId??'local'} catalog={localCatalog} setCatalog={setLocalCatalog}/>:<MarketDiscovery watch={watch} toggle={toggle} search={search} setSearch={setSearch} onlyWatch={onlyWatch} setOnlyWatch={setOnlyWatch} designV1={previewUiV1}/>}</>}</>}
 {selected&&<StockDetail key={selected.symbol} stock={selected} account={account} manual={manual} watched={watch.includes(selected.symbol)} toggleWatch={()=>toggle(selected.symbol)} designV1={previewUiV1}/>}
 {route==='portfolio'&&<><h1>포트폴리오</h1>{accountControls}{manual?<ManualWorkspace key={account.userId} uid={account.userId!}/>:<Portfolio key={account.modeKey} view={account} designV1={previewUiV1}/>}</>}

@@ -294,8 +294,10 @@
  .ui-foundation.ui-v1 .v1-course-index-bottom{display:flex;flex-wrap:wrap;gap:10px 20px;padding:6px 15px;}
 }
 @media(max-width:560px){
- .ui-foundation.ui-v1 .v1-course-topline{align-items:flex-start;}
- .ui-foundation.ui-v1 .v1-course-topline h2{font-size:26px;}
+ .ui-foundation.ui-v1 .v1-course-topline{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;}
+ .ui-foundation.ui-v1 .v1-course-topline>div{min-width:0;}
+ .ui-foundation.ui-v1 .v1-course-topline>div>p{display:none;} /* Readability-first mobile: explanatory copy stays in the active lesson. */
+ .ui-foundation.ui-v1 .v1-course-topline h2{font-size:23px;}
  .ui-foundation.ui-v1 .v1-course-global-progress{padding:8px 12px;font-size:17px;}
  .ui-foundation.ui-v1 .v1-course-global-progress small{font-size:9px;}
  .ui-foundation.ui-v1 .v1-course-reader-heading{padding:19px 17px;}

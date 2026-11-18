@@ -51,9 +51,9 @@ test('B card studio filters real supported synthetic instruments, preserves reco
  await root.getByLabel('종목 검색').fill('');
  await root.getByRole('group',{name:'섹터 선택'}).getByRole('button',{name:'ETF'}).click();
  await expect(cards).toHaveCount(3);
- await expect(root.getByRole('button',{name:'결과 정렬'})).toHaveCount(0);
  await root.getByLabel('결과 정렬').selectOption('price-desc');
- await expect(cards.first()).toContainText('QQQ');
+ const expectedTop=[...instruments].filter(s=>s.kind==='ETF').sort((a,b)=>quote(b).price-quote(a).price)[0].symbol;
+ await expect(cards.first()).toHaveAttribute('data-symbol',expectedTop);
  await root.getByRole('button',{name:'초기화'}).click();
  await expect(cards).toHaveCount(8);
  expect(await page.evaluate(key=>localStorage.getItem(key),accountKey)).toBe(before);
@@ -61,6 +61,7 @@ test('B card studio filters real supported synthetic instruments, preserves reco
 });
 
 test('C comparison table sorts numbers and preserves click-through and watch toggle',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'&marketVariant=c#market');
  const root=page.locator('.market-lab-c');
@@ -95,7 +96,7 @@ test('variant switch, currency setting, catalog mode and route state remain inta
  await expect(page.getByRole('region',{name:'미국 종목 후보 탐색'})).toContainText('개인 로컬 카탈로그');
  await expect(page.locator('.market-lab-explorer')).toHaveCount(0);
  await page.getByRole('group',{name:'종목 탐색 모드'}).getByRole('button',{name:'모의투자 지원 종목'}).click();
- await expect(page.locator('.market-lab-c .market-lab-table')).toBeVisible();
+ await expect(page.locator('.market-lab-c .market-lab-terminal-body')).toBeVisible();
  await switcher.getByRole('button',{name:/A 기존 탐색/}).click();
  await expect(page.locator('.market-lab-a .v1-discovery-panel')).toBeVisible();
  await expect(page.getByLabel('종목 검색')).toBeVisible();

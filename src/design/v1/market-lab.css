@@ -254,3 +254,8 @@
  .ui-foundation.ui-v1 .market-lab-b .market-lab-card-footer button{min-height:40px;}
  .ui-foundation.ui-v1 .market-lab-b .market-lab-preview{padding:21px 18px;}
 }
+
+/* On compact layouts, card quick-view moves focus to this inspector. */
+.ui-foundation.ui-v1 .market-lab-preview{scroll-margin-top:18px;}
+.ui-foundation.ui-v1 .market-lab-preview:focus{outline:none;}
+.ui-foundation.ui-v1 .market-lab-preview:focus-visible{outline:3px solid #7597e5;outline-offset:4px;}

@@ -137,7 +137,7 @@ test('reduced motion disables entry sequences without removing result cards or f
  const button=card.getByRole('button',{name:/빠른 정보/});
  await button.focus();await expect(button).toBeFocused();
  await page.getByRole('group',{name:'시장 디자인 선택'}).getByRole('button',{name:/C 비교 데스크/}).click();
- await expect(page.locator('.market-lab-table')).toBeVisible();
+ await expect(page.locator('.market-lab-terminal-body')).toBeVisible();
  const stage=page.locator('.market-lab-stage');
  expect(await stage.evaluate(el=>getComputedStyle(el).animationName)).toBe('none');
 });

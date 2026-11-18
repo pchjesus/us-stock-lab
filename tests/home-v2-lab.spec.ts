@@ -43,11 +43,11 @@ test('three alternatives reorder readable sections without mutating simulated ac
   await expect(page.locator('.home-dashboard > .home-section').first()).toContainText(first);
   await expect(page.locator('.home-account')).toHaveCount(1);
   await expect(page.locator('.home-watchlist')).toHaveCount(1);
-  await expect(page.locator('.home-market')).toHaveCount(1);
+  await expect(page.locator('[aria-labelledby="home-market-title"]')).toHaveCount(1);
   await expect(page.locator('.home-explore')).toHaveCount(1);
   await expect(page.getByTestId('total-assets')).toHaveText(initialAmount);
   await expect(page.locator('.home-watchlist')).toContainText('실제 현재가가 아닙니다.');
-  await expect(page.locator('.home-market')).toContainText('미국 시장 한눈에');
+  await expect(page.locator('[aria-labelledby="home-market-title"]')).toContainText('미국 시장 한눈에');
   expect(await page.evaluate(key=>localStorage.getItem(key),accountKey)).toBe(before);
  }
  await page.reload();
@@ -65,8 +65,8 @@ test('all home alternatives fit from 320 to 1440 without hiding existing routes'
    await expect(page.locator('.home-lab-'+id)).toBeVisible();
    await expect(page.getByRole('link',{name:/포트폴리오 자세히/})).toBeVisible();
    await expect(page.locator('.home-explore a[href="#learn"]')).toBeVisible();
-   await expect(page.locator('.home-explore a[href="#calendar"]')).toBeVisible();
-   await expect(page.locator('.home-watchlist a[href="#market"]')).toBeVisible();
+   await expect(page.locator('.home-explore-grid a[href="#calendar"]')).toBeVisible();
+   await expect(page.locator('.home-watchlist .home-section-title a[href="#market"]')).toBeVisible();
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    expect(overflow,'horizontal overflow: '+id+' at '+width+'px').toBeLessThanOrEqual(0);
   }
@@ -81,7 +81,7 @@ test('home comparison screenshots retain source labels and existing account comp
  for(const id of ['a','b','c']){
   await page.goto(base+'&homeVariant='+id+'#home');
   await expect(page.locator('.home-lab-'+id)).toBeVisible();
-  await expect(page.locator('.home-market .home-index').first()).toBeVisible();
+  await expect(page.locator('[aria-labelledby="home-market-title"] .home-index').first()).toBeVisible();
   await page.screenshot({path:`work/home-v2-lab/captures/${info.project.name}-${width}-home-${id}.png`,fullPage:true,animations:'disabled'});
  }
 });

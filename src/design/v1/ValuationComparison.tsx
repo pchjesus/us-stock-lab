@@ -21,10 +21,10 @@ export function ValuationComparison({symbol}:{symbol:CompanySymbol}){
     </article>;
    })}
   </div>
-  <div className="v1-valuation-footnote">
+  <details className="v1-valuation-footnote"><summary>산업군 · 기준 · 출처 자세히 보기</summary>
    <p><strong>산업군 대응:</strong> {snapshot.industry.name} · 미국 기업 {snapshot.industry.firms}개. 사업이 여러 영역에 걸친 기업이 있어 <strong>정확히 동일한 경쟁사 집단이 아닌 교육용 유사 산업군</strong>입니다. 업계 수치는 기업별 데이터의 단순 평균과 다를 수 있습니다.</p>
    <p><strong>계산 기준:</strong> 기업 PER은 최근 12개월 수익 기준, PBR·ROE는 외부 제공자의 공시·시장 자료 집계값입니다. 업계 PER은 NYU Stern의 <em>Trailing PE</em>, PBR은 <em>PBV</em>, ROE는 비조정 <em>ROE</em>입니다. 서로 산식·자료 시점·분류가 다르므로 높고 낮음을 자동 평가하지 않습니다.</p>
    <p><strong>자료:</strong> <a href={snapshot.company.source} target="_blank" rel="noreferrer">기업 PER·PBR·ROE 원본 ↗<span className="sr-only"> (새 탭)</span></a> · <a href={snapshotMeta.industryPERSource} target="_blank" rel="noreferrer">업계 PER ↗</a> · <a href={snapshotMeta.industryPBRSource} target="_blank" rel="noreferrer">업계 PBR·ROE ↗</a>. 이 값들은 고정 스냅샷으로 자동 갱신되지 않으며 합성 주가·가상주문·계좌 손익 계산에 사용되지 않습니다.</p>
-  </div>
+  </details>
  </section>;
 }

@@ -489,6 +489,8 @@ test('learning reading type is 16px-class across concepts, examples, practice, q
   const reader=page.locator('.v1-course-reader');
   const intro=reader.locator('.v1-course-summary');
   await expect(intro).toBeVisible();
+  await reader.getByRole('tab',{name:/개념/}).click();
+  await expect(reader.locator('.v1-reader-essentials p')).toHaveCount(2);
   const font=async(sel:string)=>reader.locator(sel).first().evaluate(el=>({size:parseFloat(getComputedStyle(el).fontSize),height:parseFloat(getComputedStyle(el).lineHeight)}));
   expect((await font('.v1-course-summary')).size,'summary font '+width).toBeGreaterThanOrEqual(16);
   expect((await font('.v1-reader-intro p')).size,'concept paragraph '+width).toBeGreaterThanOrEqual(16);

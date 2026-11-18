@@ -1,0 +1,78 @@
+/*
+ * UI v2 home comparison only, gated to ?ui=v1&homeLab=1.
+ * Never changes live financial records or market source boundaries.
+ */
+.ui-foundation.ui-v1 .home-lab{min-width:0;}
+.ui-foundation.ui-v1 .home-lab-switcher{margin:0 0 22px;padding:15px 18px;border:1px solid #d9e1ee;border-radius:15px;background:#f8faff;}
+.ui-foundation.ui-v1 .home-lab-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.ui-foundation.ui-v1 .home-lab-kicker{font-size:10px;letter-spacing:.12em;font-weight:800;color:#3356b0;}
+.ui-foundation.ui-v1 .home-lab-intro h1{font-size:clamp(19px,1.8vw,24px);line-height:1.25;margin:4px 0;}
+.ui-foundation.ui-v1 .home-lab-intro p{font-size:13px;line-height:1.5;margin:0;}
+.ui-foundation.ui-v1 .home-lab-state{flex:none;font-size:11px;color:#526986;background:#edf2fb;padding:7px 10px;border-radius:99px;}
+.ui-foundation.ui-v1 .home-lab-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;}
+.ui-foundation.ui-v1 .home-lab-options button{min-width:0;min-height:44px;padding:8px 10px;font-weight:720;font-size:13px;line-height:1.25;color:#344563;background:#fff;border:1px solid #dce4f0;border-radius:10px;white-space:normal;word-break:keep-all;}
+.ui-foundation.ui-v1 .home-lab-options button[aria-pressed=true]{background:#e9efff;color:#204cb6;border:2px solid #4e70d1;box-shadow:inset 0 0 0 1px #e9efff;}
+.ui-foundation.ui-v1 .home-lab-options button:hover{border-color:#7797df;}
+.ui-foundation.ui-v1 .home-lab .home-section-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;}
+.ui-foundation.ui-v1 .home-lab .home-section-title .ui-link{font-size:12px;}
+.ui-foundation.ui-v1 .home-lab .home-dashboard{min-width:0;}
+
+/* B: market data first, account and watchlist in a two-column workstation. */
+.ui-foundation.ui-v1 .home-lab-b .home-v2-layout{grid-template-columns:minmax(0,1.42fr) minmax(300px,1fr);gap:22px 18px;}
+.ui-foundation.ui-v1 .home-lab-b .home-market{grid-column:1/-1;grid-row:auto;}
+.ui-foundation.ui-v1 .home-lab-b .home-account{grid-column:1;grid-row:auto;}
+.ui-foundation.ui-v1 .home-lab-b .home-watchlist{grid-column:2;grid-row:auto;margin:0;}
+.ui-foundation.ui-v1 .home-lab-b .home-explore{grid-column:1/-1;}
+.ui-foundation.ui-v1 .home-lab-b .home-market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.ui-foundation.ui-v1 .home-lab-b .home-index{border:1px solid #dce6ef;border-radius:12px;background:#fff;}
+.ui-foundation.ui-v1 .home-lab-b .home-index-value{font-size:clamp(21px,2vw,27px);}
+.ui-foundation.ui-v1 .home-lab-b .balance.account-summary{display:block;background:#fff;border:1px solid #e0e6f0;box-shadow:0 5px 20px rgba(17,34,69,.035);padding:22px 20px;}
+.ui-foundation.ui-v1 .home-lab-b .account-summary h2{font-size:clamp(26px,2.6vw,32px);}
+.ui-foundation.ui-v1 .home-lab-b .account-summary dl{margin-top:16px;padding:14px;background:#f7f9fc;grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+.ui-foundation.ui-v1 .home-lab-b .home-watchlist{background:#f8fafd;}
+.ui-foundation.ui-v1 .home-lab-b .home-watchlist .stocks{border-top:1px solid #e2e9f1;}
+.ui-foundation.ui-v1 .home-lab-b .home-explore-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+
+/* C: low-chrome, intentionally sequential, guide the next action immediately after account. */
+.ui-foundation.ui-v1 .home-lab-c .home-v2-layout{display:flex;flex-direction:column;gap:25px;}
+.ui-foundation.ui-v1 .home-lab-c .home-account,
+.ui-foundation.ui-v1 .home-lab-c .home-market,
+.ui-foundation.ui-v1 .home-lab-c .home-watchlist,
+.ui-foundation.ui-v1 .home-lab-c .home-explore{width:100%;min-width:0;grid-column:auto;}
+.ui-foundation.ui-v1 .home-lab-c .balance.account-summary{background:#fff;border:1px solid #e5eaf1;border-radius:15px;box-shadow:none;}
+.ui-foundation.ui-v1 .home-lab-c .account-summary h2{font-size:clamp(30px,3.5vw,42px);}
+.ui-foundation.ui-v1 .home-lab-c .home-explore-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.ui-foundation.ui-v1 .home-lab-c .home-explore-link{border:1px solid #dce4ef;border-radius:12px;background:#fff;min-height:110px;}
+.ui-foundation.ui-v1 .home-lab-c .home-explore-link strong{font-size:15px;}
+.ui-foundation.ui-v1 .home-lab-c .home-watchlist{background:transparent;border:0;border-top:1px solid #dfe5ed;border-radius:0;box-shadow:none;padding:21px 0 0;}
+.ui-foundation.ui-v1 .home-lab-c .home-watchlist .stock{padding:14px 10px;}
+.ui-foundation.ui-v1 .home-lab-c .home-market{border-top:1px solid #dfe5ed;padding-top:20px;}
+.ui-foundation.ui-v1 .home-lab-c .home-market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.ui-foundation.ui-v1 .home-lab-c .home-index{background:transparent;border:1px solid #e0e6ef;border-radius:12px;box-shadow:none;}
+.ui-foundation.ui-v1 .home-lab-c .home-important{margin-top:13px;}
+
+@media(max-width:1180px){
+ .ui-foundation.ui-v1 .home-lab-b .home-v2-layout{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .home-lab-b :is(.home-market,.home-account,.home-watchlist,.home-explore){grid-column:1;}
+ .ui-foundation.ui-v1 .home-lab-b .home-market-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .ui-foundation.ui-v1 .home-lab-c .home-explore-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:720px){
+ .ui-foundation.ui-v1 .home-lab-intro{flex-direction:column;}
+ .ui-foundation.ui-v1 .home-lab-state{align-self:flex-start;}
+ .ui-foundation.ui-v1 .home-lab-b .home-explore-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .ui-foundation.ui-v1 .home-lab-c .home-market-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:480px){
+ .ui-foundation.ui-v1 .home-lab-switcher{padding:13px 12px;}
+ .ui-foundation.ui-v1 .home-lab-options{gap:5px;}
+ .ui-foundation.ui-v1 .home-lab-options button{padding:8px 4px;font-size:11px;min-height:48px;}
+ .ui-foundation.ui-v1 .home-lab-b .home-market-grid,
+ .ui-foundation.ui-v1 .home-lab-c .home-market-grid{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .home-lab-b .home-explore-grid,
+ .ui-foundation.ui-v1 .home-lab-c .home-explore-grid{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .home-lab-c .home-explore-link{min-height:72px;}
+}
+@media(prefers-reduced-motion:reduce){
+ .ui-foundation.ui-v1 .home-lab-options button{transition:none;}
+}

@@ -154,3 +154,17 @@ test('create distinct review captures for A/B/C market layouts',async({page},inf
   await page.screenshot({path:'work/market-v2/captures/'+info.project.name+'-'+width+'-'+variant+'.png',fullPage:true,animations:'disabled'});
  }
 });
+
+test('390px discovery cards are compact while retaining synthetic quote and preview actions',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'&marketVariant=b#market');
+ const cards=page.locator('.market-lab-b .market-lab-card');
+ await expect(cards).toHaveCount(8);
+ const maxHeight=await cards.evaluateAll(els=>Math.max(...els.map(el=>el.getBoundingClientRect().height)));
+ expect(maxHeight,'compact mobile cards should not form an endless expanded stack').toBeLessThan(275);
+ await expect(cards.first().locator('.market-lab-card-description')).toBeHidden();
+ await expect(cards.first().locator('.market-lab-card-stats')).toBeVisible();
+ await cards.first().getByRole('button',{name:/빠른 정보/}).click();
+ await expect(page.getByRole('region',{name:'선택 종목 요약'})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);
+});

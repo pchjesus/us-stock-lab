@@ -121,7 +121,7 @@ test('responsive market styles remain readable without document overflow on 320�
    expect(overflow,variant+' overflow at '+width).toBeLessThanOrEqual(0);
   }
   if(width>900){
-   await page.getByRole('button',{name:'메뉴 접기'}).click();
+   if(!(await page.locator('.app').evaluate(el=>el.classList.contains('collapsed'))))await page.getByRole('button',{name:'메뉴 접기'}).click();
    expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),'collapsed overflow at '+width).toBeLessThanOrEqual(0);
   }
  }

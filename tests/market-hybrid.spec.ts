@@ -31,22 +31,22 @@ test('default B cards and compact list share exact search, sector filter and sor
  const root=page.locator('.market-hybrid-page');
  const modes=page.getByRole('group',{name:'종목 보기 방식'});
  await expect(root.locator('.market-lab-card')).toHaveCount(8);
- await root.getByLabel('종목 검색').fill('oo');
- await root.getByRole('group',{name:'섹터 선택'}).getByRole('button',{name:'ETF'}).click();
+ await root.getByLabel('종목 검색').fill('a');
+ await root.getByRole('group',{name:'섹터 선택'}).getByRole('button',{name:'정보기술'}).click();
  await expect(root.locator('.market-lab-card')).toHaveCount(2);
  await root.getByLabel('결과 정렬').selectOption('price-desc');
  await modes.getByRole('button',{name:'목록'}).click();
  await expect(modes.getByRole('button',{name:'목록'})).toHaveAttribute('aria-pressed','true');
  await expect(root.locator('.market-lab-terminal-body')).toBeVisible();
- await expect(root.getByLabel('종목 검색')).toHaveValue('oo');
+ await expect(root.getByLabel('종목 검색')).toHaveValue('a');
  await expect(root.getByLabel('결과 정렬')).toHaveValue('price-desc');
- await expect(root.getByRole('group',{name:'섹터 선택'}).getByRole('button',{name:'ETF'})).toHaveAttribute('aria-pressed','true');
+ await expect(root.getByRole('group',{name:'섹터 선택'}).getByRole('button',{name:'정보기술'})).toHaveAttribute('aria-pressed','true');
  await expect(root.locator('.market-lab-table tbody tr')).toHaveCount(2);
  await modes.getByRole('button',{name:'카드'}).click();
  await expect(root.locator('.market-lab-card')).toHaveCount(2);
  await expect(root.getByLabel('결과 정렬')).toHaveValue('price-desc');
  await expect(root.getByLabel('종목 검색')).toHaveValue('oo');
- const wanted=[...instruments].filter(s=>s.kind==='ETF'&&s.symbol.toLowerCase().includes('oo')).sort((a,b)=>quote(b).price-quote(a).price).map(s=>s.symbol);
+ const wanted=[...instruments].filter(s=>['AAPL','NVDA'].includes(s.symbol)).sort((a,b)=>quote(b).price-quote(a).price).map(s=>s.symbol);
  await expect(root.locator('.market-lab-card').first()).toHaveAttribute('data-symbol',wanted[0]);
 });
 

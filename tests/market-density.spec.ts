@@ -86,8 +86,8 @@ test('market capitalization is honestly unavailable; other numeric sort orders a
  await page.setViewportSize({width:1440,height:900});
  await page.goto(route);
  await page.getByRole('group',{name:'종목 보기 방식'}).getByRole('button',{name:'목록'}).click();
- await expect(page.getByLabel('결과 정렬').locator('option[value="cap-desc"]')).toBeDisabled();
- await expect(page.getByLabel('결과 정렬').locator('option[value="cap-asc"]')).toBeDisabled();
+ await expect(page.getByLabel('결과 정렬').locator('option[value="cap-desc"]')).toHaveAttribute('disabled','');
+ await expect(page.getByLabel('결과 정렬').locator('option[value="cap-asc"]')).toHaveAttribute('disabled','');
  await expect(page.locator('.market-v3-table tbody tr')).toHaveCount(8);
  await expect(page.locator('.market-v3-table')).toContainText('시가총액');
  await expect(page.locator('.market-v3-table .market-v3-unavailable')).toHaveCount(8);
@@ -102,6 +102,7 @@ test('responsive card/list and modal have no horizontal overflow from 320 to 192
  for(const width of [320,390,768,1024,1440,1920]){
   await page.setViewportSize({width,height:920});
   await page.goto(route);
+  await page.getByRole('group',{name:'종목 보기 방식'}).getByRole('button',{name:'카드'}).click();
   await expect(page.locator('.market-v3-card')).toHaveCount(8);
   const cols=await page.locator('.market-v3-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length);
   if(width<=390)expect(cols).toBe(1);
@@ -118,6 +119,7 @@ test('responsive card/list and modal have no horizontal overflow from 320 to 192
 
 test('native quick view Escape and search shortcut support keyboard navigation',async({page})=>{
  await page.goto(route);
+ await page.getByRole('heading',{name:'종목 탐색'}).click();
  await page.keyboard.press('/');
  await expect(page.getByLabel('종목 검색')).toBeFocused();
  await page.keyboard.type('NVDA');

@@ -132,22 +132,22 @@
 
 /* A desktop can inspect the business and metrics together; mobile retains logical DOM order. */
 @media(min-width:1210px){
- .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence),
- .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence){
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview),
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview){
   display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:15px;align-items:start;
  }
- .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence)>.panel,
- .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence)>.panel{margin:0;min-width:0;}
- .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence)>#company-results,
- .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence)>#company-results{grid-column:1/-1;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>.panel,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>.panel{margin:0;min-width:0;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>#company-results,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>#company-results{grid-column:1/-1;}
  .ui-foundation.ui-v1 .detail-lab-b .company-detail #company-metrics .financial-metrics-grid,
  .ui-foundation.ui-v1 .detail-lab-c .company-detail #company-metrics .financial-metrics-grid{grid-template-columns:minmax(0,1fr);}
- .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence)>#company-metrics,
- .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence)>#company-metrics{grid-column:2;grid-row:1;}
- .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence)>#company-overview,
- .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence)>#company-overview{grid-column:1;grid-row:1;}
- .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence)>:not(#company-overview):not(#company-metrics):not(#company-results),
- .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence)>:not(#company-overview):not(#company-metrics):not(#company-results){grid-column:1/-1;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>#company-metrics,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>#company-metrics{grid-column:2;grid-row:1;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>#company-overview,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>#company-overview{grid-column:1;grid-row:1;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>:not(#company-overview):not(#company-metrics):not(#company-results),
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>:not(#company-overview):not(#company-metrics):not(#company-results){grid-column:1/-1;}
 }
 /* Mobile and narrow rails: readable without clipping/tiny columns. */
 @media(max-width:800px){

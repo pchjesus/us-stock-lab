@@ -13,7 +13,7 @@ type Sector='전체'|'정보기술'|'경기소비재'|'커뮤니케이션'|'ETF'
 type SortField='name'|'price'|'change';
 type Direction='asc'|'desc';
 type MarketMode='supported'|'catalog';
-type Props={
+export type MarketLabProps={
  watch:readonly string[];toggle:(symbol:string)=>void;
  search:string;setSearch:(text:string)=>void;
  onlyWatch:boolean;setOnlyWatch:(value:boolean)=>void;
@@ -77,7 +77,13 @@ function StudioCard({item,watch,toggle,select,selected,index}:{item:Instrument;w
   <div className="market-lab-card-footer"><span>기준 {q.date}</span><button type="button" aria-pressed={selected} onClick={select}>빠른 정보 <span aria-hidden="true">→</span></button></div>
  </article>;
 }
-function Explorer({variant,watch,toggle,search,setSearch,onlyWatch,setOnlyWatch}:Pick<Props,'watch'|'toggle'|'search'|'setSearch'|'onlyWatch'|'setOnlyWatch'>&{variant:'b'|'c'}){
+export function Explorer({variant,watch,toggle,search,setSearch,onlyWatch,setOnlyWatch,hybrid=false}:Pick<MarketLabProps,'watch'|'toggle'|'search'|'setSearch'|'onlyWatch'|'setOnlyWatch'>&{variant:'b'|'c';hybrid?:boolean}){
+ const [preferredMode,setPreferredMode]=useState<'b'|'c'>(()=>{
+  if(!hybrid)return variant;
+  try{return localStorage.getItem('us-stock-lab.market-view-mode')==='list'?'c':'b';}catch{return 'b';}
+ });
+ const display=hybrid?preferredMode:variant;
+ const [page,setPage]=useState(0);
  const currency=useCurrency();
  const [sector,setSector]=useState<Sector>('전체');
  const [selectedSymbol,setSelectedSymbol]=useState<Instrument['symbol']>('AAPL');
@@ -93,17 +99,25 @@ function Explorer({variant,watch,toggle,search,setSearch,onlyWatch,setOnlyWatch}
     return (direction==='asc'?1:-1)*x;
    });
  },[sector,onlyWatch,search,watch,sort,direction]);
- const selected=filtered.find(item=>item.symbol===selectedSymbol)??filtered[0];
- function changeSort(next:SortField){
+ const pageSize=display==='b'?24:50;
+ const pageCount=Math.max(1,Math.ceil(filtered.length/pageSize));
+ const activePage=Math.min(page,pageCount-1);
+ const visible=filtered.slice(activePage*pageSize,(activePage+1)*pageSize);
+ const selected=visible.find(item=>item.symbol===selectedSymbol)??visible[0];
+ function changeView(next:'b'|'c'){
+  setPreferredMode(next);setPage(0);
+  try{localStorage.setItem('us-stock-lab.market-view-mode',next==='b'?'cards':'list');}catch{/* No effect on account data if storage is unavailable. */}
+ }
+ function changeSort(next:SortField){setPage(0);
   if(next===sort)setDirection(value=>value==='asc'?'desc':'asc');
   else{setSort(next);setDirection(next==='name'?'asc':'desc');}
  }
- function reset(){setSearch('');setSector('전체');setOnlyWatch(false);setSort('name');setDirection('asc');}
+ function reset(){setSearch('');setSector('전체');setOnlyWatch(false);setSort('name');setDirection('asc');setPage(0);}
  function selectAndReveal(symbol:Instrument['symbol']){
   setSelectedSymbol(symbol);
   // On narrow screens the inspector follows the card/list. Keep the action visible,
   // move keyboard focus to its result, and honor reduced-motion preferences.
-  if(variant==='b'&&window.matchMedia('(max-width:1330px)').matches){
+  if(display==='b'&&window.matchMedia('(max-width:1330px)').matches){
    window.requestAnimationFrame(()=>{
     const panel=document.querySelector<HTMLElement>('.market-lab-b .market-lab-preview');
     panel?.focus({preventScroll:true});
@@ -111,24 +125,29 @@ function Explorer({variant,watch,toggle,search,setSearch,onlyWatch,setOnlyWatch}
    });
   }
  }
- return <section className={'market-lab-explorer market-lab-explorer-'+variant} aria-label="모의투자 지원 종목">
+ return <section className={'market-lab-explorer market-lab-explorer-'+display+(hybrid?' market-lab-hybrid-explorer market-lab-'+display:'')} aria-label="모의투자 지원 종목">
   <div className="market-lab-search-pane">
-   <div className="market-lab-search-heading"><div><span className="market-lab-kicker">{variant==='b'?'EXPLORE / 01':'SCREEN / SCREENER'}</span><h2>{variant==='b'?'관심 가는 기업부터 발견해봐':'8종목, 같은 기준으로 비교하기'}</h2><p>{variant==='b'?'종목을 고르고 카드에서 핵심 정보를 살펴보세요.':'섹터·관심종목을 고른 뒤 원하는 수치 순으로 정렬하세요.'}</p></div><span className="market-lab-search-count">{filtered.length}<small> / 8 종목</small></span></div>
-   <label className="market-lab-search-field"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16.2 16.2 5 5"/></svg><span className="sr-only">종목 검색</span><input aria-label="종목 검색" placeholder="기업 이름 또는 AAPL 같은 심볼 검색" value={search} onChange={event=>setSearch(event.target.value)}/>{search&&<button type="button" aria-label="검색어 지우기" onClick={()=>setSearch('')}>×</button>}</label>
-   <div className="market-lab-controls"><div className="market-lab-chips" role="group" aria-label="섹터 선택">{sectors.map(s=><button type="button" key={s} aria-pressed={sector===s} onClick={()=>setSector(s)}>{s}</button>)}</div>
-    <div className="market-lab-secondary-controls"><button type="button" className="market-lab-watch-filter" aria-pressed={onlyWatch} onClick={()=>setOnlyWatch(!onlyWatch)}>☆ 관심종목만</button>
+   <div className="market-lab-search-heading"><div><span className="market-lab-kicker">{display==='b'?'EXPLORE / 01':'SCREEN / SCREENER'}</span><h2>{display==='b'?'관심 가는 기업부터 발견해봐':'8종목, 같은 기준으로 비교하기'}</h2><p>{display==='b'?'종목을 고르고 카드에서 핵심 정보를 살펴보세요.':'섹터·관심종목을 고른 뒤 원하는 수치 순으로 정렬하세요.'}</p></div><span className="market-lab-search-count">{filtered.length}<small> / {instruments.length} 종목</small></span></div>
+   <label className="market-lab-search-field"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16.2 16.2 5 5"/></svg><span className="sr-only">종목 검색</span><input aria-label="종목 검색" placeholder="기업 이름 또는 AAPL 같은 심볼 검색" value={search} onChange={event=>{setSearch(event.target.value);setPage(0);}}/>{search&&<button type="button" aria-label="검색어 지우기" onClick={()=>{setSearch('');setPage(0);}}>×</button>}</label>
+   <div className="market-lab-controls"><div className="market-lab-chips" role="group" aria-label="섹터 선택">{sectors.map(s=><button type="button" key={s} aria-pressed={sector===s} onClick={()=>{setSector(s);setPage(0);}}>{s}</button>)}</div>
+    <div className="market-lab-secondary-controls"><button type="button" className="market-lab-watch-filter" aria-pressed={onlyWatch} onClick={()=>{setOnlyWatch(!onlyWatch);setPage(0);}}>☆ 관심종목만</button>
      <button type="button" className="market-lab-reset" onClick={reset}>초기화</button></div></div>
    <p className="market-lab-sector-source">분류 기준일 2026-11-05 · 주식은 GICS 분류 기준, ETF는 별도 표기 · <a target="_blank" rel="noopener noreferrer" href="https://www.spglobal.com/spdji/en/indices/equity/sp-500/">S&amp;P DJI 참고 ↗</a></p>
   </div>
-  <div className="market-lab-results-header"><div><h3>{variant==='b'?'둘러볼 종목':'종목 비교표'}</h3><p role="status" aria-live="polite">조건에 맞는 종목 {filtered.length}개</p></div>
-   <label className="market-lab-sort-label">정렬 <select aria-label="결과 정렬" value={sort+'-'+direction} onChange={e=>{const [next,dir]=e.target.value.split('-') as [SortField,Direction];setSort(next);setDirection(dir);}}>
+  <div className="market-lab-results-header"><div><h3>{display==='b'?'둘러볼 종목':'종목 비교표'}</h3><p role="status" aria-live="polite">조건에 맞는 종목 {filtered.length}개{filtered.length>pageSize?' · '+(activePage*pageSize+1)+'–'+(activePage*pageSize+visible.length)+' 표시':''}</p></div>
+   <div className="market-lab-result-tools">
+   {hybrid&&<div className="market-lab-view-toggle" role="group" aria-label="종목 보기 방식">
+    <button type="button" aria-pressed={display==='b'} onClick={()=>changeView('b')} title="기업 카드로 보기"><span aria-hidden="true">▦</span> 카드</button>
+    <button type="button" aria-pressed={display==='c'} onClick={()=>changeView('c')} title="촘촘한 종목 목록으로 보기"><span aria-hidden="true">☷</span> 목록</button>
+   </div>}
+   <label className="market-lab-sort-label">정렬 <select aria-label="결과 정렬" value={sort+'-'+direction} onChange={e=>{const [next,dir]=e.target.value.split('-') as [SortField,Direction];setSort(next);setDirection(dir);setPage(0);}}>
     <option value="name-asc">심볼 A–Z</option><option value="name-desc">심볼 Z–A</option>
     <option value="price-desc">합성 가격 높은 순</option><option value="price-asc">합성 가격 낮은 순</option>
     <option value="change-desc">합성 변동률 높은 순</option><option value="change-asc">합성 변동률 낮은 순</option>
-   </select></label></div>
+   </select></label></div></div>
   {filtered.length===0?<div className="market-lab-empty" role="status"><strong>조건에 맞는 종목이 없어</strong><p>검색어나 필터를 바꿔보면 돼.</p><button onClick={reset}>모든 종목 보기</button></div>:
-   variant==='b'?<div className="market-lab-studio-body">
-    <div className="market-lab-card-grid" key={sector+'-'+onlyWatch+'-'+sort+'-'+direction}>{filtered.map((item,index)=><StudioCard key={item.symbol} item={item} watch={watch} toggle={toggle} index={index} selected={item.symbol===selected?.symbol} select={()=>selectAndReveal(item.symbol)}/>)}</div>
+   display==='b'?<div className="market-lab-studio-body">
+    <div className="market-lab-card-grid" key={sector+'-'+onlyWatch+'-'+sort+'-'+direction}>{visible.map((item,index)=><StudioCard key={item.symbol} item={item} watch={watch} toggle={toggle} index={index} selected={item.symbol===selected?.symbol} select={()=>selectAndReveal(item.symbol)}/>)}</div>
     {selected&&<Preview item={selected} watch={watch} toggle={toggle}/>}
    </div>:
    <div className="market-lab-terminal-body"><div className="market-lab-table-panel">
@@ -137,24 +156,29 @@ function Explorer({variant,watch,toggle,search,setSearch,onlyWatch,setOnlyWatch}
      <th scope="col">종류</th><th scope="col" aria-sort={sort==='price'?(direction==='asc'?'ascending':'descending'):undefined}><button onClick={()=>changeSort('price')}>합성 가격 {sort==='price'?(direction==='asc'?'↑':'↓'):'↕'}</button></th>
      <th scope="col" aria-sort={sort==='change'?(direction==='asc'?'ascending':'descending'):undefined}><button onClick={()=>changeSort('change')}>합성 변동률 {sort==='change'?(direction==='asc'?'↑':'↓'):'↕'}</button></th>
      <th scope="col">관심</th><th scope="col">요약</th>
-    </tr></thead><tbody>{filtered.map(item=>{const q=quote(item);return <tr key={item.symbol} className={selected?.symbol===item.symbol?'is-selected':''}>
+    </tr></thead><tbody>{visible.map(item=>{const q=quote(item);return <tr key={item.symbol} className={selected?.symbol===item.symbol?'is-selected':''}>
      <td><a href={'#stock/'+item.symbol} className="market-lab-table-name"><strong>{item.symbol}</strong><span>{item.name}</span></a></td>
      <td>{sectorOf[item.symbol]}</td><td className="market-lab-number">{currency.format(Math.round(q.price*100))}</td>
      <td className="market-lab-number"><Change value={q.change}/></td>
      <td><Bookmark symbol={item.symbol} watched={watch.includes(item.symbol)} onToggle={()=>toggle(item.symbol)}/></td>
      <td><button className="market-lab-select-row" type="button" aria-pressed={selected?.symbol===item.symbol} onClick={()=>setSelectedSymbol(item.symbol)}>보기 <span aria-hidden="true">↗</span></button></td>
     </tr>})}</tbody></table></div>
-    <div className="market-lab-terminal-mobile">{filtered.map(item=>{const q=quote(item);return <article key={item.symbol} className="market-lab-mobile-row">
+    <div className="market-lab-terminal-mobile">{visible.map(item=>{const q=quote(item);return <article key={item.symbol} className="market-lab-mobile-row">
      <a href={'#stock/'+item.symbol}><strong>{item.symbol}</strong><span>{item.name}</span></a>
      <div><strong>{currency.format(Math.round(q.price*100))}</strong><Change value={q.change}/></div>
      <div className="market-lab-mobile-row-actions"><Bookmark symbol={item.symbol} watched={watch.includes(item.symbol)} onToggle={()=>toggle(item.symbol)}/><button type="button" aria-pressed={selected?.symbol===item.symbol} onClick={()=>setSelectedSymbol(item.symbol)}>요약 보기 ↗</button></div>
     </article>})}</div>
     <p className="market-lab-table-disclaimer">학습용 합성 시세 · 실제 시세/수익률이 아닙니다 · 생성 기준 {asOf} · 합성 시세의 변동률은 투자 판단에 사용할 수 없습니다.</p>
    </div>{selected&&<Preview item={selected} watch={watch} toggle={toggle} compact/>}</div>}
+ {filtered.length>pageSize&&<nav className="market-lab-pagination" aria-label="검색 결과 페이지">
+  <button type="button" disabled={activePage===0} onClick={()=>setPage(Math.max(0,activePage-1))}>이전</button>
+  <span role="status">{activePage+1} / {pageCount} 페이지</span>
+  <button type="button" disabled={activePage>=pageCount-1} onClick={()=>setPage(Math.min(pageCount-1,activePage+1))}>다음</button>
+ </nav>}
  </section>;
 }
 /** All variants are isolated from the v1 production market. Query-string choice is display-only. */
-export function MarketLab(props:Props){
+export function MarketLab(props:MarketLabProps){
  const [variant,setVariant]=useState<Variant>(readVariant);
  const selected=designs.find(item=>item.id===variant)!;
  function change(value:Variant){setVariant(value);try{const next=new URL(location.href);next.searchParams.set('marketVariant',value);history.replaceState(history.state,'',next.pathname+next.search+next.hash);}catch{/* UI selection still works if history is blocked */}}

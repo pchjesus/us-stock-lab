@@ -149,3 +149,21 @@
  .ui-foundation.ui-v1 .market-density-page .market-v3-star:hover,
  .ui-foundation.ui-v1 .market-density-page .market-v3-sectors button:hover{transform:none!important;}
 }
+
+/* Review polish: the global breadcrumb already names this page. Avoid a second large hero. */
+.ui-foundation.ui-v1 .market-density-page .market-density-toolbar{
+ display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+ min-height:67px;margin:0 0 12px;padding:12px 18px;
+ border:1px solid #dce5f2;border-radius:15px;background:#f8faff;
+}
+.ui-foundation.ui-v1 .market-density-page .market-density-toolbar>div{display:flex;align-items:center;gap:12px;min-width:0;flex-wrap:wrap;}
+.ui-foundation.ui-v1 .market-density-page .market-density-toolbar strong{color:#264a8e;font-size:16px;font-weight:790;}
+.ui-foundation.ui-v1 .market-density-page .market-density-toolbar span{font-size:11px;color:#7a8ea8;}
+@media(max-width:710px){
+ .ui-foundation.ui-v1 .market-density-page .market-density-toolbar{padding:9px 13px;min-height:56px;}
+ .ui-foundation.ui-v1 .market-density-page .market-density-toolbar>div{gap:4px;flex-direction:column;align-items:flex-start;}
+ .ui-foundation.ui-v1 .market-density-page .market-density-toolbar strong{font-size:14px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-search-heading{flex-direction:row;align-items:flex-start;gap:9px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-count{flex-shrink:0;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-search-panel{padding-top:17px;}
+}

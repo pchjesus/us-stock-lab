@@ -79,7 +79,7 @@ test('real watchlist, instrument detail, simulated labels and catalog read-only 
  await first.getByRole('button',{name:'AAPL 관심종목'}).click();
  await expect.poll(()=>page.evaluate(key=>JSON.parse(localStorage.getItem(key)||'[]'),watchKey)).toContain('AAPL');
  await modes.getByRole('button',{name:'목록'}).click();
- await expect(page.locator('.market-lab-table tbody tr').filter({has:page.getByRole('link',{name:/AAPL/})}).getByRole('button',{name:'AAPL 관심종목'})).toHaveAttribute('aria-pressed','true');
+ await expect(page.locator('.market-lab-terminal-body button[aria-label="AAPL 관심종목"]:visible').first()).toHaveAttribute('aria-pressed','true');
  await expect(page.locator('.market-lab-table')).toContainText('합성 가격');
  await expect(page.locator('.market-lab-table-disclaimer')).toContainText('실제 시세');
  await expect(page.getByRole('link',{name:/종목 상세 살펴보기/})).toHaveAttribute('href','#stock/AAPL');

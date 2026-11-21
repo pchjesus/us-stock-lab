@@ -11,6 +11,7 @@ import {ExperienceLab} from './ExperienceLab';
 import {BacktestLab} from './BacktestLab';
 import {PortfolioAnalysis} from './PortfolioAnalysisUI';
 import {StockDetail} from './StockDetail';
+import {DetailLab} from './design/v1/DetailLab';
 import {CatalogDiscovery} from './CatalogDiscovery';
 import {MarketDiscovery} from './MarketDiscovery';
 import {MarketLab} from './design/v1/MarketLab';
@@ -29,6 +30,7 @@ import './design/v1/polish.css';
 import './design/v1/market-lab.css';
 import './design/v1/market-hybrid.css';
 import './design/v1/market-density.css';
+import './design/v1/detail-lab.css';
 const manualTradingEnabled=import.meta.env.VITE_ENABLE_MANUAL_TRADING==='true';
 // UI v1 is opt-in on this development branch. Financial logic and route contracts remain identical.
 const previewUiV1=new URLSearchParams(window.location.search).get('ui')==='v1';
@@ -56,7 +58,7 @@ return <div className={"app ui-foundation "+(collapsed?"collapsed ":"")+(preview
 {route==='backtest'&&<BacktestLab key={account.modeKey} view={account} designV1={previewUiV1}/>}
 {route==='home'&&<HomeDashboard account={account} manual={manual} market={info} watchCount={watch.length} watchRows={rows(instruments.filter(s=>watch.includes(s.symbol)))}/>}
 {route==='market'&&previewUiV1&&new URLSearchParams(window.location.search).get('marketDensity')==='1'?<MarketDensity view={info} watch={watch} toggle={toggle} search={search} setSearch={setSearch} onlyWatch={onlyWatch} setOnlyWatch={setOnlyWatch} marketMode={marketMode} setMarketMode={setMarketMode} localCatalog={localCatalog} setLocalCatalog={setLocalCatalog} accountKey={account.userId??'local'}/>:route==='market'&&previewUiV1&&new URLSearchParams(window.location.search).get('marketHybrid')==='1'?<MarketHybrid view={info} watch={watch} toggle={toggle} search={search} setSearch={setSearch} onlyWatch={onlyWatch} setOnlyWatch={setOnlyWatch} marketMode={marketMode} setMarketMode={setMarketMode} localCatalog={localCatalog} setLocalCatalog={setLocalCatalog} accountKey={account.userId??'local'}/>:route==='market'&&previewUiV1&&new URLSearchParams(window.location.search).get('marketLab')==='1'?<MarketLab view={info} watch={watch} toggle={toggle} search={search} setSearch={setSearch} onlyWatch={onlyWatch} setOnlyWatch={setOnlyWatch} marketMode={marketMode} setMarketMode={setMarketMode} localCatalog={localCatalog} setLocalCatalog={setLocalCatalog} accountKey={account.userId??'local'}/>:['market','indices'].includes(route)&&<><div className="market-currency-header"><h1>{previewUiV1?"기업과 ETF 탐색":"시장"}</h1><CurrencyToggle/></div><p>궁금한 기업과 ETF를 찾아보세요.</p><MarketToolbar view={info}/>{route==='indices'?<IndicatorCards view={info}/>:<><div className="market-discovery-modes" role="group" aria-label="종목 탐색 모드"><button aria-pressed={marketMode==='supported'} onClick={()=>setMarketMode('supported')}>모의투자 지원 종목</button><button aria-pressed={marketMode==='catalog'} onClick={()=>setMarketMode('catalog')}>미국 종목 후보 탐색</button></div>{marketMode==='catalog'?<CatalogDiscovery key={account.userId??'local'} catalog={localCatalog} setCatalog={setLocalCatalog}/>:<MarketDiscovery watch={watch} toggle={toggle} search={search} setSearch={setSearch} onlyWatch={onlyWatch} setOnlyWatch={setOnlyWatch} designV1={previewUiV1}/>}</>}</>}
-{selected&&<StockDetail key={selected.symbol} stock={selected} account={account} manual={manual} watched={watch.includes(selected.symbol)} toggleWatch={()=>toggle(selected.symbol)} designV1={previewUiV1}/>}
+{selected&&(previewUiV1&&new URLSearchParams(window.location.search).get('detailLab')==='1'?<DetailLab key={selected.symbol} stock={selected} account={account} manual={manual} watched={watch.includes(selected.symbol)} toggleWatch={()=>toggle(selected.symbol)}/>:<StockDetail key={selected.symbol} stock={selected} account={account} manual={manual} watched={watch.includes(selected.symbol)} toggleWatch={()=>toggle(selected.symbol)} designV1={previewUiV1}/>)}
 {route==='portfolio'&&<><h1>포트폴리오</h1>{accountControls}{manual?<ManualWorkspace key={account.userId} uid={account.userId!}/>:<Portfolio key={account.modeKey} view={account} designV1={previewUiV1}/>}</>}
 {route==='portfolio/analysis'&&<PortfolioAnalysis key={account.modeKey} view={account} designV1={previewUiV1}/>}
 {(route==='learn'||route.startsWith('learn/'))&&<Learning key={account.userId??'guest'} route={route} learnerId={account.userId} designV1={previewUiV1}/>}

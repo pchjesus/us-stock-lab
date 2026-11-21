@@ -45,7 +45,7 @@ test('default B cards and compact list share exact search, sector filter and sor
  await modes.getByRole('button',{name:'카드'}).click();
  await expect(root.locator('.market-lab-card')).toHaveCount(2);
  await expect(root.getByLabel('결과 정렬')).toHaveValue('price-desc');
- await expect(root.getByLabel('종목 검색')).toHaveValue('oo');
+ await expect(root.getByLabel('종목 검색')).toHaveValue('a');
  const wanted=[...instruments].filter(s=>['AAPL','NVDA'].includes(s.symbol)).sort((a,b)=>quote(b).price-quote(a).price).map(s=>s.symbol);
  await expect(root.locator('.market-lab-card').first()).toHaveAttribute('data-symbol',wanted[0]);
 });

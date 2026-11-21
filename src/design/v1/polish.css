@@ -1,0 +1,249 @@
+/*
+ * UI v1 — Stage 6 finishing pass (Atlas: readable type, layout scope, consistent focus).
+ * All rules are opt-in and presentation-only. No app/account/learning data handling here.
+ * Rules at the end deliberately override broad legacy ".collapsed aside" selectors
+ * which previously targeted the nested lesson index as if it were the app sidebar.
+ */
+.app.ui-foundation.ui-v1{
+ --v1-body-type:16px;
+ --v1-support-type:14px;
+ --v1-meta-type:12px;
+ --v1-readable-line:1.74;
+}
+.ui-foundation.ui-v1 main{min-width:0;font-size:15px;line-height:1.65;}
+.ui-foundation.ui-v1 main :is(p,li,dd,dt){overflow-wrap:break-word;word-break:keep-all;}
+.ui-foundation.ui-v1 main :is(.panel,.v1-course-reader,.v1-course-index){box-sizing:border-box;}
+.ui-foundation.ui-v1 :is(button,a,select,input,summary,[role=tab]):focus-visible{
+ outline:3px solid #5b83df;
+ outline-offset:3px;
+}
+.ui-foundation.ui-v1 main :is(button,select,[role=tab],summary){touch-action:manipulation;}
+.ui-foundation.ui-v1 main :is(.ui-primary,.ui-link){text-underline-offset:3px;}
+.ui-foundation.ui-v1 main .panel>h2{letter-spacing:-.03em;}
+.ui-foundation.ui-v1 :is(.market-toolbar,.detail-tabs,.lesson-filter-panel,.display-settings){min-width:0;}
+
+/* LAYOUT BUG: global `.collapsed aside`, `.collapsed aside nav a`, and
+ * `.collapsed aside nav a span` applied to BOTH the real sidebar and the
+ * nested lesson chapter pane. Explicit hierarchy and sizes prevent this.
+ * Fix is present for both expanded and collapsed states, not merely a visual mask.
+ */
+.ui-foundation.ui-v1 aside.v1-course-index,
+.ui-foundation.ui-v1.collapsed aside.v1-course-index{
+ width:100%;
+ max-width:100%;
+ min-width:0;
+ height:auto;
+ padding:0;
+ align-items:stretch;
+ text-align:left;
+ box-sizing:border-box;
+}
+.ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list,
+.ui-foundation.ui-v1.collapsed aside.v1-course-index nav.v1-course-list{
+ display:flex;
+ flex-direction:column;
+ align-items:stretch;
+ justify-content:flex-start;
+ width:100%;
+ min-width:0;
+ margin:0;
+ gap:4px;
+ padding:5px 10px 10px;
+ box-sizing:border-box;
+}
+.ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list a.v1-course-link,
+.ui-foundation.ui-v1.collapsed aside.v1-course-index nav.v1-course-list a.v1-course-link{
+ display:grid;
+ grid-template-columns:32px minmax(0,1fr) auto;
+ align-items:center;
+ justify-content:stretch;
+ width:100%;
+ max-width:100%;
+ height:auto;
+ min-height:60px;
+ min-width:0;
+ padding:10px;
+ margin:0;
+ gap:10px;
+ border-radius:11px;
+ font-size:var(--v1-support-type);
+ text-align:left;
+ white-space:normal;
+ box-sizing:border-box;
+}
+.ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-number,
+.ui-foundation.ui-v1.collapsed aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-number{
+ display:grid;
+ place-items:center;
+ width:32px;
+ height:32px;
+ min-width:32px;
+ margin:0;
+ padding:0;
+ font-size:var(--v1-meta-type);
+ line-height:1.1;
+ text-align:center;
+}
+.ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-text,
+.ui-foundation.ui-v1.collapsed aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-text{
+ display:flex;
+ flex-direction:column;
+ align-items:flex-start;
+ justify-content:center;
+ width:auto;
+ max-width:100%;
+ min-width:0;
+ margin:0;
+ padding:0;
+ gap:4px;
+ text-align:left;
+ font-size:var(--v1-support-type);
+ line-height:1.5;
+}
+.ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-text strong,
+.ui-foundation.ui-v1.collapsed aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-text strong{
+ display:block;
+ width:100%;
+ min-width:0;
+ font-size:14px;
+ line-height:1.45;
+ font-weight:710;
+ word-break:keep-all;
+ overflow-wrap:break-word;
+ white-space:normal;
+}
+.ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-text small,
+.ui-foundation.ui-v1.collapsed aside.v1-course-index nav.v1-course-list a.v1-course-link .v1-course-link-text small{
+ display:block;
+ width:auto;
+ font-size:12px;
+ line-height:1.45;
+ color:#71829e;
+}
+.ui-foundation.ui-v1 .v1-course-index-header{align-items:center;}
+.ui-foundation.ui-v1 .v1-course-index-header h3{font-size:17px;}
+.ui-foundation.ui-v1 .v1-course-index-header>span,
+.ui-foundation.ui-v1 .v1-course-filter-status{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-course-filters{display:flex;flex-wrap:wrap;overflow:visible;gap:6px;padding:6px 13px 12px;}
+.ui-foundation.ui-v1 .v1-course-filters button{flex:0 0 auto;min-height:44px;font-size:var(--v1-meta-type);padding:9px 12px;white-space:nowrap;}
+.ui-foundation.ui-v1 .v1-course-index-bottom{margin:0;gap:5px;}
+.ui-foundation.ui-v1 .v1-course-index-bottom a{min-height:44px;font-size:13px;}
+.ui-foundation.ui-v1 .v1-course-list:focus-within{scrollbar-color:#bdcae3 transparent;}
+
+/* Reader: readable 16px body with stable hierarchy, distinct supplementary text.
+ * Preserve original concept/example/practice/quiz and answer storage unchanged. */
+.ui-foundation.ui-v1 .v1-course-topline p{font-size:var(--v1-support-type);line-height:1.65;}
+.ui-foundation.ui-v1 .v1-course-topline .eyebrow{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-course-global-progress small{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-course-chapter,
+.ui-foundation.ui-v1 .v1-reader-eyebrow{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-course-reader-heading h2{font-size:clamp(27px,2.5vw,35px);line-height:1.26;}
+.ui-foundation.ui-v1 .v1-course-summary{
+ font-size:var(--v1-body-type);
+ line-height:var(--v1-readable-line);
+ max-width:66ch;
+ color:#344761;
+}
+.ui-foundation.ui-v1 .v1-course-quick-meta span,
+.ui-foundation.ui-v1 .v1-course-quick-meta strong{font-size:var(--v1-meta-type);line-height:1.45;}
+.ui-foundation.ui-v1 .v1-unit-tabs [role=tab]{min-height:64px;}
+.ui-foundation.ui-v1 .v1-step-number{font-size:12px;}
+.ui-foundation.ui-v1 .v1-step-words strong{font-size:16px;}
+.ui-foundation.ui-v1 .v1-step-words small{font-size:12px;}
+.ui-foundation.ui-v1 .v1-reader-content{gap:20px;}
+.ui-foundation.ui-v1 .v1-reader-intro h3{font-size:23px;line-height:1.35;}
+.ui-foundation.ui-v1 .v1-reader-intro p,
+.ui-foundation.ui-v1 .v1-reader-essentials p,
+.ui-foundation.ui-v1 .v1-reader-note p,
+.ui-foundation.ui-v1 .v1-reader-timeline li,
+.ui-foundation.ui-v1 .v1-reader-timeline li p,
+.ui-foundation.ui-v1 .v1-reader-reassurance{
+ font-size:var(--v1-body-type);
+ line-height:var(--v1-readable-line);
+}
+.ui-foundation.ui-v1 .v1-reader-essentials{gap:20px 27px;padding-block:19px;}
+.ui-foundation.ui-v1 .v1-reader-essentials h4,
+.ui-foundation.ui-v1 .v1-reader-note h4,
+.ui-foundation.ui-v1 .v1-reader-table-section h4,
+.ui-foundation.ui-v1 .v1-reader-timeline h4{
+ font-size:17px;
+ line-height:1.45;
+}
+.ui-foundation.ui-v1 .v1-mini-label{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-reader-note{padding:19px;gap:14px;}
+.ui-foundation.ui-v1 .v1-reader-table-scroll table{font-size:var(--v1-support-type);}
+.ui-foundation.ui-v1 .v1-reader-table-scroll caption{font-size:var(--v1-support-type);}
+.ui-foundation.ui-v1 .v1-reader-table-scroll th,
+.ui-foundation.ui-v1 .v1-reader-table-scroll td{padding:12px 15px;line-height:1.65;}
+.ui-foundation.ui-v1 .v1-reader-practice-links a{font-size:var(--v1-support-type);min-height:46px;}
+.ui-foundation.ui-v1 .v1-reader-content .learning-guided-practice h3{font-size:17px;}
+.ui-foundation.ui-v1 .v1-reader-content .learning-guided-practice p,
+.ui-foundation.ui-v1 .v1-reader-content .learning-guided-practice li{font-size:var(--v1-support-type);line-height:1.75;}
+.ui-foundation.ui-v1 .v1-reader-question{padding:20px;}
+.ui-foundation.ui-v1 .v1-reader-question legend{font-size:var(--v1-body-type);line-height:1.65;font-weight:750;}
+.ui-foundation.ui-v1 .v1-question-number{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-reader-options label{min-height:50px;padding:13px 15px;font-size:var(--v1-body-type);line-height:1.55;}
+.ui-foundation.ui-v1 .v1-reader-feedback{font-size:var(--v1-support-type);line-height:1.7;padding:12px 15px;}
+.ui-foundation.ui-v1 .v1-reader-completion button{font-size:var(--v1-support-type);}
+.ui-foundation.ui-v1 .v1-reader-completion p{font-size:var(--v1-support-type);line-height:1.65;}
+.ui-foundation.ui-v1 .v1-reader-controls button{font-size:var(--v1-support-type);min-height:46px;}
+.ui-foundation.ui-v1 .v1-reader-controls>span{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-reader-sources summary{font-size:var(--v1-support-type);min-height:46px;}
+.ui-foundation.ui-v1 .v1-reader-sources li{font-size:var(--v1-support-type);line-height:1.65;}
+.ui-foundation.ui-v1 .v1-course-lesson-pagination a,
+.ui-foundation.ui-v1 .v1-course-lesson-pagination>span{font-size:var(--v1-meta-type);}
+.ui-foundation.ui-v1 .v1-course-lesson-pagination strong{font-size:var(--v1-support-type);}
+.ui-foundation.ui-v1 .v1-course-original-practice{font-size:var(--v1-support-type);line-height:1.65;}
+
+/* Shared visual finishing: restrained typography and comfortable tap targets.
+ * Dense financial tables keep numeric precision and existing color semantics. */
+.ui-foundation.ui-v1 main .v1-valuation-card>p{font-size:var(--v1-support-type);line-height:1.7;}
+.ui-foundation.ui-v1 main .v1-valuation-footnote p{font-size:var(--v1-support-type);line-height:1.75;}
+.ui-foundation.ui-v1 main .v1-discovery-intro>div>span{font-size:var(--v1-support-type);}
+.ui-foundation.ui-v1 main .v1-stock-detail .detail-heading .detail-summary{font-size:var(--v1-support-type);line-height:1.75;}
+.ui-foundation.ui-v1 main .v1-support-page>p{font-size:var(--v1-support-type);}
+.ui-foundation.ui-v1 main .v1-news-page>article p{font-size:var(--v1-support-type);line-height:1.7;}
+.ui-foundation.ui-v1 main .v1-settings-page>.panel:last-child p{font-size:var(--v1-support-type);line-height:1.75;}
+.ui-foundation.ui-v1 main .v1-experience-lab>p{font-size:var(--v1-support-type);line-height:1.7;}
+.ui-foundation.ui-v1 main .v1-bt-lab>p{font-size:var(--v1-support-type);line-height:1.7;}
+.ui-foundation.ui-v1 main .v1-analysis-shell .pa-intro>p{font-size:var(--v1-support-type);line-height:1.7;}
+.ui-foundation.ui-v1 main .v1-support-page :is(.market-links a,.source-links a){min-height:44px;}
+
+/* Tablet: use chapter selection before content when the reading surface is tight. */
+@media(min-width:851px) and (max-width:1160px){
+ .ui-foundation.ui-v1 .v1-course-layout{grid-template-columns:minmax(225px,245px) minmax(0,1fr);gap:15px;}
+ .ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list a.v1-course-link{min-height:64px;}
+}
+@media(max-width:850px){
+ .ui-foundation.ui-v1 aside.v1-course-index,
+ .ui-foundation.ui-v1.collapsed aside.v1-course-index{
+  position:static;width:100%;min-height:0;max-height:none;overflow:visible;align-items:stretch;
+ }
+ .ui-foundation.ui-v1 aside.v1-course-index nav.v1-course-list{display:none;}
+ .ui-foundation.ui-v1 .v1-course-mobile-picker{font-size:var(--v1-support-type);}
+ .ui-foundation.ui-v1 .v1-course-mobile-picker select{min-height:48px;font-size:var(--v1-body-type);}
+ .ui-foundation.ui-v1 .v1-course-summary{font-size:var(--v1-body-type);}
+}
+@media(max-width:560px){
+ .ui-foundation.ui-v1 .v1-course-reader-heading{padding:21px 19px;}
+ .ui-foundation.ui-v1 .v1-course-reader-heading h2{font-size:27px;}
+ .ui-foundation.ui-v1 .v1-reader-content{padding:20px 19px;gap:17px;}
+ .ui-foundation.ui-v1 .v1-reader-intro h3{font-size:21px;}
+ .ui-foundation.ui-v1 .v1-reader-intro p,
+ .ui-foundation.ui-v1 .v1-reader-essentials p,
+ .ui-foundation.ui-v1 .v1-reader-note p,
+ .ui-foundation.ui-v1 .v1-reader-timeline li,
+ .ui-foundation.ui-v1 .v1-reader-timeline li p{font-size:16px;}
+ .ui-foundation.ui-v1 .v1-reader-essentials{gap:16px;}
+ .ui-foundation.ui-v1 .v1-reader-note{padding:16px;}
+ .ui-foundation.ui-v1 .v1-unit-tabs [role=tab]{min-height:60px;}
+ .ui-foundation.ui-v1 .v1-step-words strong{font-size:14px;}
+ .ui-foundation.ui-v1 .v1-reader-question{padding:15px;}
+ .ui-foundation.ui-v1 .v1-reader-options label{padding:12px 11px;}
+ .ui-foundation.ui-v1 .v1-reader-controls button{font-size:13px;padding:9px 10px;}
+ .ui-foundation.ui-v1 .v1-reader-completion p{font-size:var(--v1-support-type);}
+ .ui-foundation.ui-v1 .v1-course-lesson-pagination{gap:8px;}
+}
+@media(prefers-reduced-motion:reduce){
+ .ui-foundation.ui-v1 *{scroll-behavior:auto!important;}
+}

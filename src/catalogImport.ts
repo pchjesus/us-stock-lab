@@ -19,8 +19,10 @@ export async function parseCatalogImport(bytes:Uint8Array):Promise<LocalCatalog>
  if(await payloadHash(p)!==data.sha256)throw Error('파일 무결성 해시가 일치하지 않습니다.');
  return data as LocalCatalog;
 }
-export function catalogPage(entries:readonly CatalogEntry[],query:string,page:number){
+export function catalogPage(entries:readonly CatalogEntry[],query:string,page:number,pageSize=50){
+ const limit=[25,50,100,200].includes(pageSize)?pageSize:50;
+ const safePage=Number.isSafeInteger(page)&&page>=0?page:0;
  const q=query.trim().toLocaleUpperCase('en-US');if(!q)return {total:0,entries:[] as CatalogEntry[]};
  const buckets:CatalogEntry[][]=[[],[],[]];for(const e of entries){const s=e.symbol.toUpperCase();if(s===q)buckets[0].push(e);else if(s.includes(q))buckets[1].push(e);else if(e.name.toLocaleUpperCase('en-US').includes(q))buckets[2].push(e);}
- const all=buckets.flat();return {total:all.length,entries:all.slice(page*50,page*50+50)};
+ const all=buckets.flat();return {total:all.length,entries:all.slice(safePage*limit,safePage*limit+limit)};
 }

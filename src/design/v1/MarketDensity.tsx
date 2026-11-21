@@ -13,12 +13,8 @@ import {MarketExplorerV3} from './MarketExplorerV3';
  */
 export function MarketDensity(props:MarketLabProps){
  return <div className="market-lab market-hybrid-page market-density-page">
-  <section className="market-hybrid-heading">
-   <div><span className="market-lab-kicker">DISCOVER / US STOCK LAB</span>
-    <h1>기업을 찾는 가장 편한 방식</h1>
-    <p>기업 카드로 한눈에 살펴보고, 많은 종목은 목록으로 바꿔 빠르게 찾아봐.</p>
-    <span className="market-hybrid-safe">{instruments.length}개 지원 종목 · 학습용 합성 시세 · 실제 현재가 아님</span>
-   </div>
+  <section className="market-density-toolbar" aria-label="시장 탐색 표시 설정">
+   <div><strong>기업·ETF 탐색</strong><span>{instruments.length}개 지원 종목 · 학습용 합성 시세</span></div>
    <CurrencyToggle/>
   </section>
   <MarketToolbar view={props.view}/>

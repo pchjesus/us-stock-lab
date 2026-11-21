@@ -1,4 +1,5 @@
 import {CurrencyToggle} from '../../preferences';
+import {instruments} from '../../data';
 import {CatalogDiscovery} from '../../CatalogDiscovery';
 import {MarketToolbar} from '../../MarketPanels';
 import {Explorer,type MarketLabProps} from './MarketLab';
@@ -15,7 +16,7 @@ export function MarketHybrid(props:MarketLabProps){
    <div><span className="market-lab-kicker">DISCOVER / US STOCK LAB</span>
     <h1>기업을 찾는 가장 편한 방식</h1>
     <p>카드로 쉽게 둘러보고, 종목이 많아지면 목록으로 빠르게 비교해봐.</p>
-    <span className="market-hybrid-safe">8개 지원 종목 · 학습용 합성 시세 · 실제 현재가 아님</span>
+    <span className="market-hybrid-safe">{instruments.length}개 지원 종목 · 학습용 합성 시세 · 실제 현재가 아님</span>
    </div>
    <CurrencyToggle/>
   </section>

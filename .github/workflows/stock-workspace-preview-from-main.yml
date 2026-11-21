@@ -1,0 +1,130 @@
+name: Publish independent stock workspace v3 (isolated main ops)
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: stock-workspace-v3-preview-pages
+  cancel-in-progress: false
+jobs:
+  preview:
+    if: contains(github.event.head_commit.message, '[publish-stock-workspace]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}preview/ui-v3-stock/?ui=v1&marketDensity=1&stockWorkspace=1#stock/AAPL
+    env:
+      VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
+      VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_IGTsGZshQZAE92bE0_xpYg__bOTs3GU
+      VITE_ENABLE_MANUAL_TRADING: 'false'
+      VITE_ENABLE_MARKET_FX: 'true'
+      VITE_ENABLE_TREASURY_STATS: 'true'
+    steps:
+      - name: Check out unchanged production main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: production
+      - name: Check out stable v1 preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: design/ui-v1-rebuild
+          path: preview-v1
+      - name: Check out separate home v2 laboratory branch
+        uses: actions/checkout@v4
+        with:
+          ref: design/home-v2-lab-20261118
+          path: preview-v2
+      - name: Check out separate market v2 laboratory branch
+        uses: actions/checkout@v4
+        with:
+          ref: design/market-v2-lab-20261118
+          path: preview-market
+      - name: Check out separate preferred market hybrid preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: design/market-v2-hybrid-20261121
+          path: preview-hybrid
+      - name: Check out separate density revision branch
+        uses: actions/checkout@v4
+        with:
+          ref: design/market-v2-density-20261121
+          path: preview-density
+      - name: Check out separate stock detail A/B/C lab
+        uses: actions/checkout@v4
+        with:
+          ref: design/stock-detail-v2-lab-20261121
+          path: preview-detail
+      - name: Check out independent stock workspace rewrite
+        uses: actions/checkout@v4
+        with:
+          ref: design/stock-workspace-v3-20261121
+          path: preview-workspace
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build production from main with matching Pages flags
+        working-directory: production
+        run: npm ci && npm run build
+      - name: Build stable UI v1 from separate branch
+        working-directory: preview-v1
+        run: npm ci && npm run build
+      - name: Build UI v2 home lab from isolated branch
+        working-directory: preview-v2
+        run: npm ci && npm run build
+      - name: Build UI v2 market lab from isolated branch
+        working-directory: preview-market
+        run: npm ci && npm run build
+      - name: Build preferred market hybrid from isolated branch
+        working-directory: preview-hybrid
+        run: npm ci && npm run build
+      - name: Build density revision from isolated branch
+        working-directory: preview-density
+        run: npm ci && npm run build
+      - name: Build isolated stock detail A/B/C lab
+        working-directory: preview-detail
+        run: npm ci && npm run build
+      - name: Build new stock workspace
+        working-directory: preview-workspace
+        run: npm ci && npm run build
+      - name: Package production and all preview paths
+        run: |
+          mkdir -p _site/preview/ui-v1 _site/preview/ui-v2-home _site/preview/ui-v2-market _site/preview/ui-v2-market-hybrid _site/preview/ui-v2-market-density _site/preview/ui-v2-detail _site/preview/ui-v3-stock
+          cp -a production/dist/. _site/
+          cp -a preview-v1/dist/. _site/preview/ui-v1/
+          cp -a preview-v2/dist/. _site/preview/ui-v2-home/
+          cp -a preview-market/dist/. _site/preview/ui-v2-market/
+          cp -a preview-hybrid/dist/. _site/preview/ui-v2-market-hybrid/
+          cp -a preview-density/dist/. _site/preview/ui-v2-market-density/
+          cp -a preview-detail/dist/. _site/preview/ui-v2-detail/
+          cp -a preview-workspace/dist/. _site/preview/ui-v3-stock/
+          cmp production/dist/index.html _site/index.html
+          test -f _site/index.html
+          test -f _site/preview/ui-v1/index.html
+          test -f _site/preview/ui-v2-home/index.html
+          test -f _site/preview/ui-v2-market/index.html
+          test -f _site/preview/ui-v2-market-hybrid/index.html
+          test -f _site/preview/ui-v2-market-density/index.html
+          test -f _site/preview/ui-v2-detail/index.html
+          test -f _site/preview/ui-v3-stock/index.html
+          test -d _site/assets
+          test -d _site/preview/ui-v1/assets
+          test -d _site/preview/ui-v2-home/assets
+          test -d _site/preview/ui-v2-market/assets
+          test -d _site/preview/ui-v2-market-hybrid/assets
+          test -d _site/preview/ui-v2-market-density/assets
+          test -d _site/preview/ui-v2-detail/assets
+          test -d _site/preview/ui-v3-stock/assets
+          ! grep -q 'ui-v1' _site/index.html
+          echo "Production rebuilt unchanged; historical previews and new workspace have separate subpaths."
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy new stock workspace preview
+        id: deployment
+        uses: actions/deploy-pages@v4

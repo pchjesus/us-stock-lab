@@ -1,0 +1,203 @@
+/* US Stock Lab stock detail design lab — scoped to ?ui=v1&detailLab=1. */
+.ui-foundation.ui-v1 .detail-lab{--dl-ease:cubic-bezier(.22,1,.36,1);min-width:0;color:#243955;}
+.ui-foundation.ui-v1 .detail-lab :is(a,button,select,input):focus-visible{outline:3px solid #7e9de7;outline-offset:3px;}
+.ui-foundation.ui-v1 .detail-lab-switch-panel{
+ display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap;
+ padding:18px 21px;margin:0 0 19px;background:#f8faff;border:1px solid #dde6f3;border-radius:17px;
+}
+.ui-foundation.ui-v1 .detail-lab-eyebrow{display:inline-block;color:#5c7ec3;font-size:10px;letter-spacing:.14em;font-weight:820;}
+.ui-foundation.ui-v1 .detail-lab-switch-intro h2{margin:5px 0 2px;font-size:17px;line-height:1.35;letter-spacing:-.03em;color:#26406c;}
+.ui-foundation.ui-v1 .detail-lab-switch-intro p{margin:0;font-size:12px;line-height:1.55;color:#667b9a;}
+.ui-foundation.ui-v1 .detail-lab-mode-switch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:4px;border:1px solid #dbe4f1;border-radius:13px;background:#ebf0f8;min-width:min(100%,360px);}
+.ui-foundation.ui-v1 .detail-lab-mode-switch button{
+ display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;white-space:nowrap;
+ padding:8px 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:#617791;
+ font-size:12px;font-weight:760;transition:background-color .25s ease,color .25s ease,box-shadow .25s var(--dl-ease),transform .28s var(--dl-ease);
+}
+.ui-foundation.ui-v1 .detail-lab-mode-switch button:hover{transform:translateY(-1px);color:#285198;}
+.ui-foundation.ui-v1 .detail-lab-mode-switch button[aria-pressed=true]{background:#fff;color:#2a54a6;border-color:#e0e7f3;box-shadow:0 2px 9px rgba(25,54,96,.08);}
+.ui-foundation.ui-v1 .detail-lab-mode-key{display:grid;place-items:center;width:22px;height:22px;flex:none;border-radius:6px;background:#dfe8f8;color:#3056a0;font-size:10px;font-weight:830;}
+.ui-foundation.ui-v1 .detail-lab-mode-switch button[aria-pressed=true] .detail-lab-mode-key{background:#315db7;color:#fff;}
+.ui-foundation.ui-v1 .detail-lab .detail-lab-stock{min-width:0;animation:dl-content-entry .33s var(--dl-ease) both;}
+@keyframes dl-content-entry{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dl-panel-entry{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-panel:not([hidden]){animation:dl-panel-entry .34s var(--dl-ease) both;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-panel[hidden]{display:none!important;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-heading{min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-heading>div{min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-heading .detail-summary{font-size:15px;line-height:1.65;color:#71819a;max-width:680px;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-heading .eyebrow{color:#6580ac;font-size:11px;font-weight:780;letter-spacing:.1em;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-heading button{min-height:44px;border-radius:11px;font-size:12px;font-weight:720;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-currency{padding:0 4px;margin:0 0 12px;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-shortcuts{margin:0 0 15px;gap:7px 15px;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-shortcuts a{display:inline-flex;min-height:44px;align-items:center;font-weight:690;border:1px solid #dbe6f3;border-radius:10px;padding:9px 13px;background:#fff;transition:background-color .25s ease,transform .25s var(--dl-ease);}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-shortcuts a:hover{background:#edf4ff;transform:translateY(-2px);}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-tabs{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;gap:6px;
+ padding:6px;border-radius:15px;margin:0 0 17px;border:1px solid #dee7f3;background:#f1f5fb;
+ position:sticky;top:8px;z-index:4;box-shadow:0 6px 18px rgba(21,43,79,.035);
+}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-tabs button{min-width:0;min-height:50px;border:1px solid transparent;border-radius:11px;font-weight:770;font-size:13px;color:#607697;transition:background-color .25s ease,color .25s ease,box-shadow .26s ease;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-tabs button:hover{color:#295aab;background:#fdfefe;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-tabs button[aria-selected=true]{color:#2554b3;background:#fff;box-shadow:0 3px 11px rgba(26,50,97,.09);border-color:#e5eaf5;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-panel{min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-panel>div{min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .company-detail .panel{min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .company-detail .panel h2{font-size:clamp(19px,2vw,24px);letter-spacing:-.035em;line-height:1.4;}
+.ui-foundation.ui-v1 .detail-lab-stock .company-detail .panel p,
+.ui-foundation.ui-v1 .detail-lab-stock .etf-detail .panel p{font-size:13px;line-height:1.75;}
+.ui-foundation.ui-v1 .detail-lab-stock .financial-metric{min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight{min-width:0;margin:0 0 13px;border-radius:20px;overflow:hidden;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-bottom:15px;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-head>span{font-size:11px;letter-spacing:.12em;font-weight:850;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-head p{font-size:11px;margin:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-grid article{min-width:0;padding:18px;border-radius:14px;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-index{font-size:11px;font-weight:850;letter-spacing:.07em;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-grid h2{font-size:16px;letter-spacing:-.04em;margin:8px 0 7px;line-height:1.45;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-grid p{font-size:12px;line-height:1.65;margin:0;word-break:keep-all;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-disclosure{display:flex;flex-wrap:wrap;gap:8px 17px;padding-top:13px;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-disclosure span{font-size:11px;line-height:1.5;}
+.ui-foundation.ui-v1 .detail-lab-stock .detail-lab-disclosure span:before{content:"●";font-size:6px;margin-right:6px;vertical-align:middle;}
+
+/* B — friendly narrative, business first. Soft light background and bolder pricing. */
+.ui-foundation.ui-v1 .detail-lab-b .detail-heading{
+ display:flex;align-items:flex-start;gap:16px;position:relative;padding:30px;
+ background:linear-gradient(117deg,#f1f6ff,#fff 66%);border:1px solid #dce7f6;border-radius:21px;margin:0 0 13px;
+}
+.ui-foundation.ui-v1 .detail-lab-b .detail-heading h1{font-size:clamp(32px,3.5vw,48px);letter-spacing:-.055em;color:#1c396a;margin:8px 0 10px;}
+.ui-foundation.ui-v1 .detail-lab-b .v1-detail-price{
+ display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px;
+ padding:20px 25px;background:#214686;border:1px solid #214686;border-radius:19px;margin:0 0 15px;
+ box-shadow:0 8px 24px rgba(28,67,130,.1);
+}
+.ui-foundation.ui-v1 .detail-lab-b .v1-detail-price-label{color:#cbdbfa;font-size:12px;}
+.ui-foundation.ui-v1 .detail-lab-b .v1-detail-price-value strong{color:#fff;font-size:clamp(29px,3vw,41px);}
+.ui-foundation.ui-v1 .detail-lab-b .v1-detail-price-value .up{color:#ffc5cc;}
+.ui-foundation.ui-v1 .detail-lab-b .v1-detail-price-value .down{color:#bcdaff;}
+.ui-foundation.ui-v1 .detail-lab-b .v1-detail-price-aside span{color:#c4d9ff;font-size:12px;}
+.ui-foundation.ui-v1 .detail-lab-b .v1-detail-price-aside a{color:#fff;text-decoration:underline;text-underline-offset:4px;font-weight:740;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight{padding:22px 23px 15px;background:#fff;border:1px solid #dfe8f3;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-head>span{color:#4776bf;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-head p{color:#8998ab;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid article{background:#f5f8fd;border:1px solid #e5ecf6;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-index{color:#6688bf;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid h2{color:#284b87;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid p{color:#5d7090;}
+.ui-foundation.ui-v1 .detail-lab-b .detail-lab-disclosure{border-top:1px solid #edf1f7;margin-top:16px;color:#647d9e;}
+.ui-foundation.ui-v1 .detail-lab-b .company-detail .panel{border-radius:18px;border-color:#dce6f1;box-shadow:0 5px 23px rgba(26,54,90,.025);}
+.ui-foundation.ui-v1 .detail-lab-b .company-detail #company-overview{background:#fff;}
+.ui-foundation.ui-v1 .detail-lab-b .company-detail #company-metrics{background:#f6f9fe;}
+.ui-foundation.ui-v1 .detail-lab-b .company-detail .financial-metrics-grid{min-width:0;gap:10px;}
+.ui-foundation.ui-v1 .detail-lab-b .company-detail .financial-metric{background:#fff;border:1px solid #e2e8f3;border-radius:13px;}
+.ui-foundation.ui-v1 .detail-lab-b .v1-valuation{background:#fff;border-color:#dfe6f2;border-radius:18px;}
+
+/* C — compact research workstation with high-contrast identity bar and density. */
+.ui-foundation.ui-v1 .detail-lab-c .detail-heading{
+ background:linear-gradient(120deg,#16263f 0%,#233b60 75%,#304f7e);border:1px solid #24395a;border-radius:20px;
+ padding:25px 27px 24px;margin:0 0 10px;align-items:flex-start;gap:15px;
+}
+.ui-foundation.ui-v1 .detail-lab-c .detail-heading .eyebrow{color:#a9c7f6;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-heading h1{color:#fff;font-size:clamp(29px,3vw,41px);}
+.ui-foundation.ui-v1 .detail-lab-c .detail-heading .detail-summary{color:#e1e9f4;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-heading>button{background:#f0f5ff;color:#2f5389;border-color:#7a97c0;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-detail-price{padding:14px 21px;background:#fff;border:1px solid #dbe4f0;border-radius:14px;margin:0 0 9px;gap:9px 20px;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-detail-price-label{font-size:11px;color:#70829e;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-detail-price-value strong{font-size:clamp(25px,2.5vw,35px);color:#263f6a;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-detail-price-aside{gap:3px;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-detail-price-aside span{font-size:11px;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight{padding:15px 18px 12px;background:#213654;border:1px solid #2f476a;border-radius:15px;color:#fff;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-head{padding-bottom:9px;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-head>span{color:#a9c3ef;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-head p{color:#bccce4;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid{gap:0;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid article{border:0;border-radius:0;padding:8px 17px;min-width:0;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid article+article{border-left:1px solid #3d5577;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-index{color:#8aace7;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid h2{color:#f6f9ff;font-size:14px;margin:6px 0;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid p{color:#c5d4e7;font-size:11px;line-height:1.65;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-lab-disclosure{border-top:1px solid #395174;margin-top:9px;padding-top:10px;color:#b2c9e9;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-shortcuts a{background:#f1f5fb;color:#2757a6;font-weight:730;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-tabs{background:#233957;border:1px solid #314a6b;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-tabs button{color:#d5e1f2;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-tabs button:hover{background:#314f75;color:#fff;}
+.ui-foundation.ui-v1 .detail-lab-c .detail-tabs button[aria-selected=true]{background:#fff;color:#22488e;border-color:#fff;}
+.ui-foundation.ui-v1 .detail-lab-c .company-detail .panel{border-color:#d9e3ef;}
+.ui-foundation.ui-v1 .detail-lab-c .company-detail #company-metrics{background:#edf3fa;border-color:#cfdcec;}
+.ui-foundation.ui-v1 .detail-lab-c .company-detail #company-results{background:#fff;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-valuation{border-color:#dbe5f3;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-valuation-heading{margin-bottom:13px;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-valuation-grid{gap:9px;}
+.ui-foundation.ui-v1 .detail-lab-c .v1-valuation-card{padding:13px;}
+
+/* A desktop can inspect the business and metrics together; mobile retains logical DOM order. */
+@media(min-width:1210px){
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview),
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview){
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:15px;align-items:start;
+ }
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>.panel,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>.panel{margin:0;min-width:0;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>#company-results,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>#company-results{grid-column:1/-1;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail #company-metrics .financial-metrics-grid,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail #company-metrics .financial-metrics-grid{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>#company-metrics,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>#company-metrics{grid-column:2;grid-row:1;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>#company-overview,
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>#company-overview{grid-column:1;grid-row:1;}
+ .ui-foundation.ui-v1 .detail-lab-b .company-detail:not(.company-evidence):has(>#company-overview)>:not(#company-overview):not(#company-metrics):not(#company-results),
+ .ui-foundation.ui-v1 .detail-lab-c .company-detail:not(.company-evidence):has(>#company-overview)>:not(#company-overview):not(#company-metrics):not(#company-results){grid-column:1/-1;}
+}
+/* Mobile and narrow rails: readable without clipping/tiny columns. */
+@media(max-width:800px){
+ .ui-foundation.ui-v1 .detail-lab .detail-lab-switch-panel{padding:14px 15px;}
+ .ui-foundation.ui-v1 .detail-lab-mode-switch{width:100%;min-width:0;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-heading,
+ .ui-foundation.ui-v1 .detail-lab-c .detail-heading{padding:19px 17px;gap:12px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-heading{flex-wrap:wrap;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-heading h1{font-size:clamp(28px,7vw,35px);}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-grid{grid-template-columns:minmax(0,1fr);}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight-grid article{min-height:0;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid{gap:8px;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid article{padding:13px;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid h2{margin:5px 0;}
+ .ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid article{border-left:0!important;border-top:1px solid #3d5577;padding:10px 4px;}
+ .ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid article:first-child{border-top:0;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-tabs{top:0;margin-bottom:12px;}
+}
+@media(max-width:480px){
+ .ui-foundation.ui-v1 .detail-lab-mode-switch button{padding:7px 4px;font-size:11px;gap:4px;}
+ .ui-foundation.ui-v1 .detail-lab-mode-key{width:18px;height:18px;font-size:9px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-tabs button{font-size:11px;padding:8px 3px;min-height:48px;}
+ .ui-foundation.ui-v1 .detail-lab-b .v1-detail-price,.ui-foundation.ui-v1 .detail-lab-c .v1-detail-price{padding:18px 16px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-lab-insight{padding:16px 14px 12px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-lab-disclosure{gap:5px 10px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-lab-disclosure span{font-size:10px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-heading .detail-summary{font-size:13px;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-heading h1{font-size:32px;}
+ .ui-foundation.ui-v1 .detail-lab-c .detail-heading h1{font-size:29px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-shortcuts{gap:6px;}
+ .ui-foundation.ui-v1 .detail-lab-stock .detail-shortcuts a{font-size:12px;min-height:44px;}
+}
+@media(prefers-reduced-motion:reduce){
+ .ui-foundation.ui-v1 .detail-lab .detail-lab-stock,
+ .ui-foundation.ui-v1 .detail-lab .detail-panel:not([hidden]){animation:none!important;}
+ .ui-foundation.ui-v1 .detail-lab :is(button,a,.detail-lab-stock){transition:none!important;}
+ .ui-foundation.ui-v1 .detail-lab :is(button,a):hover{transform:none!important;}
+}
+
+/* Visual review polish: three genuinely useful insights, not three giant mobile cards. */
+@media(max-width:800px){
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid article,
+ .ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid article{
+  display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:9px;align-items:start;
+ }
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid article{padding:11px 12px;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-index,
+ .ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-index{grid-column:1;grid-row:1/3;padding-top:3px;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid h2,
+ .ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid h2{grid-column:2;margin:0 0 4px;}
+ .ui-foundation.ui-v1 .detail-lab-b .detail-lab-insight-grid p,
+ .ui-foundation.ui-v1 .detail-lab-c .detail-lab-insight-grid p{grid-column:2;line-height:1.55;}
+}

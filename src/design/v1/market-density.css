@@ -1,0 +1,151 @@
+/* Independent density experiment: only ?ui=v1&marketDensity=1. */
+.ui-foundation.ui-v1 .market-density-page{--v3-ease:cubic-bezier(.22,1,.36,1);min-width:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3{min-width:0;color:#203453;}
+.ui-foundation.ui-v1 .market-density-page .market-v3 *{box-sizing:border-box;}
+.ui-foundation.ui-v1 .market-density-page .market-v3 :is(a,button,input,select):focus-visible{outline:3px solid #7fa2ef;outline-offset:3px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-search-panel{background:#fff;border:1px solid #dce5f2;border-radius:19px;padding:25px 28px 17px;box-shadow:0 8px 30px rgba(28,50,84,.035);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-search-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-kicker{color:#5482c8;font-size:10px;font-weight:800;letter-spacing:.14em;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-search-heading h2{font-size:clamp(23px,2.45vw,31px);line-height:1.25;margin:8px 0 7px;letter-spacing:-.05em;color:#213a63;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-search-heading p{color:#718199;font-size:13px;line-height:1.6;margin:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-count{white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:8px;color:#77889f;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-count strong{color:#2a56ad;font-size:29px;line-height:1;font-weight:850;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-count span{font-size:11px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-searchbox{display:flex;align-items:center;gap:11px;border:2px solid #dae4f3;border-radius:15px;background:#f6f8fc;color:#6e87a7;padding:0 14px;margin-top:20px;min-width:0;transition:border-color .22s ease,box-shadow .26s ease,background-color .22s ease;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-searchbox:focus-within{border-color:#7499e1;background:#fff;box-shadow:0 0 0 4px rgba(98,146,231,.12);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-searchbox svg{flex-shrink:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-searchbox input{width:100%;min-width:0;min-height:56px;border:0;outline:0;background:transparent;font-size:16px;color:#244268;padding:4px 0;box-shadow:none;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-searchbox input:focus-visible{outline:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-searchbox input::placeholder{font-size:14px;color:#92a0b6;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-searchbox button{border:0;background:#e9eef7;color:#567094;border-radius:8px;min-width:36px;min-height:36px;padding:6px;font-size:15px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-filters{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:9px;margin-top:17px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-sectors{display:flex;align-items:center;flex-wrap:wrap;gap:6px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-sectors button{background:#f6f8fc;border:1px solid #dfe6f0;border-radius:50px;font-size:12px;font-weight:720;padding:8px 13px;min-height:44px;color:#536981;transition:background-color .22s ease,color .22s ease,border-color .22s ease,transform .24s var(--v3-ease);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-sectors button[aria-pressed=true]{background:#2b54a2;color:#fff;border-color:#2b54a2;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-sectors button:hover{transform:translateY(-2px);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-filter-actions{display:flex;gap:7px;flex-wrap:wrap;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-filter-actions button{background:#fff;border:1px solid #dde6f2;border-radius:10px;color:#58718e;font-size:12px;font-weight:700;padding:9px 13px;min-height:44px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-filter-actions button[aria-pressed=true]{color:#8e6018;background:#fff5de;border-color:#ebcf8b;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-sector-source{font-size:11px;line-height:1.6;color:#8190a4;margin:15px 0 0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-sector-source a{text-decoration:underline;text-underline-offset:3px;color:#466aaf;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-results-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin:25px 2px 9px;scroll-margin-top:18px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-results-header h3{font-size:20px;letter-spacing:-.025em;margin:0 0 4px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-results-header p{font-size:12px;color:#8291a6;margin:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-result-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px;justify-content:flex-end;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-view-switch{display:flex;align-items:center;gap:2px;padding:4px;background:#eff3f9;border:1px solid #dfe7f2;border-radius:12px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-view-switch button{display:inline-flex;justify-content:center;align-items:center;gap:7px;min-height:38px;border:1px solid transparent;background:transparent;border-radius:9px;color:#708099;font-size:12px;font-weight:780;padding:8px 12px;white-space:nowrap;transition:background .22s ease,box-shadow .24s ease,color .22s ease;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-view-switch button span{font-size:19px;line-height:1;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-view-switch button[aria-pressed=true]{background:#fff;color:#315ba8;border-color:#e3e8f1;box-shadow:0 2px 9px rgba(24,46,81,.085);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-control-label{display:flex;gap:7px;align-items:center;min-height:44px;white-space:nowrap;color:#74859a;font-size:12px;font-weight:700;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-control-label select{border:1px solid #dce5f2;border-radius:10px;min-height:44px;background:#fff;color:#37516f;padding:7px 11px;font-size:12px;max-width:195px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-data-note{font-size:11px;line-height:1.6;margin:0 2px 14px;color:#7b8aa1;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-results{container-type:inline-size;min-width:0;animation:v3-stage-in .35s var(--v3-ease) both;}
+@keyframes v3-stage-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes v3-card-in{from{opacity:0;transform:translateY(11px) scale(.987)}to{opacity:1;transform:translateY(0) scale(1)}}
+.ui-foundation.ui-v1 .market-density-page .market-v3-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;align-items:stretch;min-width:0;}
+@container (min-width:810px){.ui-foundation.ui-v1 .market-density-page .market-v3-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@container (min-width:1110px){.ui-foundation.ui-v1 .market-density-page .market-v3-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+/* Container queries are based on content width rather than total viewport width. */
+.ui-foundation.ui-v1 .market-density-page .market-v3-card{display:flex;flex-direction:column;gap:0;min-width:0;padding:17px 17px 11px;background:#fff;border:1px solid #e0e8f3;border-radius:17px;box-shadow:0 4px 18px rgba(34,56,87,.03);animation:v3-card-in .4s var(--v3-ease) both;animation-delay:calc(var(--v3-stagger)*28ms);transition:box-shadow .28s var(--v3-ease),border-color .28s ease,transform .28s var(--v3-ease);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card:hover{border-color:#adc3ed;box-shadow:0 12px 26px rgba(37,62,112,.09);transform:translateY(-3px);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-top{display:flex;justify-content:space-between;gap:7px;align-items:center;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-avatar{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;flex:none;background:#e8effd;color:#345796;font-weight:820;font-size:12px;letter-spacing:-.03em;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-star{display:grid;place-items:center;flex:none;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border-radius:10px;background:#fff;border:1px solid #e2e9f2;color:#8291a6;transition:color .22s ease,border-color .22s ease,transform .25s var(--v3-ease),background .22s ease;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-star:hover{transform:rotate(-7deg);border-color:#bbcae3;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-star[aria-pressed=true]{color:#b8882b;background:#fff5de;border-color:#ead39e;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-heading{margin:13px 0 7px;min-width:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-heading a{color:#213a62;font-size:17px;font-weight:820;letter-spacing:-.035em;line-height:1.3;overflow-wrap:anywhere;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-heading a span{font-size:12px;color:#7997c7;font-weight:600;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-heading a:hover{color:#2e61b3;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-heading p{margin:5px 0 0;font-size:11px;color:#8291a6;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-desc{color:#708099;font-size:12px;line-height:1.5;margin:0 0 12px;min-height:36px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-metric{margin-top:auto;padding:12px 0 9px;border-top:1px solid #edf1f7;display:flex;justify-content:space-between;align-items:flex-end;gap:9px;min-width:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-metric div{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-metric small{font-size:10px;color:#8b98aa;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-metric strong{font-size:clamp(17px,1.38vw,22px);font-variant-numeric:tabular-nums;letter-spacing:-.05em;color:#273f62;overflow-wrap:anywhere;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-change{font-size:12px;font-weight:760;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-change.up{color:#c44355;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-change.down{color:#356fc0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px;padding-top:3px;border-top:1px solid #edf1f7;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-bottom small{font-size:10px;color:#9aa5b4;white-space:nowrap;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-bottom button{background:transparent;border:0;border-radius:8px;min-height:42px;padding:8px 3px;color:#3360ad;font-size:11px;font-weight:770;white-space:nowrap;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-card-bottom button:hover{background:#eef3fc;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-list{background:#fff;border:1px solid #dfe7f2;border-radius:17px;overflow:hidden;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table-wrap{width:100%;overflow-x:auto;scrollbar-width:thin;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table{border-collapse:collapse;width:100%;min-width:755px;table-layout:auto;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table th{font-size:12px;font-weight:770;background:#f2f5fa;color:#627895;border-bottom:1px solid #dce6f3;text-align:left;padding:14px 12px;white-space:nowrap;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table td{padding:11px 12px;border-bottom:1px solid #edf0f7;font-size:12px;line-height:1.4;vertical-align:middle;color:#526781;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table tbody tr{transition:background .2s ease;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table tbody tr:hover{background:#f4f8ff;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table td a{display:flex;flex-direction:column;gap:4px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table td a strong{color:#2854a1;font-size:15px;font-weight:800;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table td a span{font-size:11px;color:#7d8da4;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table .market-v3-numeric{font-size:14px;color:#2a4267;font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-table .market-v3-unavailable{color:#93a2b7;font-size:11px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-view-details{min-height:44px;padding:9px 11px;font-weight:720;font-size:12px;color:#3562b1;background:#fff;border:1px solid #dce5f2;border-radius:10px;white-space:nowrap;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-mobile-list{display:none;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-empty{text-align:center;border:1px dashed #d5e0ef;border-radius:16px;padding:35px;background:#fff;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-empty strong{font-size:19px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-empty p{font-size:13px;margin:8px 0 13px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-empty button{min-height:44px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-pagination{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;margin:16px 0;padding:10px;border:1px solid #e0e8f2;background:#fff;border-radius:12px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-pagination button{min-height:44px;font-size:12px;padding:8px 12px;border-radius:9px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-pagination span{font-variant-numeric:tabular-nums;color:#617894;font-size:12px;font-weight:730;margin:0 5px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-dialog{margin:auto;position:fixed;inset:0;width:min(460px,calc(100vw - 28px));max-height:min(85dvh,680px);overflow-y:auto;background:#fff;border-radius:21px;border:1px solid #d5e2f2;box-shadow:0 23px 85px rgba(15,29,55,.2);padding:0;animation:v3-stage-in .23s var(--v3-ease) both;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-dialog::backdrop{background:rgba(14,30,55,.53);backdrop-filter:blur(3px);}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-content{padding:24px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-header h2{font-size:26px;letter-spacing:-.04em;margin:6px 0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-header p{font-size:12px;color:#7386a3;margin:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-close{display:grid;place-items:center;flex:none;width:44px;height:44px;min-width:44px;border-radius:11px;background:#f3f6fb;color:#586c85;padding:0;font-size:19px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-desc{color:#647995;font-size:14px;line-height:1.7;margin:19px 0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-metrics{display:flex;flex-direction:column;gap:0;margin:0;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-metrics div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-top:1px solid #e3eaf3;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-metrics dt{color:#72839b;font-size:13px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-metrics dd{color:#2b4265;font-size:18px;font-weight:800;margin:0;font-variant-numeric:tabular-nums;text-align:right;overflow-wrap:anywhere;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-note{font-size:11px;color:#7a8aa0;line-height:1.65;margin:12px 0 16px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-actions{display:flex;align-items:center;gap:10px;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-actions>a{display:flex;flex:1;justify-content:center;align-items:center;min-height:49px;border-radius:10px;background:#345bb4;color:#fff;font-size:13px;font-weight:730;}
+.ui-foundation.ui-v1 .market-density-page .market-v3-quick-external{display:flex;justify-content:center;align-items:center;min-height:44px;font-size:12px;color:#5173ad;text-decoration:underline;text-underline-offset:3px;margin-top:7px;}
+@media(max-width:950px){
+ .ui-foundation.ui-v1 .market-density-page .market-v3-results-header{align-items:flex-start;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-result-controls{justify-content:flex-start;width:100%;}
+}
+@media(max-width:710px){
+ .ui-foundation.ui-v1 .market-density-page .market-v3-search-panel{padding:20px 16px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-search-heading{flex-direction:column;gap:4px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-count{margin-top:0;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-searchbox input{font-size:16px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-grid{grid-template-columns:1fr;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-card{padding:13px 16px 9px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-card-heading{margin-top:6px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-card-desc{display:none;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-card-metric{padding:9px 0 7px;margin-top:8px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-card-metric strong{font-size:20px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-table-wrap{display:none;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-list{display:block;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px 10px;padding:14px 16px;border-bottom:1px solid #eaf0f7;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-row>a{display:flex;flex-direction:column;gap:4px;min-width:0;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-row>a strong{font-size:15px;color:#2754a0;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-row>a span{font-size:12px;color:#8391a7;overflow-wrap:anywhere;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-row>div:nth-child(2){display:flex;flex-direction:column;gap:4px;align-items:flex-end;font-variant-numeric:tabular-nums;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-row>div:nth-child(2) strong{font-size:14px;color:#2e466e;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-actions{display:flex;justify-content:space-between;align-items:center;grid-column:1/-1;gap:12px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-mobile-actions button:last-child{min-height:44px;border:1px solid #d9e5f3;background:#fff;color:#345ba1;font-size:12px;}
+}
+@media(max-width:420px){
+ .ui-foundation.ui-v1 .market-density-page .market-v3-result-controls{gap:6px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-view-switch button{min-width:70px;padding:7px 9px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-control-label select{max-width:154px;padding:6px 8px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-searchbox{padding:0 11px;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-searchbox input::placeholder{font-size:12px;}
+}
+@media(prefers-reduced-motion:reduce){
+ .ui-foundation.ui-v1 .market-density-page .market-v3-results,
+ .ui-foundation.ui-v1 .market-density-page .market-v3-card,
+ .ui-foundation.ui-v1 .market-density-page .market-v3-dialog{animation:none!important;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3 :is(button,a,input,select,.market-v3-card){transition:none!important;}
+ .ui-foundation.ui-v1 .market-density-page .market-v3-card:hover,
+ .ui-foundation.ui-v1 .market-density-page .market-v3-star:hover,
+ .ui-foundation.ui-v1 .market-density-page .market-v3-sectors button:hover{transform:none!important;}
+}

@@ -7,7 +7,7 @@ permissions:
   pages: write
   id-token: write
 concurrency:
-  group: pages
+  group: market-hybrid-preview-pages
   cancel-in-progress: false
 jobs:
   preview:

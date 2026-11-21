@@ -1,0 +1,52 @@
+name: Stock workspace v3 clean slate QA (no deploy)
+on:
+  push:
+    branches: [design/stock-workspace-v3-20261121]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual-and-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Production-feature-flags build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: https://vveljtqmujdzkzmoncjx.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_IGTsGZshQZAE92bE0_xpYg__bOTs3GU
+          VITE_ENABLE_MANUAL_TRADING: 'false'
+          VITE_ENABLE_MARKET_FX: 'true'
+          VITE_ENABLE_TREASURY_STATS: 'true'
+      - run: npx playwright install --with-deps chromium
+      - name: Configure Chromium
+        run: |
+          CHROME=$(find "$HOME/.cache/ms-playwright" -path '*/chrome-linux64/chrome' -type f | head -n 1)
+          test -n "$CHROME"
+          echo "CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+          sudo ln -sf "$CHROME" /usr/bin/chromium
+      - name: Stock workspace all four tabs
+        run: npx playwright test tests/stock-workspace.spec.ts --workers=2
+      - name: Upload visual captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stock-workspace-v3-captures
+          path: |
+            work/stock-workspace/captures/*.png
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Original entire UI regression
+        run: npm test -- --workers=2
+      - name: Auth regression
+        run: npm run test:auth -- --workers=2
+      - name: Release regression
+        run: npx playwright test --config playwright.release.config.ts --workers=1
+      - name: UX0 regression
+        run: npm run test:ux0 -- --workers=2
